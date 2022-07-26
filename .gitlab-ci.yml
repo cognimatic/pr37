@@ -1,0 +1,12 @@
+stages:
+  - deploy
+
+deploy_to_dev:
+  stage: deploy
+  script:
+    - ssh argyllbuteinspir@46.37.190.106 -p 2020 "cd public_html;git pull"
+  environment:
+    name: dev site
+    url: https://argyll-bute.inspireserverc.com/
+  only:
+    - devel

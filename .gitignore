@@ -1,0 +1,11 @@
+# System files
+php.ini
+.user.ini
+error_log 
+/cgi-bin
+/.well-known 
+*.log
+
+!.gitignore
+
+/.htaccess
