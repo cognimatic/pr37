@@ -1,0 +1,8 @@
+RewriteRule ^$ web/$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+
+
+RewriteEngine on
+RewriteRule (.*) /web/$1 [L]
