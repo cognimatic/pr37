@@ -6,6 +6,8 @@ error_log
 /.well-known 
 *.log
 .DS_Store
+# Server root htaccess only. All others under version control
+/.htaccess
 
 !.gitignore
 
