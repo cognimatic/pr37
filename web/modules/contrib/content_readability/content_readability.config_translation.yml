@@ -1,0 +1,5 @@
+content_readability.config:
+  title: 'Content Readability Settings'
+  base_route_name: content_readability.admin.config
+  names:
+    - content_readability.config

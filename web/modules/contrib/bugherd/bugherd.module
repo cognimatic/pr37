@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @file
+ * BugHerd module functions.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Laminas\Escaper\Escaper;
+
+/**
+ * Implements hook_help().
+ */
+function bugherd_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the simple_user_management module.
+    case 'help.page.bugherd':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('BugHerd is an issue tracking system built for designers and web developers. This module allows you to quickly and easily add BugHerd to your Drupal site. The module allows you grant access to BugHerd by roles and even turn it off for admin pages.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_attachments().
+ *
+ * We must inline the JS so BugHerd can detect correct installation of the
+ * script.
+ */
+function bugherd_page_attachments(array &$attachments) {
+  $config = \Drupal::config('bugherd.settings');
+  $project_key = $config->get('bugherd_project_key');
+
+  if ($project_key && \Drupal::currentUser()->hasPermission('access bugherd')) {
+    $disable_on_admin = $config->get('bugherd_disable_on_admin');
+    $position = $config->get('bugherd_widget_position');
+
+    // Add to the head.
+    if (!$disable_on_admin || !\Drupal::service('router.admin_context')->isAdminRoute()) {
+      $escaper = new Escaper();
+      $attachments['#attached']['html_head'][] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'script',
+          '#value' => "
+            var BugHerdConfig = {\"feedback\":{\"tab_position\":\"" . $position . "\"}};
+
+            (function (d, t) {
+              var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
+              bh.type = 'text/javascript';
+              bh.src = 'https://www.bugherd.com/sidebarv2.js?apikey=" . $escaper->escapeJs($project_key) . "';
+              s.parentNode.insertBefore(bh, s);
+            })(document, 'script');
+          ",
+          '#cache' => [
+            'contexts' => [
+              'route',
+              'user.permissions',
+            ],
+            'tags' => [
+              'bugherd',
+            ],
+          ],
+        ],
+        'bugherd_embed',
+      ];
+    }
+  }
+}

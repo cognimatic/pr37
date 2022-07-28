@@ -1,0 +1,9 @@
+content_readability_help: 'https://www.webfx.com/tools/read-able/improve-readability.html'
+content_readability_profiles:
+  general:
+    name: "General"
+    grade: "6"
+    weight: "0"
+    machine_name: "general"
+content_readability_visibility:
+  page: 0

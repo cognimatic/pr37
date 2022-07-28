@@ -1,0 +1,14 @@
+name: 'Content Readability'
+type: module
+description: 'Displays Readability of a node''s body field.'
+core: 8.x
+core_version_requirement: ^8 || ^9
+configure: content_readability.admin.config
+package: 'Content'
+dependencies:
+  - drupal:ckeditor
+
+# Information added by Drupal.org packaging script on 2022-03-14
+version: '8.x-1.0-alpha14'
+project: 'content_readability'
+datestamp: 1647268192

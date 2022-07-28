@@ -1,0 +1,6 @@
+userswitch.user.user_list:
+  route_name: userswitch.user.user_list
+  title: 'Switch User'
+  appears_on:
+    - entity.user_role.collection
+  description: 'Manage user List.'

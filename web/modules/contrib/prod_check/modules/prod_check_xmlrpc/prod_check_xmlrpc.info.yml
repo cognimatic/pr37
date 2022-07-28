@@ -1,0 +1,14 @@
+name: 'Production Check XML-RPC'
+type: 'module'
+description: "Exposes the prod check report as an XML-RPC service"
+package: Monitoring
+core_version_requirement: ^8.8 || ^9
+configure: entity.prod_check_processor.collection
+dependencies:
+  - prod_check:prod_check
+  - xmlrpc:xmlrpc
+
+# Information added by Drupal.org packaging script on 2021-09-09
+version: '8.x-1.0-alpha8'
+project: 'prod_check'
+datestamp: 1631179992
