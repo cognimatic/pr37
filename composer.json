@@ -51,7 +51,8 @@
         "drupal/views_bulk_operations": "^4.1",
         "drupal/webform": "^6.1",
         "drupal/yoast_seo": "^1.7",
-        "localgovdrupal/localgov": "^2.0"
+        "localgovdrupal/localgov": "^2.0",
+        "localgovdrupal/localgov_multilingual": "1.x-dev"
     },
     "require-dev": {
         "brianium/paratest": "^6.0",

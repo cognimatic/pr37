@@ -12370,6 +12370,40 @@
             "install-path": "../../web/modules/contrib/localgov_menu_link_group"
         },
         {
+            "name": "localgovdrupal/localgov_multilingual",
+            "version": "1.x-dev",
+            "version_normalized": "1.9999999.9999999.9999999-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/localgovdrupal/localgov_multilingual.git",
+                "reference": "e333d3173c097da83d1ab51afbd08533ea1b4f75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_multilingual/zipball/e333d3173c097da83d1ab51afbd08533ea1b4f75",
+                "reference": "e333d3173c097da83d1ab51afbd08533ea1b4f75",
+                "shasum": ""
+            },
+            "require-dev": {
+                "localgovdrupal/localgov_core": "^2.1"
+            },
+            "time": "2022-06-23T10:55:47+00:00",
+            "default-branch": true,
+            "type": "drupal-module",
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "LocalGov Drupal Multilingual",
+            "homepage": "https://github.com/localgovdrupal/localgov_multilingual",
+            "support": {
+                "issues": "https://github.com/localgovdrupal/localgov_multilingual/issues",
+                "source": "https://github.com/localgovdrupal/localgov_multilingual/tree/1.x"
+            },
+            "install-path": "../../web/modules/contrib/localgov_multilingual"
+        },
+        {
             "name": "localgovdrupal/localgov_news",
             "version": "2.2.1",
             "version_normalized": "2.2.1.0",

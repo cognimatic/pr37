@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1210e7d5a31cdaacb97a2dd705cf8c5",
+    "content-hash": "59ea120b36b31fe2e0909dece679cc45",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -10054,6 +10054,37 @@
             "time": "2022-01-31T15:13:52+00:00"
         },
         {
+            "name": "localgovdrupal/localgov_multilingual",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/localgovdrupal/localgov_multilingual.git",
+                "reference": "e333d3173c097da83d1ab51afbd08533ea1b4f75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_multilingual/zipball/e333d3173c097da83d1ab51afbd08533ea1b4f75",
+                "reference": "e333d3173c097da83d1ab51afbd08533ea1b4f75",
+                "shasum": ""
+            },
+            "require-dev": {
+                "localgovdrupal/localgov_core": "^2.1"
+            },
+            "default-branch": true,
+            "type": "drupal-module",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "LocalGov Drupal Multilingual",
+            "homepage": "https://github.com/localgovdrupal/localgov_multilingual",
+            "support": {
+                "issues": "https://github.com/localgovdrupal/localgov_multilingual/issues",
+                "source": "https://github.com/localgovdrupal/localgov_multilingual/tree/1.x"
+            },
+            "time": "2022-06-23T10:55:47+00:00"
+        },
+        {
             "name": "localgovdrupal/localgov_news",
             "version": "2.2.1",
             "source": {
@@ -19765,6 +19796,7 @@
         "drupal/rabbit_hole": 10,
         "drupal/site_audit": 5,
         "drupal/styleguide": 10,
+        "localgovdrupal/localgov_multilingual": 20,
         "drupal/bugherd": 10,
         "drupal/entity_clone": 10,
         "drupal/entity_relationship_diagram": 20

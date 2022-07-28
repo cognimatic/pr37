@@ -2322,6 +2322,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'localgovdrupal/localgov_multilingual' => array(
+            'pretty_version' => '1.x-dev',
+            'version' => '1.9999999.9999999.9999999-dev',
+            'reference' => 'e333d3173c097da83d1ab51afbd08533ea1b4f75',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/localgov_multilingual',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'localgovdrupal/localgov_news' => array(
             'pretty_version' => '2.2.1',
             'version' => '2.2.1.0',
