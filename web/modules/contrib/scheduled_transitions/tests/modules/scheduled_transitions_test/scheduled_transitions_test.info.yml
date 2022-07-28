@@ -1,0 +1,11 @@
+name: Scheduled transtions test module
+type: module
+package: Testing
+core_version_requirement: ^9
+dependencies:
+  - entity_test_revlog
+
+# Information added by Drupal.org packaging script on 2022-03-23
+version: '2.2.1'
+project: 'scheduled_transitions'
+datestamp: 1648075433

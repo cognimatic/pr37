@@ -1,0 +1,5 @@
+services:
+  rabbit_hole_href.canonical_link_modifier:
+    class: Drupal\rabbit_hole_href\CanonicalLinkModifier
+    arguments:
+      - "@plugin.manager.rabbit_hole_behavior_plugin"

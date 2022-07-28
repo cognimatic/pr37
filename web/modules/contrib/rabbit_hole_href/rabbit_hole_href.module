@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * @file
+ * The rabbit_hole_href module file.
+ *
+ * @todo See /core/modules/views/src/Plugin/views/field/LinkBase.php
+ * @todo See https://drupal.stackexchange.com/questions/218824/how-to-alter-node-url-or-tourl-function-output
+ * @todo Implement service
+ */
+
+use Drupal\Core\Entity\ContentEntityInterface;
+
+/**
+ * @file
+ * Contains rabbit_hole_href.module.
+ */
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function rabbit_hole_href_entity_type_alter(array &$entity_types) {
+  // @todo Determine the entity types which have rabbit_hole_href enabled as
+  // rh_action, see Drupal\rabbit_hole\BehaviorInvoker, and go through them
+  // instead of only taxonomy_term:
+  // behaviourInvorker->getRabbitHoleValuesForEntityType($entity_type, $bundle);
+  // NOTE: Currently the uri callback is always set, even if redirect is set to
+  // 404 etc.!!
+  $entity_types['taxonomy_term']->setUriCallback('rabbit_hole_href_redirect_uri');
+  $links = $entity_types['taxonomy_term']->get('links');
+  unset($links['canonical']);
+  $entity_types['taxonomy_term']->set('links', $links);
+}
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ */
+function rabbit_hole_href_entity_bundle_info_alter(&$bundles) {
+  // @todo Determine the entity types which have rabbit_hole_href enabled as
+  // rh_action, see Drupal\rabbit_hole\BehaviorInvoker, and go through them
+  // instead of only taxonomy_term. Also remove "jpdummy" and use redirect
+  // instead:
+  $bundles['taxonomy_term']['jpdummy']['uri_callback'] = 'rabbit_hole_href_redirect_uri';
+  // // Set the uri callback for the redirect content type.
+  // if (isset($bundles['taxonomy_term']['redirect'])) {
+    // $bundles['taxonomy_term']['redirect']['uri_callback'] = 'rabbit_hole_href_redirect_uri';
+  // }
+}
+
+/**
+ * Bundle URI callback for redirect content type.
+ */
+function rabbit_hole_href_redirect_uri(ContentEntityInterface $entity) {
+  // if ($taxonomy_term->field_redirect->isEmpty() === FALSE) {
+  //   return $taxonomy_term->field_redirect[0]->getUrl();
+  // }
+  // return new Url('entity.taxonomy_term.canonical', ['taxonomy_term' => $taxonomy_term->id()]);
+
+  $canonicalLinkModifier = \Drupal::service('rabbit_hole_href.canonical_link_modifier');
+  $url = $canonicalLinkModifier->getCanonicalUrl($entity);
+
+  // if (isset($entity) && $entity instanceof ContentEntityInterface) {
+  //   $behaivour = $this->rabbitHoleBehaviorInvoker->processEntity($entity);
+  //   $pageRedirectHrefBehaviour->getActionTarget($entity);
+  // }
+
+  // return new Url('entity.node.canonical', ['node' => $entity->id()]);
+  return $url;
+}

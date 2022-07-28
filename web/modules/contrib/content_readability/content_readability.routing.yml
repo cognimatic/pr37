@@ -1,0 +1,33 @@
+content_readability.admin.config:
+  path: '/admin/config/content/content_readability'
+  defaults:
+    _form: '\Drupal\content_readability\Form\ContentReadabilityAdminSettingsForm'
+    _title: 'Content Readability'
+  requirements:
+    _permission: 'administer content readability'
+content_readability.add_profile.config:
+  path: '/admin/config/content/content_readability/add'
+  defaults:
+    _form: '\Drupal\content_readability\Form\ContentReadabilityAddProfile'
+    _title: 'Add Content Readability Profile'
+  requirements:
+    _permission: 'administer content readability'
+content_readability.edit_profile.config:
+  path: '/admin/config/content/content_readability/{profile}/edit'
+  defaults:
+    _form: '\Drupal\content_readability\Form\ContentReadabilityEditProfile'
+    _title_callback: '\Drupal\content_readability\Controller\ContentReadabilityController::pageTitle'
+  requirements:
+    _permission: 'administer content readability'
+content_readability.delete_profile.config:
+  path: '/admin/config/content/content_readability/{profile}/delete'
+  defaults:
+    _form: '\Drupal\content_readability\Form\ContentReadabilityDeleteProfile'
+  requirements:
+    _permission: 'administer site configuration'
+content_readability.update_readability_score:
+  path: '/content-readability/update-score'
+  defaults:
+    _controller: '\Drupal\content_readability\Controller\ContentReadabilityAjaxController::updateScore'
+  requirements:
+    _permission: 'access content'

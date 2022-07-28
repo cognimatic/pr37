@@ -1,0 +1,23 @@
+.content-readability-container {
+  position: relative;
+}
+
+.content-readability-score {
+  font-size: 3vw;
+  text-align: center;
+  line-height: initial;
+  font-weight: bold;
+}
+.content-readability-help {
+  position: absolute;
+  right: 1.25em;
+  top: 0.85em;
+}
+
+.content-readability-help img {
+  width: 20px;
+}
+
+.form-item-content-readability-profiles label{
+  display: inline-block;
+}

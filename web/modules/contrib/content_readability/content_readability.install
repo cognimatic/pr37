@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * General install file for module updates.
+ */
+
+/**
+ * Add new config `content_readability_profiles` - General placeholder item.
+ * Remove old config `content_readability_threshold`.
+ */
+function content_readability_update_8001() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('content_readability.settings');
+
+  $config->clear("content_readability_threshold");
+
+  $item = [
+    'general' =>
+    [
+      "name" => "General",
+      "grade" => 6,
+      "weight" => 0,
+      "machine_name" => "general",
+    ],
+  ];
+  $config->set('content_readability_profiles', $item);
+
+  $config->save(TRUE);
+}
+
+/**
+ * Add new config `content_readablity_visibility`.
+ */
+function content_readability_update_8002() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('content_readability.settings');
+
+  if (!$config->get('content_readability_visibility')) {
+    $contentTypes = array_keys(\Drupal::service('entity_type.manager')->getStorage('node_type')->loadMultiple());
+    $visibilityStatus = [];
+    foreach ($contentTypes as $contentType) {
+      $visibilityStatus[$contentType] = 0;
+    }
+    $config->set('content_readability_visibility', $visibilityStatus);
+    $config->save(TRUE);
+  }
+}

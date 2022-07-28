@@ -1,0 +1,145 @@
+{
+    "name": "localgovdrupal/localgov-project",
+    "description": "Project template for the LocalGov Drupal distribution.",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://github.com/localgovdrupal/localgov_project",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "composer/installers": "^1.10",
+        "cweagans/composer-patches": "^1.6",
+        "drupal/autocomplete_deluxe": "^2.0",
+        "drupal/backup_migrate": "^5.0",
+        "drupal/ckeditor_browser_context_menu": "^1.2",
+        "drupal/coffee": "^1.2",
+        "drupal/content_readability": "^1.0@alpha",
+        "drupal/core-composer-scaffold": "^9.1",
+        "drupal/core-recommended": "^9.1",
+        "drupal/db_maintenance": "^2.0",
+        "drupal/editor_advanced_link": "^2.0",
+        "drupal/editoria11y": "^1.0",
+        "drupal/environment_indicator": "^4.0",
+        "drupal/extlink": "^1.6",
+        "drupal/filefield_sources": "^1.0@alpha",
+        "drupal/fpa": "^3.0",
+        "drupal/honeypot": "^2.1",
+        "drupal/httpswww": "^2.0",
+        "drupal/image_effects": "^3.3",
+        "drupal/mail_login": "^2.6",
+        "drupal/mailsystem": "^4.4",
+        "drupal/memcache": "^2.3",
+        "drupal/module_filter": "^3.2",
+        "drupal/prod_check": "^1.0@alpha",
+        "drupal/r4032login": "^2.2",
+        "drupal/rabbit_hole": "^1.0@beta",
+        "drupal/rabbit_hole_href": "^2.0",
+        "drupal/responsive_favicons": "^1.7",
+        "drupal/search404": "^2.0",
+        "drupal/seckit": "^2.0",
+        "drupal/seo_checklist": "^5.1",
+        "drupal/simplify": "^1.2",
+        "drupal/site_audit": "^3.0@RC",
+        "drupal/styleguide": "^2.0@beta",
+        "drupal/svg_image": "^1.16",
+        "drupal/type_tray": "^1.1",
+        "drupal/unused_modules": "^1.3",
+        "drupal/views_bulk_operations": "^4.1",
+        "drupal/webform": "^6.1",
+        "drupal/yoast_seo": "^1.7",
+        "localgovdrupal/localgov": "^2.0",
+        "localgovdrupal/localgov_multilingual": "1.x-dev"
+    },
+    "require-dev": {
+        "brianium/paratest": "^6.0",
+        "drupal/bugherd": "^1.0@beta",
+        "drupal/coder": "^8.3",
+        "drupal/config_inspector": "^1.3",
+        "drupal/core-dev": "^9.1",
+        "drupal/delete_all": "^2.0",
+        "drupal/devel": "^4.1",
+        "drupal/devel_entity_updates": "^3.0",
+        "drupal/entity_clone": "^1.0@beta",
+        "drupal/entity_relationship_diagram": "1.x-dev@dev",
+        "drupal/shield": "^1.4",
+        "drupal/userswitch": "^1.9",
+        "kint-php/kint": "^4.1",
+        "mglaman/phpstan-drupal": "^1.0",
+        "phpspec/prophecy-phpunit": "^2",
+        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "bin-dir": "bin/",
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "drupal/core-composer-scaffold": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "extra": {
+        "enable-patching": true,
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "web/"
+            },
+            "file-mapping": {
+                "[web-root]/sites/default/settings.php": {
+                    "mode": "replace",
+                    "path": "assets/composer/settings.php",
+                    "overwrite": false
+                },
+                "[web-root]/sites/development.services.yml": "assets/composer/development.services.yml"
+            }
+        },
+        "installer-paths": {
+            "web/core": ["type:drupal-core"],
+            "web/libraries/{$name}": ["type:drupal-library"],
+            "web/modules/contrib/{$name}": ["type:drupal-module"],
+            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "web/themes/contrib/{$name}": ["type:drupal-theme"],
+            "drush/Commands/contrib/{$name}": ["type:drupal-drush"],
+            "web/modules/custom/{$name}": ["type:drupal-custom-module"],
+            "web/themes/custom/{$name}": ["type:drupal-custom-theme"]
+        },
+        "patches": {
+            "drupal/autocomplete_deluxe": {
+                "Multiple reference terms fails 3053986": "https://www.drupal.org/files/issues/2021-05-25/3053986-6.patch"
+            },
+			"drupal/entity_usage": {
+				"Move entity_usage_post_update_regenerate_2x() into entity_usage.post_update.php 3291423": "https://git.drupalcode.org/project/entity_usage/-/merge_requests/22.patch"
+			},
+            "drupal/userswitch": {
+                "Add an entity operation 3087885": "https://www.drupal.org/files/issues/2022-01-30/add-an-entity-operation-in-addition-to-user-list-3087885-29.patch"
+            }
+        },
+        "enable-patching": true,
+		 
+        "drupal-core-project-message": {
+            "post-create-project-cmd-message": [
+                "<bg=blue;fg=white>                                                                  </>",
+                "<bg=blue;fg=white>  Congratulations, you’ve installed the LocalGov Drupal codebase  </>",
+                "<bg=blue;fg=white>                                                                  </>",
+                "",
+                "<bg=yellow;fg=black>Next steps</>:",
+
+                "  * Install the site: https://www.drupal.org/docs/8/install",
+                "  * Remove the plugin that prints this message:",
+                "      composer remove drupal/core-project-message"
+            ]
+        }
+
+    }
+}

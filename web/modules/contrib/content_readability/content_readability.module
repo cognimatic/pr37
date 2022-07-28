@@ -1,0 +1,345 @@
+<?php
+
+/**
+ * @file
+ * Contains content_readability.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use DaveChild\TextStatistics\TextStatistics;
+
+/**
+ * Implements hook_help().
+ */
+function content_readability_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the content_readability module.
+    case 'help.page.content_readability':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Displays Readability of a node&#039;&#039;s body field.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function content_readability_theme() {
+  return [
+    'content_readability' => [
+      'variables' => ['score' => NULL],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_page_attachments().
+ *
+ * Add our javascript to the admin theme.
+ */
+function content_readability_page_attachments(array &$attachments) {
+  $theme = \Drupal::theme()->getActiveTheme()->getName();
+  $adminTheme = \Drupal::config('system.theme')->get('admin');
+
+  if ($theme == $adminTheme) {
+    $attachments['#attached']['library'][] = 'content_readability/textStatistics';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Target only node forms for now.
+ * Alters the form to place our new readability content on items with
+ * body field.
+ */
+function content_readability_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  if (!isset($form['body'])) {
+    return;
+  }
+  else {
+    // Get current bundle.
+    $bundle = $form_state->getFormObject()->getEntity()->bundle();
+    // Get list of allowed bundle.
+    $allowed_bundles = \Drupal::config('content_readability.settings')->get('content_readability_visibility');
+
+    // If the current bundle is not enabled return.
+    if ($allowed_bundles[$bundle] === 0) {
+      return;
+    }
+  }
+
+  $profiles = \Drupal::config('content_readability.settings')->get('content_readability_profiles');
+  usort($profiles, function ($item1, $item2) {
+    return $item1['weight'] <=> $item2['weight'];
+  });
+
+  // Put profiles into an array a select list can use.
+  $options = [];
+  foreach ($profiles as $profile) {
+    $options[$profile['grade']] = $profile['name'];
+  }
+
+  $textStatistics = new TextStatistics();
+  $body = $form['body']['widget'][0]['#default_value'];
+  $body = $body ? $body : '';
+  $contentReadabilityHelp = \Drupal::config('content_readability.settings')->get('content_readability_help');
+  $fleschKincaidGradeLevel = $textStatistics->fleschKincaidGradeLevel($body);
+  $contentReadabilityScore = get_content_readability_score($fleschKincaidGradeLevel, $profiles[0]['grade']);
+
+  $renderable = [
+    '#theme' => 'content_readability',
+    '#score' => [
+      "value" => $contentReadabilityScore,
+      "help" => $contentReadabilityHelp,
+    ],
+  ];
+
+  $rendered = \Drupal::service('renderer')->render($renderable);
+
+  // Check for body field on node ??
+  // If has add our field.
+  $form['content_readability'] = [
+    '#type' => 'details',
+    '#group' => isset($form['additional_settings']) ? 'additional_settings' : 'advanced',
+    '#title' => t('Readability Score'),
+    '#weight' => -99,
+    '#open' => 1,
+    '#attributes' => [
+      'class' => ['content-readability-container'],
+    ],
+  ];
+
+  $form['content_readability']['score'] = [
+    '#markup' => $rendered,
+  ];
+
+  $form['content_readability']['content_readability_profiles'] = [
+    '#type' => 'select',
+    '#title' => t('Select Profile:'),
+    '#default_value' => $profiles[0]['grade'],
+    '#options' => $options,
+    '#attributes' => [
+      'class' => ['content-readability-profiles'],
+    ],
+  ];
+
+  $form['content_readability']['scoring'] = [
+    '#type' => 'details',
+    '#group' => 'content_readability',
+    '#title' => t('Scoring Information'),
+    '#open' => 0,
+  ];
+
+  $form['content_readability']['scoring']['grade'] = [
+    '#type' => 'table',
+    '#header' => [
+      t('Scores'),
+      t('Value'),
+    ],
+  ];
+
+  $form['content_readability']['scoring']['grade'][0]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch%E2%80%93Kincaid_grade_level" target="_blank">Flesch Kincaid Grade Level<a/>'),
+  ];
+
+  $form['content_readability']['scoring']['grade'][0]['score'] = [
+    '#markup' => '<span id="fleschKincaidGradeLevel">' . $fleschKincaidGradeLevel . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['grade'][1]['name'] = [
+    '#markup' => t('Average Syllables Per Word'),
+  ];
+
+  $form['content_readability']['scoring']['grade'][1]['score'] = [
+    '#markup' => '<span id="averageSyllablesPerWord">' . round($textStatistics->averageSyllablesPerWord($body), 2) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['grade'][2]['name'] = [
+    '#markup' => t('Average Words Per Sentence'),
+  ];
+
+  $form['content_readability']['scoring']['grade'][2]['score'] = [
+    '#markup' => '<span id="averageWordsPerSentence">' . round($textStatistics->averageWordsPerSentence($body), 2) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal'] = [
+    '#type' => 'details',
+    '#group' => 'scoring',
+    '#title' => t('Additional Information'),
+    '#description' => t('Other Scoring systems and text metadata.'),
+    '#open' => 0,
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'] = [
+    '#type' => 'table',
+    '#header' => [
+      t('Additional Grade Level Scores'),
+      t('Value'),
+    ],
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][0]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/Coleman%E2%80%93Liau_index" target="_blank">Coleman-Liau Index<a/>'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][0]['score'] = [
+    '#markup' => '<span id="colemanLiauIndex">' . $textStatistics->colemanLiauIndex($body) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][1]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/SMOG" target="_blank">SMOG Index</a>'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][1]['score'] = [
+    '#markup' => '<span id="smogIndex">' . $textStatistics->smogIndex($body) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][2]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/Automated_readability_index" target="_blank">Automated Readability Index</a>'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][2]['score'] = [
+    '#markup' => '<span id="automatedReadabilityIndex">' . $textStatistics->automatedReadabilityIndex($body) . '</span>',
+  ];
+  $form['content_readability']['scoring']['additonal']['scores'][3]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/Gunning_fog_index" target="_blank">Gunning Fog Score</a>'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][3]['score'] = [
+    '#markup' => '<span id="gunningFogScore">' . $textStatistics->gunningFogScore($body) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][4]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/Dale%E2%80%93Chall_readability_formula" target="_blank">Dale-Chall</a>'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][4]['score'] = [
+    '#markup' => '<span id="daleChallReadabilityScore">' . $textStatistics->daleChallReadabilityScore($body) . '</span>',
+  ];
+  $form['content_readability']['scoring']['additonal']['scores'][5]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/Spache_readability_formula" target="_blank">Spache</a>'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['scores'][5]['score'] = [
+    '#markup' => '<span id="spacheReadabilityScore">' . $textStatistics->spacheReadabilityScore($body) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal']['information'] = [
+    '#type' => 'table',
+    '#header' => [
+      t('Additional Information'),
+      t('Value'),
+    ],
+  ];
+  $form['content_readability']['scoring']['additonal']['information'][0]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests#Flesch_reading_ease" target="_blank">Flesch Kincaid Reading Ease</a>'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['information'][0]['score'] = [
+    '#markup' => '<span id="fleschKincaidReadingEase">' . $textStatistics->fleschKincaidReadingEase($body) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal']['information'][1]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/Dale%E2%80%93Chall_readability_formula" target="_blank">Dale-Chall Difficult Words Count</a>'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['information'][1]['score'] = [
+    '#markup' => '<span id="daleChallDifficultWordCount">' . $textStatistics->daleChallDifficultWordCount($body) . '</span>',
+  ];
+  $form['content_readability']['scoring']['additonal']['information'][2]['name'] = [
+    '#markup' => t('<a href="https://en.wikipedia.org/wiki/Spache_readability_formula" target="_blank">Spache Difficult Words Count</a>'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['information'][2]['score'] = [
+    '#markup' => '<span id="spacheDifficultWordCount">' . $textStatistics->spacheDifficultWordCount($body) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal']['text_statistics'] = [
+    '#type' => 'table',
+    '#header' => [
+      t('Text Statistics'),
+      t('Value'),
+    ],
+  ];
+  $form['content_readability']['scoring']['additonal']['text_statistics'][0]['name'] = [
+    '#markup' => t('Total Letters'),
+  ];
+  $form['content_readability']['scoring']['additonal']['text_statistics'][0]['score'] = [
+    '#markup' => '<span id="letterCount">' . $textStatistics->letterCount($body) . '</span>',
+  ];
+  $form['content_readability']['scoring']['additonal']['text_statistics'][1]['name'] = [
+    '#markup' => t('Word Count'),
+  ];
+
+  $form['content_readability']['scoring']['additonal']['text_statistics'][1]['score'] = [
+    '#markup' => '<span id="wordCount">' . $textStatistics->wordCount($body) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal']['text_statistics'][2]['name'] = [
+    '#markup' => t('Total Syllables'),
+  ];
+  $form['content_readability']['scoring']['additonal']['text_statistics'][2]['score'] = [
+    '#markup' => '<span id="totalSyllables">' . $textStatistics->totalSyllables($body) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal']['text_statistics'][3]['name'] = [
+    '#markup' => t('Sentence Count'),
+  ];
+  $form['content_readability']['scoring']['additonal']['text_statistics'][3]['score'] = [
+    '#markup' => '<span id="sentenceCount">' . $textStatistics->sentenceCount($body) . '</span>',
+  ];
+
+  $form['content_readability']['scoring']['additonal']['text_statistics'][4]['name'] = [
+    '#markup' => t('Word > 3 Syllables'),
+  ];
+  $form['content_readability']['scoring']['additonal']['text_statistics'][4]['score'] = [
+    '#markup' => '<span id="wordsWithThreeSyllables">' . $textStatistics->wordsWithThreeSyllables($body) . '</span>',
+  ];
+  $form['content_readability']['scoring']['additonal']['text_statistics'][5]['name'] = [
+    '#markup' => t('Percent of Words with > 3 Syllables'),
+  ];
+  $form['content_readability']['scoring']['additonal']['text_statistics'][5]['score'] = [
+    '#markup' => '<span id="percentageWordsWithThreeSyllables">' . round($textStatistics->percentageWordsWithThreeSyllables($body), 2) . '</span>',
+  ];
+
+}
+
+/**
+ * Takes in a fleschKincaidGradeLevel and determines Score.
+ *
+ * Loads the Target Threshold Grade Level.  Takes the absolute difference
+ * from the actual grade level.  Returns the deviation grade level score.
+ */
+function get_content_readability_score($level, $target) {
+  $diff = round($level - $target);
+  $score = t("F");
+
+  switch ($diff) {
+    case ($diff <= 0):
+      $score = t("A");
+      break;
+
+    case 1:
+      $score = t("B");
+      break;
+
+    case 2:
+      $score = t("C");
+      break;
+
+    case 3:
+      $score = t("D");
+      break;
+
+    default:
+      $score = t("F");
+  }
+
+  return $score;
+}

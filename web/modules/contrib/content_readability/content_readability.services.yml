@@ -1,0 +1,9 @@
+services:
+  content_readability.admin:
+    class: Drupal\content_readability\Form\ContentReadabilityAdminSettingsForm
+    arguments:
+      - '@config.factory'
+  content_readability.form:
+    class: Drupal\content_readability\Form\ContentReadabilityForm
+    arguments:
+      - '@config.factory'

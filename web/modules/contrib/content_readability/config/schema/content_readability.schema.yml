@@ -1,0 +1,14 @@
+# Schema for the configuration of content readability
+content_readability.config:
+  type: config_object
+  label: 'Content Readability Settings'
+  mapping:
+    content_readability_profiles:
+      type: mapping
+      label: 'Content Readability Profiles'
+    content_readability_help:
+      type: string
+      label: 'Content Readability Help'
+    content_readability_visibility:
+      type: mapping
+      label: 'Content Readability Visibility'
