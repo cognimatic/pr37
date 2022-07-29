@@ -8,5 +8,6 @@ drupalTheme: 'lgd_abc',
 	localgov_scarfolk: { title: "LocalGov Scarfolk" },
 	lgd_abc: { title: "Local Gov Argyll and Bute" },
     gin: { title: 'Gin' },
+	claro: { title: 'Claro'},
   },
 };

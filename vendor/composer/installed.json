@@ -4095,17 +4095,17 @@
         },
         {
             "name": "drupal/core",
-            "version": "9.4.3",
-            "version_normalized": "9.4.3.0",
+            "version": "9.4.4",
+            "version_normalized": "9.4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "7b1a403c093c7abc89ef3df1a6b05bdb19b3ffad"
+                "reference": "7522be4ba7f6c1f0b09b7fb37a657d7a50b36f44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/7b1a403c093c7abc89ef3df1a6b05bdb19b3ffad",
-                "reference": "7b1a403c093c7abc89ef3df1a6b05bdb19b3ffad",
+                "url": "https://api.github.com/repos/drupal/core/zipball/7522be4ba7f6c1f0b09b7fb37a657d7a50b36f44",
+                "reference": "7522be4ba7f6c1f0b09b7fb37a657d7a50b36f44",
                 "shasum": ""
             },
             "require": {
@@ -4158,125 +4158,7 @@
                 "drush/drush": "<8.1.10",
                 "symfony/http-foundation": "4.4.42"
             },
-            "replace": {
-                "drupal/action": "self.version",
-                "drupal/aggregator": "self.version",
-                "drupal/automated_cron": "self.version",
-                "drupal/ban": "self.version",
-                "drupal/bartik": "self.version",
-                "drupal/basic_auth": "self.version",
-                "drupal/big_pipe": "self.version",
-                "drupal/block": "self.version",
-                "drupal/block_content": "self.version",
-                "drupal/book": "self.version",
-                "drupal/breakpoint": "self.version",
-                "drupal/ckeditor": "self.version",
-                "drupal/ckeditor5": "self.version",
-                "drupal/claro": "self.version",
-                "drupal/classy": "self.version",
-                "drupal/color": "self.version",
-                "drupal/comment": "self.version",
-                "drupal/config": "self.version",
-                "drupal/config_translation": "self.version",
-                "drupal/contact": "self.version",
-                "drupal/content_moderation": "self.version",
-                "drupal/content_translation": "self.version",
-                "drupal/contextual": "self.version",
-                "drupal/core-annotation": "self.version",
-                "drupal/core-assertion": "self.version",
-                "drupal/core-bridge": "self.version",
-                "drupal/core-class-finder": "self.version",
-                "drupal/core-datetime": "self.version",
-                "drupal/core-dependency-injection": "self.version",
-                "drupal/core-diff": "self.version",
-                "drupal/core-discovery": "self.version",
-                "drupal/core-event-dispatcher": "self.version",
-                "drupal/core-file-cache": "self.version",
-                "drupal/core-file-security": "self.version",
-                "drupal/core-filesystem": "self.version",
-                "drupal/core-front-matter": "self.version",
-                "drupal/core-gettext": "self.version",
-                "drupal/core-graph": "self.version",
-                "drupal/core-http-foundation": "self.version",
-                "drupal/core-php-storage": "self.version",
-                "drupal/core-plugin": "self.version",
-                "drupal/core-proxy-builder": "self.version",
-                "drupal/core-render": "self.version",
-                "drupal/core-serialization": "self.version",
-                "drupal/core-transliteration": "self.version",
-                "drupal/core-utility": "self.version",
-                "drupal/core-uuid": "self.version",
-                "drupal/core-version": "self.version",
-                "drupal/datetime": "self.version",
-                "drupal/datetime_range": "self.version",
-                "drupal/dblog": "self.version",
-                "drupal/dynamic_page_cache": "self.version",
-                "drupal/editor": "self.version",
-                "drupal/entity_reference": "self.version",
-                "drupal/field": "self.version",
-                "drupal/field_layout": "self.version",
-                "drupal/field_ui": "self.version",
-                "drupal/file": "self.version",
-                "drupal/filter": "self.version",
-                "drupal/forum": "self.version",
-                "drupal/hal": "self.version",
-                "drupal/help": "self.version",
-                "drupal/help_topics": "self.version",
-                "drupal/history": "self.version",
-                "drupal/image": "self.version",
-                "drupal/inline_form_errors": "self.version",
-                "drupal/jsonapi": "self.version",
-                "drupal/language": "self.version",
-                "drupal/layout_builder": "self.version",
-                "drupal/layout_discovery": "self.version",
-                "drupal/link": "self.version",
-                "drupal/locale": "self.version",
-                "drupal/media": "self.version",
-                "drupal/media_library": "self.version",
-                "drupal/menu_link_content": "self.version",
-                "drupal/menu_ui": "self.version",
-                "drupal/migrate": "self.version",
-                "drupal/migrate_drupal": "self.version",
-                "drupal/migrate_drupal_multilingual": "self.version",
-                "drupal/migrate_drupal_ui": "self.version",
-                "drupal/minimal": "self.version",
-                "drupal/mysql": "self.version",
-                "drupal/node": "self.version",
-                "drupal/olivero": "self.version",
-                "drupal/options": "self.version",
-                "drupal/page_cache": "self.version",
-                "drupal/path": "self.version",
-                "drupal/path_alias": "self.version",
-                "drupal/pgsql": "self.version",
-                "drupal/quickedit": "self.version",
-                "drupal/rdf": "self.version",
-                "drupal/responsive_image": "self.version",
-                "drupal/rest": "self.version",
-                "drupal/search": "self.version",
-                "drupal/serialization": "self.version",
-                "drupal/settings_tray": "self.version",
-                "drupal/seven": "self.version",
-                "drupal/shortcut": "self.version",
-                "drupal/sqlite": "self.version",
-                "drupal/standard": "self.version",
-                "drupal/stark": "self.version",
-                "drupal/statistics": "self.version",
-                "drupal/syslog": "self.version",
-                "drupal/system": "self.version",
-                "drupal/taxonomy": "self.version",
-                "drupal/telephone": "self.version",
-                "drupal/text": "self.version",
-                "drupal/toolbar": "self.version",
-                "drupal/tour": "self.version",
-                "drupal/tracker": "self.version",
-                "drupal/update": "self.version",
-                "drupal/user": "self.version",
-                "drupal/views": "self.version",
-                "drupal/views_ui": "self.version",
-                "drupal/workflows": "self.version",
-                "drupal/workspaces": "self.version"
-            },
-            "time": "2022-07-20T15:11:38+00:00",
+            "time": "2022-07-28T19:27:35+00:00",
             "type": "drupal-core",
             "extra": {
                 "drupal-scaffold": {
@@ -4354,14 +4236,14 @@
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
             "support": {
-                "source": "https://github.com/drupal/core/tree/9.4.3"
+                "source": "https://github.com/drupal/core/tree/9.4.4"
             },
             "install-path": "../../web/core"
         },
         {
             "name": "drupal/core-composer-scaffold",
-            "version": "9.4.3",
-            "version_normalized": "9.4.3.0",
+            "version": "9.4.4",
+            "version_normalized": "9.4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-composer-scaffold.git",
@@ -4407,14 +4289,14 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-composer-scaffold/tree/9.4.3"
+                "source": "https://github.com/drupal/core-composer-scaffold/tree/9.4.4"
             },
             "install-path": "../drupal/core-composer-scaffold"
         },
         {
             "name": "drupal/core-dev",
-            "version": "9.4.3",
-            "version_normalized": "9.4.3.0",
+            "version": "9.4.4",
+            "version_normalized": "9.4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-dev.git",
@@ -4459,23 +4341,23 @@
             ],
             "description": "require-dev dependencies from drupal/drupal; use in addition to drupal/core-recommended to run tests from drupal/core.",
             "support": {
-                "source": "https://github.com/drupal/core-dev/tree/9.4.3"
+                "source": "https://github.com/drupal/core-dev/tree/9.4.4"
             },
             "install-path": null
         },
         {
             "name": "drupal/core-recommended",
-            "version": "9.4.3",
-            "version_normalized": "9.4.3.0",
+            "version": "9.4.4",
+            "version_normalized": "9.4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-recommended.git",
-                "reference": "ff8662af0a5963a88ea856e9786e17a51f8e640c"
+                "reference": "e0cb3cb6aac8ff9f23f2d1f37e69626e42d03781"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/ff8662af0a5963a88ea856e9786e17a51f8e640c",
-                "reference": "ff8662af0a5963a88ea856e9786e17a51f8e640c",
+                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/e0cb3cb6aac8ff9f23f2d1f37e69626e42d03781",
+                "reference": "e0cb3cb6aac8ff9f23f2d1f37e69626e42d03781",
                 "shasum": ""
             },
             "require": {
@@ -4484,12 +4366,12 @@
                 "doctrine/annotations": "~1.13.2",
                 "doctrine/lexer": "~1.2.3",
                 "doctrine/reflection": "~1.2.3",
-                "drupal/core": "9.4.3",
+                "drupal/core": "9.4.4",
                 "egulias/email-validator": "~3.2",
                 "guzzlehttp/guzzle": "~6.5.8",
                 "guzzlehttp/promises": "~1.5.1",
                 "guzzlehttp/psr7": "~1.9.0",
-                "laminas/laminas-diactoros": "~2.11.0",
+                "laminas/laminas-diactoros": "~2.11.1",
                 "laminas/laminas-escaper": "~2.9.0",
                 "laminas/laminas-feed": "~2.17.0",
                 "laminas/laminas-stdlib": "~3.7.1",
@@ -4539,7 +4421,7 @@
             "conflict": {
                 "webflo/drupal-core-strict": "*"
             },
-            "time": "2022-07-20T15:11:38+00:00",
+            "time": "2022-07-28T19:27:35+00:00",
             "type": "metapackage",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4547,7 +4429,7 @@
             ],
             "description": "Core and its dependencies with known-compatible minor versions. Require this project INSTEAD OF drupal/core.",
             "support": {
-                "source": "https://github.com/drupal/core-recommended/tree/9.4.3"
+                "source": "https://github.com/drupal/core-recommended/tree/9.4.4"
             },
             "install-path": null
         },
@@ -4613,27 +4495,27 @@
         },
         {
             "name": "drupal/ctools",
-            "version": "4.0.0",
-            "version_normalized": "4.0.0.0",
+            "version": "4.0.1",
+            "version_normalized": "4.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/ctools.git",
-                "reference": "4.0.0"
+                "reference": "4.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/ctools-4.0.0.zip",
-                "reference": "4.0.0",
-                "shasum": "1401d8ea364c0fbaf36b09e990c8a7a570e8e800"
+                "url": "https://ftp.drupal.org/files/projects/ctools-4.0.1.zip",
+                "reference": "4.0.1",
+                "shasum": "ac2373c13efd7d95da7230bd5a6627f16a6a5b6e"
             },
             "require": {
-                "drupal/core": "^9.2 || ^10"
+                "drupal/core": "^9.3 || ^10"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "4.0.0",
-                    "datestamp": "1656635481",
+                    "version": "4.0.1",
+                    "datestamp": "1659069125",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -6747,18 +6629,18 @@
         },
         {
             "name": "drupal/geofield",
-            "version": "1.43.0",
-            "version_normalized": "1.43.0.0",
+            "version": "1.44.0",
+            "version_normalized": "1.44.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/geofield.git",
-                "reference": "8.x-1.43"
+                "reference": "8.x-1.44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.43.zip",
-                "reference": "8.x-1.43",
-                "shasum": "2b10564b7419e9647e92589f65d4b1ff861f40bd"
+                "url": "https://ftp.drupal.org/files/projects/geofield-8.x-1.44.zip",
+                "reference": "8.x-1.44",
+                "shasum": "a41243a7cd0b0c20645b8ecb4773f37e72048f34"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9 || ^10",
@@ -6767,8 +6649,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.43",
-                    "datestamp": "1658960151",
+                    "version": "8.x-1.44",
+                    "datestamp": "1658999752",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7548,18 +7430,18 @@
         },
         {
             "name": "drupal/leaflet",
-            "version": "2.2.4",
-            "version_normalized": "2.2.4.0",
+            "version": "2.2.5",
+            "version_normalized": "2.2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/leaflet.git",
-                "reference": "2.2.4"
+                "reference": "2.2.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/leaflet-2.2.4.zip",
-                "reference": "2.2.4",
-                "shasum": "e9ecf71ce856a40eccee28b6186813ee1a0601e5"
+                "url": "https://ftp.drupal.org/files/projects/leaflet-2.2.5.zip",
+                "reference": "2.2.5",
+                "shasum": "52e1fc7de50a5d9c0bf08f634f252ce10179c5a6"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9 || ^10",
@@ -7568,8 +7450,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.2.4",
-                    "datestamp": "1658581690",
+                    "version": "2.2.5",
+                    "datestamp": "1659018892",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -12258,17 +12140,17 @@
         },
         {
             "name": "localgovdrupal/localgov_directories",
-            "version": "2.3.0",
-            "version_normalized": "2.3.0.0",
+            "version": "2.3.1",
+            "version_normalized": "2.3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/localgovdrupal/localgov_directories.git",
-                "reference": "90b00f264fa3a6bf010c7cedad226deabe158447"
+                "reference": "f2e632504bd905164e090ee4bb44c92cbd335de9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/localgovdrupal/localgov_directories/zipball/90b00f264fa3a6bf010c7cedad226deabe158447",
-                "reference": "90b00f264fa3a6bf010c7cedad226deabe158447",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_directories/zipball/f2e632504bd905164e090ee4bb44c92cbd335de9",
+                "reference": "f2e632504bd905164e090ee4bb44c92cbd335de9",
                 "shasum": ""
             },
             "require": {
@@ -12288,7 +12170,7 @@
                 "localgovdrupal/localgov_openreferral": "Enables Open Referral output of Directories",
                 "localgovdrupal/localgov_paragraphs": "For Directory Promo Page content type in Directories"
             },
-            "time": "2022-07-25T13:21:17+00:00",
+            "time": "2022-07-28T14:37:14+00:00",
             "type": "drupal-module",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -12299,7 +12181,7 @@
             "homepage": "https://github.com/localgovdrupal/localgov_directories",
             "support": {
                 "issues": "https://github.com/localgovdrupal/localgov_directories/issues",
-                "source": "https://github.com/localgovdrupal/localgov_directories/tree/2.3.0"
+                "source": "https://github.com/localgovdrupal/localgov_directories/tree/2.3.1"
             },
             "install-path": "../../web/modules/contrib/localgov_directories"
         },
@@ -12709,17 +12591,17 @@
         },
         {
             "name": "localgovdrupal/localgov_search",
-            "version": "1.1.0",
-            "version_normalized": "1.1.0.0",
+            "version": "1.1.1",
+            "version_normalized": "1.1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/localgovdrupal/localgov_search.git",
-                "reference": "6c3991b0bca778f11ca138787ae0293eebfe70c3"
+                "reference": "1cd09a6be470e26267ec9fa9f261f24f2e22799e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/localgovdrupal/localgov_search/zipball/6c3991b0bca778f11ca138787ae0293eebfe70c3",
-                "reference": "6c3991b0bca778f11ca138787ae0293eebfe70c3",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_search/zipball/1cd09a6be470e26267ec9fa9f261f24f2e22799e",
+                "reference": "1cd09a6be470e26267ec9fa9f261f24f2e22799e",
                 "shasum": ""
             },
             "require": {
@@ -12731,7 +12613,7 @@
             "suggest": {
                 "drupal/search_api_solr": "If solr integration, rather that database search, is required."
             },
-            "time": "2022-07-25T13:37:49+00:00",
+            "time": "2022-07-28T14:34:51+00:00",
             "type": "drupal-module",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -12742,7 +12624,7 @@
             "homepage": "https://github.com/localgovdrupal/localgov_search",
             "support": {
                 "issues": "https://github.com/localgovdrupal/localgov_search/issues",
-                "source": "https://github.com/localgovdrupal/localgov_search/tree/1.1.0"
+                "source": "https://github.com/localgovdrupal/localgov_search/tree/1.1.1"
             },
             "install-path": "../../web/modules/contrib/localgov_search"
         },
@@ -15551,17 +15433,17 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.7",
-            "version_normalized": "0.11.7.0",
+            "version": "v0.11.8",
+            "version_normalized": "0.11.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "77fc7270031fbc28f9a7bea31385da5c4855cb7a"
+                "reference": "f455acf3645262ae389b10e9beba0c358aa6994e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/77fc7270031fbc28f9a7bea31385da5c4855cb7a",
-                "reference": "77fc7270031fbc28f9a7bea31385da5c4855cb7a",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/f455acf3645262ae389b10e9beba0c358aa6994e",
+                "reference": "f455acf3645262ae389b10e9beba0c358aa6994e",
                 "shasum": ""
             },
             "require": {
@@ -15584,7 +15466,7 @@
                 "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
                 "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history."
             },
-            "time": "2022-07-07T13:49:11+00:00",
+            "time": "2022-07-28T14:25:11+00:00",
             "bin": [
                 "bin/psysh"
             ],
@@ -15624,7 +15506,7 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.7"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.8"
             },
             "install-path": "../psy/psysh"
         },
