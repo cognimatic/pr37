@@ -535,6 +535,24 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/cl_components' => array(
+            'pretty_version' => '1.0.0-beta7',
+            'version' => '1.0.0.0-beta7',
+            'reference' => '1.0.0-beta7',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/cl_components',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'drupal/cl_server' => array(
+            'pretty_version' => '1.0.0-beta5',
+            'version' => '1.0.0.0-beta5',
+            'reference' => '1.0.0-beta5',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/cl_server',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/claro' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -2167,7 +2185,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../justinrainbow/json-schema',
             'aliases' => array(),
-            'dev_requirement' => true,
+            'dev_requirement' => false,
         ),
         'kint-php/kint' => array(
             'pretty_version' => '4.1.3',

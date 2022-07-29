@@ -16,6 +16,8 @@
         "drupal/autocomplete_deluxe": "^2.0",
         "drupal/backup_migrate": "^5.0",
         "drupal/ckeditor_browser_context_menu": "^1.2",
+        "drupal/cl_components": "^1.0@beta",
+        "drupal/cl_server": "^1.0@beta",
         "drupal/coffee": "^1.2",
         "drupal/content_readability": "^1.0@alpha",
         "drupal/core-composer-scaffold": "^9.1",

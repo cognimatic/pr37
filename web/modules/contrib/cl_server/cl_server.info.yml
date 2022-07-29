@@ -1,0 +1,12 @@
+name: 'Component Libraries: Server'
+type: module
+description: Providers server rendering for CL Components
+core_version_requirement: ^9.3
+dependencies:
+  - cl_components:cl_components
+  - drupal:serialization
+
+# Information added by Drupal.org packaging script on 2022-07-23
+version: '1.0.0-beta5'
+project: 'cl_server'
+datestamp: 1658608835
