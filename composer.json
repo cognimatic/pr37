@@ -46,6 +46,7 @@
         "drupal/seo_checklist": "^5.1",
         "drupal/simplify": "^1.2",
         "drupal/site_audit": "^3.0@RC",
+        "drupal/smtp": "^1.0",
         "drupal/styleguide": "^2.0@beta",
         "drupal/svg_image": "^1.16",
         "drupal/type_tray": "^1.1",

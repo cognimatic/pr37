@@ -156,6 +156,7 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'PNX\\NestedSet\\' => 14,
             'PHPStan\\PhpDocParser\\' => 21,
             'PHPStan\\' => 8,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
         array (
@@ -536,6 +537,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         'PHPStan\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpstan/phpstan-deprecation-rules/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Masterminds\\' => 
         array (
