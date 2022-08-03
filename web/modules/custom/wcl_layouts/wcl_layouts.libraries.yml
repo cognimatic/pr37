@@ -1,0 +1,5 @@
+wcl-layouts:
+  version: VERSION
+  css:
+    base:
+      css/wcl-layouts.css: {}

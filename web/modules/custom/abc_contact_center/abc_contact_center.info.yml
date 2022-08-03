@@ -1,0 +1,6 @@
+name: abc_contact_center
+type: module
+description: Display contact center status information in blocks
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9

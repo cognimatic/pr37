@@ -39,15 +39,19 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         '2f69d3914119f042cca9e44442d5ce95' => __DIR__ . '/../..' . '/web/core/includes/bootstrap.inc',
         '6db5533840cb1ae1bc049452845aa88e' => __DIR__ . '/../..' . '/web/core/includes/guzzle_php81_shim.php',
+        '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
+        '5abda994d126976858eb25d2546ee3c9' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/_autoload_modules.php',
         '9c67151ae59aff4788964ce8eb2a0f43' => __DIR__ . '/..' . '/clue/stream-filter/src/functions_include.php',
         '8cff32064859f4559445b89279f3199c' => __DIR__ . '/..' . '/php-http/message/src/filters.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        '029bffbd721800038bcfaf4916fa491c' => __DIR__ . '/..' . '/mtownsend/xml-to-array/src/helpers.php',
         'fbeead2280a8f3911a1fe6dd034f7d5e' => __DIR__ . '/..' . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvancedInterface.php',
         '96f8d8288528d52059397cad6ec61f17' => __DIR__ . '/..' . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvanced.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
+        '9e4824c5afbdc1482b6025ce3d4dfde8' => __DIR__ . '/..' . '/league/csv/src/functions_include.php',
         '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
@@ -78,6 +82,7 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         ),
         'W' => 
         array (
+            'WhiteHat101\\Crypt\\' => 18,
             'Webmozart\\PathUtil\\' => 19,
             'Webmozart\\Assert\\' => 17,
         ),
@@ -87,11 +92,13 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         ),
         'T' => 
         array (
+            'Twig\\Extensions\\' => 16,
             'Twig\\' => 5,
             'TYPO3\\PharStreamWrapper\\' => 24,
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Php81\\' => 23,
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Php73\\' => 23,
             'Symfony\\Polyfill\\Php72\\' => 23,
@@ -105,7 +112,9 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'Symfony\\Contracts\\Service\\' => 26,
             'Symfony\\Contracts\\HttpClient\\' => 29,
             'Symfony\\Contracts\\EventDispatcher\\' => 34,
+            'Symfony\\Contracts\\Cache\\' => 24,
             'Symfony\\Component\\Yaml\\' => 23,
+            'Symfony\\Component\\VarExporter\\' => 30,
             'Symfony\\Component\\VarDumper\\' => 28,
             'Symfony\\Component\\Validator\\' => 28,
             'Symfony\\Component\\Translation\\' => 30,
@@ -126,18 +135,51 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
+            'Symfony\\Component\\Config\\' => 25,
+            'Symfony\\Component\\Cache\\' => 24,
             'Symfony\\Component\\BrowserKit\\' => 29,
             'Symfony\\Cmf\\Component\\Routing\\' => 30,
+            'Symfony\\Bundle\\FrameworkBundle\\' => 31,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Symfony\\Bridge\\PhpUnit\\' => 23,
             'SlevomatCodingStandard\\' => 23,
+            'SimpleSAML\\modules\\yubikey\\' => 27,
+            'SimpleSAML\\modules\\discopower\\' => 30,
+            'SimpleSAML\\TwigConfigurableI18n\\' => 32,
+            'SimpleSAML\\Module\\statistics\\' => 29,
+            'SimpleSAML\\Module\\sqlauth\\' => 26,
+            'SimpleSAML\\Module\\smartattributes\\' => 34,
+            'SimpleSAML\\Module\\sanitycheck\\' => 30,
+            'SimpleSAML\\Module\\riak\\' => 23,
+            'SimpleSAML\\Module\\radius\\' => 25,
+            'SimpleSAML\\Module\\preprodwarning\\' => 33,
+            'SimpleSAML\\Module\\oauth\\' => 24,
+            'SimpleSAML\\Module\\negotiate\\' => 28,
+            'SimpleSAML\\Module\\metarefresh\\' => 30,
+            'SimpleSAML\\Module\\ldap\\' => 23,
+            'SimpleSAML\\Module\\expirycheck\\' => 30,
+            'SimpleSAML\\Module\\exampleattributeserver\\' => 41,
+            'SimpleSAML\\Module\\consent\\' => 26,
+            'SimpleSAML\\Module\\cdc\\' => 22,
+            'SimpleSAML\\Module\\cas\\' => 22,
+            'SimpleSAML\\Module\\authwindowslive\\' => 34,
+            'SimpleSAML\\Module\\authtwitter\\' => 30,
+            'SimpleSAML\\Module\\authorize\\' => 28,
+            'SimpleSAML\\Module\\authfacebook\\' => 31,
+            'SimpleSAML\\Module\\authcrypt\\' => 28,
+            'SimpleSAML\\Module\\authX509\\' => 27,
+            'SimpleSAML\\Module\\adfs\\' => 23,
+            'SimpleSAML\\Assert\\' => 18,
+            'SimpleSAML\\' => 11,
             'SelfUpdate\\' => 11,
             'Seld\\PharUtils\\' => 15,
             'Seld\\JsonLint\\' => 14,
+            'SAML2\\' => 6,
         ),
         'R' => 
         array (
             'Robo\\' => 5,
+            'RobRichards\\XMLSecLibs\\' => 23,
             'React\\Promise\\' => 14,
             'RRule\\' => 6,
         ),
@@ -160,10 +202,12 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         ),
         'M' => 
         array (
+            'Mtownsend\\XmlToArray\\' => 21,
             'Masterminds\\' => 12,
         ),
         'L' => 
         array (
+            'League\\Csv\\' => 11,
             'League\\Container\\' => 17,
             'Laminas\\Stdlib\\' => 15,
             'Laminas\\Feed\\' => 13,
@@ -192,6 +236,8 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
             'Grasmash\\Expander\\' => 18,
+            'Gettext\\Languages\\' => 18,
+            'Gettext\\' => 8,
             'Geocoder\\Provider\\Nominatim\\' => 28,
             'Geocoder\\Http\\' => 14,
             'Geocoder\\' => 9,
@@ -228,11 +274,13 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
             'Dflydev\\DotAccessData\\' => 22,
+            'Defuse\\Crypto\\' => 14,
             'DeepCopy\\' => 9,
             'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
         ),
         'C' => 
         array (
+            'Cron\\' => 5,
             'Consolidation\\SiteProcess\\' => 26,
             'Consolidation\\SiteAlias\\' => 24,
             'Consolidation\\OutputFormatters\\' => 31,
@@ -255,6 +303,7 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             'Behat\\Mink\\Driver\\' => 18,
             'Behat\\Mink\\' => 11,
+            'Basho\\' => 6,
         ),
         'A' => 
         array (
@@ -285,6 +334,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/cweagans/composer-patches/src',
         ),
+        'WhiteHat101\\Crypt\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/whitehat101/apr1-md5/src',
+        ),
         'Webmozart\\PathUtil\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/path-util/src',
@@ -297,6 +350,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis',
         ),
+        'Twig\\Extensions\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/extensions/src',
+        ),
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
@@ -304,6 +361,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         'TYPO3\\PharStreamWrapper\\' => 
         array (
             0 => __DIR__ . '/..' . '/typo3/phar-stream-wrapper/src',
+        ),
+        'Symfony\\Polyfill\\Php81\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php81',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -357,9 +418,17 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts',
         ),
+        'Symfony\\Contracts\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/cache-contracts',
+        ),
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Symfony\\Component\\VarExporter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/var-exporter',
         ),
         'Symfony\\Component\\VarDumper\\' => 
         array (
@@ -441,6 +510,14 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
+        'Symfony\\Component\\Config\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/config',
+        ),
+        'Symfony\\Component\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/cache',
+        ),
         'Symfony\\Component\\BrowserKit\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/browser-kit',
@@ -448,6 +525,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         'Symfony\\Cmf\\Component\\Routing\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony-cmf/routing/src',
+        ),
+        'Symfony\\Bundle\\FrameworkBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/framework-bundle',
         ),
         'Symfony\\Bridge\\PsrHttpMessage\\' => 
         array (
@@ -461,6 +542,118 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/slevomat/coding-standard/SlevomatCodingStandard',
         ),
+        'SimpleSAML\\modules\\yubikey\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authYubiKey/lib',
+        ),
+        'SimpleSAML\\modules\\discopower\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/discopower/lib',
+        ),
+        'SimpleSAML\\TwigConfigurableI18n\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/twig-configurable-i18n/src',
+        ),
+        'SimpleSAML\\Module\\statistics\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/statistics/lib',
+        ),
+        'SimpleSAML\\Module\\sqlauth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/sqlauth/lib',
+        ),
+        'SimpleSAML\\Module\\smartattributes\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/smartattributes/lib',
+        ),
+        'SimpleSAML\\Module\\sanitycheck\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/sanitycheck/lib',
+        ),
+        'SimpleSAML\\Module\\riak\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/riak/lib',
+        ),
+        'SimpleSAML\\Module\\radius\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/radius/lib',
+        ),
+        'SimpleSAML\\Module\\preprodwarning\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/preprodwarning/lib',
+        ),
+        'SimpleSAML\\Module\\oauth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/oauth/lib',
+        ),
+        'SimpleSAML\\Module\\negotiate\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/negotiate/lib',
+        ),
+        'SimpleSAML\\Module\\metarefresh\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/metarefresh/lib',
+        ),
+        'SimpleSAML\\Module\\ldap\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/ldap/lib',
+        ),
+        'SimpleSAML\\Module\\expirycheck\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/expirycheck/lib',
+        ),
+        'SimpleSAML\\Module\\exampleattributeserver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/exampleattributeserver/lib',
+        ),
+        'SimpleSAML\\Module\\consent\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/consent/lib',
+        ),
+        'SimpleSAML\\Module\\cdc\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/cdc/lib',
+        ),
+        'SimpleSAML\\Module\\cas\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/cas/lib',
+        ),
+        'SimpleSAML\\Module\\authwindowslive\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authwindowslive/lib',
+        ),
+        'SimpleSAML\\Module\\authtwitter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authtwitter/lib',
+        ),
+        'SimpleSAML\\Module\\authorize\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authorize/lib',
+        ),
+        'SimpleSAML\\Module\\authfacebook\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authfacebook/lib',
+        ),
+        'SimpleSAML\\Module\\authcrypt\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authcrypt/lib',
+        ),
+        'SimpleSAML\\Module\\authX509\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authX509/lib',
+        ),
+        'SimpleSAML\\Module\\adfs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/adfs/lib',
+        ),
+        'SimpleSAML\\Assert\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/assert/src',
+        ),
+        'SimpleSAML\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML',
+        ),
         'SelfUpdate\\' => 
         array (
             0 => __DIR__ . '/..' . '/consolidation/self-update/src',
@@ -473,9 +666,17 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/seld/jsonlint/src/Seld/JsonLint',
         ),
+        'SAML2\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2',
+        ),
         'Robo\\' => 
         array (
             0 => __DIR__ . '/..' . '/consolidation/robo/src',
+        ),
+        'RobRichards\\XMLSecLibs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/robrichards/xmlseclibs/src',
         ),
         'React\\Promise\\' => 
         array (
@@ -542,9 +743,17 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'Mtownsend\\XmlToArray\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mtownsend/xml-to-array/src',
+        ),
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'League\\Csv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/csv/src',
         ),
         'League\\Container\\' => 
         array (
@@ -610,6 +819,14 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         'Grasmash\\Expander\\' => 
         array (
             0 => __DIR__ . '/..' . '/grasmash/expander/src',
+        ),
+        'Gettext\\Languages\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gettext/languages/src',
+        ),
+        'Gettext\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gettext/gettext/src',
         ),
         'Geocoder\\Provider\\Nominatim\\' => 
         array (
@@ -722,6 +939,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/dflydev/dot-access-data/src',
         ),
+        'Defuse\\Crypto\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/defuse/php-encryption/src',
+        ),
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
@@ -729,6 +950,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
         array (
             0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
+        ),
+        'Cron\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
         'Consolidation\\SiteProcess\\' => 
         array (
@@ -807,6 +1032,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/behat/mink/src',
         ),
+        'Basho\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpfastcache/riak-client/src',
+        ),
         'Asm89\\Stack\\' => 
         array (
             0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
@@ -830,6 +1059,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         ),
         'T' => 
         array (
+            'Twig_Extensions_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/extensions/lib',
+            ),
             'Twig_' => 
             array (
                 0 => __DIR__ . '/..' . '/twig/twig/lib',
@@ -844,6 +1077,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'Stack' => 
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
+            ),
+            'SimpleSamlPhp\\Composer' => 
+            array (
+                0 => __DIR__ . '/..' . '/simplesamlphp/composer-module-installer/src',
             ),
         ),
         'H' => 
@@ -1332,6 +1569,7 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         'PharIo\\Version\\VersionConstraintValue' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintValue.php',
         'PharIo\\Version\\VersionNumber' => __DIR__ . '/..' . '/phar-io/version/src/VersionNumber.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'ReturnTypeWillChange' => __DIR__ . '/..' . '/symfony/polyfill-php81/Resources/stubs/ReturnTypeWillChange.php',
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',
         'SebastianBergmann\\CliParser\\Exception' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/Exception.php',
         'SebastianBergmann\\CliParser\\OptionDoesNotAllowArgumentException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/OptionDoesNotAllowArgumentException.php',

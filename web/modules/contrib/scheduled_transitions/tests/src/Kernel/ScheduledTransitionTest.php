@@ -164,7 +164,7 @@ class ScheduledTransitionTest extends KernelTestBase {
 
     $logs = $this->getLogs();
     $this->assertCount(2, $logs);
-    $this->assertEquals('Transitioning latest revision from Draft to Published', $logs[0]['message']);
+    $this->assertEquals('Transitioning latest revision #3 from Draft to Published', $logs[0]['message']);
     $this->assertEquals('Deleted scheduled transition #1', $logs[1]['message']);
 
     $revisionIds = $this->getRevisionIds($entity);

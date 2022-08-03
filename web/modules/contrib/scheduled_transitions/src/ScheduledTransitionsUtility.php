@@ -23,14 +23,6 @@ use Drupal\scheduled_transitions\Form\ScheduledTransitionsSettingsForm as Settin
  */
 class ScheduledTransitionsUtility implements ScheduledTransitionsUtilityInterface {
 
-  protected ConfigFactoryInterface $configFactory;
-  protected CacheBackendInterface $cache;
-  protected EntityTypeManagerInterface $entityTypeManager;
-  protected EntityTypeBundleInfoInterface $bundleInfo;
-  protected ModerationInformationInterface $moderationInformation;
-  protected Token $token;
-  protected TranslationInterface $stringTranslation;
-
   /**
    * Cache bin ID for enabled bundled cache.
    */
@@ -59,14 +51,14 @@ class ScheduledTransitionsUtility implements ScheduledTransitionsUtilityInterfac
    * @param \Drupal\Core\StringTranslation\TranslationInterface $stringTranslation
    *   String translation manager.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, CacheBackendInterface $cache, EntityTypeManagerInterface $entityTypeManager, EntityTypeBundleInfoInterface $bundleInfo, ModerationInformationInterface $moderationInformation, Token $token, TranslationInterface $stringTranslation) {
-    $this->configFactory = $configFactory;
-    $this->cache = $cache;
-    $this->entityTypeManager = $entityTypeManager;
-    $this->bundleInfo = $bundleInfo;
-    $this->moderationInformation = $moderationInformation;
-    $this->token = $token;
-    $this->stringTranslation = $stringTranslation;
+  public function __construct(protected ConfigFactoryInterface $configFactory,
+    protected CacheBackendInterface $cache,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeBundleInfoInterface $bundleInfo,
+    protected ModerationInformationInterface $moderationInformation,
+    protected Token $token,
+    protected TranslationInterface $stringTranslation,
+  ) {
   }
 
   /**
@@ -158,9 +150,8 @@ class ScheduledTransitionsUtility implements ScheduledTransitionsUtilityInterfac
       /** @var \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\RevisionableInterface $latest */
       $latest = $entityStorage->loadRevision($latestRevisionId);
     }
-    if (!isset($latest)) {
-      throw new ScheduledTransitionMissingEntity(sprintf('Could not determine latest revision.'));
-    }
+
+    $latest ?? throw new ScheduledTransitionMissingEntity('Could not determine latest revision.');
 
     $options = $scheduledTransition->getOptions();
     if (($options['revision_log_override'] ?? NULL) === TRUE) {

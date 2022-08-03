@@ -1,0 +1,37 @@
+<?php
+
+use Drupal\Migrate\Row;
+use Drupal\migrate\Plugin\MigrateSourceInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
+
+function abc_migration_migrate_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+  // Ignore content types from being migrated.
+  if ($migration->id() == 'upgrade_d7_node_type') {
+    $ignore_content_types = array('homepage', 'webform_report', 'view_page');
+    if (in_array($row->getSource()['type'], $ignore_content_types)) {
+      return FALSE;
+    }
+  }
+
+  // Ignore pointless broken fields.
+  if ($migration->id() == 'upgrade_d7_field' || $migration->id() == 'upgrade_d7_field_instance') {
+    $ignore_fields = array(
+      // Viewfield
+      'field_ss_view', // no content
+      'field_sc_view', // no content
+      'field_pl_add_a_view',
+      'field_s_other_services',
+      'field_vp_view'
+    );
+
+    if (in_array($row->getSource()['field_name'], $ignore_fields)) {
+      return FALSE;
+    }
+  }
+
+  // Ignoring content of unwanted content types.
+  $ignore_content_types_content = array('upgrade_d7_node_view_page');
+  if (in_array($migration->id(), $ignore_content_types_content)) {
+    return FALSE;
+  }
+}

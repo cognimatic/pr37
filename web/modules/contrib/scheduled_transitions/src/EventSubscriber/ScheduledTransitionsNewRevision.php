@@ -17,9 +17,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ScheduledTransitionsNewRevision implements EventSubscriberInterface {
 
-  protected EntityTypeManagerInterface $entityTypeManager;
-  protected LoggerInterface $logger;
-
   /**
    * Constructs a new ScheduledTransitionsNewRevision.
    *
@@ -28,9 +25,7 @@ class ScheduledTransitionsNewRevision implements EventSubscriberInterface {
    * @param \Psr\Log\LoggerInterface $logger
    *   A logger instance.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager, LoggerInterface $logger) {
-    $this->entityTypeManager = $entityTypeManager;
-    $this->logger = $logger;
+  public function __construct(protected EntityTypeManagerInterface $entityTypeManager, protected LoggerInterface $logger) {
   }
 
   /**

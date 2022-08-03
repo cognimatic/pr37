@@ -18,8 +18,6 @@ class ScheduledTransitionFromStateViewsField extends FieldPluginBase {
 
   public const PLUGIN_ID = 'scheduled_transitions_transition_from';
 
-  protected EntityTypeManagerInterface $entityTypeManager;
-
   /**
    * Constructs a ScheduledTransitionFromStateViewsField object.
    *
@@ -32,9 +30,8 @@ class ScheduledTransitionFromStateViewsField extends FieldPluginBase {
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, protected EntityTypeManagerInterface $entityTypeManager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->entityTypeManager = $entityTypeManager;
   }
 
   /**

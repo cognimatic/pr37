@@ -1,0 +1,176 @@
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_revision_page
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: migrate_drupal_7
+label: 'Node revisions (Page)'
+source:
+  plugin: d7_node_revision
+  node_type: page
+process:
+  nid:
+    -
+      plugin: get
+      source: nid
+  vid:
+    -
+      plugin: get
+      source: vid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_page/0/status:
+    -
+      plugin: get
+      source: comment
+  taxonomy_vocabulary_4:
+    -
+      plugin: sub_process
+      source: taxonomy_vocabulary_4
+      process:
+        target_id: tid
+  taxonomy_vocabulary_7:
+    -
+      plugin: sub_process
+      source: taxonomy_vocabulary_7
+      process:
+        target_id: tid
+  taxonomy_vocabulary_17:
+    -
+      plugin: sub_process
+      source: taxonomy_vocabulary_17
+      process:
+        target_id: tid
+  taxonomyextra:
+    -
+      plugin: sub_process
+      source: taxonomyextra
+      process:
+        target_id: tid
+  body:
+    0:
+      plugin: get
+      source: body
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_upload:
+    -
+      plugin: file_id_lookup_skip_hidden
+      source: upload
+      migration: upgrade_d7_media_file
+      no_stub: true
+  field_page_headerimg:
+    -
+      plugin: file_id_lookup
+      source: field_page_headerimg
+      migration: upgrade_d7_media_image
+      no_stub: true
+  field_question:
+    -
+      plugin: get
+      source: field_question
+  field_gaelic:
+    -
+      plugin: sub_process
+      source: field_gaelic
+      process:
+        target_id: tid
+  field_file_service:
+    -
+      plugin: get
+      source: field_file_service
+  field_metatag:
+    -
+      plugin: d7_metatag_entities
+      source: pseudo_d7_metatag_entities
+destination:
+  plugin: 'entity_revision:node'
+  default_bundle: page
+  overwrite_properties:
+    - field_upload
+migration_dependencies:
+  required:
+    - upgrade_d7_node_abplace2b_news
+    - upgrade_d7_node_blog
+    - upgrade_d7_node_book
+    - upgrade_d7_node_camera
+    - upgrade_d7_node_care_resource
+    - upgrade_d7_node_childcare
+    - upgrade_d7_node_community_councillors
+    - upgrade_d7_node_consultation
+    - upgrade_d7_node_councillors
+    - upgrade_d7_node_education_circular_documents
+    - upgrade_d7_node_events
+    - upgrade_d7_node_homepage_feature
+    - upgrade_d7_node_job_vacancy_love_argyll_
+    - upgrade_d7_node_licence
+    - upgrade_d7_node_llxml
+    - upgrade_d7_node_news_release
+    - upgrade_d7_node_page
+    - upgrade_d7_node_place
+    - upgrade_d7_node_poll
+    - upgrade_d7_node_privacy_notice
+    - upgrade_d7_node_project_update
+    - upgrade_d7_node_property
+    - upgrade_d7_node_school
+    - upgrade_d7_node_service
+    - upgrade_d7_node_service_disruption
+    - upgrade_d7_node_simplenews
+    - upgrade_d7_node_story
+    - upgrade_d7_node_sub_service
+    - upgrade_d7_node_transport_timetable
+    - upgrade_d7_node_view_page
+    - upgrade_d7_node_webform_report
+  optional:
+    - upgrade_d7_metatag_field
+    - upgrade_d7_metatag_field_instance

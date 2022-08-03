@@ -1,0 +1,27 @@
+sidebar_layout:
+  label: 'Sidebar'
+  category: 'Custom pages'
+  path: layouts/sidebar
+  template: layout--sidebar
+  library: webcurl_custom/sidebar
+  class: '\Drupal\webcurl_custom\Plugin\Layout\Sidebar'
+  default_region: sidebar
+  icon_map:
+    - [sidebar]
+  regions:
+    sidebar:
+      label: Sidebar
+
+header_layout:
+  label: 'Header'
+  category: 'Custom pages'
+  path: layouts/header
+  template: layout--header
+  library: webcurl_custom/header
+  class: '\Drupal\webcurl_custom\Plugin\Layout\Header'
+  default_region: header
+  icon_map:
+    - [sidebar]
+  regions:
+    header:
+      label: Header

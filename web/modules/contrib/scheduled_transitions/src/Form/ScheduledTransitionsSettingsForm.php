@@ -27,11 +27,6 @@ class ScheduledTransitionsSettingsForm extends ConfigFormBase {
    */
   public const SETTINGS_TAG = 'scheduled_transition_settings';
 
-  protected CacheTagsInvalidatorInterface $cacheTagInvalidator;
-  protected EntityTypeManagerInterface $entityTypeManager;
-  protected EntityTypeBundleInfoInterface $bundleInfo;
-  protected ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility;
-
   /**
    * Constructs a \Drupal\system\ConfigFormBase object.
    *
@@ -46,12 +41,13 @@ class ScheduledTransitionsSettingsForm extends ConfigFormBase {
    * @param \Drupal\scheduled_transitions\ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility
    *   Utilities for Scheduled Transitions module.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, CacheTagsInvalidatorInterface $cacheTagInvalidator, EntityTypeManagerInterface $entityTypeManager, EntityTypeBundleInfoInterface $bundleInfo, ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility) {
+  public function __construct(ConfigFactoryInterface $configFactory,
+    protected CacheTagsInvalidatorInterface $cacheTagInvalidator,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityTypeBundleInfoInterface $bundleInfo,
+    protected ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility,
+  ) {
     parent::__construct($configFactory);
-    $this->cacheTagInvalidator = $cacheTagInvalidator;
-    $this->entityTypeManager = $entityTypeManager;
-    $this->bundleInfo = $bundleInfo;
-    $this->scheduledTransitionsUtility = $scheduledTransitionsUtility;
   }
 
   /**
@@ -63,7 +59,7 @@ class ScheduledTransitionsSettingsForm extends ConfigFormBase {
       $container->get('cache_tags.invalidator'),
       $container->get('entity_type.manager'),
       $container->get('entity_type.bundle.info'),
-      $container->get('scheduled_transitions.utility')
+      $container->get('scheduled_transitions.utility'),
     );
   }
 

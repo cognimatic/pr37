@@ -1,0 +1,10 @@
+.layout-builder__layout .layout__region--header {
+    background-color: #FFC0CB;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.layout-builder__layout .layout__region--header:before {
+    content: 'Header area';
+}
+

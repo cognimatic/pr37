@@ -1,0 +1,203 @@
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_school
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: migrate_drupal_7
+label: 'Nodes (School)'
+source:
+  plugin: d7_node
+  node_type: school
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  vid:
+    -
+      plugin: get
+      source: vid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_school/0/status:
+    -
+      plugin: get
+      source: comment
+  body:
+    0:
+      plugin: get
+      source: body
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_upload:
+    -
+      plugin: file_id_lookup_skip_hidden
+      source: upload
+      migration: upgrade_d7_media_file
+      no_stub: true
+  field_sc_view:
+    -
+      plugin: get
+      source: field_sc_view
+  field_headteacher:
+    -
+      plugin: get
+      source: field_headteacher
+  field_sch_address:
+    0:
+      plugin: get
+      source: field_sch_address
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_sch_telephone:
+    -
+      plugin: get
+      source: field_sch_telephone
+  field_sch_fax:
+    -
+      plugin: get
+      source: field_sch_fax
+  field_sch_email:
+    0:
+      plugin: get
+      source: field_sch_email
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_sch_hmie:
+    0:
+      plugin: get
+      source: field_sch_hmie
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_sch_website:
+    -
+      plugin: field_link
+      source: field_sch_website
+  field_sch_holidays:
+    -
+      plugin: field_link
+      source: field_sch_holidays
+  field_views_search_terms:
+    -
+      plugin: get
+      source: field_views_search_terms
+  field_school_roll_projection:
+    0:
+      plugin: get
+      source: field_school_roll_projection
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_gaelic:
+    -
+      plugin: sub_process
+      source: field_gaelic
+      process:
+        target_id: tid
+  field_hmie:
+    0:
+      plugin: get
+      source: field_hmie
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_twitter:
+    0:
+      plugin: get
+      source: field_twitter
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_demomination:
+    -
+      plugin: get
+      source: field_demomination
+  field_early_learning_and_childca:
+    -
+      plugin: get
+      source: field_early_learning_and_childca
+  field_gaelic_medium:
+    -
+      plugin: get
+      source: field_gaelic_medium
+  field_integrated_learning_centre:
+    -
+      plugin: get
+      source: field_integrated_learning_centre
+  field_metatag:
+    -
+      plugin: d7_metatag_entities
+      source: pseudo_d7_metatag_entities
+destination:
+  plugin: 'entity:node'
+  default_bundle: school
+  overwrite_properties:
+    - field_upload
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+  optional:
+    - upgrade_d7_field_instance
+    - upgrade_d7_comment_field_instance
+    - upgrade_d7_metatag_field
+    - upgrade_d7_metatag_field_instance

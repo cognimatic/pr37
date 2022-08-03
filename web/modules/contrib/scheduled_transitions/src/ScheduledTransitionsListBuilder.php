@@ -18,8 +18,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ScheduledTransitionsListBuilder extends EntityListBuilder {
 
-  protected DateFormatterInterface $dateFormatter;
-
   /**
    * Constructs a new ScheduledTransitionsListBuilder..
    *
@@ -30,9 +28,8 @@ class ScheduledTransitionsListBuilder extends EntityListBuilder {
    * @param \Drupal\Core\Datetime\DateFormatterInterface $dateFormatter
    *   Various date related functionality.
    */
-  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, DateFormatterInterface $dateFormatter) {
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, protected DateFormatterInterface $dateFormatter) {
     parent::__construct($entity_type, $storage);
-    $this->dateFormatter = $dateFormatter;
   }
 
   /**
@@ -42,7 +39,7 @@ class ScheduledTransitionsListBuilder extends EntityListBuilder {
     return new static(
       $entity_type,
       $container->get('entity_type.manager')->getStorage($entity_type->id()),
-      $container->get('date.formatter')
+      $container->get('date.formatter'),
     );
   }
 
@@ -84,7 +81,7 @@ class ScheduledTransitionsListBuilder extends EntityListBuilder {
     try {
       $row['host_entity'] = $hostEntity ? $hostEntity->toLink() : $this->t('- Missing entity -');
     }
-    catch (UndefinedLinkTemplateException $exception) {
+    catch (UndefinedLinkTemplateException) {
       $row['host_entity'] = $hostEntity->label();
     }
 

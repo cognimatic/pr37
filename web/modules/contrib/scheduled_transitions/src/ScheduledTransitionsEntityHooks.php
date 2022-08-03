@@ -26,10 +26,6 @@ use Drupal\scheduled_transitions\ScheduledTransitionsPermissions as Permissions;
  */
 class ScheduledTransitionsEntityHooks implements ContainerInjectionInterface {
 
-  protected ConfigFactoryInterface $configFactory;
-  protected EntityTypeManagerInterface $entityTypeManager;
-  protected ModerationInformationInterface $moderationInformation;
-
   /**
    * Array of IDs of Entity types using content moderation workflows.
    *
@@ -47,10 +43,7 @@ class ScheduledTransitionsEntityHooks implements ContainerInjectionInterface {
    * @param \Drupal\content_moderation\ModerationInformationInterface $moderationInformation
    *   General service for moderation-related questions about Entity API.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, EntityTypeManagerInterface $entityTypeManager, ModerationInformationInterface $moderationInformation) {
-    $this->configFactory = $configFactory;
-    $this->entityTypeManager = $entityTypeManager;
-    $this->moderationInformation = $moderationInformation;
+  public function __construct(protected ConfigFactoryInterface $configFactory, protected EntityTypeManagerInterface $entityTypeManager, protected ModerationInformationInterface $moderationInformation) {
   }
 
   /**

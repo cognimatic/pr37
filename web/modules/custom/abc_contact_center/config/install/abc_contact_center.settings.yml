@@ -1,0 +1,7 @@
+rightnow_script: 'https://argyllandbute.widget.custhelp.com/euf/rightnow/RightNow.Client.js'
+liberty_endpoint: 'https://liberty.argyll-bute.gov.uk/api/Liberty/2/Partitions/3/acd/11/livequeuesummary?api-key=7b55341b-1920-4944-8091-97ae49f58d21&type=json'
+opening_time: '09:00'
+closing_time: '17:00'
+contact_block_markup:
+  value: ''
+  format: basic_html

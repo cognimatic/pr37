@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\scheduled_transitions\Plugin\QueueWorker;
 
 use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\scheduled_transitions\Exception\ScheduledTransitionMissingEntity;
@@ -30,9 +29,6 @@ class ScheduledTransitionJob extends QueueWorkerBase implements ContainerFactory
    */
   const SCHEDULED_TRANSITION_ID = 'scheduled_transition_id';
 
-  protected ScheduledTransitionsRunnerInterface $scheduledTransitionsRunner;
-  protected EntityStorageInterface $scheduledTransitionStorage;
-
   /**
    * Constructs a new ScheduledTransitionJob.
    *
@@ -42,15 +38,13 @@ class ScheduledTransitionJob extends QueueWorkerBase implements ContainerFactory
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity type manager.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $scheduledTransitionStorage
+   *   Storage for scheduled transitions.
    * @param \Drupal\scheduled_transitions\ScheduledTransitionsRunnerInterface $scheduledTransitionsRunner
    *   Executes transitions.
    */
-  public function __construct(array $configuration, string $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager, ScheduledTransitionsRunnerInterface $scheduledTransitionsRunner) {
+  public function __construct(array $configuration, string $plugin_id, $plugin_definition, protected EntityStorageInterface $scheduledTransitionStorage, protected ScheduledTransitionsRunnerInterface $scheduledTransitionsRunner) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->scheduledTransitionStorage = $entityTypeManager->getStorage('scheduled_transition');
-    $this->scheduledTransitionsRunner = $scheduledTransitionsRunner;
   }
 
   /**
@@ -61,7 +55,7 @@ class ScheduledTransitionJob extends QueueWorkerBase implements ContainerFactory
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity_type.manager'),
+      $container->get('entity_type.manager')->getStorage('scheduled_transition'),
       $container->get('scheduled_transitions.runner')
     );
   }
@@ -76,7 +70,7 @@ class ScheduledTransitionJob extends QueueWorkerBase implements ContainerFactory
       try {
         $this->scheduledTransitionsRunner->runTransition($transition);
       }
-      catch (ScheduledTransitionMissingEntity $exception) {
+      catch (ScheduledTransitionMissingEntity) {
         $transition->delete();
       }
     }

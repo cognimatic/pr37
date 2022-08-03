@@ -1,0 +1,15 @@
+.cllr-table ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cllr-table .date {
+  font-weight: bold;
+}
+
+td.col-2, th.col-2 {
+  width: 16.66667%; }
+
+td.col-4, th.col-4 {
+  width: 33.33333%; }

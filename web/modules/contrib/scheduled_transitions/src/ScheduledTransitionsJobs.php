@@ -21,10 +21,12 @@ class ScheduledTransitionsJobs implements ScheduledTransitionsJobsInterface {
    */
   protected const LOCK_DURATION = 1800;
 
-  protected $entityTypeManager;
-  protected TimeInterface $time;
+  /**
+   * The scheduled transition job queue.
+   *
+   * @var \Drupal\Core\Queue\QueueInterface
+   */
   protected QueueInterface $queue;
-  protected LoggerInterface $logger;
 
   /**
    * Constructs a new ScheduledTransitionsRunner.
@@ -38,11 +40,8 @@ class ScheduledTransitionsJobs implements ScheduledTransitionsJobsInterface {
    * @param \Psr\Log\LoggerInterface $logger
    *   A logger instance.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager, TimeInterface $time, QueueFactory $queueFactory, LoggerInterface $logger) {
-    $this->entityTypeManager = $entityTypeManager;
-    $this->time = $time;
+  public function __construct(protected EntityTypeManagerInterface $entityTypeManager, protected TimeInterface $time, QueueFactory $queueFactory, protected LoggerInterface $logger) {
     $this->queue = $queueFactory->get(ScheduledTransitionJob::PLUGIN_ID);
-    $this->logger = $logger;
   }
 
   /**

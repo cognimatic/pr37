@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function wcl_layouts_install() {
+
+  // Replace dependencies on layout_builder_base_library module in existing layouts.
+  $old_module = 'layout_builder_base_library';
+  $new_module = 'wcl_layouts';
+  $display_modes = \Drupal::service('config.factory')->listAll("core.entity_view_display");
+
+  foreach ($display_modes as $display_mode) {
+    $config = \Drupal::service('config.factory')->getEditable($display_mode);
+    $modules = $config->get('dependencies.module');
+
+    $key = array_search($old_module, $modules);
+    if ($key === FALSE) {
+      // Assumed not to use layout_builder_base_library layouts.
+      continue;
+    }
+
+    $modules[$key] = $new_module;
+    $config->set('dependencies.module', $modules);
+    $config->save();
+  }
+}

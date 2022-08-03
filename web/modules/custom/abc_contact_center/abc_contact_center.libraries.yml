@@ -1,0 +1,11 @@
+# Custom module library for general purposes.
+abc_contact_center:
+  css:
+    component:
+      css/abc-contact-center.css: {}
+
+abc_contact_center_rightnow:
+  js:
+    https://argyllandbute.widget.custhelp.com/euf/rightnow/RightNow.Client.js: { type: external, minified: true }
+    js/abc-contact-center-rightnow.js: {}
+

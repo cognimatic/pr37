@@ -1,0 +1,5 @@
+abc_councillors:
+  version: 1.x
+  css:
+    theme:
+      css/abc_councillors.css: {}

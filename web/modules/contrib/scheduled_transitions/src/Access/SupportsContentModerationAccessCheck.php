@@ -29,9 +29,6 @@ class SupportsContentModerationAccessCheck implements AccessInterface {
    */
   public const ACCESS_CHECK_ID = '_scheduled_transitions_supports_content_moderation';
 
-  protected ModerationInformationInterface $moderationInformation;
-  protected ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility;
-
   /**
    * Constructs a new SupportsContentModerationAccessCheck.
    *
@@ -40,9 +37,7 @@ class SupportsContentModerationAccessCheck implements AccessInterface {
    * @param \Drupal\scheduled_transitions\ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility
    *   Utilities for Scheduled Transitions module.
    */
-  public function __construct(ModerationInformationInterface $moderationInformation, ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility) {
-    $this->moderationInformation = $moderationInformation;
-    $this->scheduledTransitionsUtility = $scheduledTransitionsUtility;
+  public function __construct(protected ModerationInformationInterface $moderationInformation, protected ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility) {
   }
 
   /**

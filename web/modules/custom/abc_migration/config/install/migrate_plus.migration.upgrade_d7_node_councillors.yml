@@ -1,0 +1,257 @@
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_councillors
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: migrate_drupal_7
+label: 'Nodes (Councillors)'
+source:
+  plugin: d7_node
+  node_type: councillors
+process:
+  nid:
+    -
+      plugin: get
+      source: tnid
+  vid:
+    -
+      plugin: get
+      source: vid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_councillors/0/status:
+    -
+      plugin: get
+      source: comment
+  field_surgery:
+    0:
+      plugin: get
+      source: field_surgery
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_ward:
+    0:
+      plugin: get
+      source: field_ward
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_address:
+    -
+      plugin: get
+      source: field_address
+  field_group:
+    -
+      plugin: get
+      source: field_group
+  field_email:
+    0:
+      plugin: get
+      source: field_email
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_chairmanships:
+    0:
+      plugin: get
+      source: field_chairmanships
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_otherbodies:
+    0:
+      plugin: get
+      source: field_otherbodies
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_telephone:
+    -
+      plugin: get
+      source: field_telephone
+  field_mobile:
+    -
+      plugin: get
+      source: field_mobile
+  field_photo:
+    -
+      plugin: file_id_lookup
+      source: field_photo
+      migration: upgrade_d7_media_image
+      no_stub: true
+  field_interests:
+    0:
+      plugin: get
+      source: field_interests
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_committees:
+    0:
+      plugin: get
+      source: field_committees
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_spokesperson:
+    -
+      plugin: get
+      source: field_spokesperson
+  field_cllr_surname:
+    -
+      plugin: get
+      source: field_cllr_surname
+  field_map:
+    -
+      plugin: get
+      source: field_map
+  field_gifts_and_hospitatily:
+    0:
+      plugin: get
+      source: field_gifts_and_hospitatily
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_remuneration:
+    0:
+      plugin: get
+      source: field_remuneration
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_related_undertakings:
+    0:
+      plugin: get
+      source: field_related_undertakings
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_contracts_with_the_authori:
+    0:
+      plugin: get
+      source: field_contracts_with_the_authori
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_election_expenses:
+    -
+      plugin: get
+      source: field_election_expenses
+  field_houses_land_and_buildings:
+    0:
+      plugin: get
+      source: field_houses_land_and_buildings
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_shares_and_securities:
+    0:
+      plugin: get
+      source: field_shares_and_securities
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_non_financial_interests:
+    0:
+      plugin: get
+      source: field_non_financial_interests
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_views_search_terms:
+    -
+      plugin: get
+      source: field_views_search_terms
+  field_cllr_facebook:
+    -
+      plugin: get
+      source: field_cllr_facebook
+  field_surgery_date:
+    -
+      plugin: sub_process
+      source: field_surgery_date
+      process:
+        value:
+          plugin: format_date
+          from_format: 'Y-m-d H:i:s'
+          to_format: 'Y-m-d\TH:i:s'
+          source: value
+  field_metatag:
+    -
+      plugin: d7_metatag_entities
+      source: pseudo_d7_metatag_entities
+destination:
+  plugin: 'entity:node'
+  default_bundle: councillors
+migration_dependencies:
+  required:
+    - upgrade_d7_user
+    - upgrade_d7_node_type
+  optional:
+    - upgrade_d7_field_instance
+    - upgrade_d7_comment_field_instance
+    - upgrade_d7_metatag_field
+    - upgrade_d7_metatag_field_instance

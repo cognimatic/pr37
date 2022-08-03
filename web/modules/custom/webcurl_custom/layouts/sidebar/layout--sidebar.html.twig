@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a four-column 25%-25%-25%-25% layout.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ *
+ * @ingroup themeable
+ */
+#}
+{% if content %}
+    <div {{ attributes }}>
+        <div class="layout-section-container">
+            <div {{ region_attributes.sidebar.addClass('layout layout__region', 'layout__region--sidebar') }}>
+                {% if content.sidebar %}
+                    {{ content.sidebar }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}

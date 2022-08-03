@@ -13,9 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ScheduledTransitionsHooks implements ContainerInjectionInterface {
 
-  protected ConfigFactoryInterface $configFactory;
-  protected ScheduledTransitionsJobsInterface $scheduledTransitionsJobs;
-
   /**
    * Constructs a new ScheduledTransitionsHooks.
    *
@@ -24,9 +21,7 @@ class ScheduledTransitionsHooks implements ContainerInjectionInterface {
    * @param \Drupal\scheduled_transitions\ScheduledTransitionsJobsInterface $scheduledTransitionsJobs
    *   Job runner for Scheduled Transitions.
    */
-  public function __construct(ConfigFactoryInterface $configFactory, ScheduledTransitionsJobsInterface $scheduledTransitionsJobs) {
-    $this->configFactory = $configFactory;
-    $this->scheduledTransitionsJobs = $scheduledTransitionsJobs;
+  public function __construct(protected ConfigFactoryInterface $configFactory, protected ScheduledTransitionsJobsInterface $scheduledTransitionsJobs) {
   }
 
   /**
@@ -35,7 +30,7 @@ class ScheduledTransitionsHooks implements ContainerInjectionInterface {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
-      $container->get('scheduled_transitions.jobs')
+      $container->get('scheduled_transitions.jobs'),
     );
   }
 

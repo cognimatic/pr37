@@ -14,7 +14,6 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\scheduled_transitions\ScheduledTransitionsUtility;
-use Drupal\scheduled_transitions\ScheduledTransitionsUtilityInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,11 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 class ScheduledTransitionsLocalTask extends LocalTaskDefault implements ContainerFactoryPluginInterface {
 
   use StringTranslationTrait;
-
-  protected RouteMatchInterface $routeMatch;
-  protected ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility;
-  protected EntityTypeManagerInterface $entityTypeManager;
-  protected LanguageManagerInterface $languageManager;
 
   /**
    * Constructs a new ScheduledTransitionsLocalTask.
@@ -48,11 +42,8 @@ class ScheduledTransitionsLocalTask extends LocalTaskDefault implements Containe
    * @param \Drupal\Core\StringTranslation\TranslationInterface $stringTranslation
    *   The string translation service.
    */
-  public function __construct(array $configuration, $plugin_id, array $plugin_definition, RouteMatchInterface $routeMatch, EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $languageManager, TranslationInterface $stringTranslation) {
+  public function __construct(array $configuration, $plugin_id, array $plugin_definition, protected RouteMatchInterface $routeMatch, protected EntityTypeManagerInterface $entityTypeManager, protected LanguageManagerInterface $languageManager, TranslationInterface $stringTranslation) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->routeMatch = $routeMatch;
-    $this->entityTypeManager = $entityTypeManager;
-    $this->languageManager = $languageManager;
     $this->stringTranslation = $stringTranslation;
   }
 
@@ -67,7 +58,7 @@ class ScheduledTransitionsLocalTask extends LocalTaskDefault implements Containe
       $container->get('current_route_match'),
       $container->get('entity_type.manager'),
       $container->get('language_manager'),
-      $container->get('string_translation')
+      $container->get('string_translation'),
     );
   }
 

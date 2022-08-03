@@ -1,0 +1,7 @@
+abc_contact_center.settings:
+  path: '/admin/config/services/abc-contact-center'
+  defaults:
+    _title: 'abc_contact_center settings'
+    _form: 'Drupal\abc_contact_center\Form\SettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

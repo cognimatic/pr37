@@ -12,16 +12,13 @@ use Drush\Commands\DrushCommands;
  */
 class ScheduledTransitionsCommands extends DrushCommands {
 
-  protected ScheduledTransitionsJobsInterface $jobs;
-
   /**
    * Constructs a new ScheduledTransitionsCommands.
    *
    * @param \Drupal\scheduled_transitions\ScheduledTransitionsJobsInterface $jobs
    *   Job runner for Scheduled Transitions.
    */
-  public function __construct(ScheduledTransitionsJobsInterface $jobs) {
-    $this->jobs = $jobs;
+  public function __construct(protected ScheduledTransitionsJobsInterface $jobs) {
   }
 
   /**

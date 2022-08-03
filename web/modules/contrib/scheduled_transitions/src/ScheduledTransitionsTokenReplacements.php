@@ -7,6 +7,7 @@ namespace Drupal\scheduled_transitions;
 use Drupal\content_moderation\ModerationInformationInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\scheduled_transitions\Entity\ScheduledTransitionInterface;
 
@@ -17,38 +18,23 @@ class ScheduledTransitionsTokenReplacements {
 
   use StringTranslationTrait;
 
-  protected ScheduledTransitionInterface $scheduledTransition;
-  protected ?ModerationInformationInterface $moderationInformation;
-  protected ?array $cachedReplacements;
-
-  /**
-   * A new default revision.
-   *
-   * @var \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\RevisionableInterface
-   */
-  protected EntityInterface $newRevision;
-
-  /**
-   * The latest current revision.
-   *
-   * @var \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\RevisionableInterface
-   */
-  protected EntityInterface $latest;
+  protected ?ModerationInformationInterface $moderationInformation = NULL;
+  protected ?array $cachedReplacements = NULL;
 
   /**
    * ScheduledTransitionsTokens constructor.
    *
    * @param \Drupal\scheduled_transitions\Entity\ScheduledTransitionInterface $scheduledTransition
    *   A scheduled transition entity.
-   * @param \Drupal\Core\Entity\EntityInterface $newRevision
+   * @param \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\RevisionableInterface $newRevision
    *   A new default revision.
-   * @param \Drupal\Core\Entity\EntityInterface $latest
+   * @param \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\RevisionableInterface $latest
    *   The latest current revision.
    */
-  public function __construct(ScheduledTransitionInterface $scheduledTransition, EntityInterface $newRevision, EntityInterface $latest) {
-    $this->scheduledTransition = $scheduledTransition;
-    $this->newRevision = $newRevision;
-    $this->latest = $latest;
+  public function __construct(protected ScheduledTransitionInterface $scheduledTransition,
+    protected EntityInterface|RevisionableInterface $newRevision,
+    protected EntityInterface|RevisionableInterface $latest,
+  ) {
   }
 
   /**

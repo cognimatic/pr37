@@ -314,8 +314,8 @@ class ScheduledTransition extends ContentEntityBase implements ScheduledTransiti
     $entity = $this->getEntity();
     if ($entity) {
       $tags[] = ScheduledTransitionsUtility::createScheduledTransitionsCacheTag($entity);
-      Cache::invalidateTags($tags);
     }
+    Cache::invalidateTags($tags);
   }
 
 }

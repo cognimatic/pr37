@@ -20,8 +20,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ScheduledTransitionRescheduleForm extends ContentEntityForm {
 
-  protected DateFormatterInterface $dateFormatter;
-
   /**
    * Constructs a new ScheduledTransitionRescheduleForm.
    *
@@ -34,9 +32,8 @@ class ScheduledTransitionRescheduleForm extends ContentEntityForm {
    * @param \Drupal\Core\Datetime\DateFormatterInterface $dateFormatter
    *   Various date related functionality.
    */
-  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, DateFormatterInterface $dateFormatter) {
+  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, protected DateFormatterInterface $dateFormatter) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
-    $this->dateFormatter = $dateFormatter;
   }
 
   /**

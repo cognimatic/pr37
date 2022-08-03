@@ -1,0 +1,230 @@
+langcode: en
+status: true
+dependencies: {  }
+id: upgrade_d7_node_revision_school
+class: Drupal\migrate\Plugin\Migration
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: migrate_drupal_7
+label: 'Node revisions (School)'
+source:
+  plugin: d7_node_revision
+  node_type: school
+process:
+  nid:
+    -
+      plugin: get
+      source: nid
+  vid:
+    -
+      plugin: get
+      source: vid
+  langcode:
+    -
+      plugin: default_value
+      source: language
+      default_value: und
+  title:
+    -
+      plugin: get
+      source: title
+  uid:
+    -
+      plugin: get
+      source: node_uid
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: created
+  changed:
+    -
+      plugin: get
+      source: changed
+  promote:
+    -
+      plugin: get
+      source: promote
+  sticky:
+    -
+      plugin: get
+      source: sticky
+  revision_uid:
+    -
+      plugin: get
+      source: revision_uid
+  revision_log:
+    -
+      plugin: get
+      source: log
+  revision_timestamp:
+    -
+      plugin: get
+      source: timestamp
+  comment_node_school/0/status:
+    -
+      plugin: get
+      source: comment
+  body:
+    0:
+      plugin: get
+      source: body
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_upload:
+    -
+      plugin: file_id_lookup_skip_hidden
+      source: upload
+      migration: upgrade_d7_media_file
+      no_stub: true
+  field_sc_view:
+    -
+      plugin: get
+      source: field_sc_view
+  field_headteacher:
+    -
+      plugin: get
+      source: field_headteacher
+  field_sch_address:
+    0:
+      plugin: get
+      source: field_sch_address
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_sch_telephone:
+    -
+      plugin: get
+      source: field_sch_telephone
+  field_sch_fax:
+    -
+      plugin: get
+      source: field_sch_fax
+  field_sch_email:
+    0:
+      plugin: get
+      source: field_sch_email
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_sch_hmie:
+    0:
+      plugin: get
+      source: field_sch_hmie
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_sch_website:
+    -
+      plugin: field_link
+      source: field_sch_website
+  field_sch_holidays:
+    -
+      plugin: field_link
+      source: field_sch_holidays
+  field_views_search_terms:
+    -
+      plugin: get
+      source: field_views_search_terms
+  field_school_roll_projection:
+    0:
+      plugin: get
+      source: field_school_roll_projection
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_gaelic:
+    -
+      plugin: sub_process
+      source: field_gaelic
+      process:
+        target_id: tid
+  field_hmie:
+    0:
+      plugin: get
+      source: field_hmie
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_twitter:
+    0:
+      plugin: get
+      source: field_twitter
+    media_wysiwyg:
+      plugin: media_wysiwyg_filter
+    text_format_munge:
+      plugin: abc_migration_text_format_munge
+  field_demomination:
+    -
+      plugin: get
+      source: field_demomination
+  field_early_learning_and_childca:
+    -
+      plugin: get
+      source: field_early_learning_and_childca
+  field_gaelic_medium:
+    -
+      plugin: get
+      source: field_gaelic_medium
+  field_integrated_learning_centre:
+    -
+      plugin: get
+      source: field_integrated_learning_centre
+  field_metatag:
+    -
+      plugin: d7_metatag_entities
+      source: pseudo_d7_metatag_entities
+destination:
+  plugin: 'entity_revision:node'
+  default_bundle: school
+  overwrite_properties:
+    - field_upload
+migration_dependencies:
+  required:
+    - upgrade_d7_node_abplace2b_news
+    - upgrade_d7_node_blog
+    - upgrade_d7_node_book
+    - upgrade_d7_node_camera
+    - upgrade_d7_node_care_resource
+    - upgrade_d7_node_childcare
+    - upgrade_d7_node_community_councillors
+    - upgrade_d7_node_consultation
+    - upgrade_d7_node_councillors
+    - upgrade_d7_node_education_circular_documents
+    - upgrade_d7_node_events
+    - upgrade_d7_node_homepage_feature
+    - upgrade_d7_node_job_vacancy_love_argyll_
+    - upgrade_d7_node_licence
+    - upgrade_d7_node_llxml
+    - upgrade_d7_node_news_release
+    - upgrade_d7_node_page
+    - upgrade_d7_node_place
+    - upgrade_d7_node_poll
+    - upgrade_d7_node_privacy_notice
+    - upgrade_d7_node_project_update
+    - upgrade_d7_node_property
+    - upgrade_d7_node_school
+    - upgrade_d7_node_service
+    - upgrade_d7_node_service_disruption
+    - upgrade_d7_node_simplenews
+    - upgrade_d7_node_story
+    - upgrade_d7_node_sub_service
+    - upgrade_d7_node_transport_timetable
+    - upgrade_d7_node_view_page
+    - upgrade_d7_node_webform_report
+  optional:
+    - upgrade_d7_metatag_field
+    - upgrade_d7_metatag_field_instance

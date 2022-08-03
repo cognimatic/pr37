@@ -1,0 +1,7 @@
+abc_bins.settings:
+  path: '/admin/config/services/abc_bins'
+  defaults:
+    _title: 'Settings'
+    _form: 'Drupal\abc_bins\Form\SettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

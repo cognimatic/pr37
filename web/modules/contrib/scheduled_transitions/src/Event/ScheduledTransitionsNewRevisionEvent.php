@@ -13,7 +13,11 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class ScheduledTransitionsNewRevisionEvent extends Event {
 
-  protected ScheduledTransitionInterface $scheduledTransition;
+  /**
+   * The new revision to transition.
+   *
+   * @var \Drupal\Core\Entity\RevisionableInterface|null
+   */
   protected ?RevisionableInterface $newRevision;
 
   /**
@@ -22,8 +26,7 @@ class ScheduledTransitionsNewRevisionEvent extends Event {
    * @param \Drupal\scheduled_transitions\Entity\ScheduledTransitionInterface $scheduledTransition
    *   Scheduled transition entity.
    */
-  public function __construct(ScheduledTransitionInterface $scheduledTransition) {
-    $this->scheduledTransition = $scheduledTransition;
+  public function __construct(protected ScheduledTransitionInterface $scheduledTransition) {
   }
 
   /**

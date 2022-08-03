@@ -33,10 +33,6 @@ class ScheduledTransitionsPermissions implements ContainerInjectionInterface {
    */
   public const ENTITY_OPERATION_RESCHEDULE_TRANSITIONS = 'reschedule scheduled transitions';
 
-  protected EntityTypeManagerInterface $entityTypeManager;
-  protected EntityTypeBundleInfoInterface $bundleInfo;
-  protected ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility;
-
   /**
    * Constructs a new ScheduledTransitionsPermissions.
    *
@@ -49,11 +45,8 @@ class ScheduledTransitionsPermissions implements ContainerInjectionInterface {
    * @param \Drupal\scheduled_transitions\ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility
    *   Utilities for Scheduled Transitions module.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager, EntityTypeBundleInfoInterface $bundleInfo, TranslationInterface $stringTranslation, ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility) {
-    $this->entityTypeManager = $entityTypeManager;
-    $this->bundleInfo = $bundleInfo;
+  public function __construct(protected EntityTypeManagerInterface $entityTypeManager, protected EntityTypeBundleInfoInterface $bundleInfo, TranslationInterface $stringTranslation, protected ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility) {
     $this->stringTranslation = $stringTranslation;
-    $this->scheduledTransitionsUtility = $scheduledTransitionsUtility;
   }
 
   /**
@@ -64,7 +57,7 @@ class ScheduledTransitionsPermissions implements ContainerInjectionInterface {
       $container->get('entity_type.manager'),
       $container->get('entity_type.bundle.info'),
       $container->get('string_translation'),
-      $container->get('scheduled_transitions.utility')
+      $container->get('scheduled_transitions.utility'),
     );
   }
 

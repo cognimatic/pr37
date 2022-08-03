@@ -21,16 +21,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ScheduledTransitionForm extends ContentEntityForm {
 
-  protected DateFormatterInterface $dateFormatter;
-  protected LanguageManagerInterface $languageManager;
-
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, DateFormatterInterface $dateFormatter, LanguageManagerInterface $languageManager) {
+  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, protected DateFormatterInterface $dateFormatter, protected LanguageManagerInterface $languageManager) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
-    $this->dateFormatter = $dateFormatter;
-    $this->languageManager = $languageManager;
   }
 
   /**

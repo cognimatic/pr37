@@ -1,0 +1,4 @@
+services:
+  abc_bins.webservice:
+    class: Drupal\abc_bins\Webservice
+    arguments: ['@http_client']

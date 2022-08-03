@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for abc_bins module.
+ */
+
+
+/**
+ * Implements hook_theme().
+ */
+function abc_bins_theme($existing, $type, $theme, $path) {
+  return [
+    'bin_lookup_details' => [
+      'variables' => [
+        'mode' => '',
+        'calendarname' => '',
+        'route' => '',
+        'nextCollections' => [],
+        'bindays' => [],
+      ],
+    ],
+  ];
+}

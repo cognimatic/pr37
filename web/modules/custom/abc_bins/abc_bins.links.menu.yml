@@ -1,0 +1,5 @@
+abc_bins.settings:
+  title: Bin integration settings
+  parent: system.admin_config_services
+  route_name: abc_bins.settings
+  weight: 10

@@ -1,0 +1,5 @@
+abc_contact_center.settings:
+  title: Contact Center settings
+  parent: system.admin_config_services
+  route_name: abc_contact_center.settings
+  weight: 10

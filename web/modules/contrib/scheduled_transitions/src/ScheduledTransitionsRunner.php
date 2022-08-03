@@ -32,15 +32,6 @@ class ScheduledTransitionsRunner implements ScheduledTransitionsRunnerInterface 
 
   protected const LOCK_DURATION = 1800;
 
-  protected EntityTypeManagerInterface $entityTypeManager;
-  protected TimeInterface $time;
-  protected LoggerInterface $logger;
-  protected ModerationInformationInterface $moderationInformation;
-  protected Token $token;
-  protected ConfigFactoryInterface $configFactory;
-  protected EventDispatcherInterface $eventDispatcher;
-  protected ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility;
-
   /**
    * Constructs a new ScheduledTransitionsRunner.
    *
@@ -61,15 +52,15 @@ class ScheduledTransitionsRunner implements ScheduledTransitionsRunnerInterface 
    * @param \Drupal\scheduled_transitions\ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility
    *   Utilities for Scheduled Transitions module.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager, ConfigFactoryInterface $configFactory, TimeInterface $time, LoggerInterface $logger, ModerationInformationInterface $moderationInformation, Token $token, EventDispatcherInterface $eventDispatcher, ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility) {
-    $this->entityTypeManager = $entityTypeManager;
-    $this->configFactory = $configFactory;
-    $this->time = $time;
-    $this->logger = $logger;
-    $this->moderationInformation = $moderationInformation;
-    $this->token = $token;
-    $this->eventDispatcher = $eventDispatcher;
-    $this->scheduledTransitionsUtility = $scheduledTransitionsUtility;
+  public function __construct(protected EntityTypeManagerInterface $entityTypeManager,
+    protected ConfigFactoryInterface $configFactory,
+    protected TimeInterface $time,
+    protected LoggerInterface $logger,
+    protected ModerationInformationInterface $moderationInformation,
+    protected Token $token,
+    protected EventDispatcherInterface $eventDispatcher,
+    protected ScheduledTransitionsUtilityInterface $scheduledTransitionsUtility,
+  ) {
   }
 
   /**
@@ -91,9 +82,7 @@ class ScheduledTransitionsRunner implements ScheduledTransitionsRunnerInterface 
     $this->eventDispatcher->dispatch(ScheduledTransitionsEvents::NEW_REVISION, $event);
 
     $newRevision = $event->getNewRevision();
-    if (!$newRevision) {
-      throw new ScheduledTransitionMissingEntity(sprintf('No revision could be determined to transition to for scheduled transition #%s', $scheduledTransitionId));
-    }
+    $newRevision ?? throw new ScheduledTransitionMissingEntity(sprintf('No revision could be determined to transition to for scheduled transition #%s', $scheduledTransitionId));
 
     /** @var \Drupal\Core\Entity\EntityStorageInterface|\Drupal\Core\Entity\RevisionableStorageInterface $entityStorage */
     $entityStorage = $this->entityTypeManager->getStorage($entity->getEntityTypeId());
@@ -173,7 +162,7 @@ class ScheduledTransitionsRunner implements ScheduledTransitionsRunnerInterface 
 
     // If publishing the latest revision, then only set moderation state.
     if ($newIsLatest) {
-      $this->log(LogLevel::INFO, 'Transitioning latest revision from @original_state to @new_state', $replacements);
+      $this->log(LogLevel::INFO, 'Transitioning latest revision #@original_revision_id from @original_state to @new_state', $replacements);
       if ($newRevision instanceof RevisionLogInterface && $revisionLog) {
         $newRevision
           ->setRevisionLogMessage($revisionLog)

@@ -1,0 +1,17 @@
+#myChatLinkInfo span {
+  display: none !important;
+}
+
+.sidebar #block-livechatandvaavailability {
+  background: transparent;
+}
+
+#block-callcentrequeuemonitor .btn {
+  white-space: normal !important;
+  margin-bottom: 4px;
+}
+
+#block-callcentrequeuemonitor img {
+  margin: 5px 10px 5px 0;
+  vertical-align: middle;
+}

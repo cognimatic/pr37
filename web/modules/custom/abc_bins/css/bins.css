@@ -1,0 +1,33 @@
+@media (min-width: 992px) {
+  .block-abc-bins-bin-dates-lookup {
+    border: 2px solid #005a8a;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 2em;
+  }
+}
+
+.General {background-color: #CEE3A7 !important;}
+.Recycling {background-color: #9FCCEC !important;}
+.Food {background-color: #E2A757 !important;}
+.Glass {background-color: #ddd !important;}
+
+.well ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.well li {
+  padding: 5px;
+  border-radius: 5px;
+  display: inline;
+  list-style-type: none;
+  margin-right: 10px;
+}
+
+span.beta {
+  background-color: #f9a538;
+  color: #fff;
+  padding: 2px;
+  border-radius: 4px;
+}
