@@ -41,7 +41,7 @@ body {
   --sidebar-exposed-form-bg-color: var(--color-grey-lightest);
 
   /* Apply Variables */
-  --breadcrumbs-divider: "»";
+  --breadcrumbs-divider: ">";
   --breadcrumbs-background-color: var(--color-accent-alt);
   --breadcrumbs-link-color: var(--color-black);
   --alert-banner-bg-color-minor: var(--color-accent-alt);
