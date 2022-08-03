@@ -34,14 +34,14 @@
 */
 body {
   /* Set Variables */
-  --color-accent: #01738f;
-  --color-accent-alt: #ffe146;
+  --color-accent: #0f1a44;
+  --color-accent-alt: #135526;
   --font-primary: "Open Sans", roboto, oxygen, ubuntu, cantarell, "Helvetica Neue", sans-serif;
   --font-secondary: 'Mulish', var(--font-primary);
   --sidebar-exposed-form-bg-color: var(--color-grey-lightest);
 
   /* Apply Variables */
-  --breadcrumbs-divider: "//";
+  --breadcrumbs-divider: "»";
   --breadcrumbs-background-color: var(--color-accent-alt);
   --breadcrumbs-link-color: var(--color-black);
   --alert-banner-bg-color-minor: var(--color-accent-alt);
