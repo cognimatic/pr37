@@ -45,7 +45,7 @@ class CToolsViewsBasicViewBlockTest extends UITestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp($import_test_views = TRUE, $modules = ['views_test_config']): void {
+  protected function setUp($import_test_views = TRUE) {
     parent::setUp($import_test_views);
 
     ViewTestData::createTestViews(get_class($this), ['ctools_views_test_views']);

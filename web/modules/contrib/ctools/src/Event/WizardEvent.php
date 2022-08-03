@@ -3,7 +3,7 @@
 namespace Drupal\ctools\Event;
 
 use Drupal\ctools\Wizard\FormWizardInterface;
-use Drupal\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * An event for altering form wizard values.

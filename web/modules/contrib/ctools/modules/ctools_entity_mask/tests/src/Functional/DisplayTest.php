@@ -39,7 +39,7 @@ class DisplayTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
 
     $account = $this->drupalCreateUser(['administer blocks']);
@@ -109,8 +109,10 @@ class DisplayTest extends BrowserTestBase {
     $this->assertNotFalse(strpos($rendered, $block->field_link->uri));
 
     $image_url = $block->field_image->entity->getFileUri();
-    $image_url = $this->container->get('file_url_generator')->generateAbsoluteString($image_url);
-    $image_url = $this->container->get('file_url_generator')->transformRelative($image_url);
+    $image_url = file_create_url($image_url);
+    // file_create_url() will include the host and port, but the rendered output
+    // won't include those.
+    $image_url = file_url_transform_relative($image_url);
     // @todo Use assertStringContainsString() when we rely exclusively on
     // PHPUnit 8.
     $this->assertNotFalse(strpos($rendered, $image_url));

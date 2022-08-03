@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\ctools\Unit;
 
-use Prophecy\PhpUnit\ProphecyTrait;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Plugin\Context\Context;
@@ -22,7 +21,6 @@ use Drupal\Tests\UnitTestCase;
  */
 class ContextMapperTest extends UnitTestCase {
 
-  use ProphecyTrait;
   /**
    * The typed data manager.
    *
@@ -43,7 +41,7 @@ class ContextMapperTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
 
     $this->typedDataManager = $this->prophesize(TypedDataManager::class);

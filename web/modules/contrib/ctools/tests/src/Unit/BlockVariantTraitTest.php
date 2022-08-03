@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\ctools\Unit;
 
-use Prophecy\PhpUnit\ProphecyTrait;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\ctools\Plugin\BlockPluginCollection;
 use Drupal\ctools\Plugin\BlockVariantTrait;
@@ -17,7 +16,6 @@ use Drupal\Tests\UnitTestCase;
  */
 class BlockVariantTraitTest extends UnitTestCase {
 
-  use ProphecyTrait;
   /**
    * Tests the getRegionAssignments() method.
    *

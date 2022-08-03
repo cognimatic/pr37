@@ -87,7 +87,7 @@ abstract class EntityFormWizardBase extends FormWizardBase implements EntityForm
       $values[$this->getEntityType()] = $entity;
     }
     $event = new WizardEvent($this, $values);
-    $this->dispatcher->dispatch($event, FormWizardInterface::LOAD_VALUES);
+    $this->dispatcher->dispatch(FormWizardInterface::LOAD_VALUES, $event);
     return $event->getValues();
   }
 
