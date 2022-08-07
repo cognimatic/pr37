@@ -4,9 +4,9 @@ module.exports = {
     "../stories/**/*.stories.@(json)"
   ],
   "addons": [
-	'@lullabot/storybook-drupal-addon',
     "@storybook/addon-links",
-    "@storybook/addon-essentials"
+    "@storybook/addon-essentials",
+	'@lullabot/storybook-drupal-addon'
   ],
   "framework": "@storybook/server",
   "core": {

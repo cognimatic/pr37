@@ -1,13 +1,12 @@
 export const parameters = {
   server: {
-    url: 'https://abc.ddev.site/',
+    url: 'https://abc.ddev.site',
   },
-drupalTheme: 'lgd_abc',
+  drupalTheme: 'claro',
   supportedDrupalThemes: {
-    localgov_base: { title: 'LocalGov Base' },
-	localgov_scarfolk: { title: "LocalGov Scarfolk" },
-	lgd_abc: { title: "Local Gov Argyll and Bute" },
-    gin: { title: 'Gin' },
-	claro: { title: 'Claro'},
+	  localgov_base: { title: 'Local Gov Base' },
+	  lgd_abc: { title: 'Argyll and Bute' },
+	  gin: { title: 'Gin' },
+	  claro: { title: 'Claro'},
   },
 };
