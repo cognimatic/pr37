@@ -24,7 +24,7 @@ class ComponentDiscovery {
   private static $directoryIteratorFlags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_SELF | \FilesystemIterator::SKIP_DOTS;
 
   /**
-   * Cached component information.
+   * Cached component information keyed by component ID.
    *
    * @var \Drupal\cl_components\Component\Component[]|null
    */
@@ -75,14 +75,16 @@ class ComponentDiscovery {
     $components = $this->findAll();
     $filtered = array_filter(
       $components,
-      fn (Component $component) => $component->getMetadata()->getComponentType() === ComponentMetadata::COMPONENT_TYPE_ORGANISM
+      fn(Component $component) => $component->getMetadata()
+          ->getComponentType() === ComponentMetadata::COMPONENT_TYPE_ORGANISM
     );
     if (!$no_wip) {
       return $filtered;
     }
     return array_filter(
       $filtered,
-      fn (Component $component) => $component->getMetadata()->getStatus() !== ComponentMetadata::COMPONENT_STATUS_WIP
+      fn(Component $component) => $component->getMetadata()
+          ->getStatus() !== ComponentMetadata::COMPONENT_STATUS_WIP
     );
   }
 
@@ -94,46 +96,71 @@ class ComponentDiscovery {
    */
   public function findAll(): array {
     if (isset($this->components)) {
-      return $this->components;
+      return array_values($this->components);
     }
+    $components_by_key = fn(array $data) => array_reduce(
+      $data,
+      static fn(array $all, Component $c) => [...$all, $c->getId() => $c],
+      []
+    );
     $cache_ids = $this->cache->get('all-cache-ids');
     if ($cache_ids && is_array($cache_ids->data)) {
       $cache_entries = $this->cache->getMultiple($cache_ids->data);
-      $components = array_map(
-        fn (object $item) => $item->data,
+      // Get the data of the cache properties.
+      $cache_data = array_map(
+        fn(object $item) => $item->data,
         $cache_entries
       );
-      $this->components = array_values($components);
-      return $this->components;
-    }
-    $unflattened = array_map(function (string $path) {
-      try {
-        $directory_iterator = new \RecursiveDirectoryIterator($path, static::$directoryIteratorFlags);
-      }
-      catch (\UnexpectedValueException $exception) {
-        watchdog_exception('cl_components', $exception);
-        return [];
-      }
-      $components = array_map(
-        [$this, 'createComponent'],
-        $this->discoverComponentPaths($directory_iterator, [])
+      // Ensure cache data deserializes to a Component.
+      $cached_components = array_filter(
+        $cache_data,
+        static fn(mixed $item) => $item instanceof Component
       );
-      return array_filter($components);
-    }, $this->scanDirs);
-    $this->components = array_merge(...$unflattened);
+      $this->components = $components_by_key($cached_components);
+      return array_values($this->components);
+    }
+    $paths = $this->findAllPaths();
+    $components = array_map([$this, 'createComponent'], $paths);
+    $components = array_filter($components);
+    $this->components = $components_by_key($components);
     $this->cache->set(
       'all-cache-ids',
-      array_map(fn (Component $component) => 'component::' . $component->getId(), $this->components)
+      array_map(
+        static fn(Component $component) => 'component::' . $component->getId(),
+        $this->components
+      )
     );
     $this->cache->setMultiple(array_reduce(
-      $this->components,
-      fn (array $items, Component $component) => array_merge(
+      $components,
+      static fn(array $items, Component $component) => array_merge(
         $items,
         ['component::' . $component->getId() => ['data' => $component]]
       ),
       []
     ));
-    return $this->components;
+    return array_values($this->components);
+  }
+
+  /**
+   * Finds the paths to all the components under the scan dirs.
+   *
+   * Note that this method is not cached. Use responsibly.
+   *
+   * @return string[]
+   *   The paths to the component folders.
+   */
+  public function findAllPaths(): array {
+    $unflattened = array_map(function (string $path) {
+      try {
+        $directory_iterator = new \RecursiveDirectoryIterator($path, static::$directoryIteratorFlags);
+        return $this->discoverComponentPaths($directory_iterator, []);
+      }
+      catch (\UnexpectedValueException $exception) {
+        watchdog_exception('cl_components', $exception);
+        return [];
+      }
+    }, $this->scanDirs);
+    return array_merge(...$unflattened);
   }
 
   /**
@@ -275,19 +302,59 @@ class ComponentDiscovery {
    *   When the component cannot be found.
    */
   public function find(string $id): Component {
+    // Check if the component is in memory cache.
+    if (($this->components[$id] ?? NULL) instanceof Component) {
+      return $this->components[$id];
+    }
+    // Check if the component is in persisted cache.
+    $cached = $this->cache->get('component::' . $id);
+    if ($cached && $cached->data instanceof Component) {
+      return $cached->data;
+    }
+    // Find all components and search for ours.
     $components = $this->findAll();
     $matches = array_filter(
       $components,
-      static function (Component $component) use ($id) {
-        return $component->getId() === $id;
-      }
+      static fn(Component $c) => $c->getId() === $id
     );
     $component = reset($matches);
-    if (!$component instanceof Component) {
-      $message = sprintf('Unable to find component "%s" in the component repository', $id);
-      throw new ComponentNotFoundException($message);
+    if ($component instanceof Component) {
+      return $component;
     }
-    return $component;
+    $message = sprintf('Unable to find component "%s" in the component repository', $id);
+    throw new ComponentNotFoundException($message);
+  }
+
+  /**
+   * Gets the directories to scan for components.
+   *
+   * @return string[]
+   *   The directories.
+   */
+  public function getScanDirs() {
+    return $this->scanDirs;
+  }
+
+  /**
+   * Creates a component from a component path.
+   *
+   * @param string $path
+   *   The path to the directory that holds the component.
+   *
+   * @return \Drupal\cl_components\Component\Component|null The component.
+   *   The component.
+   */
+  private function createComponent(string $path): ?Component {
+    try {
+      return $this->instantiateComponent($path);
+    }
+    catch (InvalidComponentException $e) {
+      watchdog_exception('cl_components', $e, 'Invalid component @path. Error: @error', [
+        '@path' => $path,
+        '@error' => $e->getMessage(),
+      ]);
+      return NULL;
+    }
   }
 
   /**
@@ -298,26 +365,22 @@ class ComponentDiscovery {
    *
    * @return \Drupal\cl_components\Component\Component
    *   The component.
+   *
+   * @throws \Drupal\cl_components\Exception\InvalidComponentException
    */
-  private function createComponent(string $path): ?Component {
+  public function instantiateComponent(string $path): Component {
     $assets = $this->discoverDistAssets($path);
     $templates = $this->discoverTemplates($path);
     $meta = $this->discoverMeta($path);
     $id = $meta->getMachineName();
-    try {
-      return new Component(
-        $id,
-        $templates,
-        $assets['css'],
-        $assets['js'],
-        $meta,
-        $this->debugMode
-      );
-    }
-    catch (InvalidComponentException $e) {
-      watchdog_exception('cl_components', $e);
-      return NULL;
-    }
+    return new Component(
+      $id,
+      $templates,
+      $assets['css'],
+      $assets['js'],
+      $meta,
+      $this->debugMode
+    );
   }
 
   /**
@@ -329,7 +392,7 @@ class ComponentDiscovery {
    * @return array
    *   The list of assets in the "dist" directory to include for the component.
    */
-  private function discoverDistAssets(string $path): array {
+  public function discoverDistAssets(string $path): array {
     $extensions = ['css', 'js'];
     $app_root = \Drupal::getContainer()->getParameter('app.root');
     $dirname = substr(dirname(__DIR__, 2), strlen($app_root) + 1);
@@ -348,7 +411,7 @@ class ComponentDiscovery {
         try {
           $it = new \RecursiveDirectoryIterator($full_path, static::$directoryIteratorFlags);
           $files = array_map(
-            fn (string $file) => sprintf('%s/%s', $prefix, $file),
+            fn(string $file) => sprintf('%s/%s', $prefix, $file),
             $this->findSubpathByExtension($it, $extension)
           );
         }

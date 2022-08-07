@@ -6,7 +6,8 @@
   "required": [
     "machineName",
     "name",
-    "status"
+    "status",
+    "componentType"
   ],
   "properties": {
     "$schema": {

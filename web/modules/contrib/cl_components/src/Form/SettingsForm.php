@@ -8,7 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Configure Storybook Components settings for this site.
  */
-class SettingsForm extends ConfigFormBase {
+final class SettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
@@ -42,13 +42,26 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t('Use additional debugging tools for components. This is in addition to the debug HTML comments added to the DOM when setting <code>twig.config.debug: true</code> in your development.services.yml container.'),
       '#default_value' => $this->config('cl_components.settings')->get('debug'),
     ];
-    return parent::buildForm($form, $form_state);
+    $form = parent::buildForm($form, $form_state);
+    $form['actions']['clear'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Clear Discovery Cache'),
+    ];
+    return $form;
   }
 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    // Check if the configuration form was saved or the cache clear triggered.
+    $element = $form_state->getTriggeringElement();
+    if (end($element['#array_parents']) === 'clear') {
+      $cache = \Drupal::cache('component_registry');
+      $cache->deleteAll();
+      $this->messenger()->addMessage($this->t('The component discovery cache has been cleared.'));
+      return;
+    }
     $paths = $this->massagePathsValue($form_state->getValue('paths'));
     $debug = (bool) $form_state->getValue('debug');
     $this->config('cl_components.settings')

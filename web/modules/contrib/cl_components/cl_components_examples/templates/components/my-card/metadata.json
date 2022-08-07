@@ -4,13 +4,14 @@
   "name": "Card",
   "status": "BETA",
   "componentType": "organism",
-  "variants": ["light"],
+  "variants": [
+    "light"
+  ],
   "schemas": {
     "props": {
       "type": "object",
       "required": [
-        "header",
-        "children"
+        "header"
       ],
       "properties": {
         "header": {

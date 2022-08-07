@@ -10,3 +10,8 @@ cl_debug:
       src/assets/css/cl-debug.css: {}
   js:
     src/assets/js/cl-debug.js: { }
+
+cl_registry:
+  css:
+    component:
+      src/assets/css/cl-registry.css: {}

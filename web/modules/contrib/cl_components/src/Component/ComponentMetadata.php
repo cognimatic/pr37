@@ -27,6 +27,8 @@ final class ComponentMetadata {
 
   public const COMPONENT_STATUS_WIP = 'WIP';
 
+  public const DEFAULT_DESCRIPTION = '- Not available -';
+
   /**
    * the absolute path to the component directory.
    *
@@ -152,7 +154,7 @@ final class ComponentMetadata {
     $folder_name = end($path_parts);
     $this->machineName = $metadata_info['machineName'] ?? $folder_name;
     $this->name = $metadata_info['name'] ?? ucwords($this->machineName);
-    $this->description = $metadata_info['description'] ?? '- Not available -';
+    $this->description = $metadata_info['description'] ?? static::DEFAULT_DESCRIPTION;
     $this->status = $metadata_info['status'] ?? static::COMPONENT_STATUS_WIP;
     $this->componentType = $metadata_info['componentType'] ?? static::COMPONENT_TYPE_ORGANISM;
     $this->libraryDependencies = $metadata_info['libraryDependencies'] ?? [];
@@ -202,15 +204,13 @@ final class ComponentMetadata {
    * @throws \Drupal\cl_components\Exception\InvalidComponentException
    */
   private function parseSchemaInfo(array $metadata_info): void {
-    $default_props_schema = [
+    $default_schema = [
       'type' => 'object',
       'additionalProperties' => FALSE,
       'required' => [],
-      'properties' => [
-        'children' => ['type' => 'string'],
-      ],
+      'properties' => [],
     ];
-    $this->schemas = $metadata_info['schemas'] ?? ['props' => $default_props_schema];
+    $this->schemas = $metadata_info['schemas'] ?? ['props' => $default_schema];
     if (($this->schemas['props']['type'] ?? 'object') !== 'object') {
       throw new InvalidComponentException('The schema for the props in the component metadata is invalid. The schema should be of type "object".');
     }
@@ -218,12 +218,9 @@ final class ComponentMetadata {
       throw new InvalidComponentException('The schema for the props in the component metadata is invalid. Arbitrary additional properties are not allowed.');
     }
     $this->schemas['props']['additionalProperties'] = FALSE;
-    $this->schemas['props']['properties']['children'] = ['type' => 'string'];
     // Save the props.
-    $schema_props = $metadata_info['schemas']['props'] ?? $default_props_schema;
-    $required_info = $schema_props['required'] ?? [];
+    $schema_props = $metadata_info['schemas']['props'] ?? $default_schema;
     foreach ($schema_props['properties'] ?? [] as $name => $schema) {
-      $is_required = in_array($name, $required_info);
       // All props should also support "object" this allows deferring rendering
       // in Twig to the render pipeline.
       $type = $schema['type'] ?? '';

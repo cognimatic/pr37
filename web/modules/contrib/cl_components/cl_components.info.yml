@@ -7,7 +7,7 @@ core: 8.x
 core_version_requirement: ^8 || ^9 || ^10
 configure: cl_components.settings
 
-# Information added by Drupal.org packaging script on 2022-06-15
-version: '1.0.0-beta7'
+# Information added by Drupal.org packaging script on 2022-07-09
+version: '1.0.0-beta8'
 project: 'cl_components'
-datestamp: 1655283637
+datestamp: 1657364963

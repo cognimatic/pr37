@@ -1,6 +1,6 @@
 {
     "name": "drupal/cl_components",
-    "description": "Component library using Storybook for the Hybrid Cloud team at IBM.",
+    "description": "Drupal module that allows to declare, discover, and render self-contained components.",
     "type": "drupal-module",
     "license": "GPL-2.0-or-later",
     "authors": [
@@ -11,11 +11,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.1",
         "ext-json": "*",
         "justinrainbow/json-schema": "^5.2.11"
-    },
-    "suggest": {
-        "league/commonmark": "^2"
     }
 }
