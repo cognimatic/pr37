@@ -55,7 +55,7 @@ class AdminFunctionalityTest extends BrowserTestBase {
   /**
    * Tests each of the admin pages loads correctly.
    *
-   * This is to be used until all of the admin functionality has separate
+   * This is to be used until all of the admin functionality has separate.
    *
    * @param string $path
    *   The path to check.
@@ -85,11 +85,26 @@ class AdminFunctionalityTest extends BrowserTestBase {
       ['admin/config/development/backup_migrate/schedule', 'Schedule'],
       ['admin/config/development/backup_migrate/schedule/add', 'Add schedule'],
       ['admin/config/development/backup_migrate/settings', 'Settings'],
-      ['admin/config/development/backup_migrate/settings/add', 'Add settings profile'],
-      ['admin/config/development/backup_migrate/settings/destination', 'Backup Destination'],
-      ['admin/config/development/backup_migrate/settings/destination/add', 'Add destination'],
-      ['admin/config/development/backup_migrate/settings/source', 'Backup sources'],
-      ['admin/config/development/backup_migrate/settings/source/add', 'Add Backup Source'],
+      [
+        'admin/config/development/backup_migrate/settings/add',
+        'Add settings profile',
+      ],
+      [
+        'admin/config/development/backup_migrate/settings/destination',
+        'Backup Destination',
+      ],
+      [
+        'admin/config/development/backup_migrate/settings/destination/add',
+        'Add destination',
+      ],
+      [
+        'admin/config/development/backup_migrate/settings/source',
+        'Backup sources',
+      ],
+      [
+        'admin/config/development/backup_migrate/settings/source/add',
+        'Add Backup Source',
+      ],
     ];
   }
 
@@ -98,6 +113,7 @@ class AdminFunctionalityTest extends BrowserTestBase {
    */
   public function testDestinationsAdmin() {
     // Load the destination page.
+    // @todo Confirm the table only has one record.
     $this->drupalGet('admin/config/development/backup_migrate/settings/destination');
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
@@ -105,7 +121,6 @@ class AdminFunctionalityTest extends BrowserTestBase {
     $session->pageTextContains('Private Files Directory');
     $session->pageTextContains('private_files');
     $session->pageTextContains('Server File Directory');
-    // @todo Confirm the table only has one record.
 
     // Load the destination-add form.
     $this->drupalGet('admin/config/development/backup_migrate/settings/destination/add');
@@ -171,7 +186,6 @@ class AdminFunctionalityTest extends BrowserTestBase {
     $session->pageTextContains('Public Files');
 
     // @todo Confirm the table has four records.
-
     // Load the add source form.
     $this->drupalGet('admin/config/development/backup_migrate/settings/source/add');
     $session = $this->assertSession();
@@ -183,9 +197,9 @@ class AdminFunctionalityTest extends BrowserTestBase {
 
     // Create a new source of type File Directory.
     $edit = [
-        'label' => 'Test FileDirectory source',
-        'id' => 'test_filedirectory_source',
-        'type' => 'FileDirectory',
+      'label' => 'Test FileDirectory source',
+      'id' => 'test_filedirectory_source',
+      'type' => 'FileDirectory',
     ];
     $this->submitForm($edit, 'Save and edit');
 
@@ -201,7 +215,7 @@ class AdminFunctionalityTest extends BrowserTestBase {
 
     // Fill in a path.
     $edit = [
-        'config[directory]' => 'test_path',
+      'config[directory]' => 'test_path',
     ];
     $this->submitForm($edit, 'Save');
     $session = $this->assertSession();
@@ -229,9 +243,9 @@ class AdminFunctionalityTest extends BrowserTestBase {
 
     // Create a new source of type MySQL Database.
     $edit = [
-        'label' => 'Test MySQL source',
-        'id' => 'test_mysql_source',
-        'type' => 'MySQL',
+      'label' => 'Test MySQL source',
+      'id' => 'test_mysql_source',
+      'type' => 'MySQL',
     ];
     $this->submitForm($edit, 'Save and edit');
 
@@ -278,6 +292,7 @@ class AdminFunctionalityTest extends BrowserTestBase {
    */
   public function testSchedulesAdmin() {
     // Load the schedule page.
+    // @todo Confirm the table only has one record.
     $this->drupalGet('admin/config/development/backup_migrate/schedule');
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
@@ -293,7 +308,6 @@ class AdminFunctionalityTest extends BrowserTestBase {
     $session->pageTextContains('Never');
     $session->pageTextContains('Disabled');
     $session->pageTextContains('Last backups');
-    // @todo Confirm the table only has one record.
 
     // Edit an existing schedule - turn on the default schedule.
     $this->drupalGet('admin/config/development/backup_migrate/schedule/edit/daily_schedule');
@@ -358,12 +372,12 @@ class AdminFunctionalityTest extends BrowserTestBase {
    */
   public function testProfilesAdmin() {
     // Load the profiles page.
+    // @todo Confirm the table has no records.
     $this->drupalGet('admin/config/development/backup_migrate/settings');
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
     $session->pageTextContains('Settings');
     $session->pageTextContains('Profile Name');
-    // @todo Confirm the table has no records.
 
     // Load the profile-add form.
     $this->drupalGet('admin/config/development/backup_migrate/settings/add');

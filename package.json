@@ -5,20 +5,5 @@
   "repository": "https://gitlab.inspireservera.com/custom-non-rp/argyll-bute-council.git",
   "author": "Rob Carr <robert@inspire.scot>",
   "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.18.9",
-    "@lullabot/storybook-drupal-addon": "^1.0.21",
-    "@storybook/addon-actions": "^6.5.9",
-    "@storybook/addon-essentials": "^6.5.9",
-    "@storybook/addon-links": "^6.5.9",
-    "@storybook/builder-webpack5": "^6.5.9",
-    "@storybook/manager-webpack5": "^6.5.9",
-    "@storybook/server": "^6.5.9",
-    "babel-loader": "^8.2.5"
-  },
-  "dependencies": {},
-  "scripts": {
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  }
+  "scripts": {}
 }

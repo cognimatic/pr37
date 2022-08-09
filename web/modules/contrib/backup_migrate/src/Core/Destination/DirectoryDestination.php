@@ -11,7 +11,7 @@ use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 use Drupal\backup_migrate\Core\File\ReadableStreamBackupFile;
 
 /**
- *
+ * A destination that is a directory.
  *
  * @package Drupal\backup_migrate\Core\Destination
  */

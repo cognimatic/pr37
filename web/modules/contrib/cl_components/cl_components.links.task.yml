@@ -1,8 +1,0 @@
-cl_components.settings_tab:
-  title: 'Settings'
-  route_name: cl_components.settings
-  base_route: cl_components.settings
-cl_components.registry_tab:
-  title: 'Component Audit'
-  route_name: cl_components.registry
-  base_route: cl_components.settings

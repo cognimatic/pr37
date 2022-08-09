@@ -108,7 +108,11 @@ class BackupMigrate implements BackupMigrateInterface {
     }
 
     // Allow the plugins to tear down.
-    $this->plugins()->call('tearDown', NULL, ['operation' => 'backup', 'source_id' => $source_id, 'destination_id' => $destination_id]);
+    $this->plugins()->call('tearDown', NULL, [
+      'operation' => 'backup',
+      'source_id' => $source_id,
+      'destination_id' => $destination_id,
+    ]);
   }
 
   /**

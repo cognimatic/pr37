@@ -1,3 +1,23 @@
+Backup and Migrate 5.1.x-dev, xxxx-xx-xx
+----------------------------------------
+#3223057 by paulocs, larisse, DamienMcKenna, Anybody, Grevil: Add Drush command
+  for running a quick backup.
+#2968766 by paulocs, DamienMcKenna, intrafusion, larisse, fgm, hron84: Add
+  Drush commands for getting details of available configurations.
+#3262387 by DamienMcKenna: Remove support for Drupal 8.
+#3223058 by DamienMcKenna, paulocs, larisse: Add Drush command for running a
+  scheduled backup.
+#3258613 by Anybody, hmendes, pmagunia, DamienMcKenna: Improve Quick Backup
+  status message.
+#3262391 by DamienMcKenna: Coding standards improvements.
+
+
+Backup and Migrate 5.0.x-dev, xxxx-xx-xx
+----------------------------------------
+#3261770 by hmendes, solideogloria, Adrianm6254, DamienMcKenna: PHP notice when
+  downloading saved backup.
+
+
 Backup and Migrate 5.0.1, 2021-07-09
 ------------------------------------
 #3220548 by paulocs, senzaesclusiva, DamienMcKenna: Warning: Invalid argument
