@@ -3,7 +3,7 @@
 namespace Drupal\backup_migrate\Core\Destination;
 
 /**
- * An interface for managing listable(?) destinations.
+ * Interface ListableDestinationInterface.
  *
  * @package Drupal\backup_migrate\Core\Destination
  */

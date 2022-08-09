@@ -1,0 +1,429 @@
+.servicehub--status {
+  overflow: auto;
+
+  .fa-info-circle {
+    position: absolute;
+    left: 0;
+    vertical-align: middle;
+
+    @include rem(font-size, 35);
+    @include rem(margin-right, 10);
+  }
+
+  h2 {
+    @include rem(margin, 25, 0);
+  }
+
+  h3 {
+    display: inline-block;
+
+    @include rem(margin-top, 5);
+    @include rem(margin-bottom, 10);
+  }
+
+  p {
+    font-weight: $font-bold;
+    display: inline;
+  }
+
+  span {
+    position: relative;
+    display: inline-block;
+
+    @include rem(padding-left, 50);
+    @include rem(margin-bottom, 15);
+  }
+}
+
+.servicehub--link-section {
+  overflow: auto;
+  width: 100%;
+
+  @include rem(padding, 30, 0);
+
+  h2 {
+    line-height: 1;
+    font-size: $h5-font-size;
+
+    @include rem(margin-top, 15);
+    @include rem(margin-bottom, 15);
+
+    @include media-breakpoint-up(lg) {
+      font-size: $h3-font-size;
+    }
+  }
+}
+
+.servicehub--more {
+  border-bottom: $gray-tint;
+
+  @include rem(margin-bottom, 20);
+
+  h2,
+  h3 {
+    line-height: 1;
+    font-size: $h5-font-size;
+
+    @include rem(margin-top, 0);
+    @include rem(margin-bottom, 15);
+
+    @include media-breakpoint-up(lg) {
+      font-size: $h3-font-size;
+    }
+  }
+}
+
+.servicehub--more [class*='col-'] {
+  @include rem(padding-top, 0);
+  @include rem(padding-bottom, 0);
+}
+
+/* Servicehub Contact */
+
+.servicehub--contact {
+  overflow: auto;
+
+  .contact-container {
+    background: $gray-tint;
+    border-left: 0.313rem solid $primary;
+
+    @include rem(padding, 20, 30, 15);
+    @include rem(margin-bottom, 25);
+
+    h2 {
+      margin: 0;
+      line-height: 1;
+
+      @include rem(padding-bottom, 15);
+    }
+
+    ul {
+      font-weight: $font-bold;
+      list-style: none;
+      margin-left: 0;
+      padding-left: 0;
+
+      span {
+        display: inline-block;
+        text-align: center;
+
+        @include rem(width, 20);
+        @include rem(padding-right, 10);
+      }
+
+      .fa {
+        font-size: $font-size-sm;
+      }
+    }
+
+    i {
+      font-size: $font-size-ex-med;
+
+      @include rem(margin-right, 5);
+    }
+
+    p {
+      font-size: $font-size-med;
+    }
+  }
+
+  .sidebar {
+    @include rem(margin-top, 10);
+  }
+
+  .contact-top {
+    @include rem(padding-bottom, 20);
+
+    .column-2 {
+      @include rem(padding-right, 30);
+    }
+
+    ul {
+      @include rem(margin-bottom, 15);
+    }
+
+    h3 {
+      margin: 0;
+      font-weight: $font-bold;
+      font-size: $font-size-med;
+
+      @include rem(line-height, 25);
+    }
+  }
+
+  .opening-times {
+    font-size: $font-size-med;
+
+    @include rem(line-height, 22);
+  }
+
+  .contact-title {
+    font-weight: $font-bold;
+    text-decoration: none;
+  }
+
+  .contact-address {
+    span {
+      display: block;
+      font-size: $font-size-med;
+    }
+  }
+
+  .contact-bottom {
+    border-top: $gray-tint;
+
+    @include rem(padding-top, 15);
+
+    li {
+      font-size: $font-size-med;
+      display: inline;
+
+      @include rem(margin-right, 10);
+    }
+  }
+}
+
+.servicehub--contact [class*='col-'],
+.contact-top [class*='col-'],
+.cta-pull [class*='col-'] {
+  @include rem(padding-top, 0);
+  @include rem(padding-bottom, 0);
+}
+
+.block-system-main-block {
+  .page-node-type-localgov-services-sublanding {
+    h3 {
+      margin-top: 0;
+    }
+  }
+}
+
+// service pages use header links that are styled differently to those featured in main content
+.page-node-type-localgov_directory,
+.page-node-type-localgov_directories_page {
+  .sidebar {
+    margin-top: 0;
+  }
+}
+
+.page-node-type-localgov-services-landing,
+.page-node-type-localgov-services-sublanding,
+.page-node-type-type-localgov-services-sublanding,
+.page-node-type-localgov-directory,
+.page-node-type-localgov-directories-page {
+  main { // remove main top margin for service pages
+    margin-top: 0;
+
+    section { // service pages use section differently so dont require the default margin and padding
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .block-system-main-block {
+    h2 {
+      margin-top: 0 !important;
+
+      a {
+        color: $primary;
+        text-decoration: underline;
+
+        &:visited {
+          color: $primary;
+        }
+
+        &:hover,
+        &:focus {
+          text-decoration: none;
+          color: $secondary;
+        }
+      }
+    }
+  }
+}
+
+.servicehub--update {
+  overflow: auto;
+  background-color: $indigo-tint;
+
+  @include rem(margin-top, 30);
+  @include rem(margin-bottom, 20);
+  @include rem(padding, 20);
+
+  .servicehub--status {
+    .fa-info-circle {
+      @include rem(top, 5);
+    }
+  }
+
+  &_inner {
+    background: $white;
+
+    @include rem(padding, 20, 30, 25);
+    @include rem(margin-bottom, 20);
+
+    ul {
+      li {
+        color: $carbon !important;
+      }
+    }
+  }
+
+  .action-link,
+  .read-more {
+    color: $white;
+
+    i {
+      color: $carbon;
+    }
+
+    &:hover,
+    &:focus {
+      color: $carbon;
+    }
+  }
+
+  ul {
+    display: table;
+    width: 100%;
+    list-style-type: none;
+
+    &:not(:last-child) {
+      @include rem(margin-bottom, 20);
+    }
+
+    h2 {
+      float: left;
+      font-weight: $font-bold;
+
+      @include rem(font-size, 25);
+      @include rem(margin, 10, 0);
+      @include rem(padding-right, 20);
+    }
+
+    li {
+      color: $white;
+      display: table-cell;
+
+      &:first-child {
+        font-weight: $font-bold;
+
+        @include rem(width, 150);
+      }
+    }
+  }
+
+  .read-more {
+    font-weight: $font-bold;
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+
+  &.striped {
+    ul {
+      li {
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  &.striped ul:not(:last-child) {
+    border-bottom: $gray-tint;
+
+    @include rem(padding-bottom, 20);
+  }
+}
+
+// Service page CTA's
+
+
+.service-landing-page__service-item { // services landing page
+  p,
+  .field--name-body,
+  .field--name-localgov-guides-description,
+  .field--type-text-with-summary {
+    font-size: $font-size-lg;
+  }
+}
+
+.lgd-topic-list-builder__service-item {
+  .field--name-localgov-guides-description,
+  .field--type-text-with-summary {
+    font-size: $font-size-lg;
+  }
+}
+
+
+.block-localgov-service-cta-block {
+  @include rem(padding-top, 15);
+  @include rem(padding-bottom, 15);
+
+  .service-cta-block {
+    &__list {
+      padding-right: 0; // override general ul setting
+
+      @include rem(padding-bottom, 15);
+
+      .service-cta-block__list-item { // CTA styling
+        @include media-breakpoint-up(md) {
+          @include rem(padding-right, 15);
+
+          &:nth-child(2n) { // remove the right padding from every second item
+            padding-right: 0;
+          }
+        }
+
+        @include media-breakpoint-up(lg) {
+          &:nth-child(2n) {
+            @include rem(padding-right, 15);
+          }
+
+          &:nth-child(3n) { // remove the right padding from every third item
+            padding-right: 0;
+          }
+        }
+
+        .service-cta-block__link {
+          &:hover,
+          &:focus {
+            text-decoration: none;
+          }
+        }
+
+        .service-cta-block__link-icon {
+          transition: none; // reset base transition setting
+          left: 0 !important; // override base transition setting
+        }
+
+        a.external-link { // control change of icon due to external link on the button
+          position: relative;
+
+          &:after {
+            width: 1.1rem;
+            height: 1.1rem;
+            font-size: 1rem;
+            text-decoration: none;
+            margin-top: 0;
+            top: 1.2rem;
+            position: absolute;
+            right: 1rem;
+            background-color: $carbon;
+          }
+
+          &:hover,
+          &:focus {
+            &:after {
+              background-color: $white;
+            }
+          }
+
+          .service-cta-block__link-icon {
+            display: none; // hide the chevron thats normally used
+          }
+        }
+      }
+    }
+  }
+}

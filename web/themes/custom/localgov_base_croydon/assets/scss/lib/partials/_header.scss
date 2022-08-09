@@ -1,0 +1,239 @@
+.lgd-header {
+  &__nav--primary {
+    flex: 1;
+  }
+
+  &__inner {
+    justify-content: start;
+
+    @include media-breakpoint-up(md) {
+      justify-content: inherit;
+    }
+  }
+
+  &__toggles {
+    margin-bottom: 0;
+
+    .lgd-header__toggle--secondary { // Services Button
+      font-family: $font-family-secondary;
+      font-size: $font-size-lg;
+      font-weight: $font-bold;
+      text-decoration: underline;
+
+      &:hover,
+      &:focus {
+        background-color: $white;
+        color: $carbon;
+        text-decoration: none;
+      }
+
+      &.lgd-header__toggle--active {
+        @include outline(.1875rem, -.1875rem, $focus);
+      }
+
+      .lgd-header__toggle-icon {
+        &:after {
+          font-size: $font-size-base;
+          font-weight: $fa-font-weight; // some font awesome icons require a specific font weight
+          font-family: $font-family-icons;
+          content: $fa-chevron-right;
+        }
+      }
+    }
+
+    .lgd-header__toggle--primary { // Mobile Menu Button
+      outline: 0.2rem solid $white;
+      padding: 0;
+      border-radius: 0;
+      margin: 0;
+
+      @include rem(width, 38);
+      @include rem(height, 38);
+
+      .lgd-header__toggle-text {
+        display: none; // text is not required visually
+      }
+
+      .lgd-header__toggle-icon {
+        &:after {
+          transition: none; // remove base setting
+          transform: none; // remove base setting
+          font-size: $font-size-ex-med;
+          font-family: $font-family-icons;
+          content: $fa-bars;
+
+          @include rem(margin-left, 2);
+        }
+      }
+
+      &:hover,
+      &:focus { // re-declare settings to override global button settings
+        outline: 0.2rem solid $white !important;
+        outline-offset: 0;
+        padding: 0;
+        border-radius: 0;
+        margin: 0;
+
+        @include rem(width, 38);
+        @include rem(height, 38);
+      }
+
+      &.lgd-header__toggle--active { // active state icon
+        .lgd-header__toggle-icon {
+          &:after {
+            content: $fa-times;
+            font-size: $font-size-ex-ex-lg;
+
+            @include rem(margin-left, 3);
+          }
+        }
+      }
+    }
+  }
+
+  .lgd-header__nav--active { // use active state to target only mobile search
+    .lgd-region__inner--search {
+      width: 100%;
+
+      .js-form-type-search {
+        width: 100%;
+
+        .form-search {
+          @include rem(margin, 10, 0);
+        }
+      }
+    }
+  }
+
+  .lgd-header__nav--primary {
+    &.lgd-header__nav--active { // use active state to target only mobile primary menu
+      .lgd-region--primary-menu {
+        background-color: $primary;
+
+        .menu--main {
+          li {
+            &:not(:last-child) {
+              a {
+                color: $white;
+                padding: 0;
+                text-decoration: none;
+              }
+            }
+
+            &:last-child {
+              a {
+                padding: 0;
+                margin-left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .lgd-header__nav--secondary {
+    height: 75vh;
+    overflow: auto;
+
+    @include media-breakpoint-up(md) {
+      height: auto;
+    }
+
+    &.lgd-header__nav--active { // use active state to target only mobile secondary menu
+
+      h2 {
+        &.visually-hidden { // force the title to unhide
+          display: inline-block;
+          opacity: 1;
+          width: auto;
+          position: relative !important;
+          overflow: visible;
+          font-size: $h2-font-size;
+        }
+      }
+
+      .menu--localgov-services-menu {
+        list-style-type: none;
+        padding-inline-start: 0;
+        margin-top: 1rem;
+
+        li {
+          a {
+            font-weight: $font-bold;
+          }
+        }
+      }
+    }
+  }
+
+  .region-header { // set logo position for mobile and unset for desktop
+    display: flex;
+    flex: auto;
+
+    @include media-breakpoint-up(md) {
+      display: block;
+      flex: none;
+    }
+  }
+
+  .menu--main .menu-item:last-child { // My Account Styling
+    white-space: nowrap;
+
+    a {
+      color: $yellow;
+      font-weight: $font-bold; // for fallbacks only
+      white-space: nowrap;
+      font-size: $font-size-base;
+      margin: 1rem;
+      padding: 0.25rem 0 0 0;
+      position: relative;
+      border: 0;
+
+      &:hover,
+      &:focus {
+        background: $yellow;
+        color: $link-hover-color;
+        text-decoration: none;
+        border: 0;
+      }
+
+      &:after {
+        position: absolute;
+        font-size: $font-size-base;
+        font-weight: $fa-font-weight; // some font awesome icons require a specific font weight
+        font-family: $font-family-icons;
+        content: $fa-user;
+        margin: 0;
+        padding: 0;
+        color: $white;
+
+        @include rem(right,-20);
+      }
+    }
+  }
+
+  .lgd-region--search {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include media-breakpoint-up(lg) {
+      position: initial;
+      top: auto;
+      width: auto;
+    }
+
+    .form-item {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.region-secondary-menu .menu-item {
+  margin-bottom: 0;
+  line-height: 1.25rem;
+}

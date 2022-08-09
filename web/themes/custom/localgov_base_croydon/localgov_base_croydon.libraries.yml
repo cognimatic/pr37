@@ -1,0 +1,64 @@
+global:
+  css:
+    base:
+      css/base/variables.css: { weight: 200 }
+  js:
+    js/bootstrap.min.js: {}
+    js/main.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+
+base:
+  css:
+    theme:
+      assets/css/font-face.css: {}
+      css/components/base.css: { weight: 200 }
+      assets/css/lib/main.css: {}
+      css/components/form-items.css: {}
+
+header:
+  css:
+    theme:
+      css/components/header.css: { weight: 200 }
+
+alert:
+  css:
+    theme:
+      css/components/alert.css: { weight: 200 }
+
+homepage:
+  css:
+    theme:
+      css/components/homepage.css: { weight: 200 }
+
+service-cta-block:
+  css:
+    theme:
+      css/components/service-cta-block.css: { weight: 200 }
+
+service-landing-page:
+  css:
+    theme:
+      css/components/service-landing-page.css: { weight: 200 }
+
+secondary-menu:
+  css:
+    theme:
+      css/components/secondary-menu.css: { weight: 200 }
+
+teaser:
+  css:
+    theme:
+      css/components/teaser.css: { weight: 200 }
+
+topic-list-builder:
+  css:
+    theme:
+      css/components/topic-list-builder.css: { weight: 200 }
+
+wysiwyg-styles:
+  css:
+    theme:
+      css/components/wysiwyg-styles.css: { weight: 200 }

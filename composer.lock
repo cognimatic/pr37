@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06e7dbced1b01135621e3ded1dc5b4db",
+    "content-hash": "0f4023516ee0e24417aeeb3113d502da",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2615,14 +2615,14 @@
         },
         {
             "name": "drupal/backup_migrate",
-            "version": "dev-5.1.x",
+            "version": "dev-5.0.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/backup_migrate.git",
-                "reference": "79c28c31b9ad685601263e7e1db80e6360cc70e6"
+                "reference": "1b59ab6eb8c1d6e9bdfaa4047619486479795033"
             },
             "require": {
-                "drupal/core": "^9"
+                "drupal/core": "^8.7.7 || ^9"
             },
             "suggest": {
                 "defuse/php-encryption": "Optional encryption of saved backups."
@@ -2630,11 +2630,11 @@
             "type": "drupal-module",
             "extra": {
                 "branch-alias": {
-                    "dev-5.1.x": "5.1.x-dev"
+                    "dev-5.0.x": "5.0.x-dev"
                 },
                 "drupal": {
-                    "version": "5.1.x-dev",
-                    "datestamp": "1643929538",
+                    "version": "5.0.1+2-dev",
+                    "datestamp": "1643926553",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."

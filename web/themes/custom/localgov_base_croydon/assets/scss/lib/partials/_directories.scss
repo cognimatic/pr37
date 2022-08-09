@@ -1,0 +1,430 @@
+.block-localgov-directories {
+  padding-top: 0 !important; // base override
+
+  &-channel-search-block { // search block stlying
+    form {
+      background-color: $gray-tint;
+      padding: var(--spacing);
+
+      .form-text {
+        font-size: $font-size-ex-med;
+      }
+
+      margin-bottom: 1rem;
+
+      label {
+        font-size: $h4-font-size;
+        font-weight: $font-bold;
+        margin-bottom: 0;
+      }
+
+      .form-submit {
+        @extend .btn;
+        @extend .btn-primary;
+
+        width: 100%;
+        text-align: left;
+        position: relative;
+        font-size: $h5-font-size;
+        font-weight: $font-bold;
+
+        &:after {
+          font-family: $font-family-icons;
+          font-weight: $fa-font-weight; // some font awesome icons require a specific font weight
+          content: $fa-search;
+          font-size: $h5-font-size;
+          display: block;
+          position: absolute;
+          right: 1rem;
+          color: $white;
+
+          @include rem(top, 6);
+        }
+      }
+
+      .form-text,
+      select {
+        @extend .form-control;
+      }
+    }
+  }
+}
+
+.block-facets { // facet styling
+  .facets-widget {
+    &--checkbox {
+      background-color: $pink-tint;
+      padding-bottom: var(--spacing);
+
+      .facet-group__title {
+        padding: var(--spacing) 0 0 var(--spacing);
+      }
+
+      ul {
+        width: auto;
+        background-color: $white;
+        margin: var(--spacing);
+        padding: var(--spacing);
+
+        li {
+          margin-top: 0;
+          border-bottom: 0.06rem solid $gray;
+
+          @include rem(padding-bottom, 10);
+
+          &:last-child {
+            border: 0;
+            padding-bottom: 0;
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .facet-item input[type="checkbox"] + label::after { // fix globally when forms prject is merged
+        color: $green;
+      }
+    }
+  }
+}
+
+.view-localgov-directory-channel {
+  .lgd-teaser { // results list styling
+    border-bottom: 0.063rem solid $gray-primary;
+
+    @include rem(padding-bottom, 10);
+    @include rem(margin-bottom, 25);
+    @include rem(margin-top, 16);
+
+    h2 {
+      font-weight: $font-bold;
+      font-size: $font-size-ex-med;
+
+      @include rem(margin, 0, 0, 14, 0);
+      @include rem(line-height, 24);
+    }
+
+    .field--type-text-with-summary {
+      font-size: $font-size-lg;
+
+      @include rem(margin-bottom, 12);
+    }
+  }
+}
+
+/* Directory Listing */
+
+.page-node-type-directory-item {
+  h2 {
+    @include rem(margin-bottom, 30);
+  }
+
+  h3 {
+    @include rem(margin, 35, 0, 14, 0);
+  }
+}
+
+.contact-list {
+  padding-left: 0;
+  list-style: none;
+
+  @include rem(margin, 26, 0);
+
+  li {
+    @include rem(padding-left, 5);
+  }
+
+  span {
+    @include rem(margin-right, 20);
+    @include rem(width, 20);
+  }
+}
+
+.filter-wrapper {
+  background: $indigo-tint;
+
+  @include rem(padding, 10);
+
+  legend {
+    @include rem(margin-bottom, 9);
+  }
+}
+
+.fieldset-wrapper {
+  background: $white;
+
+  @include rem(padding, 10);
+}
+
+.form-checkboxes {
+  > div {
+    position: relative;
+  }
+
+  input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    margin-bottom: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  label {
+    width: 100%;
+    display: inline-block;
+    max-width: 100%;
+
+    @include rem(margin-bottom, 5);
+    @include rem(padding-left, 30);
+
+    > span {
+      display: inline-block;
+
+      &.facet_item__label {
+        width: 80%;
+        text-align: left;
+      }
+
+      &.facet_item__count {
+        width: 20%;
+        text-align: right;
+      }
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      display: inline-block;
+      font-family: $font-family-icons;
+      font-weight: $fa-font-weight; // some font awesome icons require a specific font weight
+      -webkit-font-smoothing: antialiased;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1.3;
+      text-align: center;
+      border: 0.0625rem solid $gray-tint;
+
+      @include rem(top, 3);
+      @include rem(height, 18);
+      @include rem(width, 18);
+      @include rem(font-size, 15);
+    }
+  }
+}
+
+.directories-hide-filters {
+  display: block;
+  background: none;
+}
+
+.page-node-type-directory-listing {
+  .directories-search {
+    background-color: $gray-tint;
+
+    form {
+      margin-top: 0;
+      display: block;
+    }
+
+    h2 {
+      display: none;
+    }
+  }
+
+  .directories-search-form--search-toggle {
+    display: none;
+  }
+}
+
+.directory-listing-content {
+  .pager {
+    ul {
+      list-style-type: none;
+
+      li {
+        display: inline-block;
+
+        @include rem(padding, 10);
+
+        a {
+          color: $blue;
+        }
+
+        &.is-active {
+          a {
+            color: $carbon;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.directory-contact { // contact information area
+  > div {
+    @include rem(margin-bottom, 10);
+  }
+
+  a {
+    position: relative;
+    align-self: flex-start;
+    font-size: $font-size-lg;
+
+    @include rem(margin-left, 30);
+
+    &:before {
+      position: absolute;
+      font-size: $font-size-lg;
+      font-weight: $fa-font-weight; // some font awesome icons require a specific font weight
+      font-family: $font-family-icons;
+      margin: 0;
+      padding: 0;
+      color: $carbon;
+
+      @include rem(left, -30);
+    }
+  }
+
+  .contact-urls {
+    a {
+      &.contact-website,
+      &.contact-inspection-report {
+        &:before {
+          content: $fa-link;
+        }
+      }
+
+      &.contact-facebook {
+        &:before {
+          font-family: $font-family-brands;
+          content: $fa-facebook;
+        }
+      }
+
+      &.contact-twitter {
+        &:before {
+          font-family: $font-family-brands;
+          content: $fa-twitter;
+        }
+      }
+
+      &.contact-youtube {
+        &:before {
+          font-family: $font-family-brands;
+          content: $fa-youtube-square;
+        }
+      }
+
+      &.contact-instagram {
+        &:before {
+          font-family: $font-family-brands;
+          content: $fa-instagram;
+        }
+      }
+    }
+  }
+
+  .contact-phone {
+    a {
+      &:before {
+        content: $fa-phone;
+      }
+    }
+  }
+
+  .contact-email {
+    a {
+      &:before {
+        content: $fa-envelope;
+      }
+    }
+  }
+
+  .contact-instagram {
+    a {
+      &:before {
+        content: $fa-instagram;
+      }
+    }
+  }
+
+  .contact-youtube {
+    a {
+      &:before {
+        content: $fa-youtube-square;
+      }
+    }
+  }
+
+  .contact-twitter {
+    a {
+      &:before {
+        content: $fa-twitter;
+      }
+    }
+  }
+
+  .contact-facebook {
+    a {
+      &:before {
+        content: $fa-facebook;
+      }
+    }
+  }
+
+  .contact-address {
+    @include rem(margin-left, 30);
+
+    .address {
+      position: relative;
+
+      br {
+        display: none; // hide inline br tags
+      }
+
+      &:before {
+        position: absolute;
+        font-size: $font-size-lg;
+        font-weight: $fa-font-weight; // some font awesome icons require a specific font weight
+        font-family: $font-family-icons;
+        content: $fa-map-marker;
+        margin: 0;
+        padding: 0;
+        color: $carbon;
+
+        @include rem(left, -30);
+      }
+    }
+  }
+
+  .leaflet-container {
+    margin-bottom: 2rem;
+
+    a {
+      margin-left: 0; // remove inherited margin
+    }
+  }
+}
+
+// override the settings for the open street map links at the bottom of the maps
+.leaflet-control-container {
+  a {
+    @include rem(font-size, 11);
+
+    &.external-link:after {
+      display: none;
+    }
+  }
+}
+
+.field--name-localgov-directory-opening-times { // opening times are rendered differently - not sure why
+  .field__label {
+    @extend .h3;
+
+    @include rem(margin-bottom, 24);
+  }
+}

@@ -5,9 +5,11 @@ namespace Drupal\backup_migrate\Drupal\Config;
 use Drupal\backup_migrate\Core\Config\ConfigInterface;
 use Drupal\backup_migrate\Core\Main\BackupMigrateInterface;
 use Drupal\backup_migrate\Core\Plugin\PluginManagerInterface;
+use Drupal\backup_migrate\Core\Source\FileDirectorySource;
+use Drupal\backup_migrate\Core\Source\MySQLiSource;
 use Drupal\backup_migrate\Entity\SettingsProfile;
 use Drupal\Core\Form\FormStateInterface;
-
+use Drupal\backup_migrate\Drupal\Destination\DrupalDirectoryDestination;
 /**
  *
  *
@@ -21,7 +23,8 @@ class DrupalConfigHelper {
    * @param \Drupal\backup_migrate\Core\Plugin\PluginManagerInterface $plugins
    *   The PluginManager containing all of the plugins to be configured.
    * @param string $operation
-   *   Either 'backup', 'restore', or 'initialize' depending on the operation.
+   *   'backup', 'restore', or 'initialize' depending on the operation being
+   *   configured for.
    * @param array $parents
    *   The form parents array.
    *
@@ -42,10 +45,11 @@ class DrupalConfigHelper {
   /**
    * Build the configuration form for a single plugin, source or destination.
    *
-   * @param \Drupal\backup_migrate\Drupal\Destination\DrupalDirectoryDestination|FileDirectorySource|MySQLiSource $plugin
+   * @param DrupalDirectoryDestination|FileDirectorySource|MySQLiSource $plugin
    *   The plugin, source or destination to build the form for.
    * @param string $operation
-   *   Either 'backup', 'restore', or 'initialize' depending on the operation.
+   *   'backup', 'restore', or 'initialize' depending on the operation being
+   *   configured for.
    * @param array $parents
    *
    * @return array

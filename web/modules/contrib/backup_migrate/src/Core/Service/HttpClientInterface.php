@@ -5,7 +5,7 @@ namespace Drupal\backup_migrate\Core\Service;
 use Drupal\backup_migrate\Core\File\ReadableStreamBackupFile;
 
 /**
- * Provides an interface for HTTP client requests.
+ * Interface HttpClientInterface.
  *
  * @package Drupal\backup_migrate\Core\Service
  */

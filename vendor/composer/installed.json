@@ -3585,15 +3585,15 @@
         },
         {
             "name": "drupal/backup_migrate",
-            "version": "dev-5.1.x",
-            "version_normalized": "dev-5.1.x",
+            "version": "dev-5.0.x",
+            "version_normalized": "dev-5.0.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/backup_migrate.git",
-                "reference": "79c28c31b9ad685601263e7e1db80e6360cc70e6"
+                "reference": "1b59ab6eb8c1d6e9bdfaa4047619486479795033"
             },
             "require": {
-                "drupal/core": "^9"
+                "drupal/core": "^8.7.7 || ^9"
             },
             "suggest": {
                 "defuse/php-encryption": "Optional encryption of saved backups."
@@ -3601,15 +3601,18 @@
             "type": "drupal-module",
             "extra": {
                 "branch-alias": {
-                    "dev-5.1.x": "5.1.x-dev"
+                    "dev-5.0.x": "5.0.x-dev"
                 },
                 "drupal": {
-                    "version": "5.1.x-dev",
-                    "datestamp": "1643929538",
+                    "version": "5.0.1+2-dev",
+                    "datestamp": "1643926553",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
                     }
+                },
+                "patches_applied": {
+                    "filectime and filesize receiving NULL values 3268401": "https://www.drupal.org/files/issues/2022-08-09/filectime-filesize-null-values-3268401.patch"
                 }
             },
             "installation-source": "source",

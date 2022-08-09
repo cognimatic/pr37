@@ -1,0 +1,17 @@
+// admin styling
+
+@include media-breakpoint-up(md) {
+  .purge-other-pages-form { // fix for cdn purge area
+    > div {
+      display: flex;
+
+      label {
+        min-width: 10.625rem;
+        font-size: $font-size-ex-sm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ description: "Argyll & Bute Council sub-theme, which uses localgov_base as its b
 type: theme
 core_version_requirement: ^8.8 || ^9
 base theme: "localgov_base"
+logo: logo.png
 
 libraries:
   - lgd_abc/variables

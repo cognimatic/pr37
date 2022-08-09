@@ -5,7 +5,7 @@ namespace Drupal\backup_migrate\Core\Destination;
 use Drupal\backup_migrate\Core\File\BackupFileReadableInterface;
 
 /**
- * An interface for managing writeable destinations.
+ * Interface WritableDestinationInterface.
  *
  * @package Drupal\backup_migrate\Core\Destination
  */

@@ -3,7 +3,7 @@
 namespace Drupal\backup_migrate\Core\Service;
 
 /**
- * Simple interface for managing the service manager.
+ * Interface ServiceManagerInterface.
  *
  * @package Drupal\backup_migrate\Core\Environment
  */

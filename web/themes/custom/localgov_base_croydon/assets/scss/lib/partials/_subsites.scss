@@ -1,0 +1,263 @@
+.page-node-type-localgov-subsites-overview,
+.page-node-type-localgov-subsites-page {
+  main,
+  .sidebar {
+    @include rem(margin-top, 10);
+
+    .block-system-main-block {
+      .container-fluid { // remove container fluid padding for nested blocks
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+
+    .block-localgov-subsite-navigation {
+      background-color: $section-nav-background !important; // override base
+      color: $white;
+      padding: 0 !important;  // override base
+      overflow: auto;
+
+      .menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        h3 {
+          color: $white;
+          border-left: 0;
+          margin: 0;
+
+          @include rem(padding, 20, 24);
+        }
+
+        .menu-item {
+          background: $white;
+          display: grid;
+          padding: 0;
+
+          a {
+            color: $primary;
+            border-left: 0.1875rem solid $gray-tint;
+
+            @include rem(padding, 12, 24);
+
+            &:hover {
+              color: $carbon;
+              text-decoration: none;
+              border-left: 0.1875rem solid $primary;
+            }
+          }
+
+          .is-active {
+            background-color: $gray-tint;
+            color: $carbon;
+            border-left: 0.1875rem solid $primary;
+            text-decoration: none;
+          }
+
+          span {
+            display: block;
+          }
+        }
+      }
+
+      .reveal {
+        color: $white;
+        text-decoration: underline;
+
+        &:hover,
+        &:focus {
+          color: $carbon;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .sidebar {
+    margin-top: 0;
+
+    @include rem(padding-right, 15);
+    @include rem(padding-left, 15);
+
+    @include media-breakpoint-up(md) {
+      padding-left: 0;
+    }
+
+    nav {
+      @include rem(margin-bottom, 30);
+    }
+  }
+
+  .layout--twocol {
+    h2 {
+      margin-top: 0 !important;
+    }
+
+    .fact-box {
+      p {
+        &.fact-closing {
+          display: none;
+        }
+      }
+    }
+
+    .call-out-box {
+      background-color: $calloutbg;
+
+      h3 {
+        margin-top: 0;
+      }
+
+      .call-out-box__link {
+        @extend .btn;
+        @extend .btn-primary;
+      }
+    }
+
+    .author {
+      color: $carbon;
+    }
+
+    .socials {
+      span {
+        width: 100%;
+        display: inline-block;
+        padding-bottom: 1rem;
+
+        @include media-breakpoint-up(md) {
+          width: auto;
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    .social-btn {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      padding: 0;
+      overflow: hidden;
+      vertical-align: middle;
+      cursor: pointer;
+      border-radius: 50%;
+
+      @include rem(margin, 10);
+      @include rem(width, 47);
+      @include rem(height, 47);
+
+      i {
+        display: inline-block;
+        width: inherit;
+        color: $white;
+        text-align: center;
+        padding-right: 0;
+
+        @include rem(font-size, 26);
+        @include rem(line-height, 48);
+      }
+
+      &.btn-li {
+        background-color: $socialdefault !important;
+      }
+
+      &.btn-fb {
+        background-color: $facebook !important;
+      }
+
+      &.btn-tw {
+        background-color: $twitter !important;
+      }
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; // fixes collapsing bug
+      height: 0;
+      overflow: hidden;
+
+      @include rem(padding-top, 30);
+      @include rem(margin-bottom, 15);
+    }
+
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    // tmp remove erroneous text
+
+    #field--field_left_column_of_text,
+    #field--field_right_column_of_text {
+      > div:first-child {
+        display: none;
+      }
+    }
+
+    #field--field_left_column_of_text {
+      h2 {
+        margin-top: 0 !important;
+      }
+    }
+
+    .link-block {
+      position: relative;
+
+      h2 {
+        margin-top: 0 !important; // stop link block headers inheriting the top margin of generic .content H2s
+      }
+
+      a {
+        color: $linkblock;
+      }
+
+      .link-block__title,
+      .link-block__content {
+        @include rem(padding-left, 5);
+      }
+    }
+
+    .lgd-icon {
+      svg {
+        max-height: $font-size-base;
+        fill: $green;
+        position: absolute;
+        left: 0;
+        top: 0.5rem;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .collapse.dont-collapse-sm {
+    display: block;
+    height: auto !important;
+    visibility: visible;
+  }
+}
+
+// theme & core overrides
+
+.page-node-type-localgov-subsites-page {
+  .paragraph--type--page-section {
+    .layout--twocol {
+      .layout__region--first {
+        display: flex; // match heights for the fact boxes
+
+        @include rem(padding-right, 15); // ignore padding set in core
+      }
+
+      .layout__region--second {
+        display: flex; // match heights match heights for the fact boxes
+
+        @include rem(padding-left, 15); // ignore padding set in core
+      }
+    }
+  }
+}

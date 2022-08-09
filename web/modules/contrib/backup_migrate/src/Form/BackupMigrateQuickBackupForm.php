@@ -6,7 +6,6 @@ use Drupal\backup_migrate\Drupal\Config\DrupalConfigHelper;
 use Drupal\backup_migrate\Entity\SettingsProfile;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 
 /**
  * Provides a form for performing a 1-click site backup.
@@ -26,7 +25,7 @@ class BackupMigrateQuickBackupForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     // Leave a message about the Entire Site backup.
     // @see https://www.drupal.org/project/backup_migrate/issues/3151290
-    $this->messenger()->addMessage($this->t('It is recommended to not use the "Entire site" backup as it has a tendency of failing on anything but the tiniest of sites. Hopefully this will be fixed in a future release.'), MessengerInterface::TYPE_WARNING);
+    $this->messenger()->addMessage($this->t('It is recommended to not use the "Entire site" backup as it has a tendency of failing on anything but the tiniest of sites. Hopefully this will be fixed in a future release.'));
 
     $form = [];
 

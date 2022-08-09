@@ -1,0 +1,136 @@
+.banner--primary { // Homepage banner
+  .banner__image { // fix-height
+    img {
+      @include rem(max-height, 200); // reset base min
+      @include rem(min-height, 300); // fix image height
+    }
+  }
+
+  .field--name-localgov-title { // re-implement h1 styling due to override base styling
+    font-family: $font-family-secondary;
+    font-size: $h1-font-size !important;
+
+    @include media-breakpoint-up(lg) {
+      font-size: $font-size-base * 2.875 !important;
+    }
+  }
+}
+
+.block-localgov-subsite-banner { // subsite banner
+  .banner--primary {
+    .banner__content {
+      display: flex;
+      flex-direction: column;
+      background: none; // base override
+      max-width: var(--width-container);
+      margin: calc(var(--banner-content-margin) * -1) auto 0;
+      padding: 0 var(--spacing-padding-horizontal);
+
+      .field--name-localgov-title {
+        background-color: $primary;
+
+        @include rem(padding, 20, 40);
+      }
+
+      .field--name-localgov-subsites-banner-text {
+        background-color: $primary-tint;
+        font-size: $font-size-lg;
+        color: $carbon;
+
+        @include rem(padding, 20, 40);
+      }
+    }
+  }
+}
+
+.banner-full-tint {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.banner-full {
+  margin-bottom: 0;
+
+  @include rem(height, 280);
+
+  h1 {
+    color: $white;
+  }
+
+  .btn {
+    font-size: 1.375rem;
+
+    @include rem(max-width, 48);
+
+    span {
+      @include rem(height, 30);
+      @include rem(line-height, 30);
+
+      &:before {
+        @include rem(margin-left, -3);
+      }
+    }
+  }
+
+  .form-control {
+    border: 0 !important;
+    font-size: 1.1875rem;
+  }
+
+  img {
+    display: flex;
+    width: 15%;
+    height: auto;
+
+    @include rem(min-width, 90);
+    @include rem(max-width, 150);
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .banner-full {
+    h1 {
+      font-size: 3.375rem;
+    }
+
+    .form-control {
+      font-size: 1.375rem;
+
+      @include rem(height, 51);
+    }
+
+    .btn {
+      font-size: 1.375rem;
+
+      @include rem(max-width, 200);
+
+      span {
+        @include rem(height, 37);
+        @include rem(line-height, 37);
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .banner-full {
+    height: 35vh;
+
+    @include rem(min-height, 300);
+
+    .btn {
+      font-size: 1.5rem;
+    }
+
+    .form-control {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media (min-width: 120rem) { // custom breakpoint
+  .banner-full {
+    height: 40vh;
+
+    @include rem(min-height, 400);
+  }
+}
