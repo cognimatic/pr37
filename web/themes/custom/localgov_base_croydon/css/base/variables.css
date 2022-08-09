@@ -30,9 +30,9 @@ body {
     We should not refer to these directly in our CSS however. Instead,
     we use the names at our "Colours Applied" section.
   */
-  --color-accent: #880088;
-  --color-accent-rgb: 136, 0, 136; /*rgb value needed for accent colours*/
-  --color-green: #77bb55;
+  --color-accent: #0f1a44;
+  --color-accent-rgb: 15, 26, 68; /*rgb value needed for accent colours*/
+  --color-green: #135526;
   --color-red: #ae1100;
   --color-orange: #ff5500;
   --color-yellow: #ffbb00;
