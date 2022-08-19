@@ -33,18 +33,48 @@
     hotpink, just set `--color-accent: hotpink;`
 */
 body {
-  /* Set Variables */
-  --color-accent: #0f1a44;
-  --color-accent-alt: #135526;
-  --font-primary: "Open Sans", roboto, oxygen, ubuntu, cantarell, "Helvetica Neue", sans-serif;
+  /* Colours */
+  /*
+    Colours Defined
+    In this section, we define the colours available in our theme.
+    We should not refer to these directly in our CSS however. Instead,
+    we use the names at our "Colours Applied" section.
+  */
+  
+  --color-green: #015621;
+  --color-red: #961722;
+  --color-orange: #ed7522;
+  --color-yellow: #FEF093;
+  --color-blue: #22548E;
+  
+  --color-accent: #152453;
+  --color-accent-alt: #FCDF1B;
+  --color-light-bg: #D6EAF8;
+  --font-primary: roboto, "Open Sans", oxygen, ubuntu, cantarell, "Helvetica Neue", sans-serif;
   --font-secondary: 'Mulish', var(--font-primary);
   --sidebar-exposed-form-bg-color: var(--color-grey-lightest);
+  
+  
 
-  /* Apply Variables */
+  /*
+    Colours Applied
+    In this section, we "apply" our colours.
+  */
+  --color-info: var(--color-blue);
+  --color-success: var(--color-green);
+  --color-danger: var(--color-red);
+  --color-warning: var(--color-orange);
+  --color-minor: var(--color-yellow);
+  --color-link: var(--color-accent);
+  --color-focus: var(--color-yellow);
+  
+  
   --breadcrumbs-divider: ">";
   --breadcrumbs-background-color: var(--color-accent-alt);
-  --breadcrumbs-link-color: var(--color-black);
-  --alert-banner-bg-color-minor: var(--color-accent-alt);
+  --breadcrumbs-link-color: #333333;
+  --alert-banner-bg-color: var(--color-accent-alt);
+  --alert-banner-color: var(--color-accent);
+  --alert-banner-bg-color-minor: var(--color-light-bg);
   --color-section-pre-footer-bg: var(--color-accent);
 
 }

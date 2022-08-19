@@ -1,0 +1,24 @@
+{% extends '@localgov_base/layout/page.html.twig' %}
+
+{% block post_footer %}
+<div class="lgd-footer__post-footer">
+        <div class="lgd-container">
+          <div class="lgd-row">
+      <div class="lgd-row__one-quarter">
+        <a class="" href="/" title="Go to Argyll and Bute Homepage">
+          <img class="img-fluid" src="{{ directory }}/assets/img/footer-logo.png" alt="Argyll and Bute Council Footer Logo" /></a>
+      </div>
+      <div class="lgd-row__one-half">
+        {% if has_post_footer %}
+          <div class="lgd-row__one-third">
+            {{ page.post_footer }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="lgd-row__one-quarter lgd-footer__copyright">
+        <p>&copy; Argyll &amp; Bute Council {{ "now"|date("Y") }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

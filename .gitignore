@@ -33,10 +33,6 @@ error_log
 /images
 /backups
 
-# Storybook and Node
-/node_modules/.cache
-
-
 # Ignore DB dumps
 *.sql
 *.sql.gz

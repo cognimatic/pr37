@@ -1,0 +1,42 @@
+name: "LocalGov SASS ABC"
+description: "Argyll and Bute styling enhancements to LocalGov Base (SASS)"
+type: theme
+core_version_requirement: ^8.8 || ^9
+base theme: "localgov_base"
+libraries:
+  - abc_sass/global
+  - abc_sass/alert
+  - abc_sass/base
+  - abc_sass/footer
+  - abc_sass/header
+  - abc_sass/homepage
+  - abc_sass/service-cta-block
+  - abc_sass/service-landing-page
+  - abc_sass/teaser
+  - abc_sass/topic-list-builder
+  - abc_sass/secondary-menu
+  - abc_sass/wysiwyg-styles
+
+regions:
+  tabs: "Tabs"
+  header: "Header"
+  search: "Search"
+  mobile_search: "Mobile search"
+  primary_menu: "Primary menu"
+  secondary_menu: "Secondary menu"
+  banner: "Banner"
+  breadcrumb: "Breadcrumb"
+  messages: "Messages"
+  content_top: "Content top"
+  content: "Content"
+  content_bottom: "Content bottom"
+  sidebar_first: "Sidebar first"
+  sidebar_second: "Sidebar second"
+  footer_first: "Footer first"
+  footer_second: "Footer second"
+  footer_third: "Footer third"
+  footer: "Footer"
+  lower_footer_first: "Lower footer first"
+  lower_footer_second: "Lower footer second"
+  lower_footer_third: "Lower footer third"
+  disabled: "Disabled"
