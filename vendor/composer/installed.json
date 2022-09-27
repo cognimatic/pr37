@@ -3586,15 +3586,15 @@
         },
         {
             "name": "drupal/backup_migrate",
-            "version": "dev-5.0.x",
-            "version_normalized": "dev-5.0.x",
+            "version": "dev-5.1.x",
+            "version_normalized": "dev-5.1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/backup_migrate.git",
-                "reference": "1b59ab6eb8c1d6e9bdfaa4047619486479795033"
+                "reference": "50bead99a795976d283018f89a4d76e124206317"
             },
             "require": {
-                "drupal/core": "^8.7.7 || ^9"
+                "drupal/core": "^9.3 || ^10"
             },
             "suggest": {
                 "defuse/php-encryption": "Optional encryption of saved backups."
@@ -3602,11 +3602,11 @@
             "type": "drupal-module",
             "extra": {
                 "branch-alias": {
-                    "dev-5.0.x": "5.0.x-dev"
+                    "dev-5.1.x": "5.1.x-dev"
                 },
                 "drupal": {
-                    "version": "5.0.1+2-dev",
-                    "datestamp": "1643926553",
+                    "version": "5.1.x-dev",
+                    "datestamp": "1663062569",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."

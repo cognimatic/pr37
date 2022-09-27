@@ -17,7 +17,7 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['backup_migrate'];
+  protected static $modules = ['backup_migrate'];
 
   /**
    * {@inheritdoc}
@@ -100,12 +100,19 @@ class BackupMigrateQuickBackupTest extends BrowserTestBase {
     $session->statusCodeEquals(200);
     $session->pageTextContains('Are you sure you want to restore this backup?');
 
+    // Remove the time portion of the timestamp to avoid timing problems where
+    // the backup completes at a different time to the test running, e.g. the
+    // restore completing at 4:49pm but the test running at 4:50pm.
+    $time = \Drupal::time()->getCurrentTime();
+    $time = \Drupal::service('date.formatter')->format($time, 'long');
+    $time_substring = substr($time, 0, -8);
+
     // Restore the backup.
     $this->submitForm([], 'Restore');
     $session = $this->assertSession();
     $session->statusCodeEquals(200);
     $session->addressEquals('admin/config/development/backup_migrate/settings/destination/backups/private_files');
-    $session->pageTextContains('Restore Complete.');
+    $session->pageTextContains('Restore completed at ' . $time_substring);
   }
 
   /**

@@ -15,7 +15,7 @@
         "cweagans/composer-patches": "^1.6",
         "defuse/php-encryption": "^2.3",
         "drupal/autocomplete_deluxe": "^2.0",
-        "drupal/backup_migrate": "5.0.x-dev@dev",
+        "drupal/backup_migrate": "5.1.x-dev@dev",
         "drupal/block_class": "^2.0",
         "drupal/bpmn_io": "^1.0",
         "drupal/broken_link": "^3.1",

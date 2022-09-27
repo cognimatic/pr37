@@ -108,7 +108,11 @@ class BackupMigrate implements BackupMigrateInterface {
     }
 
     // Allow the plugins to tear down.
-    $this->plugins()->call('tearDown', NULL, ['operation' => 'backup', 'source_id' => $source_id, 'destination_id' => $destination_id]);
+    $this->plugins()->call('tearDown', NULL, [
+      'operation' => 'backup',
+      'source_id' => $source_id,
+      'destination_id' => $destination_id,
+    ]);
   }
 
   /**
@@ -150,6 +154,9 @@ class BackupMigrate implements BackupMigrateInterface {
       // Do the actual source restore.
       $import_result = $source->importFromFile($file);
       if (!$import_result) {
+        if ($file->getExtLast() == 'ssl') {
+          throw new BackupMigrateException('The file needs to be decrypted. Please check the "Decrypt file" option and enter the decryption password.');
+        }
         throw new BackupMigrateException('The file could not be imported.');
       }
 

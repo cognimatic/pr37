@@ -27,8 +27,8 @@ class Mailer implements MailerInterface {
       $body = strtr($body, $replacements);
     }
 
-    // Use the PHP mail function to send the message.
-    mail($to, $subject, $body, $additional_headers);
+    $langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+    \Drupal::service('plugin.manager.mail')->mail('backup_migrate', $subject, $to, $langcode, ['content' => $body]);
   }
 
 }

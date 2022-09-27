@@ -440,13 +440,13 @@
             'dev_requirement' => false,
         ),
         'drupal/backup_migrate' => array(
-            'pretty_version' => 'dev-5.0.x',
-            'version' => 'dev-5.0.x',
-            'reference' => '1b59ab6eb8c1d6e9bdfaa4047619486479795033',
+            'pretty_version' => 'dev-5.1.x',
+            'version' => 'dev-5.1.x',
+            'reference' => '50bead99a795976d283018f89a4d76e124206317',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/backup_migrate',
             'aliases' => array(
-                0 => '5.0.x-dev',
+                0 => '5.1.x-dev',
             ),
             'dev_requirement' => false,
         ),

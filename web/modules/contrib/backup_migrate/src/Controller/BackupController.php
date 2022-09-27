@@ -119,10 +119,18 @@ class BackupController extends ControllerBase {
     $backups = $destination->queryFiles([], $order['sql'], $php_sort, $count);
 
     foreach ($backups as $backup_id => $backup) {
+      $col['description'] = [
+        '#markup' => '<div title="' . $backup->getFullName() . '" class="backup-migrate-description">' . $backup->getFullName() . '</div>',
+      ];
+
+      if (!empty($backup->getMeta('description'))) {
+        $col['description']['#markup'] .= ' <div title="' . $backup->getMeta('description') . '" class="backup-migrate-description">' . $backup->getMeta('description') . '</div>';
+      }
+
       $rows[] = [
         'data' => [
           // Cells.
-          $backup->getFullName(),
+          \Drupal::service('renderer')->render($col['description']),
           \Drupal::service('date.formatter')
             ->format($backup->getMeta('datestamp')),
           format_size($backup->getMeta('filesize')),
