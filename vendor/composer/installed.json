@@ -3611,9 +3611,6 @@
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
                     }
-                },
-                "patches_applied": {
-                    "filectime and filesize receiving NULL values 3268401": "https://www.drupal.org/files/issues/2022-08-09/filectime-filesize-null-values-3268401.patch"
                 }
             },
             "installation-source": "source",
@@ -6636,9 +6633,6 @@
                     "services": {
                         "drush.services.yml": "^9"
                     }
-                },
-                "patches_applied": {
-                    "Move entity_usage_post_update_regenerate_2x into entity_usage.post_update.php 3291423": "https://git.drupalcode.org/project/entity_usage/-/merge_requests/22.patch"
                 }
             },
             "installation-source": "dist",
@@ -6983,18 +6977,18 @@
         },
         {
             "name": "drupal/field_group",
-            "version": "3.2.0",
-            "version_normalized": "3.2.0.0",
+            "version": "3.3.0",
+            "version_normalized": "3.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/field_group.git",
-                "reference": "8.x-3.2"
+                "reference": "8.x-3.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/field_group-8.x-3.2.zip",
-                "reference": "8.x-3.2",
-                "shasum": "2020bbfe40f6ba43bc733ae7c8761632572433a0"
+                "url": "https://ftp.drupal.org/files/projects/field_group-8.x-3.3.zip",
+                "reference": "8.x-3.3",
+                "shasum": "c7a423b1d7643ee40dd1543d72fa04e8ac1756e4"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9"
@@ -7005,15 +6999,12 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-3.2",
-                    "datestamp": "1628513585",
+                    "version": "8.x-3.3",
+                    "datestamp": "1663516404",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
-                },
-                "patches_applied": {
-                    "Fix 'Undefined property: stdClass::$region' error #3059614": "https://www.drupal.org/files/issues/2020-06-15/3059614-37.patch"
                 }
             },
             "installation-source": "dist",
@@ -7027,16 +7018,16 @@
                     "homepage": "https://www.drupal.org/user/647364"
                 },
                 {
-                    "name": "Stalski",
-                    "homepage": "https://www.drupal.org/user/322618"
-                },
-                {
                     "name": "jyve",
                     "homepage": "https://www.drupal.org/user/591438"
                 },
                 {
                     "name": "nils.destoop",
                     "homepage": "https://www.drupal.org/user/361625"
+                },
+                {
+                    "name": "Stalski",
+                    "homepage": "https://www.drupal.org/user/322618"
                 },
                 {
                     "name": "swentel",
@@ -8903,6 +8894,57 @@
             "install-path": "../../web/modules/contrib/media_directories"
         },
         {
+            "name": "drupal/media_library_edit",
+            "version": "2.3.0",
+            "version_normalized": "2.3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/media_library_edit.git",
+                "reference": "8.x-2.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/media_library_edit-8.x-2.3.zip",
+                "reference": "8.x-2.3",
+                "shasum": "7cff8281ef0132a2ecb047449d6210d80f1a9e0d"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-2.3",
+                    "datestamp": "1653483531",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "ahebrank",
+                    "homepage": "https://www.drupal.org/user/3190515"
+                }
+            ],
+            "description": "Add an edit button to the Media Library widget when an item is selected.",
+            "homepage": "https://www.drupal.org/project/media_library_edit",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/media_library_edit",
+                "issues": "https://www.drupal.org/project/issues/media_library_edit"
+            },
+            "install-path": "../../web/modules/contrib/media_library_edit"
+        },
+        {
             "name": "drupal/memcache",
             "version": "2.4.0",
             "version_normalized": "2.4.0.0",
@@ -10549,30 +10591,30 @@
         },
         {
             "name": "drupal/shield",
-            "version": "1.6.0",
-            "version_normalized": "1.6.0.0",
+            "version": "1.7.0",
+            "version_normalized": "1.7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/shield.git",
-                "reference": "8.x-1.6"
+                "reference": "8.x-1.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/shield-8.x-1.6.zip",
-                "reference": "8.x-1.6",
-                "shasum": "b28bb5350f4a35172dc090cb603f2e62d71ae996"
+                "url": "https://ftp.drupal.org/files/projects/shield-8.x-1.7.zip",
+                "reference": "8.x-1.7",
+                "shasum": "dcb77778aaffd39a9bb80c123f086358ad1c8bf9"
             },
             "require": {
-                "drupal/core": "^8.7.7 || ^9"
+                "drupal/core": "^9.2 || ^10"
             },
             "require-dev": {
-                "drupal/key": "^1.0"
+                "drupal/key": "^1.16"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.6",
-                    "datestamp": "1644835181",
+                    "version": "8.x-1.7",
+                    "datestamp": "1661968920",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -13947,23 +13989,24 @@
         },
         {
             "name": "localgovdrupal/localgov_core",
-            "version": "2.1.6",
-            "version_normalized": "2.1.6.0",
+            "version": "2.1.8",
+            "version_normalized": "2.1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/localgovdrupal/localgov_core.git",
-                "reference": "bae9625f0cc3992db439dfa25d6a8a94ab597eab"
+                "reference": "beab74afc281bf8b66ac3da1e51591f9e7efb3eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/localgovdrupal/localgov_core/zipball/bae9625f0cc3992db439dfa25d6a8a94ab597eab",
-                "reference": "bae9625f0cc3992db439dfa25d6a8a94ab597eab",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_core/zipball/beab74afc281bf8b66ac3da1e51591f9e7efb3eb",
+                "reference": "beab74afc281bf8b66ac3da1e51591f9e7efb3eb",
                 "shasum": ""
             },
             "require": {
                 "drupal/field_group": "^3.1",
                 "drupal/image_widget_crop": "^2.3",
                 "drupal/linkit": "^6.0-beta1",
+                "drupal/media_library_edit": "^2.3",
                 "drupal/metatag": "^1.14",
                 "drupal/pathauto": "^1.8",
                 "drupal/redirect": "^1.6",
@@ -13973,18 +14016,13 @@
             "require-dev": {
                 "drupal/paragraphs": "^1.12"
             },
-            "time": "2022-08-08T13:36:42+00:00",
+            "time": "2022-09-26T14:28:51+00:00",
             "type": "drupal-module",
             "extra": {
                 "enable-patching": true,
                 "composer-exit-on-patch-failure": true,
                 "patchLevel": {
                     "drupal/core": "-p2"
-                },
-                "patches": {
-                    "drupal/field_group": {
-                        "Fix 'Undefined property: stdClass::$region' error #3059614": "https://www.drupal.org/files/issues/2020-06-15/3059614-37.patch"
-                    }
                 }
             },
             "installation-source": "dist",
@@ -13996,7 +14034,7 @@
             "homepage": "https://github.com/localgovdrupal/localgov_core",
             "support": {
                 "issues": "https://github.com/localgovdrupal/localgov_core/issues",
-                "source": "https://github.com/localgovdrupal/localgov_core/tree/2.1.6"
+                "source": "https://github.com/localgovdrupal/localgov_core/tree/2.1.8"
             },
             "install-path": "../../web/modules/contrib/localgov_core"
         },
@@ -14046,17 +14084,17 @@
         },
         {
             "name": "localgovdrupal/localgov_directories",
-            "version": "2.3.2",
-            "version_normalized": "2.3.2.0",
+            "version": "2.3.3",
+            "version_normalized": "2.3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/localgovdrupal/localgov_directories.git",
-                "reference": "0b999f194e0f662baad1443cf5efef2ea8af54ef"
+                "reference": "0523d048a7b4b332cf4e111347d7d22f46563ff8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/localgovdrupal/localgov_directories/zipball/0b999f194e0f662baad1443cf5efef2ea8af54ef",
-                "reference": "0b999f194e0f662baad1443cf5efef2ea8af54ef",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_directories/zipball/0523d048a7b4b332cf4e111347d7d22f46563ff8",
+                "reference": "0523d048a7b4b332cf4e111347d7d22f46563ff8",
                 "shasum": ""
             },
             "require": {
@@ -14076,7 +14114,7 @@
                 "localgovdrupal/localgov_openreferral": "Enables Open Referral output of Directories",
                 "localgovdrupal/localgov_paragraphs": "For Directory Promo Page content type in Directories"
             },
-            "time": "2022-08-08T13:26:48+00:00",
+            "time": "2022-09-26T14:06:39+00:00",
             "type": "drupal-module",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -14087,7 +14125,7 @@
             "homepage": "https://github.com/localgovdrupal/localgov_directories",
             "support": {
                 "issues": "https://github.com/localgovdrupal/localgov_directories/issues",
-                "source": "https://github.com/localgovdrupal/localgov_directories/tree/2.3.2"
+                "source": "https://github.com/localgovdrupal/localgov_directories/tree/2.3.3"
             },
             "install-path": "../../web/modules/contrib/localgov_directories"
         },
@@ -14147,17 +14185,17 @@
         },
         {
             "name": "localgovdrupal/localgov_geo",
-            "version": "1.2.0",
-            "version_normalized": "1.2.0.0",
+            "version": "1.2.1",
+            "version_normalized": "1.2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/localgovdrupal/localgov_geo.git",
-                "reference": "2215943fa786e5e86ab4ef595af45bc7d16f2d48"
+                "reference": "3956da4ad859d4d95dd619d470dee496e142ea9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/localgovdrupal/localgov_geo/zipball/2215943fa786e5e86ab4ef595af45bc7d16f2d48",
-                "reference": "2215943fa786e5e86ab4ef595af45bc7d16f2d48",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_geo/zipball/3956da4ad859d4d95dd619d470dee496e142ea9e",
+                "reference": "3956da4ad859d4d95dd619d470dee496e142ea9e",
                 "shasum": ""
             },
             "require": {
@@ -14177,7 +14215,7 @@
             "suggest": {
                 "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev"
             },
-            "time": "2022-06-06T13:27:52+00:00",
+            "time": "2022-09-26T13:19:01+00:00",
             "type": "drupal-module",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -14188,7 +14226,7 @@
             "homepage": "https://github.com/localgovdrupal/localgov_geo",
             "support": {
                 "issues": "https://github.com/localgovdrupal/localgov_geo/issues",
-                "source": "https://github.com/localgovdrupal/localgov_geo/tree/1.2.0"
+                "source": "https://github.com/localgovdrupal/localgov_geo/tree/1.2.1"
             },
             "install-path": "../../web/modules/contrib/localgov_geo"
         },

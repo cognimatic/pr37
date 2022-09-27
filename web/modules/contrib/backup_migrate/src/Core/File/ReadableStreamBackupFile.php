@@ -55,14 +55,13 @@ class ReadableStreamBackupFile extends BackupFile implements BackupFileReadableI
    * Get the realpath of the file.
    *
    * @return string
-   *   The path or stream URI to the file or '' (empty) if the file does not 
-   *   exist.
+   *   The path or stream URI to the file or NULL if the file does not exist.
    */
   public function realpath() {
     if (file_exists($this->path)) {
       return $this->path;
     }
-    return '';
+    return NULL;
   }
 
   /**
