@@ -66,6 +66,12 @@ field.value.viewsreference:
       label: 'Options of enabled settings'
       sequence:
         type: viewsreference.enabled_settings.[%key]
+    argument:
+      type: string
+      label: 'Argument settings'
+    title:
+      type: integer
+      label: 'Include View Title settings'
 
 viewsreference.enabled_settings.*:
   type: string

@@ -13,7 +13,7 @@ use Drupal\viewsreference\Plugin\ViewsReferenceSettingInterface;
  * @ViewsReferenceSetting(
  *   id = "pager",
  *   label = @Translation("Pagination"),
- *   default_value = "",
+ *   default_value = 0,
  * )
  */
 class ViewsReferencePager extends PluginBase implements ViewsReferenceSettingInterface {

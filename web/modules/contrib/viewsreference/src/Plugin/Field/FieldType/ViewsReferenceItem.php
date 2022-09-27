@@ -143,18 +143,6 @@ class ViewsReferenceItem extends EntityReferenceItem {
   /**
    * {@inheritdoc}
    */
-  public static function fieldSettingsFormValidate(array $form, FormStateInterface $form_state) {
-    // Remove unchecked values. so that we have only the checked values in the config.
-    $keys = ['plugin_types', 'preselect_views', 'enabled_settings'];
-    foreach ($keys as $key) {
-      $form_state->setValue(['settings', $key], array_filter($form_state->getValue(['settings', $key], [])));
-    }
-    parent::fieldSettingsFormValidate($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function getPreconfiguredOptions() {
     return [];
   }

@@ -137,15 +137,9 @@
             "drupal/autocomplete_deluxe": {
                 "Multiple reference terms fails 3053986": "https://www.drupal.org/files/issues/2021-05-25/3053986-6.patch"
             },
-			"drupal/backup_migrate": {
-				"filectime and filesize receiving NULL values 3268401": "https://www.drupal.org/files/issues/2022-08-09/filectime-filesize-null-values-3268401.patch"
-			},
 	        "drupal/cludo_search": {
 	          "Cludo search autocomplete not working on block 3050293": "https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch"
 	        },
-			"drupal/entity_usage": {
-				"Move entity_usage_post_update_regenerate_2x into entity_usage.post_update.php 3291423": "https://git.drupalcode.org/project/entity_usage/-/merge_requests/22.patch"
-			},
             "drupal/userswitch": {
                 "Add an entity operation 3087885": "https://www.drupal.org/files/issues/2022-01-30/add-an-entity-operation-in-addition-to-user-list-3087885-29.patch"
             }
