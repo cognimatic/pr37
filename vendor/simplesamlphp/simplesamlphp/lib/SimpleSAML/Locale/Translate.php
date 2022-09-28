@@ -8,8 +8,6 @@
  * @package SimpleSAMLphp
  */
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Locale;
 
 use Gettext\BaseTranslator;
@@ -58,7 +56,7 @@ class Translate
      * Constructor
      *
      * @param \SimpleSAML\Configuration $configuration Configuration object
-     * @param string|null $defaultDictionary The default dictionary where tags will come from.
+     * @param string|null               $defaultDictionary The default dictionary where tags will come from.
      */
     public function __construct(Configuration $configuration, $defaultDictionary = null)
     {
@@ -99,8 +97,10 @@ class Translate
      *
      * @return array An associative array with the dictionary.
      */
-    private function getDictionary(string $name): array
+    private function getDictionary($name)
     {
+        assert(is_string($name));
+
         if (!array_key_exists($name, $this->dictionaries)) {
             $sepPos = strpos($name, ':');
             if ($sepPos !== false) {
@@ -230,7 +230,7 @@ class Translate
     /**
      * Mark a string for translation without translating it.
      *
-     * @param string $tag A tag name to mark for translation.
+     * @param string  $tag A tag name to mark for translation.
      *
      * @return string The tag, unchanged.
      */
@@ -261,7 +261,7 @@ class Translate
      * @param bool $striptags
      * @deprecated Not used in twig, gettext
      *
-     * @return string  The translated tag, or a placeholder value if the tag wasn't found.
+     * @return string|null  The translated tag, or a placeholder value if the tag wasn't found.
      */
     public function t(
         $tag,
@@ -281,6 +281,26 @@ class Translate
                 '. This parameter will go away, the fallback will become' .
                 ' identical to the $tag in 2.0.'
             );
+        }
+        if (!is_array($replacements)) {
+            // TODO: remove this entire if for 2.0
+
+            // old style call to t(...). Print warning to log
+            Logger::warning(
+                'Deprecated use of SimpleSAML\Locale\Translate::t(...) at ' . $where .
+                '. Please update the code to use the new style of parameters.'
+            );
+
+            // for backwards compatibility
+            /** @psalm-suppress PossiblyInvalidArgument */
+            if (!$replacements && ($this->getTag($tag) === null)) {
+                Logger::warning(
+                    'Code which uses $fallbackdefault === FALSE should be updated to use the getTag() method instead.'
+                );
+                return null;
+            }
+
+            $replacements = $oldreplacements;
         }
 
         if (is_array($tag)) {
@@ -319,7 +339,7 @@ class Translate
      *
      * @return string The string that should be used, or the tag name if $fallbacktag is set to false.
      */
-    private function getStringNotTranslated(string $tag, bool $fallbacktag): string
+    private function getStringNotTranslated($tag, $fallbacktag)
     {
         if ($fallbacktag) {
             return 'not translated (' . $tag . ')';
@@ -356,7 +376,7 @@ class Translate
     /**
      * Include a language file from the dictionaries directory.
      *
-     * @param string $file File name of dictionary to include
+     * @param string                         $file File name of dictionary to include
      * @param \SimpleSAML\Configuration|null $otherConfig Optionally provide a different configuration object than the
      * one provided in the constructor to be used to find the directory of the dictionary. This allows to combine
      * dictionaries inside the SimpleSAMLphp main code distribution together with external dictionaries. Defaults to
@@ -384,7 +404,7 @@ class Translate
      *
      * @return array An array holding all the translations in the file.
      */
-    private function readDictionaryJSON(string $filename): array
+    private function readDictionaryJSON($filename)
     {
         $definitionFile = $filename . '.definition.json';
         assert(file_exists($definitionFile));
@@ -416,7 +436,7 @@ class Translate
      *
      * @return array An array holding all the translations in the file.
      */
-    private function readDictionaryPHP(string $filename): array
+    private function readDictionaryPHP($filename)
     {
         $phpFile = $filename . '.php';
         assert(file_exists($phpFile));
@@ -437,8 +457,10 @@ class Translate
      *
      * @return array An array holding all the translations in the file.
      */
-    private function readDictionaryFile(string $filename): array
+    private function readDictionaryFile($filename)
     {
+        assert(is_string($filename));
+
         Logger::debug('Translate: Reading dictionary [' . $filename . ']');
 
         $jsonFile = $filename . '.definition.json';
@@ -468,7 +490,7 @@ class Translate
     {
         $text = BaseTranslator::$current->gettext($original);
 
-        if (func_num_args() === 1 || $original === null) {
+        if (func_num_args() === 1) {
             return $text;
         }
 
@@ -526,7 +548,6 @@ class Translate
 
         // we don't have a translation for the current language, load alternative priorities
         $sspcfg = Configuration::getInstance();
-        /** @psalm-var \SimpleSAML\Configuration $langcfg */
         $langcfg = $sspcfg->getConfigItem('language');
         $priorities = $langcfg->getArray('priorities', []);
 
@@ -540,22 +561,5 @@ class Translate
 
         // nothing we can use, return null so that we can set a default
         return null;
-    }
-
-    /**
-     * Prefix tag
-     *
-     * @param string $tag Translation tag
-     * @param string $prefix Prefix to be added
-     *
-     * @return string Prefixed tag
-     */
-    public static function addTagPrefix(string $tag, string $prefix): string
-    {
-        $tagPos = strrpos($tag, ':');
-        // if tag contains ':' target actual tag
-        $tagPos = ($tagPos === false) ? 0 : $tagPos + 1;
-        // add prefix at $tagPos
-        return substr_replace($tag, $prefix, $tagPos, 0);
     }
 }

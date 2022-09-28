@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Module\core\Auth\Process;
 
 use SimpleSAML\Configuration;
@@ -81,7 +79,7 @@ class AttributeMap extends \SimpleSAML\Auth\ProcessingFilter
      * @throws \Exception If the filter could not load the requested attribute map file.
      * @return void
      */
-    private function loadMapFile(string $fileName): void
+    private function loadMapFile($fileName)
     {
         $config = Configuration::getInstance();
 

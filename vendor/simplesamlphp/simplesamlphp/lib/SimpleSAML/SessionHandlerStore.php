@@ -6,8 +6,6 @@
  * @package SimpleSAMLphp
  */
 
-declare(strict_types=1);
-
 namespace SimpleSAML;
 
 class SessionHandlerStore extends SessionHandlerCookie

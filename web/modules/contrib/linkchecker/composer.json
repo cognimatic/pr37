@@ -17,10 +17,10 @@
     "issues": "https://www.drupal.org/project/issues/linkchecker",
     "source": "https://git.drupal.org/project/linkchecker.git"
   },
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "require": {
-    "drupal/core": "^8.8.0 || ^9",
-    "drupal/dynamic_entity_reference": "^1.0 || ^2.0@alpha"
+    "drupal/core": "^8.9 || ^9.2",
+    "drupal/dynamic_entity_reference": "^1.0 || ^2.0@alpha || ^3.0@beta || ^4.0@alpha"
   },
   "require-dev": {
      "drupal/redirect": "^1.6"

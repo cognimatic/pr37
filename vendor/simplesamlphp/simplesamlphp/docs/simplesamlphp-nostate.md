@@ -110,9 +110,7 @@ flow. The lack of cookies will cause SimpleSAMLphp's session to be lost when rec
 assertion via the HTTP-POST binding.
 
 To resolve this, you can set the `session.cookie.samesite` attribute in `config.php`
-to `None`. Starting with SimpleSAMLphp 1.19, the config template contains a way to
-set this dynamically based on the user's browser support for this attribute.
-You also need to enable the `session.cookie.secure` setting.
+to `None`.
 
 ### A generic problem saving sessions
 

@@ -9,7 +9,7 @@ dependencies:
 test_dependencies:
   - redirect:redirect
 
-# Information added by Drupal.org packaging script on 2022-05-05
-version: '8.x-1.0-beta5'
+# Information added by Drupal.org packaging script on 2022-09-27
+version: '8.x-1.0-beta6'
 project: 'linkchecker'
-datestamp: 1651776457
+datestamp: 1664257508

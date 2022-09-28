@@ -8,7 +8,7 @@ core_version_requirement: ^8 || ^9 || ^10
 dependencies:
   - drupal:block
 
-# Information added by Drupal.org packaging script on 2022-08-17
-version: '2.0.2'
+# Information added by Drupal.org packaging script on 2022-09-27
+version: '2.0.5'
 project: 'block_class'
-datestamp: 1660705006
+datestamp: 1664290370

@@ -1,5 +1,0 @@
-bpmn_io.add:
-  route_name: bpmn_io.add
-  title: 'Add new BPMN.iO model'
-  appears_on:
-    - entity.eca.collection

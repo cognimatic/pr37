@@ -47,7 +47,10 @@ default:
       value: false
   revision_translation_affected:
     -
-      value: true
+      value: true    
+  moderation_state:
+    -
+      value: published
   path:
     -
       alias: /localgov-drupal-demo

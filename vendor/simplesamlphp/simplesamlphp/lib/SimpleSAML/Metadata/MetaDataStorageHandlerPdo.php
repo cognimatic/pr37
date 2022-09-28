@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Metadata;
 
 use SimpleSAML\Database;
@@ -81,8 +79,10 @@ class MetaDataStorageHandlerPdo extends MetaDataStorageSource
      * @throws \Exception If a database error occurs.
      * @throws \SimpleSAML\Error\Exception If the metadata can be retrieved from the database, but cannot be decoded.
      */
-    private function load(string $set): ?array
+    private function load($set)
     {
+        assert(is_string($set));
+
         $tableName = $this->getTableName($set);
 
         if (!in_array($set, $this->supportedSets, true)) {
@@ -145,15 +145,15 @@ class MetaDataStorageHandlerPdo extends MetaDataStorageSource
     /**
      * Retrieve a metadata entry.
      *
-     * @param string $index The entityId we are looking up.
+     * @param string $entityId The entityId we are looking up.
      * @param string $set The set we are looking for metadata in.
      *
      * @return array|null An associative array with metadata for the given entity, or NULL if we are unable to
      *         locate the entity.
      */
-    public function getMetaData($index, $set)
+    public function getMetaData($entityId, $set)
     {
-        assert(is_string($index));
+        assert(is_string($entityId));
         assert(is_string($set));
 
         // validate the metadata set is valid
@@ -162,8 +162,8 @@ class MetaDataStorageHandlerPdo extends MetaDataStorageSource
         }
 
         // support caching
-        if (isset($this->cachedMetadata[$index][$set])) {
-            return $this->cachedMetadata[$index][$set];
+        if (isset($this->cachedMetadata[$entityId][$set])) {
+            return $this->cachedMetadata[$entityId][$set];
         }
 
         $tableName = $this->getTableName($set);
@@ -176,13 +176,13 @@ class MetaDataStorageHandlerPdo extends MetaDataStorageSource
             $stmt = $this->db->read(
                 "SELECT entity_id, entity_data FROM {$tableName} "
                 . "WHERE (entity_id LIKE :dynamicId OR entity_id = :entityId)",
-                ['dynamicId' => '__DYNAMIC%', 'entityId' => $index]
+                ['dynamicId' => '__DYNAMIC%', 'entityId' => $entityId]
             );
         } else {
             // other metadata types should be able to match on entity id
             $stmt = $this->db->read(
                 "SELECT entity_id, entity_data FROM {$tableName} WHERE entity_id = :entityId",
-                ['entityId' => $index]
+                ['entityId' => $entityId]
             );
         }
 
@@ -204,10 +204,10 @@ class MetaDataStorageHandlerPdo extends MetaDataStorageSource
             }
 
             // update the entity id to either the key (if not dynamic or generate the dynamic hosted url)
-            $metadataSet[$d['entity_id']] = $this->updateEntityID($set, $index, $data);
+            $metadataSet[$d['entity_id']] = $this->updateEntityID($set, $entityId, $data);
         }
 
-        $indexLookup = $this->lookupIndexFromEntityId($index, $metadataSet);
+        $indexLookup = $this->lookupIndexFromEntityId($entityId, $metadataSet);
         if (isset($indexLookup) && array_key_exists($indexLookup, $metadataSet)) {
             $this->cachedMetadata[$indexLookup][$set] = $metadataSet[$indexLookup];
             return $this->cachedMetadata[$indexLookup][$set];
@@ -275,8 +275,10 @@ class MetaDataStorageHandlerPdo extends MetaDataStorageSource
      *
      * @return string Replaced table name
      */
-    private function getTableName(string $table): string
+    private function getTableName($table)
     {
+        assert(is_string($table));
+
         return $this->db->applyPrefix(str_replace("-", "_", $this->tablePrefix . $table));
     }
 
@@ -290,28 +292,18 @@ class MetaDataStorageHandlerPdo extends MetaDataStorageSource
     {
         $stmt = 0;
         $fine = true;
-        $driver = $this->db->getDriver();
-
-        $text = 'TEXT';
-        if ($driver === 'mysql') {
-            $text = 'MEDIUMTEXT';
-        }
-
         foreach ($this->supportedSets as $set) {
             $tableName = $this->getTableName($set);
-            $rows = $this->db->write(sprintf(
-                "CREATE TABLE IF NOT EXISTS $tableName (entity_id VARCHAR(255) PRIMARY KEY NOT NULL, "
-                    . "entity_data %s NOT NULL)",
-                $text
-            ));
-
+            $rows = $this->db->write(
+                "CREATE TABLE IF NOT EXISTS $tableName (entity_id VARCHAR(255) PRIMARY KEY NOT NULL, entity_data " .
+                "TEXT NOT NULL)"
+            );
             if ($rows === false) {
                 $fine = false;
             } else {
                 $stmt += $rows;
             }
         }
-
         if (!$fine) {
             return false;
         }

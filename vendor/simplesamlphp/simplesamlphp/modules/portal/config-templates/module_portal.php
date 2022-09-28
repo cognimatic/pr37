@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Configuration for the module portal.
  */

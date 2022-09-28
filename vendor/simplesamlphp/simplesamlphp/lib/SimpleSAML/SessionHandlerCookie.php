@@ -11,8 +11,6 @@
  * @abstract
  */
 
-declare(strict_types=1);
-
 namespace SimpleSAML;
 
 use SimpleSAML\Utils;
@@ -77,7 +75,7 @@ abstract class SessionHandlerCookie extends SessionHandler
             }
 
             // check if we have a valid session id
-            if (!is_null($this->session_id) && !self::isValidSessionID($this->session_id)) {
+            if (!self::isValidSessionID($this->session_id)) {
                 // invalid, disregard this session
                 return null;
             }
@@ -103,7 +101,7 @@ abstract class SessionHandlerCookie extends SessionHandler
      *
      * @return string A random session id.
      */
-    private static function createSessionID(): string
+    private static function createSessionID()
     {
         return bin2hex(openssl_random_pseudo_bytes(16));
     }
@@ -117,8 +115,11 @@ abstract class SessionHandlerCookie extends SessionHandler
      *
      * @return boolean True if this session ID is valid, false otherwise.
      */
-    private static function isValidSessionID(string $session_id): bool
+    private static function isValidSessionID($session_id)
     {
+        if (!is_string($session_id)) {
+            return false;
+        }
 
         if (strlen($session_id) != 32) {
             return false;

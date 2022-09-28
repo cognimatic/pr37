@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\IdP;
 
 use SimpleSAML\Auth;
@@ -45,7 +43,7 @@ class TraditionalLogoutHandler implements LogoutHandlerInterface
      * @param array &$state The logout state.
      * @return void
      */
-    private function logoutNextSP(array &$state): void
+    private function logoutNextSP(array &$state)
     {
         $association = array_pop($state['core:LogoutTraditional:Remaining']);
         if ($association === null) {
@@ -111,7 +109,6 @@ class TraditionalLogoutHandler implements LogoutHandlerInterface
             throw new Error\Exception('RelayState lost during logout.');
         }
 
-        /** @psalm-var array $state */
         $state = Auth\State::loadState($relayState, 'core:LogoutTraditional');
 
         if ($error === null) {

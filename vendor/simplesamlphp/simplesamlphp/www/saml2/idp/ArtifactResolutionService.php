@@ -11,7 +11,7 @@
 require_once('../../_include.php');
 
 $config = \SimpleSAML\Configuration::getInstance();
-if (!$config->getBoolean('enable.saml20-idp', false) || !\SimpleSAML\Module::isModuleEnabled('saml')) {
+if (!$config->getBoolean('enable.saml20-idp', false)) {
     throw new \SimpleSAML\Error\Error('NOACCESS');
 }
 
@@ -47,8 +47,10 @@ if (!($request instanceof \SAML2\ArtifactResolve)) {
 }
 
 $issuer = $request->getIssuer();
-\Webmozart\Assert\Assert::notNull($issuer);
-$issuer = $issuer->getValue();
+if (!is_string($issuer)) {
+    $issuer = $issuer->getValue();
+}
+
 $spMetadata = $metadata->getMetaDataConfig($issuer, 'saml20-sp-remote');
 
 $artifact = $request->getArtifact();
@@ -58,7 +60,7 @@ $store->delete('artifact', $artifact);
 
 if ($responseData !== null) {
     $document = \SAML2\DOMDocumentFactory::fromString($responseData);
-    $responseXML = $document->documentElement;
+    $responseXML = $document->firstChild;
 } else {
     $responseXML = null;
 }

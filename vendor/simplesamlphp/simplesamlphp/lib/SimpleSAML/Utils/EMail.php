@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Utils;
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -73,7 +71,7 @@ class EMail
         return $address;
     }
 
-
+    
     /**
      * Set the data that should be embedded in the e-mail body
      *
@@ -160,6 +158,8 @@ class EMail
     public function setTransportMethod($transportMethod, array $transportOptions = [])
     {
         assert(is_string($transportMethod));
+        assert(is_array($transportOptions));
+
 
         switch (strtolower($transportMethod)) {
             // smtp transport method
@@ -231,6 +231,8 @@ class EMail
      */
     public static function initFromConfig(EMail $EMail)
     {
+        assert($EMail instanceof EMail);
+
         $config = Configuration::getInstance();
         $EMail->setTransportMethod(
             $config->getString('mail.transport.method', 'mail'),

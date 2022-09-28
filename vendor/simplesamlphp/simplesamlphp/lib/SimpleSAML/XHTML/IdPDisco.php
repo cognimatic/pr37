@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\XHTML;
 
 use SimpleSAML\Configuration;
@@ -608,7 +606,7 @@ class IdPDisco
             foreach ($tryLanguages as $lang) {
                 if ($name = $this->getEntityDisplayName($data, $lang)) {
                     $newlist[$entityid]['name'] = $name;
-                    continue;
+                    break 1;
                 }
             }
             if (empty($newlist[$entityid]['name'])) {
@@ -617,7 +615,7 @@ class IdPDisco
             foreach ($tryLanguages as $lang) {
                 if (!empty($data['description'][$lang])) {
                     $newlist[$entityid]['description'] = $data['description'][$lang];
-                    continue;
+                    break 1;
                 }
             }
             if (!empty($data['icon'])) {
@@ -644,7 +642,6 @@ class IdPDisco
         $t->data['entityID'] = $this->spEntityId;
         $t->data['urlpattern'] = htmlspecialchars(Utils\HTTP::getSelfURLNoQuery());
         $t->data['rememberenabled'] = $this->config->getBoolean('idpdisco.enableremember', false);
-        $t->data['rememberchecked'] = $this->config->getBoolean('idpdisco.rememberchecked', false);
         $t->show();
     }
 
@@ -654,7 +651,7 @@ class IdPDisco
      * @param string $language
      * @return string|null
      */
-    private function getEntityDisplayName(array $idpData, string $language): ?string
+    private function getEntityDisplayName(array $idpData, $language)
     {
         if (isset($idpData['UIInfo']['DisplayName'][$language])) {
             return $idpData['UIInfo']['DisplayName'][$language];

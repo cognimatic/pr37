@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Utils;
 
 use SimpleSAML\Auth as Authentication;
@@ -17,7 +15,7 @@ use SimpleSAML\Session;
 class Auth
 {
     /**
-     * Retrieve an admin login URL.
+     * Retrieve a admin login URL.
      *
      * @param string|NULL $returnTo The URL the user should arrive on after admin authentication. Defaults to null.
      *
@@ -39,7 +37,7 @@ class Auth
 
 
     /**
-     * Retrieve an admin logout URL.
+     * Retrieve a admin logout URL.
      *
      * @param string|NULL $returnTo The URL the user should arrive on after admin authentication. Defaults to null.
      *

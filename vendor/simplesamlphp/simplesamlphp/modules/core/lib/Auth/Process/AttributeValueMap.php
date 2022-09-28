@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Module\core\Auth\Process;
 
 use SimpleSAML\Error;
@@ -19,13 +17,13 @@ class AttributeValueMap extends \SimpleSAML\Auth\ProcessingFilter
      * The name of the attribute we should assign values to (ie: the target attribute).
      * @var string
      */
-    private $targetattribute = '';
+    private $targetattribute;
 
     /**
      * The name of the attribute we should create values from.
      * @var string
      */
-    private $sourceattribute = '';
+    private $sourceattribute;
 
     /**
      * The required $sourceattribute values and target affiliations.
@@ -93,10 +91,10 @@ class AttributeValueMap extends \SimpleSAML\Auth\ProcessingFilter
         }
 
         // now validate it
-        if (empty($this->sourceattribute)) {
+        if (!is_string($this->sourceattribute)) {
             throw new Error\Exception("AttributeValueMap: 'sourceattribute' configuration option not set.");
         }
-        if (empty($this->targetattribute)) {
+        if (!is_string($this->targetattribute)) {
             throw new Error\Exception("AttributeValueMap: 'targetattribute' configuration option not set.");
         }
         if (!is_array($this->values)) {

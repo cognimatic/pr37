@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Auth;
 
 use SimpleSAML\Configuration;
@@ -309,8 +307,11 @@ abstract class Source
      * @return \SimpleSAML\Auth\Source The parsed authentication source.
      * @throws \Exception If the authentication source is invalid.
      */
-    private static function parseAuthSource(string $authId, array $config): Source
+    private static function parseAuthSource($authId, $config)
     {
+        assert(is_string($authId));
+        assert(is_array($config));
+
         self::validateSource($config, $authId);
 
         $id = $config[0];

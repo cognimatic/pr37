@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML;
 
 use SimpleSAML\Error\Error;
@@ -235,8 +233,12 @@ class Utilities
      * @param array $parameters
      * @return void
      */
-    private static function doRedirect(string $url, array $parameters = []): void
+    private static function doRedirect($url, $parameters = [])
     {
+        assert(is_string($url));
+        assert(!empty($url));
+        assert(is_array($parameters));
+
         if (!empty($parameters)) {
             $url = self::addURLparameter($url, $parameters);
         }

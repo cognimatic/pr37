@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML;
 
 use SimpleSAML\Logger\ErrorLogLoggingHandler;
@@ -73,7 +71,7 @@ class Logger
      *
      * @var string
      */
-    public const NO_TRACKID = '_NOTRACKIDYET_';
+    const NO_TRACKID = '_NOTRACKIDYET_';
 
     /**
      * This variable holds the track ID we have retrieved from the session class. It can also be NULL, in which case
@@ -128,28 +126,28 @@ class Logger
     private static $shuttingDown = false;
 
     /** @var int */
-    public const EMERG = 0;
+    const EMERG = 0;
 
     /** @var int */
-    public const ALERT = 1;
+    const ALERT = 1;
 
     /** @var int */
-    public const CRIT = 2;
+    const CRIT = 2;
 
     /** @var int */
-    public const ERR = 3;
+    const ERR = 3;
 
     /** @var int */
-    public const WARNING = 4;
+    const WARNING = 4;
 
     /** @var int */
-    public const NOTICE = 5;
+    const NOTICE = 5;
 
     /** @var int */
-    public const INFO = 6;
+    const INFO = 6;
 
     /** @var int */
-    public const DEBUG = 7;
+    const DEBUG = 7;
 
 
     /**
@@ -257,7 +255,7 @@ class Logger
      */
     public static function stats($string)
     {
-        self::log(self::NOTICE, $string, self::$logLevel >= self::NOTICE);
+        self::log(self::NOTICE, $string, true);
     }
 
 
@@ -391,7 +389,7 @@ class Logger
      * @param boolean $stats Whether this is a stats message or a regular one.
      * @return void
      */
-    private static function defer(int $level, string $message, bool $stats): void
+    private static function defer($level, $message, $stats)
     {
         // save the message for later
         self::$earlyLog[] = ['level' => $level, 'string' => $message, 'statsLog' => $stats];
@@ -409,7 +407,7 @@ class Logger
      * @return void
      * @throws \Exception
      */
-    private static function createLoggingHandler(string $handler = null): void
+    private static function createLoggingHandler($handler = null)
     {
         self::$initializing = true;
 
@@ -468,7 +466,7 @@ class Logger
      * @param bool $statsLog
      * @return void
      */
-    private static function log(int $level, string $string, bool $statsLog = false): void
+    private static function log($level, $string, $statsLog = false)
     {
         if (self::$initializing) {
             // some error occurred while initializing logging
@@ -489,17 +487,17 @@ class Logger
         }
 
         if (self::$captureLog) {
-            $sample = microtime(false);
-            list($msecs, $mtime) = explode(' ', $sample);
-
-            $time = intval($mtime);
-            $usec = substr($msecs, 2, 3);
-
-            $ts = gmdate('H:i:s', $time) . '.' . $usec . 'Z';
+            $ts = microtime(true);
+            $msecs = (int) (($ts - (int) $ts) * 1000);
+            $ts = gmdate('H:i:s', $ts) . sprintf('.%03d', $msecs) . 'Z';
             self::$capturedLog[] = $ts . ' ' . $string;
         }
 
         if (self::$logLevel >= $level || $statsLog) {
+            if (is_array($string)) {
+                $string = implode(",", $string);
+            }
+
             $formats = ['%trackid', '%msg', '%srcip', '%stat'];
             $replacements = [self::$trackid, $string, $_SERVER['REMOTE_ADDR']];
 

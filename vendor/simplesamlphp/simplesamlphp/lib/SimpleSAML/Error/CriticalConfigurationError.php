@@ -1,13 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Error;
 
 use SimpleSAML\Configuration;
 use SimpleSAML\Logger;
 use SimpleSAML\Utils;
-use Throwable;
 
 /**
  * This exception represents a configuration error that we cannot recover from.
@@ -67,11 +64,11 @@ class CriticalConfigurationError extends ConfigurationError
 
 
     /**
-     * @param \Throwable $exception
+     * @param \Exception $exception
      *
-     * @return \SimpleSAML\Error\Exception
+     * @return CriticalConfigurationError
      */
-    public static function fromException(Throwable $exception): Exception
+    public static function fromException(\Exception $exception)
     {
         $reason = null;
         $file = null;

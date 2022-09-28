@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Hook to add the modinfo module to the frontpage.
  *

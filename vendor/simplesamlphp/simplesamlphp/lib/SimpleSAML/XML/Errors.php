@@ -10,8 +10,6 @@
  * @package SimpleSAMLphp
  */
 
-declare(strict_types=1);
-
 namespace SimpleSAML\XML;
 
 use LibXMLError;
@@ -34,7 +32,7 @@ class Errors
      *
      * @return void
      */
-    private static function addErrors(): void
+    private static function addErrors()
     {
         $currentErrors = libxml_get_errors();
         libxml_clear_errors();

@@ -208,9 +208,6 @@ class BlockClassHelperService {
     // Store in the config.
     $config->set('block_classes_stored', $block_classes_to_store);
 
-    // Save.
-    $config->save();
-
     // Store the id replacement in the settings only if it is enabled in the
     // Global Settings page.
     if (!empty($config->get('enable_id_replacement'))) {
@@ -229,9 +226,11 @@ class BlockClassHelperService {
       // Get the block class.
       $replaced_id = $entity->getThirdPartySetting('block_class', 'replaced_id');
 
-      // Avoid store empty values.
+      // Avoid store empty values, so save the current config and skip without
+      // $replaced_id.
       if (empty(trim($replaced_id ?? ''))) {
-        return FALSE;
+        $config->save();
+        return;
       }
 
       // Remove the extra spaces.
@@ -932,7 +931,13 @@ class BlockClassHelperService {
     unset($third_party_settings['block_class']['remove_item']);
 
     // Clear empty values.
-    $third_party_settings['block_class'] = array_filter($third_party_settings['block_class']);
+    $third_party_settings['block_class'] = !empty($third_party_settings['block_class']) ?? array_filter($third_party_settings['block_class']);
+
+    // Merge with all third party settings.
+    $all_third_party_settings = $form_state->getValue('third_party_settings');
+    if (!empty($all_third_party_settings)) {
+      $third_party_settings = array_merge($third_party_settings, $all_third_party_settings);
+    }
 
     // Set the ThirdPartySettings with the default array.
     $form_state->setValue('third_party_settings', $third_party_settings);
@@ -998,7 +1003,7 @@ class BlockClassHelperService {
       foreach ($third_party_settings['block_class'] as $key => $third_party_setting) {
 
         // If there is a classes_ we can remove.
-        if (str_contains($key, 'classes_')) {
+        if (strpos($key, 'classes_') !== FALSE) {
           unset($third_party_settings['block_class'][$key]);
         }
 

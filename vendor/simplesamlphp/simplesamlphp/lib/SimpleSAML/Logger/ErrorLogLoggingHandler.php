@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Logger;
 
 use SimpleSAML\Configuration;
@@ -48,8 +46,7 @@ class ErrorLogLoggingHandler implements LoggingHandlerInterface
      */
     public function __construct(Configuration $config)
     {
-        // Remove any non-printable characters before storing
-        $this->processname = preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $config->getString('logging.processname', 'SimpleSAMLphp'));
+        $this->processname = $config->getString('logging.processname', 'SimpleSAMLphp');
     }
 
 
@@ -83,6 +80,7 @@ class ErrorLogLoggingHandler implements LoggingHandlerInterface
         $formats = ['%process', '%level'];
         $replacements = [$this->processname, $levelName];
         $string = str_replace($formats, $replacements, $string);
+        $string = preg_replace('/%\w+(\{[^\}]+\})?/', '', $string);
         $string = trim($string);
 
         error_log($string);

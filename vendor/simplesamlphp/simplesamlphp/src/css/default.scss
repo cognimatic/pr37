@@ -1,8 +1,7 @@
 @import "../../node_modules/reset-css/sass/_reset.scss";
 @import "../../node_modules/purecss/build/pure.css";
-$fa-font-path: '../fonts/';
-@import "../../node_modules/\@fortawesome/fontawesome-free/scss/fontawesome";
-@import "../../node_modules/\@fortawesome/fontawesome-free/scss/solid";
+@import "../../node_modules/font-awesome/scss/font-awesome.scss";
+@import "../../node_modules/selectize/dist/css/selectize.css";
 @import "../../node_modules/highlight.js/styles/zenburn.css";
 
 /*************
@@ -418,8 +417,7 @@ HEADER
 }
 
 .language-menu {
-  font-family: "Font Awesome 5 Free", sans-serif;
-  font-weight: 400;
+  font-family: FontAwesome, sans-serif;
   min-width: 10rem;
 }
 
@@ -608,16 +606,58 @@ input[type="file"] {
   float: right;
 }
 
+/* SELECTIZE */
+.selectize-input,
+.selectize-dropdown,
+.selectize-input.dropdown-active {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.selectize-input:after {
+  transform: translate(8px, 0);
+}
+
 div .item {
   float: left;
+}
+
+.selectize-dropdown {
+  text-align: left;
+}
+
+.selectize-control.single .selectize-input, .selectize-dropdown.single {
+  background-color: white;
+  background-image: none;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 3px #ddd;
+  box-sizing: border-box;
+  font-size: inherit;
+  padding: 0.5em 0.6em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.selectize-dropdown-content {
+  cursor: pointer;
+  .option {
+    &:hover, &:focus, &.active {
+      color: white;
+      background-color: #444444;
+    }
+    span.highlight {
+      color: black;
+      background-color: #fffbd5;
+    }
+  }
 }
 
 /* ***********************************************************
 IMAGES
 ************************************************************ */
 .fa {
-  font-family: "Font Awesome 5 Free" !important;
-  font-weight: 400;
+  font-family: FontAwesome !important;
 }
 
 span.fa, i.fa {
@@ -816,8 +856,7 @@ div.preferredidp {
     }
     &:after {
       content: "\f078";
-      font-family: "Font Awesome 5 Free";
-      font-weight: 400;
+      font-family: FontAwesome;
     }
   }
 

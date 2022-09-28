@@ -1,12 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Auth;
 
 use SimpleSAML\Utils;
-
-error_reporting(E_ALL ^ E_DEPRECATED);
 
 /**
  * A class that generates and verifies time-limited tokens.
@@ -88,7 +84,7 @@ class TimeLimitedToken
      *
      * @return string The token for the given time and offset.
      */
-    private function calculateTokenValue(int $offset, int $time = null): string
+    private function calculateTokenValue($offset, $time = null)
     {
         if ($time === null) {
             $time = time();

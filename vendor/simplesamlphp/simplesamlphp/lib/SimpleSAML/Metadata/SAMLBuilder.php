@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Metadata;
 
 use SAML2\Constants;
@@ -88,7 +86,7 @@ class SAMLBuilder
      * @param array $metadata
      * @return void
      */
-    private function setExpiration(array $metadata): void
+    private function setExpiration($metadata)
     {
         if (array_key_exists('expire', $metadata)) {
             if ($metadata['expire'] - time() < $this->maxDuration) {
@@ -155,11 +153,6 @@ class SAMLBuilder
 
         $metadata = Configuration::loadFromArray($metadata, $metadata['entityid']);
         $defaultEndpoint = $metadata->getDefaultEndpoint('SingleSignOnService');
-
-        /**
-         * @psalm-var \SAML2\XML\md\RoleDescriptor $e
-         * @psalm-suppress UndefinedClass
-         */
         $e = new SecurityTokenServiceType();
         $e->setLocation($defaultEndpoint['Location']);
 
@@ -176,7 +169,7 @@ class SAMLBuilder
      * @param \SAML2\XML\md\RoleDescriptor $e Reference to the element where the Extensions element should be included.
      * @return void
      */
-    private function addExtensions(Configuration $metadata, RoleDescriptor $e): void
+    private function addExtensions(Configuration $metadata, RoleDescriptor $e)
     {
         if ($metadata->hasValue('tags')) {
             $a = new Attribute();
@@ -370,8 +363,10 @@ class SAMLBuilder
      * @return array An array of endpoint objects,
      *     either \SAML2\XML\md\EndpointType or \SAML2\XML\md\IndexedEndpointType.
      */
-    private static function createEndpoints(array $endpoints, bool $indexed): array
+    private static function createEndpoints(array $endpoints, $indexed)
     {
+        assert(is_bool($indexed));
+
         $ret = [];
 
         foreach ($endpoints as &$ep) {
@@ -428,7 +423,7 @@ class SAMLBuilder
     private function addAttributeConsumingService(
         SPSSODescriptor $spDesc,
         Configuration $metadata
-    ): void {
+    ) {
         $attributes = $metadata->getArray('attributes', []);
         $name = $metadata->getLocalizedString('name', null);
 
@@ -700,6 +695,7 @@ class SAMLBuilder
      */
     public function addAttributeAuthority(array $metadata)
     {
+        assert(is_array($metadata));
         assert(isset($metadata['entityid']));
         assert(isset($metadata['metadata-set']));
 
@@ -795,9 +791,10 @@ class SAMLBuilder
      * @param string                      $x509data The certificate data.
      * @return void
      */
-    private function addX509KeyDescriptor(RoleDescriptor $rd, string $use, string $x509data): void
+    private function addX509KeyDescriptor(RoleDescriptor $rd, $use, $x509data)
     {
         assert(in_array($use, ['encryption', 'signing'], true));
+        assert(is_string($x509data));
 
         $keyDescriptor = \SAML2\Utils::createKeyDescriptor($x509data);
         $keyDescriptor->setUse($use);
@@ -814,7 +811,7 @@ class SAMLBuilder
      * @param \SimpleSAML\Configuration    $metadata The metadata of the entity.
      * @return void
      */
-    private function addCertificate(RoleDescriptor $rd, Configuration $metadata): void
+    private function addCertificate(RoleDescriptor $rd, Configuration $metadata)
     {
         $keys = $metadata->getPublicKeys();
         foreach ($keys as $key) {

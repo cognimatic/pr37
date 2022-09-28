@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Metadata;
 
 use SimpleSAML\Configuration;
@@ -77,7 +75,7 @@ class MetaDataStorageHandlerFlatFile extends MetaDataStorageSource
      *     or null if we are unable to load metadata from the given file.
      * @throws \Exception If the metadata set cannot be loaded.
      */
-    private function load(string $set): ?array
+    private function load($set)
     {
         $metadatasetfile = $this->directory . $set . '.php';
 
@@ -85,7 +83,6 @@ class MetaDataStorageHandlerFlatFile extends MetaDataStorageSource
             return null;
         }
 
-        /** @psalm-var mixed $metadata   We cannot be sure what the include below will do with this var */
         $metadata = [];
 
         include($metadatasetfile);

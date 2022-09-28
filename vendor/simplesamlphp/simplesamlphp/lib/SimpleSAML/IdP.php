@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML;
 
 use SAML2\Constants as SAML2;
@@ -66,8 +64,10 @@ class IdP
      *
      * @throws \SimpleSAML\Error\Exception If the IdP is disabled or no such auth source was found.
      */
-    private function __construct(string $id)
+    private function __construct($id)
     {
+        assert(is_string($id));
+
         $this->id = $id;
         $this->associationGroup = $id;
 
@@ -348,7 +348,7 @@ class IdP
      * @throws \SimpleSAML\Module\saml\Error\NoPassive If we were asked to do passive authentication.
      * @return void
      */
-    private function authenticate(array &$state): void
+    private function authenticate(array &$state)
     {
         if (isset($state['isPassive']) && (bool) $state['isPassive']) {
             throw new NoPassive(SAML2::STATUS_RESPONDER, 'Passive authentication not supported.');
@@ -371,7 +371,7 @@ class IdP
      * @throws \Exception If there is no auth source defined for this IdP.
      * @return void
      */
-    private function reauthenticate(array &$state): void
+    private function reauthenticate(array &$state)
     {
         $sourceImpl = $this->authSource->getAuthSource();
         $sourceImpl->reauthenticate($state);

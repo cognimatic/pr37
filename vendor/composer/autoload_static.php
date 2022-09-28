@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit19019a155f8fb119d127e867a94e8614
+class ComposerStaticInitac63a14fe3e83462456265cb381107bb
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -50,11 +50,12 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         '9e4824c5afbdc1482b6025ce3d4dfde8' => __DIR__ . '/..' . '/league/csv/src/functions_include.php',
         '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
+        '5a12a5271c58108e0aa33355e6ac54ea' => __DIR__ . '/..' . '/drupal/console-core/src/functions.php',
         '92c8763cd6170fce6fcfe7e26b4e8c10' => __DIR__ . '/..' . '/symfony/phpunit-bridge/bootstrap.php',
         '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
     );
@@ -128,6 +129,7 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'Symfony\\Component\\HttpFoundation\\' => 33,
             'Symfony\\Component\\Finder\\' => 25,
             'Symfony\\Component\\Filesystem\\' => 29,
+            'Symfony\\Component\\ExpressionLanguage\\' => 37,
             'Symfony\\Component\\EventDispatcher\\' => 34,
             'Symfony\\Component\\ErrorHandler\\' => 31,
             'Symfony\\Component\\DomCrawler\\' => 29,
@@ -139,9 +141,9 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'Symfony\\Component\\Cache\\' => 24,
             'Symfony\\Component\\BrowserKit\\' => 29,
             'Symfony\\Cmf\\Component\\Routing\\' => 30,
-            'Symfony\\Bundle\\FrameworkBundle\\' => 31,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Symfony\\Bridge\\PhpUnit\\' => 23,
+            'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 49,
             'SlevomatCodingStandard\\' => 23,
             'SimpleSAML\\modules\\yubikey\\' => 27,
             'SimpleSAML\\modules\\discopower\\' => 30,
@@ -169,7 +171,7 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'SimpleSAML\\Module\\authcrypt\\' => 28,
             'SimpleSAML\\Module\\authX509\\' => 27,
             'SimpleSAML\\Module\\adfs\\' => 23,
-            'SimpleSAML\\Assert\\' => 18,
+            'SimpleSAML\\Composer\\' => 20,
             'SimpleSAML\\' => 11,
             'SelfUpdate\\' => 11,
             'Seld\\PharUtils\\' => 15,
@@ -257,6 +259,9 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'Drush\\' => 6,
             'Drupal\\Driver\\' => 14,
             'Drupal\\Core\\' => 12,
+            'Drupal\\Console\\Core\\' => 20,
+            'Drupal\\Console\\Composer\\Plugin\\' => 31,
+            'Drupal\\Console\\' => 15,
             'Drupal\\Composer\\Plugin\\Scaffold\\' => 32,
             'Drupal\\Component\\' => 17,
             'Drupal\\' => 7,
@@ -273,7 +278,6 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
-            'Dflydev\\DotAccessData\\' => 22,
             'Defuse\\Crypto\\' => 14,
             'DeepCopy\\' => 9,
             'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
@@ -308,6 +312,7 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         'A' => 
         array (
             'Asm89\\Stack\\' => 12,
+            'Alchemy\\Zippy\\' => 14,
         ),
     );
 
@@ -482,6 +487,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/symfony/filesystem',
         ),
+        'Symfony\\Component\\ExpressionLanguage\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/expression-language',
+        ),
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
@@ -526,10 +535,6 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/symfony-cmf/routing/src',
         ),
-        'Symfony\\Bundle\\FrameworkBundle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/framework-bundle',
-        ),
         'Symfony\\Bridge\\PsrHttpMessage\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/psr-http-message-bridge',
@@ -537,6 +542,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         'Symfony\\Bridge\\PhpUnit\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/phpunit-bridge',
+        ),
+        'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stecman/symfony-console-completion/src',
         ),
         'SlevomatCodingStandard\\' => 
         array (
@@ -646,9 +655,9 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/adfs/lib',
         ),
-        'SimpleSAML\\Assert\\' => 
+        'SimpleSAML\\Composer\\' => 
         array (
-            0 => __DIR__ . '/..' . '/simplesamlphp/assert/src',
+            0 => __DIR__ . '/..' . '/simplesamlphp/composer-module-installer/src',
         ),
         'SimpleSAML\\' => 
         array (
@@ -868,6 +877,18 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/../..' . '/web/core/lib/Drupal/Core',
         ),
+        'Drupal\\Console\\Core\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/drupal/console-core/src',
+        ),
+        'Drupal\\Console\\Composer\\Plugin\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/drupal/console-extend-plugin/src',
+        ),
+        'Drupal\\Console\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/drupal/console/src',
+        ),
         'Drupal\\Composer\\Plugin\\Scaffold\\' => 
         array (
             0 => __DIR__ . '/..' . '/drupal/core-composer-scaffold',
@@ -934,10 +955,6 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             1 => __DIR__ . '/..' . '/doctrine/event-manager/lib/Doctrine/Common',
             2 => __DIR__ . '/..' . '/doctrine/persistence/lib/Doctrine/Common',
             3 => __DIR__ . '/..' . '/doctrine/reflection/lib/Doctrine/Common',
-        ),
-        'Dflydev\\DotAccessData\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/dflydev/dot-access-data/src',
         ),
         'Defuse\\Crypto\\' => 
         array (
@@ -1040,6 +1057,10 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         array (
             0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
         ),
+        'Alchemy\\Zippy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alchemy/zippy/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -1078,10 +1099,6 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
             ),
-            'SimpleSamlPhp\\Composer' => 
-            array (
-                0 => __DIR__ . '/..' . '/simplesamlphp/composer-module-installer/src',
-            ),
         ),
         'H' => 
         array (
@@ -1092,6 +1109,18 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
         ),
         'D' => 
         array (
+            'Dflydev\\PlaceholderResolver' => 
+            array (
+                0 => __DIR__ . '/..' . '/dflydev/placeholder-resolver/src',
+            ),
+            'Dflydev\\DotAccessData' => 
+            array (
+                0 => __DIR__ . '/..' . '/dflydev/dot-access-data/src',
+            ),
+            'Dflydev\\DotAccessConfiguration' => 
+            array (
+                0 => __DIR__ . '/..' . '/dflydev/dot-access-configuration/src',
+            ),
             'DaveChild\\TextStatistics' => 
             array (
                 0 => __DIR__ . '/..' . '/davechild/textstatistics/src',
@@ -1788,11 +1817,11 @@ class ComposerStaticInit19019a155f8fb119d127e867a94e8614
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit19019a155f8fb119d127e867a94e8614::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit19019a155f8fb119d127e867a94e8614::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit19019a155f8fb119d127e867a94e8614::$prefixesPsr0;
-            $loader->fallbackDirsPsr0 = ComposerStaticInit19019a155f8fb119d127e867a94e8614::$fallbackDirsPsr0;
-            $loader->classMap = ComposerStaticInit19019a155f8fb119d127e867a94e8614::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitac63a14fe3e83462456265cb381107bb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitac63a14fe3e83462456265cb381107bb::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitac63a14fe3e83462456265cb381107bb::$prefixesPsr0;
+            $loader->fallbackDirsPsr0 = ComposerStaticInitac63a14fe3e83462456265cb381107bb::$fallbackDirsPsr0;
+            $loader->classMap = ComposerStaticInitac63a14fe3e83462456265cb381107bb::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -2,8 +2,6 @@
 
 require_once('../_include.php');
 
-use Symfony\Component\VarExporter\VarExporter;
-
 // make sure that the user has admin access rights
 \SimpleSAML\Utils\Auth::requireAdmin();
 
@@ -44,7 +42,7 @@ if (!empty($xmldata)) {
             unset($entityMetadata['entityDescriptor']);
 
             $text .= '$metadata[' . var_export($entityId, true) . '] = ' .
-                VarExporter::export($entityMetadata) . ";\n";
+                var_export($entityMetadata, true) . ";\n";
         }
         $entities = $text;
     }

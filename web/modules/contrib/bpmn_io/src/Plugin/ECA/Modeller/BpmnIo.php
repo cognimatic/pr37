@@ -10,6 +10,8 @@ use Drupal\eca_modeller_bpmn\ModellerBpmnBase;
  *
  * @EcaModeller(
  *   id = "bpmn_io",
+ *   label = "BPMN.iO",
+ *   description = "BPMN modeller with a feature-rich UI."
  * )
  */
 class BpmnIo extends ModellerBpmnBase {

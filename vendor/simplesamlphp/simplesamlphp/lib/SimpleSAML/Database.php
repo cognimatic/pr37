@@ -1,13 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML;
 
-use Exception;
 use PDO;
 use PDOException;
-use PDOStatement;
 
 /**
  * This file implements functions to read and write to a group of database servers.
@@ -80,11 +76,11 @@ class Database
      *
      * @param \SimpleSAML\Configuration $config Instance of the \SimpleSAML\Configuration class
      */
-    private function __construct(Configuration $config)
+    private function __construct($config)
     {
         $driverOptions = $config->getArray('database.driver_options', []);
         if ($config->getBoolean('database.persistent', true)) {
-            $driverOptions[PDO::ATTR_PERSISTENT] = true;
+            $driverOptions = [PDO::ATTR_PERSISTENT => true];
         }
 
         // connect to the master
@@ -120,7 +116,7 @@ class Database
      *
      * @return string $instanceId
      */
-    private static function generateInstanceId(Configuration $config): string
+    private static function generateInstanceId($config)
     {
         $assembledConfig = [
             'master' => [
@@ -128,7 +124,7 @@ class Database
                 'database.username'   => $config->getString('database.username', null),
                 'database.password'   => $config->getString('database.password', null),
                 'database.prefix'     => $config->getString('database.prefix', ''),
-                'database.persistent' => $config->getBoolean('database.persistent', true),
+                'database.persistent' => $config->getBoolean('database.persistent', false),
             ],
             'slaves' => $config->getArray('database.slaves', []),
         ];
@@ -141,14 +137,14 @@ class Database
      * This function connects to a database.
      *
      * @param string $dsn Database connection string
-     * @param string|null $username SQL user
-     * @param string|null $password SQL password
+     * @param string $username SQL user
+     * @param string $password SQL password
      * @param array  $options PDO options
      *
      * @throws \Exception If an error happens while trying to connect to the database.
      * @return \PDO object
      */
-    private function connect(string $dsn, string $username = null, string $password = null, array $options): PDO
+    private function connect($dsn, $username, $password, $options)
     {
         try {
             $db = new PDO($dsn, $username, $password, $options);
@@ -156,7 +152,7 @@ class Database
 
             return $db;
         } catch (PDOException $e) {
-            throw new Exception("Database error: " . $e->getMessage());
+            throw new \Exception("Database error: " . $e->getMessage());
         }
     }
 
@@ -167,7 +163,7 @@ class Database
      *
      * @return \PDO object
      */
-    private function getSlave(): PDO
+    private function getSlave()
     {
         if (count($this->dbSlaves) > 0) {
             $slaveId = rand(0, count($this->dbSlaves) - 1);
@@ -201,8 +197,12 @@ class Database
      * @throws \Exception If an error happens while trying to execute the query.
      * @return \PDOStatement object
      */
-    private function query(PDO $db, string $stmt, array $params): PDOStatement
+    private function query($db, $stmt, $params)
     {
+        assert(is_object($db));
+        assert(is_string($stmt));
+        assert(is_array($params));
+
         try {
             $query = $db->prepare($stmt);
 
@@ -219,7 +219,7 @@ class Database
             return $query;
         } catch (PDOException $e) {
             $this->lastError = $db->errorInfo();
-            throw new Exception("Database error: " . $e->getMessage());
+            throw new \Exception("Database error: " . $e->getMessage());
         }
     }
 
@@ -233,13 +233,16 @@ class Database
      * @throws \Exception If an error happens while trying to execute the query.
      * @return int The number of rows affected.
      */
-    private function exec(PDO $db, string $stmt): int
+    private function exec($db, $stmt)
     {
+        assert(is_object($db));
+        assert(is_string($stmt));
+
         try {
             return $db->exec($stmt);
         } catch (PDOException $e) {
             $this->lastError = $db->errorInfo();
-            throw new Exception("Database error: " . $e->getMessage());
+            throw new \Exception("Database error: " . $e->getMessage());
         }
     }
 
@@ -257,7 +260,8 @@ class Database
         $db = $this->dbMaster;
 
         if (is_array($params)) {
-            return $this->query($db, $stmt, $params)->rowCount();
+            $obj = $this->query($db, $stmt, $params);
+            return ($obj === false) ? $obj : $obj->rowCount();
         } else {
             return $this->exec($db, $stmt);
         }
@@ -288,16 +292,5 @@ class Database
     public function getLastError()
     {
         return $this->lastError;
-    }
-
-
-    /**
-     * Return the name of the PDO-driver
-     *
-     * @return string
-     */
-    public function getDriver(): string
-    {
-        return $this->dbMaster->getAttribute(PDO::ATTR_DRIVER_NAME);
     }
 }

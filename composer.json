@@ -22,6 +22,7 @@
         "drupal/ckeditor_browser_context_menu": "^1.2",
         "drupal/cludo_search": "^1.0@beta",
         "drupal/coffee": "^1.2",
+        "drupal/console": "~1.0",
         "drupal/content_moderation_notifications": "^3.4",
         "drupal/content_readability": "^1.0@alpha",
         "drupal/core-composer-scaffold": "^9.1",
@@ -66,6 +67,7 @@
         "drupal/views_bulk_operations": "^4.1",
         "drupal/views_data_export": "^1.1",
         "drupal/webform": "^6.1",
+        "drupal/webprofiler": "^9.0",
         "drupal/yoast_seo": "^1.7",
         "localgovdrupal/localgov": "^2.0",
         "localgovdrupal/localgov_multilingual": "1.x-dev"
@@ -108,7 +110,8 @@
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "simplesamlphp/composer-module-installer": true
+            "simplesamlphp/composer-module-installer": true,
+            "drupal/console-extend-plugin": true
         }
     },
     "extra": {

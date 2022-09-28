@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Module\saml\Auth\Source;
 
 use SAML2\AuthnRequest;
@@ -60,7 +58,7 @@ class SP extends \SimpleSAML\Auth\Source
     /**
      * A list of supported protocols.
      *
-     * @var string[]
+     * @var array
      */
     private $protocols = [];
 
@@ -140,7 +138,7 @@ class SP extends \SimpleSAML\Auth\Source
         ];
 
         // add NameIDPolicy
-        if ($this->metadata->hasValue('NameIDPolicy')) {
+        if ($this->metadata->hasValue('NameIDValue')) {
             $format = $this->metadata->getValue('NameIDPolicy');
             if (is_array($format)) {
                 $metadata['NameIDFormat'] = Configuration::loadFromArray($format)->getString(
@@ -191,7 +189,7 @@ class SP extends \SimpleSAML\Auth\Source
         }
 
         // add contacts
-        $contacts = $this->metadata->getArray('contacts', []);
+        $contacts = $this->metadata->getArray('contact', []);
         foreach ($contacts as $contact) {
             $metadata['contacts'][] = Utils\Config\Metadata::getContact($contact);
         }
@@ -347,13 +345,8 @@ class SP extends \SimpleSAML\Auth\Source
      * @return array
      * @throws \Exception
      */
-    private function getACSEndpoints(): array
+    private function getACSEndpoints()
     {
-        // If a list of endpoints is specified in config, take that at face value
-        if ($this->metadata->hasValue('AssertionConsumerService')) {
-            return $this->metadata->getArray('AssertionConsumerService');
-        }
-
         $endpoints = [];
         $default = [
             Constants::BINDING_HTTP_POST,
@@ -434,7 +427,7 @@ class SP extends \SimpleSAML\Auth\Source
      * @return array
      * @throws \SimpleSAML\Error\CriticalConfigurationError
      */
-    private function getSLOEndpoints(): array
+    private function getSLOEndpoints()
     {
         $store = Store::getInstance();
         $bindings = $this->metadata->getArray(
@@ -444,8 +437,7 @@ class SP extends \SimpleSAML\Auth\Source
                 Constants::BINDING_SOAP,
             ]
         );
-        $defaultLocation = Module::getModuleURL('saml/sp/saml2-logout.php/' . $this->getAuthId());
-        $location = $this->metadata->getString('SingleLogoutServiceLocation', $defaultLocation);
+        $location = Module::getModuleURL('saml/sp/saml2-logout.php/' . $this->getAuthId());
 
         $endpoints = [];
         foreach ($bindings as $binding) {
@@ -470,7 +462,7 @@ class SP extends \SimpleSAML\Auth\Source
      * @return void
      * @deprecated will be removed in a future version
      */
-    private function startSSO1(Configuration $idpMetadata, array $state): void
+    private function startSSO1(Configuration $idpMetadata, array $state)
     {
         $idpEntityId = $idpMetadata->getString('entityid');
 
@@ -508,7 +500,7 @@ class SP extends \SimpleSAML\Auth\Source
      * @param array $state  The state array for the current authentication.
      * @return void
      */
-    private function startSSO2(Configuration $idpMetadata, array $state): void
+    private function startSSO2(Configuration $idpMetadata, array $state)
     {
         if (isset($state['saml:ProxyCount']) && $state['saml:ProxyCount'] < 0) {
             Auth\State::throwException(
@@ -654,19 +646,9 @@ class SP extends \SimpleSAML\Auth\Source
 
         $ar->setRequesterID($requesterID);
 
-        // If the downstream SP has set extensions then use them.
-        // Otherwise use extensions that might be defined in the local SP (only makes sense in a proxy scenario)
-        if (isset($state['saml:Extensions']) && count($state['saml:Extensions']) > 0) {
+        if (isset($state['saml:Extensions'])) {
             $ar->setExtensions($state['saml:Extensions']);
-        } else if ($this->metadata->getArray('saml:Extensions', null) !== null) {
-            $ar->setExtensions($this->metadata->getArray('saml:Extensions'));
         }
-
-        $providerName = $this->metadata->getString("ProviderName", null);
-        if ($providerName !== null) {
-            $ar->setProviderName($providerName);
-        }
-
 
         // save IdP entity ID as part of the state
         $state['ExpectedIssuer'] = $idpMetadata->getString('entityid');
@@ -758,7 +740,7 @@ class SP extends \SimpleSAML\Auth\Source
      * @param array $state  The state array.
      * @return void
      */
-    private function startDisco(array $state): void
+    private function startDisco(array $state)
     {
         $id = Auth\State::saveState($state, 'saml:sp:sso');
 

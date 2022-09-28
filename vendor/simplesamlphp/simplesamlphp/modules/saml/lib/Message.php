@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Module\saml;
 
 use RobRichards\XMLSecLibs\XMLSecurityKey;
@@ -94,7 +92,7 @@ class Message
         Configuration $srcMetadata,
         Configuration $dstMetadata,
         \SAML2\Message $message
-    ): void {
+    ) {
 
         $signingEnabled = null;
         if ($message instanceof LogoutRequest || $message instanceof LogoutResponse) {
@@ -135,7 +133,7 @@ class Message
      *
      * @throws \SimpleSAML\Error\Exception if we cannot find the certificate matching the fingerprint.
      */
-    private static function findCertificate(array $certFingerprints, array $certificates): string
+    private static function findCertificate(array $certFingerprints, array $certificates)
     {
         $candidates = [];
 
@@ -170,7 +168,7 @@ class Message
      * @throws \SimpleSAML\Error\Exception if there is not certificate in the metadata for the entity.
      * @throws \Exception if the signature validation fails with an exception.
      */
-    public static function checkSign(Configuration $srcMetadata, SignedElement $element): bool
+    public static function checkSign(Configuration $srcMetadata, SignedElement $element)
     {
         // find the public key that should verify signatures by this entity
         $keys = $srcMetadata->getPublicKeys('signing');
@@ -300,28 +298,16 @@ class Message
      *
      * @param \SimpleSAML\Configuration $srcMetadata The metadata of the sender (IdP).
      * @param \SimpleSAML\Configuration $dstMetadata The metadata of the recipient (SP).
-     * @psalm-suppress UndefinedDocblockClass  This can be removed after upgrading to saml2v5
-     * @param \SimpleSAML\SAML2\XML\xenc\EncryptionMethod|null $encryptionMethod The EncryptionMethod from the assertion.
      *
      * @return array Array of decryption keys.
      */
     public static function getDecryptionKeys(
         Configuration $srcMetadata,
-        Configuration $dstMetadata,
-        $encryptionMethod = null
+        Configuration $dstMetadata
     ) {
         $sharedKey = $srcMetadata->getString('sharedkey', null);
         if ($sharedKey !== null) {
-            if ($encryptionMethod !== null) {
-                $algo = $encryptionMethod->getAlgorithm();
-            } else {
-                $algo = $srcMetadata->getString('sharedkey_algorithm', null);
-                if ($algo === null) {
-                    $algo = $dstMetadata->getString('sharedkey_algorithm');
-                }
-            }
-
-            $key = new XMLSecurityKey($algo);
+            $key = new XMLSecurityKey(XMLSecurityKey::AES128_CBC);
             $key->loadKey($sharedKey);
             return [$key];
         }
@@ -395,7 +381,7 @@ class Message
         Configuration $srcMetadata,
         Configuration $dstMetadata,
         $assertion
-    ): Assertion {
+    ) {
         assert($assertion instanceof Assertion || $assertion instanceof EncryptedAssertion);
 
         if ($assertion instanceof Assertion) {
@@ -412,12 +398,7 @@ class Message
         }
 
         try {
-            // @todo Enable this code for saml2v5 to automatically determine encryption algorithm
-            //$encryptionMethod = $assertion->getEncryptedData()->getEncryptionMethod();
-            //$keys = self::getDecryptionKeys($srcMetadata, $dstMetadata, $encryptionMethod);
-
-            $encryptionMethod = null;
-            $keys = self::getDecryptionKeys($srcMetadata, $dstMetadata, $encryptionMethod);
+            $keys = self::getDecryptionKeys($srcMetadata, $dstMetadata);
         } catch (\Exception $e) {
             throw new SSP_Error\Exception('Error decrypting assertion: ' . $e->getMessage());
         }
@@ -460,7 +441,7 @@ class Message
         Configuration $srcMetadata,
         Configuration $dstMetadata,
         Assertion &$assertion
-    ): void {
+    ) {
         if (!$assertion->hasEncryptedAttributes()) {
             return;
         }
@@ -684,9 +665,10 @@ class Message
         Configuration $idpMetadata,
         Response $response,
         $assertion,
-        bool $responseSigned
-    ): Assertion {
+        $responseSigned
+    ) {
         assert($assertion instanceof Assertion || $assertion instanceof EncryptedAssertion);
+        assert(is_bool($responseSigned));
 
         $assertion = self::decryptAssertion($idpMetadata, $spMetadata, $assertion);
         self::decryptAttributes($idpMetadata, $spMetadata, $assertion);
@@ -929,6 +911,7 @@ class Message
      */
     public static function getEncryptionKey(Configuration $metadata)
     {
+
         $sharedKey = $metadata->getString('sharedkey', null);
         if ($sharedKey !== null) {
             $key = new XMLSecurityKey(XMLSecurityKey::AES128_CBC);

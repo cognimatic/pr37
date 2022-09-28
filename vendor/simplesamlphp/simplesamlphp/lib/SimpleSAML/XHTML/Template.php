@@ -7,8 +7,6 @@
  * @package SimpleSAMLphp
  */
 
-declare(strict_types=1);
-
 namespace SimpleSAML\XHTML;
 
 use SimpleSAML\Configuration;
@@ -25,10 +23,6 @@ use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-/**
- * The content-property is set upstream, but this is not recognized by Psalm
- * @psalm-suppress PropertyNotSetInConstructor
- */
 class Template extends Response
 {
     /**
@@ -219,7 +213,7 @@ class Template extends Response
      * @param string $templateName The template name to normalize.
      * @return string The filename we need to look for.
      */
-    private function normalizeTemplateName(string $templateName): string
+    private function normalizeTemplateName($templateName)
     {
         if (strripos($templateName, '.twig')) {
             return $templateName;
@@ -246,7 +240,7 @@ class Template extends Response
      * @return TemplateLoader The twig template loader or false if the template does not exist.
      * @throws \Twig\Error\LoaderError In case a failure occurs.
      */
-    private function setupTwigTemplatepaths(): TemplateLoader
+    private function setupTwigTemplatepaths()
     {
         $filename = $this->normalizeTemplateName($this->template);
 
@@ -288,7 +282,7 @@ class Template extends Response
      * @return \Twig\Environment
      * @throws \Exception if the template does not exist
      */
-    private function setupTwig(): \Twig\Environment
+    private function setupTwig()
     {
         $auto_reload = $this->configuration->getBoolean('template.auto_reload', true);
         $cache = $this->configuration->getString('template.cache', false);
@@ -311,16 +305,14 @@ class Template extends Response
 
         // set up translation
         $options = [
-            'auto_reload' => $auto_reload,
             'cache' => $cache,
-            'strict_variables' => true,
+            'auto_reload' => $auto_reload,
             'translation_function' => [Translate::class, 'translateSingularGettext'],
             'translation_function_plural' => [Translate::class, 'translatePluralGettext'],
         ];
 
         $twig = new Twig_Environment($loader, $options);
         $twig->addExtension(new Twig_Extensions_Extension_I18n());
-        $twig->addExtension(new \Twig\Extensions\DateExtension());
 
         $twig->addFunction(new TwigFunction('moduleURL', [Module::class, 'getModuleURL']));
 
@@ -366,7 +358,7 @@ class Template extends Response
      *
      * @return array An array of module => templatedir lookups.
      */
-    private function findThemeTemplateDirs(): array
+    private function findThemeTemplateDirs()
     {
         if (!isset($this->theme['module'])) {
             // no module involved
@@ -406,7 +398,7 @@ class Template extends Response
      *
      * @throws \InvalidArgumentException If the module is not enabled or it has no templates directory.
      */
-    private function getModuleTemplateDir(string $module): string
+    private function getModuleTemplateDir($module)
     {
         if (!Module::isModuleEnabled($module)) {
             throw new \InvalidArgumentException('The module \'' . $module . '\' is not enabled.');
@@ -445,7 +437,7 @@ class Template extends Response
      *
      * @return array|null The array containing information of all available languages.
      */
-    private function generateLanguageBar(): ?array
+    private function generateLanguageBar()
     {
         $languages = $this->translator->getLanguage()->getLanguageList();
         ksort($languages);
@@ -477,7 +469,7 @@ class Template extends Response
      * Set some default context
      * @return void
      */
-    private function twigDefaultContext(): void
+    private function twigDefaultContext()
     {
         // show language bar by default
         if (!isset($this->data['hideLanguageBar'])) {
@@ -520,21 +512,15 @@ class Template extends Response
         if ($this->controller) {
             $this->controller->display($this->data);
         }
-        try {
-            return $this->twig->render($this->twig_template, $this->data);
-        } catch (\Twig\Error\RuntimeError $e) {
-            throw new \SimpleSAML\Error\Exception(substr($e->getMessage(), 0, -1) . ' in ' . $this->template, 0, $e);
-        }
+        return $this->twig->render($this->twig_template, $this->data);
     }
 
 
     /**
      * Send this template as a response.
      *
-     * @return $this This response.
+     * @return Response This response.
      * @throws \Exception if the template cannot be found.
-     *
-     * Note: No return type possible due to upstream limitations
      */
     public function send()
     {
@@ -569,7 +555,7 @@ class Template extends Response
      *
      * @return array An array with the name of the module and template
      */
-    private function findModuleAndTemplateName(string $template): array
+    private function findModuleAndTemplateName($template)
     {
         $tmp = explode(':', $template, 2);
         return (count($tmp) === 2) ? [$tmp[0], $tmp[1]] : [null, $tmp[0]];
@@ -592,8 +578,9 @@ class Template extends Response
      *
      * @throws \Exception If the template file couldn't be found.
      */
-    private function findTemplatePath(string $template, bool $throw_exception = true): ?string
+    private function findTemplatePath($template, $throw_exception = true)
     {
+        assert(is_string($template));
         $extensions = ['.tpl.php', '.php'];
 
         list($templateModule, $templateName) = $this->findModuleAndTemplateName($template);
@@ -763,7 +750,7 @@ class Template extends Response
      *
      * @return array
      */
-    private function getLanguageList(): array
+    private function getLanguageList()
     {
         return $this->translator->getLanguage()->getLanguageList();
     }
@@ -804,7 +791,7 @@ class Template extends Response
      * @param string $file
      * @return void
      */
-    private function includeAtTemplateBase(string $file): void
+    private function includeAtTemplateBase($file)
     {
         $data = $this->data;
 
@@ -850,7 +837,7 @@ class Template extends Response
      *
      * @return bool
      */
-    private function isLanguageRTL(): bool
+    private function isLanguageRTL()
     {
         return $this->translator->getLanguage()->isLanguageRTL();
     }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Utils\Config;
 
 use SAML2\Constants;
@@ -302,10 +300,10 @@ class Metadata
      */
     public static function isHiddenFromDiscovery(array $metadata)
     {
-        if (!isset($metadata['EntityAttributes'][self::$ENTITY_CATEGORY])) {
-            return false;
-        }
-        return in_array(self::$HIDE_FROM_DISCOVERY, $metadata['EntityAttributes'][self::$ENTITY_CATEGORY], true);
+        Logger::maskErrors(E_ALL);
+        $hidden = in_array(self::$HIDE_FROM_DISCOVERY, $metadata['EntityAttributes'][self::$ENTITY_CATEGORY], true);
+        Logger::popErrorMask();
+        return $hidden === true;
     }
 
 

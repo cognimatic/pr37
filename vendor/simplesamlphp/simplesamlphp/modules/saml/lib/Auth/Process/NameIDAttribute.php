@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Module\saml\Auth\Process;
 
 use SAML2\Constants;
@@ -66,8 +64,10 @@ class NameIDAttribute extends \SimpleSAML\Auth\ProcessingFilter
      *
      * @throws \SimpleSAML\Error\Exception if the replacement is invalid.
      */
-    private static function parseFormat(string $format): array
+    private static function parseFormat($format)
     {
+        assert(is_string($format));
+
         $ret = [];
         $pos = 0;
         while (($next = strpos($format, '%', $pos)) !== false) {

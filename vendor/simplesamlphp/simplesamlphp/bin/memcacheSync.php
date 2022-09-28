@@ -91,7 +91,7 @@ if ($warnBigSlab > 0) {
  *
  * @return array An array with all the keys available on the server.
  */
-function getServerKeys(string $server): array
+function getServerKeys($server)
 {
     $server = explode(':', $server);
     $host = $server[0];

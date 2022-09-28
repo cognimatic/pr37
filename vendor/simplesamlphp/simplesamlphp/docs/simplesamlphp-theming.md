@@ -50,7 +50,7 @@ The first thing you need to do is having a SimpleSAMLphp module to place your th
 Then within this module, you can create a new theme named `fancytheme`.
 
 	cd modules/mymodule
-	mkdir -p themes/fancytheme/default/includes
+	mkdir -p themes/fancytheme
 
 Now, configure SimpleSAMLphp to use your new theme in `config.php`:
 

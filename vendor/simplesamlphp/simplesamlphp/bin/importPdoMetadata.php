@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-
 $baseDir = dirname(dirname(__FILE__));
 
 require_once $baseDir . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . '_autoload.php';

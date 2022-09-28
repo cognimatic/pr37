@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Module\core\Auth;
 
 use SimpleSAML\Auth;
@@ -26,17 +24,20 @@ abstract class UserPassOrgBase extends \SimpleSAML\Auth\Source
     /**
      * The string used to identify our states.
      */
-    public const STAGEID = '\SimpleSAML\Module\core\Auth\UserPassOrgBase.state';
+    const STAGEID = '\SimpleSAML\Module\core\Auth\UserPassOrgBase.state';
+
 
     /**
      * The key of the AuthId field in the state.
      */
-    public const AUTHID = '\SimpleSAML\Module\core\Auth\UserPassOrgBase.AuthId';
+    const AUTHID = '\SimpleSAML\Module\core\Auth\UserPassOrgBase.AuthId';
+
 
     /**
      * The key of the OrgId field in the state, identifies which org was selected.
      */
-    public const ORGID = '\SimpleSAML\Module\core\Auth\UserPassOrgBase.SelectedOrg';
+    const ORGID = '\SimpleSAML\Module\core\Auth\UserPassOrgBase.SelectedOrg';
+
 
     /**
      * What way do we handle the organization as part of the username.

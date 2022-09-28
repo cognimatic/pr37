@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Module\saml\SP;
 
 use PDO;
@@ -25,7 +23,7 @@ class LogoutStore
      * @param \SimpleSAML\Store\SQL $store  The datastore.
      * @return void
      */
-    private static function createLogoutTable(Store\SQL $store): void
+    private static function createLogoutTable(Store\SQL $store)
     {
         $tableVer = $store->getTableVersion('saml_LogoutStore');
         if ($tableVer === 4) {
@@ -40,11 +38,6 @@ class LogoutStore
                     // This does not affect the NOT NULL constraint
                     $update = [
                         'ALTER TABLE ' . $store->prefix . '_saml_LogoutStore ALTER COLUMN _expire TYPE TIMESTAMP'
-                    ];
-                    break;
-                case 'sqlsrv':
-                    $update = [
-                        'ALTER TABLE ' . $store->prefix . '_saml_LogoutStore ALTER COLUMN _expire DATETIME NOT NULL'
                     ];
                     break;
                 case 'sqlite':
@@ -123,11 +116,6 @@ class LogoutStore
                     $update = [
                         'ALTER TABLE ' . $store->prefix .
                         '_saml_LogoutStore ALTER COLUMN _authSource TYPE VARCHAR(255)'];
-                    break;
-               case 'sqlsrv':
-                    $update = [
-                        'ALTER TABLE ' . $store->prefix . '_saml_LogoutStore ALTER COLUMN _authSource VARCHAR(255) NOT NULL'
-                    ];
                     break;
                 case 'sqlite':
                     /**
@@ -210,7 +198,7 @@ class LogoutStore
      * @param \SimpleSAML\Store\SQL $store  The datastore.
      * @return void
      */
-    private static function cleanLogoutStore(Store\SQL $store): void
+    private static function cleanLogoutStore(Store\SQL $store)
     {
         Logger::debug('saml.LogoutStore: Cleaning logout store.');
 
@@ -235,12 +223,18 @@ class LogoutStore
      */
     private static function addSessionSQL(
         Store\SQL $store,
-        string $authId,
-        string $nameId,
-        string $sessionIndex,
-        int $expire,
-        string $sessionId
-    ): void {
+        $authId,
+        $nameId,
+        $sessionIndex,
+        $expire,
+        $sessionId
+    ) {
+        assert(is_string($authId));
+        assert(is_string($nameId));
+        assert(is_string($sessionIndex));
+        assert(is_int($expire));
+        assert(is_string($sessionId));
+
         self::createLogoutTable($store);
 
         if (rand(0, 1000) < 10) {
@@ -270,8 +264,11 @@ class LogoutStore
      * @param string $nameId  The hash of the users NameID.
      * @return array  Associative array of SessionIndex =>  SessionId.
      */
-    private static function getSessionsSQL(Store\SQL $store, string $authId, string $nameId): array
+    private static function getSessionsSQL(Store\SQL $store, $authId, $nameId)
     {
+        assert(is_string($authId));
+        assert(is_string($nameId));
+
         self::createLogoutTable($store);
 
         $params = [
@@ -304,12 +301,11 @@ class LogoutStore
      * @param array $sessionIndexes  The session indexes.
      * @return array  Associative array of SessionIndex =>  SessionId.
      */
-    private static function getSessionsStore(
-        Store $store,
-        string $authId,
-        string $nameId,
-        array $sessionIndexes
-    ): array {
+    private static function getSessionsStore(Store $store, $authId, $nameId, array $sessionIndexes)
+    {
+        assert(is_string($authId));
+        assert(is_string($nameId));
+
         $res = [];
         foreach ($sessionIndexes as $sessionIndex) {
             $sessionId = $store->get('saml.LogoutStore', $nameId . ':' . $sessionIndex);
@@ -369,7 +365,6 @@ class LogoutStore
         // serialize and anonymize the NameID
         // TODO: remove this conditional statement
         if (is_array($nameId)) {
-            /** @psalm-suppress UndefinedMethod */
             $nameId = NameID::fromArray($nameId);
         }
         $strNameId = serialize($nameId);
@@ -412,7 +407,6 @@ class LogoutStore
         // serialize and anonymize the NameID
         // TODO: remove this conditional statement
         if (is_array($nameId)) {
-            /** @psalm-suppress UndefinedMethod */
             $nameId = NameID::fromArray($nameId);
         }
         $strNameId = serialize($nameId);
@@ -431,11 +425,10 @@ class LogoutStore
 
         if ($store instanceof Store\SQL) {
             $sessions = self::getSessionsSQL($store, $authId, $strNameId);
+        } elseif (empty($sessionIndexes)) {
+            // We cannot fetch all sessions without a SQL store
+            return false;
         } else {
-            if (empty($sessionIndexes)) {
-                // We cannot fetch all sessions without a SQL store
-                return false;
-            }
             /** @var array $sessions At this point the store cannot be false */
             $sessions = self::getSessionsStore($store, $authId, $strNameId, $sessionIndexes);
         }

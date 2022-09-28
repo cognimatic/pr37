@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 
 /**
  * Implementation of the Shibboleth 1.3 HTTP-POST binding.

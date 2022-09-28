@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace SimpleSAML\Logger;
 
 use SimpleSAML\Configuration;
@@ -31,8 +29,7 @@ class SyslogLoggingHandler implements LoggingHandlerInterface
     {
         $facility = $config->getInteger('logging.facility', defined('LOG_LOCAL5') ? constant('LOG_LOCAL5') : LOG_USER);
 
-        // Remove any non-printable characters before storing
-        $processname = preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $config->getString('logging.processname', 'SimpleSAMLphp'));
+        $processname = $config->getString('logging.processname', 'SimpleSAMLphp');
 
         // Setting facility to LOG_USER (only valid in Windows), enable log level rewrite on windows systems
         if (Utils\System::getOS() === Utils\System::WINDOWS) {
@@ -77,7 +74,8 @@ class SyslogLoggingHandler implements LoggingHandlerInterface
         $formats = ['%process', '%level'];
         $replacements = ['', $level];
         $string = str_replace($formats, $replacements, $string);
-        $string = preg_replace('/^%date(\{[^\}]+\})?\s*/', '', $string);
+        $string = preg_replace('/%\w+(\{[^\}]+\})?/', '', $string);
+        $string = trim($string);
 
         syslog($level, $string);
     }
