@@ -60,12 +60,15 @@ tr .form-item,
   line-height: 1.125rem;
 }
 
-.form-item__label--multiple-value-form {
+.form-item__label--multiple-value-form,
+.field-multiple-table .field-label h4.label {
+  display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
+  vertical-align: middle;
 }
 
 .form-item__label[for] {
