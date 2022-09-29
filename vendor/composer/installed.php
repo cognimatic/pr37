@@ -1477,6 +1477,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/paragraphs_table' => array(
+            'pretty_version' => '1.9.0',
+            'version' => '1.9.0.0',
+            'reference' => '8.x-1.9',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/paragraphs_table',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/pathauto' => array(
             'pretty_version' => '1.11.0',
             'version' => '1.11.0.0',
@@ -1638,6 +1647,15 @@
             'install_path' => __DIR__ . '/../../web/modules/contrib/shield',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'drupal/shs' => array(
+            'pretty_version' => '2.0.0-rc3',
+            'version' => '2.0.0.0-RC3',
+            'reference' => '2.0.0-rc3',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/shs',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'drupal/simple_sitemap' => array(
             'pretty_version' => '3.11.0',
