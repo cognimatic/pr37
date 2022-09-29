@@ -241,7 +241,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
         '#title' => $this->t('Custom text at the footer of each paragraph'),
         '#description' => $this->t('Variable available {{ paragraph_name }}, {{ paragraph_type }}, {{ entity_type }}, {{ entity_field }}, {{ entity_id }}'),
         '#type' => 'textarea',
-        '#default_value' => $this->getSettings()['header_text'],
+        '#default_value' => $this->getSettings()['footer_text'],
       ],
     ];
     if (\Drupal::service('module_handler')->moduleExists('quick_data')) {
