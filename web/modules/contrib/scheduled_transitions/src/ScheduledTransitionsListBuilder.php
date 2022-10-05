@@ -48,6 +48,7 @@ class ScheduledTransitionsListBuilder extends EntityListBuilder {
    */
   public function load() {
     $query = $this->storage->getQuery();
+    $query->accessCheck(TRUE);
     $header = $this->buildHeader();
     $query->tableSort($header);
     $ids = $query->execute();

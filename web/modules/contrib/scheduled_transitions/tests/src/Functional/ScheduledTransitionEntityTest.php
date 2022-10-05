@@ -69,7 +69,10 @@ class ScheduledTransitionEntityTest extends BrowserTestBase {
     ]);
     $this->drupalLogin($currentUser);
 
-    $entity = ScheduledTransitionsTestEntity::create(['type' => 'st_entity_test']);
+    $entity = ScheduledTransitionsTestEntity::create([
+      'type' => 'st_entity_test',
+      'name' => 'foo',
+    ]);
     $entity->save();
 
     $this->drupalGet($entity->toUrl(ScheduledTransitionsRouteProvider::LINK_TEMPLATE));

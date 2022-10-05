@@ -22,10 +22,10 @@ class ScheduledTransitionsCronUnitTest extends UnitTestCase {
   private ScheduledTransitionsJobsInterface $testJobs;
 
   /**
-   * ScheduledTransitionsCronUnitTest constructor.
+   * {@inheritdoc}
    */
-  public function __construct() {
-    parent::__construct();
+  protected function setUp(): void {
+    parent::setUp();
     $this->testConfigFactory = $this->createMock(ConfigFactoryInterface::class);
     $this->testJobs = $this->createMock(ScheduledTransitionsJobsInterface::class);
   }

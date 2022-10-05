@@ -91,7 +91,7 @@ class ScheduledTransitionRescheduleFormTest extends BrowserTestBase {
       'date[date]' => '2018-10-21',
       'date[time]' => '14:00:00',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Reschedule transition');
+    $this->submitForm($edit, 'Reschedule transition');
     $this->assertSession()->pageTextContains('Rescheduled transition for Sun, 10/21/2018 - 14:00');
 
     // Reload ST.

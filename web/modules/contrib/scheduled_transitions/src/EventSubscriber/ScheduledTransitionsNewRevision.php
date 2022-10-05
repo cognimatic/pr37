@@ -61,7 +61,7 @@ class ScheduledTransitionsNewRevision implements EventSubscriberInterface {
     /** @var \Drupal\Core\Entity\EntityStorageInterface|\Drupal\Core\Entity\RevisionableStorageInterface $entityStorage */
     $entityStorage = $this->entityTypeManager->getStorage($entity->getEntityTypeId());
 
-    /** @var \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\RevisionableInterface $newRevision */
+    /** @var \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\RevisionableInterface|null $newRevision */
     $newRevision = $entityStorage->loadRevision($entityRevisionId);
     if (!isset($newRevision)) {
       $this->logger->info('Target revision does not exist for scheduled transition #@id', $targs);

@@ -54,7 +54,7 @@ class ScheduledTransitionSettingsFormTest extends BrowserTestBase {
     $edit = [
       'cron_create_queue_items' => FALSE,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save configuration');
+    $this->submitForm($edit, 'Save configuration');
 
     $this->assertSession()->pageTextContains('The configuration options have been saved.');
     $this->assertSession()->checkboxNotChecked('cron_create_queue_items');
@@ -83,7 +83,7 @@ class ScheduledTransitionSettingsFormTest extends BrowserTestBase {
       'mirror_operation_view' => 'update',
       'mirror_operation_add' => 'update',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save configuration');
+    $this->submitForm($edit, 'Save configuration');
 
     $this->assertSession()->pageTextContains('The configuration options have been saved.');
     $this->assertSession()->fieldValueEquals('mirror_operation_view', 'update');
@@ -105,14 +105,14 @@ class ScheduledTransitionSettingsFormTest extends BrowserTestBase {
     $this->drupalGet($url);
 
     $this->assertSession()->pageTextContains('Enabled types (0)');
-    $this->assertFieldByName('enabled[entity_test_revlog:entity_test_revlog]');
-    $this->assertFieldByName('enabled[st_entity_test:st_entity_test]');
+    $this->assertSession()->fieldExists('enabled[entity_test_revlog:entity_test_revlog]');
+    $this->assertSession()->fieldExists('enabled[st_entity_test:st_entity_test]');
 
     // Enable just one of the boxes.
     $edit = [
       'enabled[st_entity_test:st_entity_test]' => 'TRUE',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save configuration');
+    $this->submitForm($edit, 'Save configuration');
 
     $this->assertSession()->pageTextContains('The configuration options have been saved.');
     $this->assertSession()->pageTextContains('Enabled types (1)');

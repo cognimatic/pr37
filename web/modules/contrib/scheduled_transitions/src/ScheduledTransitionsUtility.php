@@ -67,6 +67,7 @@ class ScheduledTransitionsUtility implements ScheduledTransitionsUtilityInterfac
   public function getTransitions(EntityInterface $entity): array {
     $transitionStorage = $this->entityTypeManager->getStorage('scheduled_transition');
     $ids = $transitionStorage->getQuery()
+      ->accessCheck(FALSE)
       ->condition('entity__target_type', $entity->getEntityTypeId())
       ->condition('entity__target_id', $entity->id())
       ->execute();
@@ -130,6 +131,7 @@ class ScheduledTransitionsUtility implements ScheduledTransitionsUtilityInterfac
     $entityDefinition = $entityStorage->getEntityType();
 
     $ids = $entityStorage->getQuery()
+      ->accessCheck(FALSE)
       ->allRevisions()
       ->condition($entityDefinition->getKey('id'), $entity->id())
       ->condition($entityDefinition->getKey('langcode'), $language)
@@ -146,6 +148,7 @@ class ScheduledTransitionsUtility implements ScheduledTransitionsUtilityInterfac
   public function generateRevisionLog(ScheduledTransitionInterface $scheduledTransition, RevisionLogInterface $newRevision): string {
     $entityStorage = $this->entityTypeManager->getStorage($newRevision->getEntityTypeId());
     $latestRevisionId = $entityStorage->getLatestRevisionId($newRevision->id());
+    $latest = NULL;
     if ($latestRevisionId) {
       /** @var \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\RevisionableInterface $latest */
       $latest = $entityStorage->loadRevision($latestRevisionId);

@@ -79,7 +79,7 @@ class ScheduledTransitionsRunner implements ScheduledTransitionsRunnerInterface 
     }
 
     $event = new ScheduledTransitionsNewRevisionEvent($scheduledTransition);
-    $this->eventDispatcher->dispatch(ScheduledTransitionsEvents::NEW_REVISION, $event);
+    $this->eventDispatcher->dispatch($event, ScheduledTransitionsEvents::NEW_REVISION);
 
     $newRevision = $event->getNewRevision();
     $newRevision ?? throw new ScheduledTransitionMissingEntity(sprintf('No revision could be determined to transition to for scheduled transition #%s', $scheduledTransitionId));

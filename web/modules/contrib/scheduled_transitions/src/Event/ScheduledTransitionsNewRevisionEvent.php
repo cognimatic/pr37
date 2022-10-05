@@ -4,7 +4,7 @@ namespace Drupal\scheduled_transitions\Event;
 
 use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\scheduled_transitions\Entity\ScheduledTransitionInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Used to determine the new revision for a transition.

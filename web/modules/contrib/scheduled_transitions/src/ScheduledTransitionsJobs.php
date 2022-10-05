@@ -53,6 +53,7 @@ class ScheduledTransitionsJobs implements ScheduledTransitionsJobsInterface {
 
     $now = $this->time->getRequestTime();
     $query = $transitionStorage->getQuery();
+    $query->accessCheck(FALSE);
     $query->condition('transition_on', $now, '<=');
     $or = $query->orConditionGroup()
       ->condition('locked_on', NULL, 'IS NULL')

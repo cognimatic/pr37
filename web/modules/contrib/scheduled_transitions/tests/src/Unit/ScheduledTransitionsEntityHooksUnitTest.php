@@ -31,12 +31,13 @@ class ScheduledTransitionsEntityHooksUnitTest extends UnitTestCase {
   private ConfigFactoryInterface $testConfigFactory;
   private EntityTypeManagerInterface $testEntityTypeManager;
   private ModerationInformationInterface $testModerationInformation;
+  private ContainerBuilder $testContainer;
 
   /**
    * ScheduledTransitionsEntityHooksUnitTest constructor.
    */
-  public function __construct() {
-    parent::__construct();
+  public function setUp(): void {
+    parent::setUp();
     $this->testConfigFactory = $this->createMock(ConfigFactoryInterface::class);
     $this->testEntityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
     $this->testModerationInformation = $this->createMock(ModerationInformationInterface::class);

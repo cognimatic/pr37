@@ -42,14 +42,14 @@ class ParagraphsTableWidget extends ParagraphsWidget {
 
     $elements['vertical'] = [
       '#type' => 'checkbox',
-      '#title' => t('Table vertical'),
-      '#description' => t('If checked, table data will show in vertical mode.'),
+      '#title' => $this->t('Table vertical'),
+      '#description' => $this->t('If checked, table data will show in vertical mode.'),
       '#default_value' => !empty($this->getSetting('vertical')) ? $this->getSetting('vertical') : FALSE,
     ];
     $elements['paste_clipboard'] = [
       '#type' => 'checkbox',
-      '#title' => t('Paste from clipboard'),
-      '#description' => t('Add multiple rows, you can paste data from Excel'),
+      '#title' => $this->t('Paste from clipboard'),
+      '#description' => $this->t('Add multiple rows, you can paste data from Excel'),
       '#default_value' => !empty($this->getSetting('paste_clipboard')) ? $this->getSetting('paste_clipboard') : FALSE,
     ];
     $cardinality = $this->fieldDefinition->get('fieldStorage')
@@ -57,8 +57,8 @@ class ParagraphsTableWidget extends ParagraphsWidget {
     if ($cardinality > 1) {
       $elements['show_all'] = [
         '#type' => 'checkbox',
-        '#title' => t('Show all %cardinality items in form', ['%cardinality' => $cardinality]),
-        '#description' => t('If checked, remove button add more.'),
+        '#title' => $this->t('Show all %cardinality items in form', ['%cardinality' => $cardinality]),
+        '#description' => $this->t('If checked, remove button add more.'),
         '#default_value' => !empty($this->getSetting('show_all')) ? $this->getSetting('show_all') : FALSE,
       ];
     }
@@ -83,15 +83,15 @@ class ParagraphsTableWidget extends ParagraphsWidget {
   public function settingsSummary() {
     $summary = [];
     if (!empty($this->getSetting('vertical'))) {
-      $summary[] = t('Table mode vertical');
+      $summary[] = $this->t('Table mode vertical');
     }
     if (!empty($this->getSetting('paste_clipboard'))) {
-      $summary[] = t('Paste from Excel');
+      $summary[] = $this->t('Paste from Excel');
     }
     if (!empty($this->getSetting('show_all'))) {
       $cardinality = $this->fieldDefinition->get('fieldStorage')
         ->get('cardinality');
-      $summary[] = t('Show all %cardinality elements in form', ['%cardinality' => $cardinality]);
+      $summary[] = $this->t('Show all %cardinality elements in form', ['%cardinality' => $cardinality]);
     }
     $features = array_filter($this->getSetting('features'));
     if (!empty($features)) {

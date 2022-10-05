@@ -931,7 +931,9 @@ class BlockClassHelperService {
     unset($third_party_settings['block_class']['remove_item']);
 
     // Clear empty values.
-    $third_party_settings['block_class'] = !empty($third_party_settings['block_class']) ?? array_filter($third_party_settings['block_class']);
+    if (!empty($third_party_settings['block_class'])) {
+      $third_party_settings['block_class'] = array_filter($third_party_settings['block_class']);
+    }
 
     // Merge with all third party settings.
     $all_third_party_settings = $form_state->getValue('third_party_settings');
@@ -958,9 +960,17 @@ class BlockClassHelperService {
       $classes_field = $third_party_settings['block_class'];
 
       // Unset values that aren't classes.
-      unset($classes_field['attributes']);
-      unset($classes_field['remove_item']);
-      unset($classes_field['add_another_item']);
+      if (isset($classes_field['attributes'])) {
+        unset($classes_field['attributes']);
+      }
+
+      if (isset($classes_field['remove_item'])) {
+        unset($classes_field['remove_item']);
+      }
+
+      if (isset($classes_field['add_another_item'])) {
+        unset($classes_field['add_another_item']);
+      }
 
       // Removed blank values.
       $classes_field = array_filter($classes_field);

@@ -140,6 +140,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
         '#description' => $this->t('Caption of table') .
         $this->t('Variable available {{ paragraph_name }}, {{ paragraph_type }}, {{ entity_type }}, {{ entity_field }}, {{ entity_id }}'),
         '#type' => 'textfield',
+        '#maxlength' => 512,
         '#default_value' => $this->getSettings()['caption'],
       ],
       'vertical' => [
@@ -266,7 +267,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     $summary[] = $this->t('Rendered as @view_mode', ['@view_mode' => !empty($view_modes[$view_mode]) ? $view_modes[$view_mode] : $view_mode]);
 
     if (!empty($this->getSetting('caption'))) {
-      $summary[] = $this->t('Caption: @caption', ['@caption' => $this->getSetting('caption')]);
+      $summary[] = $this->t('Caption') . ': ' . strip_tags($this->getSetting('caption'));
     }
     if (!empty($this->getSetting('vertical'))) {
       $summary[] = $this->t('Table mode vertical');

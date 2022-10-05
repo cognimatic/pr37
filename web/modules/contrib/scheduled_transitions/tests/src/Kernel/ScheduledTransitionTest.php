@@ -15,7 +15,7 @@ use Drupal\scheduled_transitions\Entity\ScheduledTransitionInterface;
 use Drupal\scheduled_transitions_test\Entity\ScheduledTransitionsTestEntity as TestEntity;
 use Drupal\Tests\content_moderation\Traits\ContentModerationTestTrait;
 use Drupal\user\Entity\User;
-use Symfony\Component\Debug\BufferingLogger;
+use Symfony\Component\ErrorHandler\BufferingLogger;
 
 /**
  * Tests basic functionality of scheduled_transitions fields.
@@ -42,7 +42,7 @@ class ScheduledTransitionTest extends KernelTestBase {
     'system',
   ];
 
-  private string $testLoggerServiceName = 'test.logger';
+  private const TEST_LOGGER_SERVICE_NAME = 'test.logger';
 
   /**
    * {@inheritdoc}
@@ -734,7 +734,7 @@ class ScheduledTransitionTest extends KernelTestBase {
    *   Logs from buffer, where values are an array with keys: severity, message.
    */
   protected function getLogBuffer(): array {
-    return $this->container->get($this->testLoggerServiceName)->cleanLogs();
+    return $this->container->get(static::TEST_LOGGER_SERVICE_NAME)->cleanLogs();
   }
 
   /**
@@ -753,6 +753,7 @@ class ScheduledTransitionTest extends KernelTestBase {
 
     /** @var int[] $ids */
     $ids = $entityStorage->getQuery()
+      ->accessCheck(FALSE)
       ->allRevisions()
       ->condition($entityDefinition->getKey('id'), $entity->id())
       ->execute();
@@ -765,7 +766,7 @@ class ScheduledTransitionTest extends KernelTestBase {
   public function register(ContainerBuilder $container) {
     parent::register($container);
     $container
-      ->register($this->testLoggerServiceName, BufferingLogger::class)
+      ->register(static::TEST_LOGGER_SERVICE_NAME, BufferingLogger::class)
       ->addTag('logger');
   }
 
@@ -774,7 +775,7 @@ class ScheduledTransitionTest extends KernelTestBase {
    */
   protected function tearDown(): void {
     // Clean out logs so their arn't sent out to stderr.
-    $this->container->get($this->testLoggerServiceName)->cleanLogs();
+    $this->container->get(static::TEST_LOGGER_SERVICE_NAME)->cleanLogs();
     parent::tearDown();
   }
 

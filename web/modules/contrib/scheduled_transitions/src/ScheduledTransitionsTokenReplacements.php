@@ -52,6 +52,7 @@ class ScheduledTransitionsTokenReplacements {
 
     // getWorkflowForEntity only supports Content Entities, this can be removed
     // if Scheduled Transitions supports non CM workflows in the future.
+    $states = [];
     if ($this->latest instanceof ContentEntityInterface) {
       $workflow = $this->moderationInformation()->getWorkflowForEntity($this->latest);
       $workflowPlugin = $workflow->getTypePlugin();
@@ -78,6 +79,7 @@ class ScheduledTransitionsTokenReplacements {
    *   Moderation information service.
    */
   protected function moderationInformation(): ModerationInformationInterface {
+    // @phpstan-ignore-next-line
     return $this->moderationInformation ?? \Drupal::service('content_moderation.moderation_information');
   }
 

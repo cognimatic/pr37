@@ -15,6 +15,7 @@
         "drupal/field_group": "^3.0",
         "drupal/fontawesome": "^2.18",
         "drupal/geolocation": "^3.1",
+        "drupal/layout_paragraphs": "^2.0",
         "drupal/office_hours": "^1.4",
         "drupal/paragraphs": "^1.13",
         "drupal/tablefield": "^2.3",

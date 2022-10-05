@@ -58,13 +58,20 @@ class ScheduledTransitionsLocalTaskUnitTest extends UnitTestCase {
       ->willReturn($parameters);
 
     $query = $this->createMock(QueryInterface::class);
-    $query->expects($this->at(0))
+    $query->expects($this->any())
       ->method('condition')
-      ->with('entity__target_type', 'st_entity_test')
-      ->willReturnSelf();
-    $query->expects($this->at(1))
-      ->method('condition')
-      ->with('entity__target_id', $entityId)
+      ->withConsecutive(
+        ['entity__target_type', 'st_entity_test'],
+        ['entity__target_id', $entityId],
+        ['entity_revision_langcode', $currentUserLanguage],
+      )
+      ->willReturnOnConsecutiveCalls(
+        $this->returnSelf(),
+        $this->returnSelf(),
+        $this->returnValue($query),
+      );
+    $query->expects($this->any())
+      ->method('accessCheck')
       ->willReturnSelf();
     $query->expects($this->any())
       ->method('count')
@@ -73,10 +80,6 @@ class ScheduledTransitionsLocalTaskUnitTest extends UnitTestCase {
     $query->expects($this->any())
       ->method('execute')
       ->willReturn($assertCount);
-    $query->expects($this->at(2))
-      ->method('condition')
-      ->with('entity_revision_langcode', $currentUserLanguage)
-      ->willReturn($query);
 
     $transitionStorage = $this->createMock(EntityStorageInterface::class);
     $transitionStorage->expects($this->any())

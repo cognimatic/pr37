@@ -200,4 +200,19 @@ class ScheduledTransitionLocalTaskTest extends BrowserTestBase {
     $this->assertSession()->linkNotExists('Latest version');
   }
 
+  /**
+   * Tests the entity collection tab.
+   */
+  public function testEntityCollectionTab() {
+    $currentUser = $this->drupalCreateUser([
+      'access administration pages',
+      'view all scheduled transitions',
+    ]);
+    $this->drupalLogin($currentUser);
+
+    $this->drupalGet('/admin/content');
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->linkExists('Scheduled transitions');
+  }
+
 }

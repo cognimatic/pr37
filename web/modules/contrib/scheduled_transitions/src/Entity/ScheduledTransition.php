@@ -188,6 +188,7 @@ class ScheduledTransition extends ContentEntityBase implements ScheduledTransiti
    * {@inheritdoc}
    */
   public function setEntityRevisionLanguage(string $langCode) {
+    // @phpstan-ignore-next-line
     $this->entity_revision_langcode = $langCode;
     return $this;
   }
@@ -203,6 +204,7 @@ class ScheduledTransition extends ContentEntityBase implements ScheduledTransiti
    * {@inheritdoc}
    */
   public function setAuthor(AccountInterface $author) {
+    // @phpstan-ignore-next-line
     $this->author = $author->id();
     return $this;
   }
@@ -218,7 +220,9 @@ class ScheduledTransition extends ContentEntityBase implements ScheduledTransiti
    * {@inheritdoc}
    */
   public function setState(WorkflowInterface $workflow, string $state) {
+    // @phpstan-ignore-next-line
     $this->workflow = $workflow->id();
+    // @phpstan-ignore-next-line
     $this->moderation_state = $state;
     return $this;
   }
@@ -290,6 +294,7 @@ class ScheduledTransition extends ContentEntityBase implements ScheduledTransiti
    * {@inheritdoc}
    */
   public function setOptions(array $options) {
+    // @phpstan-ignore-next-line
     $this->options = $options;
     return $this;
   }
@@ -314,8 +319,8 @@ class ScheduledTransition extends ContentEntityBase implements ScheduledTransiti
     $entity = $this->getEntity();
     if ($entity) {
       $tags[] = ScheduledTransitionsUtility::createScheduledTransitionsCacheTag($entity);
+      Cache::invalidateTags($tags);
     }
-    Cache::invalidateTags($tags);
   }
 
 }

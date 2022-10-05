@@ -70,6 +70,7 @@ class ScheduledTransitionsLocalTask extends LocalTaskDefault implements Containe
     if ($entity) {
       $transitionStorage = $this->entityTypeManager->getStorage('scheduled_transition');
       $count = $transitionStorage->getQuery()
+        ->accessCheck(FALSE)
         ->condition('entity__target_type', $entity->getEntityTypeId())
         ->condition('entity__target_id', $entity->id())
         ->condition('entity_revision_langcode', $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId())
