@@ -209,6 +209,8 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         ),
         'L' => 
         array (
+            'LocalgovDrupal\\OsPlacesGeocoder\\Tests\\' => 38,
+            'LocalgovDrupal\\OsPlacesGeocoder\\' => 32,
             'League\\Csv\\' => 11,
             'League\\Container\\' => 17,
             'Laminas\\Stdlib\\' => 15,
@@ -759,6 +761,14 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'LocalgovDrupal\\OsPlacesGeocoder\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/localgovdrupal/localgov_os_places_geocoder_provider/tests',
+        ),
+        'LocalgovDrupal\\OsPlacesGeocoder\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/localgovdrupal/localgov_os_places_geocoder_provider/src',
         ),
         'League\\Csv\\' => 
         array (

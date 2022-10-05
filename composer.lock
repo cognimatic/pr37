@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "278829070a99ab355de646f93a0f121c",
+    "content-hash": "0515123029f1c40f02db67c9e002364a",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -3420,6 +3420,84 @@
             "homepage": "https://www.drupal.org/project/condition_field",
             "support": {
                 "source": "https://git.drupalcode.org/project/condition_field"
+            }
+        },
+        {
+            "name": "drupal/config_split",
+            "version": "2.0.0-rc4",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/config_split.git",
+                "reference": "2.0.0-rc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/config_split-2.0.0-rc4.zip",
+                "reference": "2.0.0-rc4",
+                "shasum": "d4c06efbadd34793b0c9b71772162057afa58111"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9 || ^10"
+            },
+            "conflict": {
+                "drush/drush": "<10"
+            },
+            "require-dev": {
+                "drupal/config_filter": "^1||^2"
+            },
+            "suggest": {
+                "drupal/chosen": "Chosen uses the Chosen jQuery plugin to make the <select> elements more user-friendly.",
+                "drupal/select2_all": "Applies the Select2 library to all select fields on the site similar to the Chosen module."
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0-rc4",
+                    "datestamp": "1662235380",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
+                    }
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": "^10 || ^11"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Fabian Bircher",
+                    "homepage": "https://www.drupal.org/u/bircher",
+                    "email": "opensource@fabianbircher.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Nuvole Web",
+                    "homepage": "http://nuvole.org",
+                    "email": "info@nuvole.org",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "pescetti",
+                    "homepage": "https://www.drupal.org/user/436244"
+                }
+            ],
+            "description": "Configuration filter for importing and exporting extra config",
+            "homepage": "https://www.drupal.org/project/config_split",
+            "keywords": [
+                "Drupal",
+                "configuration",
+                "configuration management"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/config_split",
+                "issues": "https://www.drupal.org/project/issues/config_split",
+                "slack": "https://drupal.slack.com/archives/C45342CDD"
             }
         },
         {
@@ -12423,6 +12501,56 @@
                 "source": "https://github.com/localgovdrupal/localgov_openreferral/tree/1.0.3"
             },
             "time": "2022-04-25T16:18:58+00:00"
+        },
+        {
+            "name": "localgovdrupal/localgov_os_places_geocoder_provider",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/localgovdrupal/localgov_os_places_geocoder_provider.git",
+                "reference": "f79ec3f866522a85affd94b00c5ccd4488b07fba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_os_places_geocoder_provider/zipball/f79ec3f866522a85affd94b00c5ccd4488b07fba",
+                "reference": "f79ec3f866522a85affd94b00c5ccd4488b07fba",
+                "shasum": ""
+            },
+            "require": {
+                "geocoder-php/common-http": "^4.1",
+                "willdurand/geocoder": "^4.0"
+            },
+            "provide": {
+                "geocoder-php/provider-implementation": "1.0"
+            },
+            "require-dev": {
+                "geocoder-php/provider-integration-tests": "^1.0",
+                "php-http/curl-client": "^2.2",
+                "php-http/message": "^1.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LocalgovDrupal\\OsPlacesGeocoder\\": "src/",
+                    "LocalgovDrupal\\OsPlacesGeocoder\\Tests\\": "tests/"
+                },
+                "exclude-from-classmap": [
+                    "/tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Temporary home for our OS Places Geocoder provider.",
+            "homepage": "https://github.com/localgovdrupal/localgov_os_places_geocoder_provider",
+            "support": {
+                "issues": "https://github.com/localgovdrupal/localgov_os_places_geocoder_provider/issues",
+                "source": "https://github.com/localgovdrupal/localgov_os_places_geocoder_provider/tree/release-1.x"
+            },
+            "time": "2021-11-29T14:25:00+00:00"
         },
         {
             "name": "localgovdrupal/localgov_page_components",
@@ -25031,6 +25159,7 @@
     "stability-flags": {
         "drupal/backup_migrate": 20,
         "drupal/cludo_search": 10,
+        "drupal/config_split": 5,
         "drupal/content_readability": 15,
         "drupal/filefield_sources": 15,
         "drupal/layout_builder_base": 20,
@@ -25041,6 +25170,7 @@
         "drupal/shs": 5,
         "drupal/site_audit": 5,
         "localgovdrupal/localgov_multilingual": 20,
+        "localgovdrupal/localgov_os_places_geocoder_provider": 20,
         "drupal/bugherd": 10,
         "drupal/entity_clone": 10,
         "drupal/entity_relationship_diagram": 20

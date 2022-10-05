@@ -116,6 +116,8 @@ return array(
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Mtownsend\\XmlToArray\\' => array($vendorDir . '/mtownsend/xml-to-array/src'),
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
+    'LocalgovDrupal\\OsPlacesGeocoder\\Tests\\' => array($vendorDir . '/localgovdrupal/localgov_os_places_geocoder_provider/tests'),
+    'LocalgovDrupal\\OsPlacesGeocoder\\' => array($vendorDir . '/localgovdrupal/localgov_os_places_geocoder_provider/src'),
     'League\\Csv\\' => array($vendorDir . '/league/csv/src'),
     'League\\Container\\' => array($vendorDir . '/league/container/src'),
     'Laminas\\Stdlib\\' => array($vendorDir . '/laminas/laminas-stdlib/src'),
