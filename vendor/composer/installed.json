@@ -5149,6 +5149,53 @@
             "install-path": "../../web/modules/contrib/content_readability"
         },
         {
+            "name": "drupal/convert_bundles",
+            "version": "1.0.0-alpha7",
+            "version_normalized": "1.0.0.0-alpha7",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/convert_bundles.git",
+                "reference": "8.x-1.0-alpha7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/convert_bundles-8.x-1.0-alpha7.zip",
+                "reference": "8.x-1.0-alpha7",
+                "shasum": "54687536c1ebbbc19b28d44ccee903cee497562c"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-alpha7",
+                    "datestamp": "1621952571",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "el1_1el",
+                    "homepage": "https://www.drupal.org/user/1795292"
+                }
+            ],
+            "description": "Convert entity bundles from one value to another",
+            "homepage": "https://www.drupal.org/project/convert_bundles",
+            "support": {
+                "source": "https://git.drupalcode.org/project/convert_bundles"
+            },
+            "install-path": "../../web/modules/contrib/convert_bundles"
+        },
+        {
             "name": "drupal/core",
             "version": "9.4.7",
             "version_normalized": "9.4.7.0",
@@ -7543,6 +7590,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "Don't render facet block if backend isn't available: https://www.drupal.org/project/facets/issues/3311856": "https://git.drupalcode.org/issue/facets-3311856/-/commit/765d5ef4228906c7f201e116763f3018a7867c96.patch"
                 }
             },
             "installation-source": "dist",

@@ -659,6 +659,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/convert_bundles' => array(
+            'pretty_version' => '1.0.0-alpha7',
+            'version' => '1.0.0.0-alpha7',
+            'reference' => '8.x-1.0-alpha7',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/convert_bundles',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/core' => array(
             'pretty_version' => '9.4.7',
             'version' => '9.4.7.0',
