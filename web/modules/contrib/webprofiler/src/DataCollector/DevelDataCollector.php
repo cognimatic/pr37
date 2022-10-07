@@ -5,7 +5,9 @@ namespace Drupal\webprofiler\DataCollector;
 use Drupal\Core\Link;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 use Drupal\webprofiler\DrupalDataCollectorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,17 +21,39 @@ class DevelDataCollector extends DataCollector implements DrupalDataCollectorInt
   use StringTranslationTrait, DrupalDataCollectorTrait;
 
   /**
-   * {@inheritdoc}
+   * @var \Drupal\Core\Routing\RouteMatchInterface
    */
-  public function collect(Request $request, Response $response, \Exception $exception = NULL) {
-    $this->data['original_url'] = $request->getPathInfo();
+  private $routeMatch;
+
+  /**
+   * DevelDataCollector constructor.
+   *
+   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
+   *   The route match.
+   */
+  public function __construct(RouteMatchInterface $routeMatch) {
+    $this->routeMatch = $routeMatch;
   }
 
   /**
-   * @return string
+   * {@inheritdoc}
+   */
+  public function collect(Request $request, Response $response, \Exception $exception = NULL) {
+    $original_route = $this->routeMatch->getRouteName();
+    if ($original_route != NULL) {
+      $original_route_parameters = $this->routeMatch
+        ->getRawParameters()
+        ->all();
+      $this->data['destination'] = Url::fromRoute($original_route, $original_route_parameters)
+        ->toString();
+    }
+  }
+
+  /**
+   * @return array
    */
   public function getLinks() {
-    return $this->develMenuLinks($this->data['original_url']);
+    return $this->develMenuLinks($this->data['destination']);
   }
 
   /**
@@ -64,12 +88,12 @@ class DevelDataCollector extends DataCollector implements DrupalDataCollectorInt
   }
 
   /**
-   * @param string $original_url
+   * @param string $destination
    *
    * @return array Array containing Devel Menu links
    *   Array containing Devel Menu links
    */
-  protected function develMenuLinks($original_url) {
+  protected function develMenuLinks($destination) {
     // We cannot use injected services here because at this point this
     // class is deserialized from a storage and not constructed.
     $menuLinkTreeService = \Drupal::service('menu.link_tree');
@@ -86,15 +110,21 @@ class DevelDataCollector extends DataCollector implements DrupalDataCollectorInt
     $tree = $menuLinkTreeService->transform($tree, $manipulators);
 
     $links = [];
-
     foreach ($tree as $item) {
-      /** @var \Drupal\devel\Plugin\Menu\DestinationMenuLink $link */
-      $link = $item->link;
-      $renderable = Link::fromTextAndUrl($link->getTitle(), $link->getUrlObject())
-        ->toRenderable();
+      /** @var \Drupal\devel\Plugin\Menu\DestinationMenuLink $item_link */
+      $item_link = $item->link;
+
+      // Get the link url and replace the destination parameter with the
+      // original route.
+      $url = $item_link->getUrlObject();
+      $url->setOption('query', ['destination' => $destination]);
+
+      // Build and render the link.
+      $link = Link::fromTextAndUrl($item_link->getTitle(), $url);
+      $renderable = $link->toRenderable();
       $rendered = $rendererService->renderPlain($renderable);
-      $linkString = preg_replace('/\/profiler\/(.*)&/', $original_url . '&', $rendered);
-      $links[] = Markup::create($linkString);;
+
+      $links[] = Markup::create($rendered);
     }
 
     return $links;

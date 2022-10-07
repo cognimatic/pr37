@@ -7,7 +7,6 @@
     </a>
     {% endset %}
     {% set text %}
-    {% spaceless %}
         <div class="sf-toolbar-info-piece">
             {% for keys, form in collector.getForms %}
                 <b>{{ keys }}</b>
@@ -15,7 +14,6 @@
                         ::{{ form.class.method }}</a></div>
             {% endfor %}
         </div>
-    {% endspaceless %}
     {% endset %}
 
     <div class="sf-toolbar-block">

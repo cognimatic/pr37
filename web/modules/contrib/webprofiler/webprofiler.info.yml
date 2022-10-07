@@ -10,7 +10,7 @@ tags:
 dependencies:
  - devel:devel
 
-# Information added by Drupal.org packaging script on 2022-09-07
-version: '9.0.0'
+# Information added by Drupal.org packaging script on 2022-10-07
+version: '9.0.2'
 project: 'webprofiler'
-datestamp: 1662531833
+datestamp: 1665128595

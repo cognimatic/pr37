@@ -3,10 +3,12 @@
 namespace Drupal\webprofiler\EventDispatcher;
 
 use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Drupal\Component\EventDispatcher\Event;
 use Drupal\webprofiler\Stopwatch;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Contracts\EventDispatcher\Event as ContractsEvent;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as ContractsEventDispatcherInterface;
 
 /**
  * Class TraceableEventDispatcher.
@@ -48,12 +50,38 @@ class TraceableEventDispatcher extends ContainerAwareEventDispatcher implements 
   /**
    * {@inheritdoc}
    */
-  public function dispatch($event, $event_name = NULL) {
-    // Temporary hack for 9.0 and 9.1 compat. See https://gitlab.com/drupalspoons/devel/-/issues/344.
-    if (is_string($event)) {
-      $event_obj = $event_name ?? new Event();
-      $event_name = $event;
-      $event = $event_obj;
+  public function dispatch($event/*, string $event_name = NULL*/) {
+    $event_name = 1 < \func_num_args() ? func_get_arg(1) : NULL;
+    if (\is_object($event)) {
+      $class_name = get_class($event);
+      $event_name = $event_name ?? $class_name;
+
+      $deprecation_message = 'Symfony\Component\EventDispatcher\Event is deprecated in drupal:9.1.0 and will be replaced by Symfony\Contracts\EventDispatcher\Event in drupal:10.0.0. A new Drupal\Component\EventDispatcher\Event class is available to bridge the two versions of the class. See https://www.drupal.org/node/3159012';
+
+      // Trigger a deprecation error if the deprecated Event class is used
+      // directly.
+      if ($class_name === 'Symfony\Component\EventDispatcher\Event') {
+        @trigger_error($deprecation_message, E_USER_DEPRECATED);
+      }
+      // Also try to trigger deprecation errors when classes are in the Drupal
+      // namespace and inherit directly from the deprecated class. If a class is
+      // in the Symfony namespace or a different one, we have to assume those
+      // will be updated by the dependency itself. Exclude the Drupal Event
+      // bridge class as a special case, otherwise it's pointless.
+      elseif ($class_name !== 'Drupal\Component\EventDispatcher\Event' && strpos($class_name, 'Drupal') !== FALSE) {
+        if (get_parent_class($event) === 'Symfony\Component\EventDispatcher\Event') {
+          @trigger_error($deprecation_message, E_USER_DEPRECATED);
+        }
+      }
+    }
+    elseif (\is_string($event) && (NULL === $event_name || $event_name instanceof ContractsEvent || $event_name instanceof Event)) {
+      @trigger_error('Calling the Symfony\Component\EventDispatcher\EventDispatcherInterface::dispatch() method with a string event name as the first argument is deprecated in drupal:9.1.0, an Event object will be required instead in drupal:10.0.0. See https://www.drupal.org/node/3154407', E_USER_DEPRECATED);
+      $swap = $event;
+      $event = $event_name ?? new Event();
+      $event_name = $swap;
+    }
+    else {
+      throw new \TypeError(sprintf('Argument 1 passed to "%s::dispatch()" must be an object, %s given.', ContractsEventDispatcherInterface::class, \gettype($event)));
     }
 
     $this->preDispatch($event_name, $event);
@@ -67,7 +95,7 @@ class TraceableEventDispatcher extends ContainerAwareEventDispatcher implements 
       }
 
       // Invoke listeners and resolve callables if necessary.
-      foreach ($this->listeners[$event_name] as $priority => &$definitions) {
+      foreach ($this->listeners[$event_name] as &$definitions) {
         foreach ($definitions as &$definition) {
           if (!isset($definition['callable'])) {
             $definition['callable'] = [
@@ -75,11 +103,11 @@ class TraceableEventDispatcher extends ContainerAwareEventDispatcher implements 
               $definition['service'][1],
             ];
           }
+          if (is_array($definition['callable']) && isset($definition['callable'][0]) && $definition['callable'][0] instanceof \Closure) {
+            $definition['callable'][0] = $definition['callable'][0]();
+          }
 
-          $definition['callable']($event, $event_name, $this);
-
-          $this->addCalledListener($definition, $event_name, $priority);
-
+          call_user_func($definition['callable'], $event, $event_name, $this);
           if ($event->isPropagationStopped()) {
             return $event;
           }
@@ -155,8 +183,7 @@ class TraceableEventDispatcher extends ContainerAwareEventDispatcher implements 
         $token = $event->getResponse()->headers->get('X-Debug-Token');
         try {
           $this->stopwatch->stopSection($token);
-        }
-        catch (\LogicException $e) {
+        } catch (\LogicException $e) {
         }
         break;
 
@@ -167,8 +194,7 @@ class TraceableEventDispatcher extends ContainerAwareEventDispatcher implements 
         $token = $event->getResponse()->headers->get('X-Debug-Token');
         try {
           $this->stopwatch->stopSection($token);
-        }
-        catch (\LogicException $e) {
+        } catch (\LogicException $e) {
         }
         break;
     }

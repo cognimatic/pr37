@@ -58,14 +58,14 @@ class TranslationManagerWrapper extends TranslationManager {
    * @return array
    */
   public function getTranslated() {
-    return $this->translated;
+    return $this->translated ?? [];
   }
 
   /**
    * @return array
    */
   public function getUntranslated() {
-    return $this->untranslated;
+    return $this->untranslated ?? [];
   }
 
 }

@@ -3615,21 +3615,21 @@
         },
         {
             "name": "drupal/admin_toolbar",
-            "version": "3.1.1",
-            "version_normalized": "3.1.1.0",
+            "version": "3.2.1",
+            "version_normalized": "3.2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/admin_toolbar.git",
-                "reference": "3.1.1"
+                "reference": "3.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/admin_toolbar-3.1.1.zip",
-                "reference": "3.1.1",
-                "shasum": "a66ce69cd7e56f1cc43797dc2a58d6eab367d353"
+                "url": "https://ftp.drupal.org/files/projects/admin_toolbar-3.2.1.zip",
+                "reference": "3.2.1",
+                "shasum": "7a4bfb716e269be4ca03b7f04e29e4439ec6cf93"
             },
             "require": {
-                "drupal/core": "^8.8.0 || ^9.0 || ^10.0"
+                "drupal/core": "^8.8.0 || ^9.0"
             },
             "require-dev": {
                 "drupal/admin_toolbar_tools": "*"
@@ -3637,8 +3637,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.1.1",
-                    "datestamp": "1658802262",
+                    "version": "3.2.1",
+                    "datestamp": "1665044276",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -11169,21 +11169,21 @@
         },
         {
             "name": "drupal/search_api",
-            "version": "1.25.0",
-            "version_normalized": "1.25.0.0",
+            "version": "1.26.0",
+            "version_normalized": "1.26.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/search_api.git",
-                "reference": "8.x-1.25"
+                "reference": "8.x-1.26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/search_api-8.x-1.25.zip",
-                "reference": "8.x-1.25",
-                "shasum": "823bf5a6010cd08c7d1b287fcd855fbf81140e39"
+                "url": "https://ftp.drupal.org/files/projects/search_api-8.x-1.26.zip",
+                "reference": "8.x-1.26",
+                "shasum": "a37f4ac23f7f0517df85fd450b4a9a50333ae93d"
             },
             "require": {
-                "drupal/core": "^9.2 || ^10.0"
+                "drupal/core": "^9.3 || ^10.0"
             },
             "conflict": {
                 "drupal/search_api_solr": "2.* || 3.0 || 3.1"
@@ -11201,8 +11201,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.25",
-                    "datestamp": "1658149514",
+                    "version": "8.x-1.26",
+                    "datestamp": "1664975343",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -11244,22 +11244,22 @@
         },
         {
             "name": "drupal/search_api_autocomplete",
-            "version": "1.6.0",
-            "version_normalized": "1.6.0.0",
+            "version": "1.7.0",
+            "version_normalized": "1.7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/search_api_autocomplete.git",
-                "reference": "8.x-1.6"
+                "reference": "8.x-1.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/search_api_autocomplete-8.x-1.6.zip",
-                "reference": "8.x-1.6",
-                "shasum": "4065946556cac1ccd9b19754a165fb32fc734b92"
+                "url": "https://ftp.drupal.org/files/projects/search_api_autocomplete-8.x-1.7.zip",
+                "reference": "8.x-1.7",
+                "shasum": "9be80f9187252adbb265402276e9bdce6a5698cd"
             },
             "require": {
-                "drupal/core": "^8 || ^9",
-                "drupal/search_api": "1.x"
+                "drupal/core": "^9.2 || ^10",
+                "drupal/search_api": "^1.0"
             },
             "require-dev": {
                 "drupal/search_api_page": "1.x-dev"
@@ -11267,8 +11267,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.6",
-                    "datestamp": "1641998786",
+                    "version": "8.x-1.7",
+                    "datestamp": "1664975494",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -12730,18 +12730,18 @@
         },
         {
             "name": "drupal/webprofiler",
-            "version": "9.0.0",
-            "version_normalized": "9.0.0.0",
+            "version": "9.0.2",
+            "version_normalized": "9.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/webprofiler.git",
-                "reference": "9.0.0"
+                "reference": "9.0.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/webprofiler-9.0.0.zip",
-                "reference": "9.0.0",
-                "shasum": "f142b0463dd16019b6a4319ee9415e6052a47674"
+                "url": "https://ftp.drupal.org/files/projects/webprofiler-9.0.2.zip",
+                "reference": "9.0.2",
+                "shasum": "b9f168af37090e8435fb8134c694f7d0f511ff61"
             },
             "require": {
                 "doctrine/common": "^2.7",
@@ -12752,8 +12752,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "9.0.0",
-                    "datestamp": "1662531831",
+                    "version": "9.0.2",
+                    "datestamp": "1665128594",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -17485,17 +17485,17 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.6.4",
-            "version_normalized": "6.6.4.0",
+            "version": "v6.6.5",
+            "version_normalized": "6.6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "a94fdebaea6bd17f51be0c2373ab80d3d681269b"
+                "reference": "8b6386d7417526d1ea4da9edb70b8352f7543627"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/a94fdebaea6bd17f51be0c2373ab80d3d681269b",
-                "reference": "a94fdebaea6bd17f51be0c2373ab80d3d681269b",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/8b6386d7417526d1ea4da9edb70b8352f7543627",
+                "reference": "8b6386d7417526d1ea4da9edb70b8352f7543627",
                 "shasum": ""
             },
             "require": {
@@ -17519,10 +17519,10 @@
                 "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
                 "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
                 "psr/log": "For optional PSR-3 debug logging",
-                "stevenmaguire/oauth2-microsoft": "Needed for Microsoft XOAUTH2 authentication",
-                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)"
+                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
+                "thenetworg/oauth2-azure": "Needed for Microsoft XOAUTH2 authentication"
             },
-            "time": "2022-08-22T09:22:00+00:00",
+            "time": "2022-10-07T12:23:10+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -17554,7 +17554,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.6.4"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.6.5"
             },
             "funding": [
                 {
@@ -17739,17 +17739,17 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.8.7",
-            "version_normalized": "1.8.7.0",
+            "version": "1.8.8",
+            "version_normalized": "1.8.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "536ff0ed719b5679e9f09c17aeaee9b31969cb8e"
+                "reference": "08310ce271984587e2a4cda94e1ac66510a6ea07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/536ff0ed719b5679e9f09c17aeaee9b31969cb8e",
-                "reference": "536ff0ed719b5679e9f09c17aeaee9b31969cb8e",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/08310ce271984587e2a4cda94e1ac66510a6ea07",
+                "reference": "08310ce271984587e2a4cda94e1ac66510a6ea07",
                 "shasum": ""
             },
             "require": {
@@ -17758,7 +17758,7 @@
             "conflict": {
                 "phpstan/phpstan-shim": "*"
             },
-            "time": "2022-10-04T14:09:33+00:00",
+            "time": "2022-10-06T12:51:57+00:00",
             "bin": [
                 "phpstan",
                 "phpstan.phar"
@@ -17781,7 +17781,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.8.7"
+                "source": "https://github.com/phpstan/phpstan/tree/1.8.8"
             },
             "funding": [
                 {

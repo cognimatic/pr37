@@ -174,7 +174,10 @@ class EntityManagerWrapper extends DefaultPluginManager implements EntityTypeMan
    * {@inheritdoc}
    */
   public function getFormObject($entity_type, $operation) {
-    return $this->entityTypeManager->getFormObject($entity_type, $operation);
+    $formObject = $this->entityTypeManager->getFormObject($entity_type, $operation);
+    $formObject->setEntityTypeManager($this);
+
+    return $formObject;
   }
 
   /**

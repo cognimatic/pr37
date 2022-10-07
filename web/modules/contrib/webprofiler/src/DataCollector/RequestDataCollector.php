@@ -43,7 +43,15 @@ class RequestDataCollector extends BaseRequestDataCollector implements DrupalDat
     parent::collect($request, $response, $exception);
 
     if ($controller = $this->controllerResolver->getController($request)) {
-      $this->data['controller'] = $this->getMethodData($controller[0], $controller[1]);
+      if (is_object($controller)) {
+        $class = get_class((object) $controller);
+        $method = '__invoke';
+      } else {
+        $class = $controller[0];
+        $method = $controller[1];
+      }
+
+      $this->data['controller'] = $this->getMethodData($class, $method);
       $this->data['access_check'] = $this->accessCheck;
     }
   }

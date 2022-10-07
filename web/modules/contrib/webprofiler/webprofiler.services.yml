@@ -76,7 +76,7 @@ services:
 
   webprofiler.devel:
     class: Drupal\webprofiler\DataCollector\DevelDataCollector
-    arguments: ['@menu.link_tree']
+    arguments: ['@current_route_match']
     tags:
       - { name: data_collector, template: '@webprofiler/Collector/devel.html.twig', id: 'devel', title: 'Devel', priority: 15 }
 
