@@ -1,0 +1,6 @@
+media_link_enhancements.settings:
+  title: Media Link Enhancements settings
+  route_name: media_link_enhancements.settings
+  parent: system.admin_config_media
+  description: 'Media Link Enhancements module configuration and settings.'
+  weight: -20

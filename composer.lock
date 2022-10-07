@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68dde2cf8a97fe4b88690ee4570faf97",
+    "content-hash": "f22af723e8537d45f06d1d1aef8a799f",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -7865,6 +7865,50 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/media_library_edit",
                 "issues": "https://www.drupal.org/project/issues/media_library_edit"
+            }
+        },
+        {
+            "name": "drupal/media_link_enhancements",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/media_link_enhancements.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/media_link_enhancements-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "e899648d0e04e7e4d595e3d7c8ad5bc706f94ab3"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.1",
+                    "datestamp": "1651617595",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "cameron prince",
+                    "homepage": "https://www.drupal.org/user/1765640"
+                }
+            ],
+            "description": "Provides various enhancements for media entity links.",
+            "homepage": "https://www.drupal.org/project/media_link_enhancements",
+            "support": {
+                "source": "https://git.drupalcode.org/project/media_link_enhancements"
             }
         },
         {

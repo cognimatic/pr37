@@ -1,0 +1,110 @@
+<?php
+
+/**
+ * @file
+ * Primary module file for the Media Link Enhancements module.
+ */
+
+use Drupal\Core\Render\Element;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_entity_display_build_alter().
+ *
+ * Loops over all link fields being displayed and rewrites their
+ * link text to include file type/size.
+ *
+ * Loops over all fields using the selected field types and
+ * updates media links.
+ */
+function media_link_enhancements_entity_display_build_alter(&$build, $context) {
+
+  $config = \Drupal::config('media_link_enhancements.settings');
+  $helper = \Drupal::service('media_link_enhancements.helper');
+
+  foreach (Element::children($build) as $field_name) {
+    $element =& $build[$field_name];
+
+    // Add type/size text to link field anchors.
+    $enabled = !empty($config->get('enable_type_size_appending'));
+    if ($enabled && isset($element['#field_type']) && $element['#field_type'] === 'link') {
+      foreach ($element['#items'] as $delta => $item) {
+
+        // Bail if there's no url element.
+        if (!isset($build[$field_name][$delta]['#url'])) {
+          continue;
+        }
+
+        // Bail if the url element isn't a Url object.
+        if (!$build[$field_name][$delta]['#url'] instanceof Url) {
+          continue;
+        }
+
+        $url = $build[$field_name][$delta]['#url'];
+
+        // Bail if this is an unrouted url.
+        if (!$url->isRouted()) {
+          continue;
+        }
+
+        // Bail if the link doesn't point to a media entity.
+        if (!isset($url->getRouteParameters()['media'])) {
+          continue;
+        }
+
+        $mid = $url->getRouteParameters()['media'];
+        $media = \Drupal::entityTypeManager()->getStorage('media')->load($mid);
+
+        // Bail if there's no media object, media is unpublished or the bundle
+        // isn't allowed.
+        if (empty($media) || !$media->isPublished() || !$helper->checkBundle($media->bundle(), 'type_size_appending_bundles')) {
+          continue;
+        }
+
+        $storage = \Drupal::entityTypeManager()->getStorage('file');
+        $source = $storage->load($media->getSource()->getSourceFieldValue($media));
+
+        // Bail if we don't have a source object.
+        if (!$source) {
+          continue;
+        }
+
+        // Pass the source off to the get_append_text service and check
+        // for a non-FALSE response.
+        if ($text = \Drupal::service('media_link_enhancements.append_text')->getText($source)) {
+          $build[$field_name][$delta]['#title'] .= $text;
+        }
+      }
+    }
+
+    // Parse content fields.
+    $enabled = !empty($config->get('enable_content_parsing'));
+    $types = $config->get('content_parsing_field_types');
+    if ($enabled && !empty($types) && is_array($types)) {
+      foreach ($types as $type) {
+        if (isset($element['#field_type']) && $element['#field_type'] === $type) {
+          foreach ($element['#items'] as $delta => $item) {
+            if (isset($build[$field_name][$delta]['#text'])) {
+              // Call the alter_links service to perform the parsing.
+              $service = \Drupal::service('media_link_enhancements.alter_links');
+              $build[$field_name][$delta]['#text'] = $service->alterLinks($build[$field_name][$delta]['#text']);
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
+
+/**
+ * Implements hook_entity_type_build().
+ *
+ * Override the media entity so that the flag from the Linkit
+ * matcher is passed to the URL generator.
+ */
+function media_link_enhancements_entity_type_build(&$entity_types) {
+  if (isset($entity_types['media'])) {
+    $entity_types['media']->setClass('Drupal\media_link_enhancements\Entity\MediaLinkEnhancementsMedia');
+  }
+}

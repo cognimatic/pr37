@@ -1,0 +1,75 @@
+media_link_enhancements.settings:
+  type: mapping
+  mapping:
+    enable_direct_linking:
+      type: boolean
+      label: 'Enable direct linking'
+    direct_linking_bundles:
+      type: sequence
+      label: 'Direct linking media types'
+      sequence:
+        -  type: string
+           label: 'Media type machine name'
+    direct_linking_extensions:
+      type: string
+      label: 'Direct linking extensions'
+    direct_linking_download_attr:
+      type: boolean
+      label: 'Enable download attribute'
+    direct_linking_download_attr_extensions:
+      type: string
+      label: 'Download attribute extensions'
+    enable_type_size_appending:
+      type: boolean
+      label: 'Enable type/size appending'
+    type_size_appending_bundles:
+      type: sequence
+      label: 'Type/size appending media types'
+      sequence:
+        -  type: string
+           label: 'Media type machine name'
+    type_size_appending_prefix:
+      type: string
+      label: 'Type/size appending prefix'
+    type_size_appending_separator:
+      type: string
+      label: 'Type/size appending separator'
+    type_size_appending_suffix:
+      type: string
+      label: 'Type/size appending suffix'
+    type_size_appending_uppercase:
+      type: boolean
+      label: 'Type/size appending uppercase'
+    type_size_appending_extensions:
+      type: string
+      label: 'Type/size appending extensions'
+    enable_redirect:
+      type: boolean
+      label: 'Enable redirects'
+    redirect_bundles:
+      type: sequence
+      label: 'Redirect media types'
+      sequence:
+        -  type: string
+           label: 'Media type machine name'
+    redirect_extensions:
+      type: string
+      label: 'Redirect extensions'
+    enable_binary_response:
+      type: boolean
+      label: 'Enable binary response'
+    binary_response_bundles:
+      type: sequence
+      label: 'Binary response media types'
+    binary_response_extensions:
+      type: string
+      label: 'Binary response extensions'
+    enable_content_parsing:
+      type: boolean
+      label: 'Enable content parsing'
+    content_parsing_field_types:
+      type: sequence
+      label: 'Content parsing field types'
+      sequence:
+        -  type: string
+           label: 'Field type machine name'

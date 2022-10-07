@@ -1,0 +1,14 @@
+services:
+  media_link_enhancements.route_subscriber:
+    class: Drupal\media_link_enhancements\Routing\MediaLinkEnhancementsRouteSubscriber
+    tags:
+      - { name: 'event_subscriber' }
+  media_link_enhancements.append_text:
+    class: Drupal\media_link_enhancements\MediaLinkEnhancementsAppendText
+    arguments: ['@config.factory', '@media_link_enhancements.helper']
+  media_link_enhancements.alter_links:
+    class: Drupal\media_link_enhancements\MediaLinkEnhancementsAlterLinks
+    arguments: ['@config.factory','@entity_type.manager','@entity.repository','@media_link_enhancements.append_text','@media_link_enhancements.helper']
+  media_link_enhancements.helper:
+    class: Drupal\media_link_enhancements\MediaLinkEnhancementsHelper
+    arguments: ['@config.factory']

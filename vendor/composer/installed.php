@@ -1425,6 +1425,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/media_link_enhancements' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'reference' => '1.0.1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/media_link_enhancements',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/memcache' => array(
             'pretty_version' => '2.5.0',
             'version' => '2.5.0.0',

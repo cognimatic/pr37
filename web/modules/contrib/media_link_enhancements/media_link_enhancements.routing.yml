@@ -1,0 +1,7 @@
+media_link_enhancements.settings:
+  path: '/admin/config/media/media_link_enhancements'
+  defaults:
+    _form: '\Drupal\media_link_enhancements\Form\MediaLinkEnhancementsAdminForm'
+    _title: 'Configure Media Link Enhancements'
+  requirements:
+    _permission: 'administer_media_link_enhancements'
