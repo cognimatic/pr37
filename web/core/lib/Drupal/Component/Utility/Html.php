@@ -373,7 +373,7 @@ EOD;
    * will convert "&eacute;" to "é", whereas Html::escape() will not convert "é"
    * to "&eacute;".
    *
-   * @param string $text
+   * @param string|null $text
    *   The text to decode entities in.
    *
    * @return string
@@ -382,7 +382,10 @@ EOD;
    * @see html_entity_decode()
    * @see \Drupal\Component\Utility\Html::escape()
    */
-  public static function decodeEntities($text) {
+  public static function decodeEntities(?string $text): string {
+    if (is_null($text)) {
+      trigger_error('Passing null to ' . __METHOD__ . ' is deprecated in drupal:10.1.0 and is prohibited starting in drupal:11.0.0. Pass a string instead. See https://www.drupal.org/project/drupal/issues/3255637.', E_USER_DEPRECATED);
+    }
     return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
   }
 
@@ -409,7 +412,7 @@ EOD;
    * '#markup' is not recommended. Use the '#plain_text' key instead and the
    * renderer will autoescape the text.
    *
-   * @param string $text
+   * @param string|null $text
    *   The input text.
    *
    * @return string
@@ -420,8 +423,11 @@ EOD;
    *
    * @ingroup sanitization
    */
-  public static function escape($text) {
-    return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+  public static function escape(?string $text): string {
+    if (is_null($text)) {
+      trigger_error('Passing null to Html::escape() is deprecated in drupal:10.1.0 and is prohibited starting in drupal:11.0.0. Pass a string instead. See https://www.drupal.org/project/drupal/issues/3255637.', E_USER_DEPRECATED);
+    }
+    return htmlspecialchars($text ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
   }
 
   /**

@@ -40,14 +40,14 @@
 #}
 
 {% if promoted %}
-<div class="services--business services--list-block mb-5 col-12">
+<div {{ attributes.addClass('services--business services--list-block mb-5 col-12') }}>
 	<h2>
 		<a href="{{ field_link }}">{{ content.localgov_ia_block_title }}</a>
 	</h2>
 	{{ list }}
 </div>
 {% else %}
-<div class="services--list-block mt-4 col-sm-6 col-md-4">
+<div {{ attributes.addClass('services--list-block mt-4 col-sm-6 col-md-4') }}>
 	<h2>
 		<a href="{{ field_link }}">{{ content.localgov_ia_block_title }}</a>
 	</h2>

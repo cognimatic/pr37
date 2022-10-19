@@ -38,7 +38,14 @@
  * @ingroup themeable
  */
 #}
-<div class="box-link">
+
+{%
+  set classes = [
+    'box-link',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
   <a href="{{ localgov_link.url }}"
     {% if localgov_link.open_in_new_window %} target="_blank" {% endif %}>
     {{ content.localgov_image }}
