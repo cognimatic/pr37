@@ -153,6 +153,9 @@
 				"Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2021-11-25/3099026-32_0.patch",
 				"Add type declaration html-escape decodeEntitties FormattableMarkup-placeholderEscape 3255637": "https://www.drupal.org/files/issues/2022-10-17/3255637-68.patch"
 			},
+			"drupal/gin": {
+				"Custom toolbar logo lacks alt attribute 3293366": "https://git.drupalcode.org/project/gin/-/merge_requests/161.diff"
+			},
 			"drupal/shs": {
 				"Error saving null empty value 3241169": "https://www.drupal.org/files/issues/2022-02-28/shs-Error_saving_null_empty_value_after_2.0.0-rc1_update-3241169-36.patch"
 			},

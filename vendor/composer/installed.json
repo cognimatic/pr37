@@ -8411,6 +8411,9 @@
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
                     }
+                },
+                "patches_applied": {
+                    "Custom toolbar logo lacks alt attribute 3293366": "https://git.drupalcode.org/project/gin/-/merge_requests/161.diff"
                 }
             },
             "installation-source": "dist",
