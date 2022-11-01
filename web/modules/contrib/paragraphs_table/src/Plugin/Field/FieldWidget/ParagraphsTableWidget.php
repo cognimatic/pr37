@@ -31,6 +31,7 @@ class ParagraphsTableWidget extends ParagraphsWidget {
       'show_all' => FALSE,
       'duplicate' => FALSE,
       'features' => ['duplicate' => 'duplicate'],
+      'form_mode' => 'default',
     ] + parent::defaultSettings();
   }
 
@@ -74,6 +75,27 @@ class ParagraphsTableWidget extends ParagraphsWidget {
         '#multiple' => TRUE,
       ];
     }
+    $display = \Drupal::service('entity_display.repository');
+    $settings = $this->getFieldSettings();
+    $bundle = NULL;
+    if (!empty($settings["handler_settings"]["target_bundles"])) {
+      $bundle = array_shift($settings["handler_settings"]["target_bundles"]);
+    }
+    if (!empty($bundle)) {
+      $modes = $display->getFormModeOptionsByBundle("paragraph", $bundle);
+    }
+    else {
+      $modes = ['default' => $this->t("Default"),];
+    }
+
+    $elements['form_mode'] = [
+      '#type' => 'select',
+      '#title' => t('Form mode'),
+      '#description' => t('Select which form mode is displayed'),
+      '#options' => $modes,
+      '#default_value' => !empty($this->getSetting('form_mode')) ? $this->getSetting('form_mode') : 'default',
+    ];
+
     return $elements;
   }
 
@@ -97,6 +119,9 @@ class ParagraphsTableWidget extends ParagraphsWidget {
     if (!empty($features)) {
       $summary[] = $this->t('Features: @features', ['@features' => implode(', ', $features)]);
     }
+    if (!empty($this->getSetting('form_mode'))) {
+      $summary[] = $this->t('Mode: @mode', ['@mode' => $this->getSetting('form_mode')]);
+    }
 
     return $summary;
   }
@@ -108,6 +133,8 @@ class ParagraphsTableWidget extends ParagraphsWidget {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
+    $form_mode = $this->getSetting('form_mode');
+    $this->setSetting("form_display_mode", $form_mode);
     $elements = parent::formMultipleElements($items, $form, $form_state);
     $settings = $this->fieldDefinition->getSettings();
     $handler = $settings['handler_settings'];
@@ -131,7 +158,7 @@ class ParagraphsTableWidget extends ParagraphsWidget {
       return $elements;
     }
     $formDisplay = \Drupal::service('entity_display.repository')
-      ->getFormDisplay($target_type, $default_type);
+      ->getFormDisplay($target_type, $default_type, $form_mode);
     $components = $formDisplay->getComponents();
     uasort($components, 'Drupal\Component\Utility\SortArray::sortByWeightElement');
 

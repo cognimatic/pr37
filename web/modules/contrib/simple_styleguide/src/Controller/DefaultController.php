@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormBuilderInterface;
 
 /**
- * Class DefaultController.
+ * Primary controller styleguide and config pages.
  *
  * @package Drupal\simple_styleguide\Controller
  */

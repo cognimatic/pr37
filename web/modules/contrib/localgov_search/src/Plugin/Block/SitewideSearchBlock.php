@@ -110,6 +110,7 @@ class SitewideSearchBlock extends BlockBase implements ContainerFactoryPluginInt
         $form['#id'] .= '-block';
         $form['s']['#attributes']['placeholder'] = 'Search';
         $form['s']['#required'] = TRUE;
+        $form['#cache']['contexts'] = ['url.query_args:s'];
       }
     }
 

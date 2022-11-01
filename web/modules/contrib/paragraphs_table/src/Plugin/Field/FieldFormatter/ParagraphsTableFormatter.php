@@ -11,6 +11,7 @@ use Drupal\Core\Url;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
+use Drupal\field\Entity\FieldConfig;
 use Drupal\field\FieldConfigInterface;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -120,6 +121,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
       'hide_line_operations' => FALSE,
       'form_format_table' => TRUE,
       'footer_text' => '',
+      'sum_fields' => '',
     ] + parent::defaultSettings();
   }
 
@@ -245,6 +247,46 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
         '#default_value' => $this->getSettings()['footer_text'],
       ],
     ];
+    $options_number_field = [];
+    $target_type = $this->getFieldSetting('target_type');
+    $field_name = $this->fieldDefinition->getName();
+    $entity_type = $form["#entity_type"];
+    $bundle = $form["#bundle"];
+    $entityFieldManager = \Drupal::service('entity_field.manager');
+    $fieldDefinitions = $entityFieldManager->getFieldDefinitions($entity_type, $bundle);
+    if(!empty($fieldDefinitions[$field_name])){
+      $target_bundles = $fieldDefinitions[$field_name]->getSettings()["handler_settings"]["target_bundles"];
+      $target_bundle = current($target_bundles);
+      $paragraphs_entity = \Drupal::entityTypeManager()->getStorage($target_type)
+        ->create(['type' => $target_bundle]);
+      $field_definitions = $paragraphs_entity->getFieldDefinitions();
+      $typSupport = [ 'integer',  'number', 'number_integer', 'bigint_item_default',
+        'float', 'list_float', 'decimal',
+      ];
+      foreach ($field_definitions as $fieldName => $field_definition){
+        if($field_definition instanceof FieldConfig){
+          $type = $field_definition->getType();
+          if(in_array($type, $typSupport)){
+            $options_number_field[$fieldName] = $field_definition->getLabel();
+          }
+        }
+      }
+    }
+    if (!empty($options_number_field)) {
+      $settingForm['sum_fields'] = [
+        '#title' => $this->t('Sum fields'),
+        '#description' => $this->t('use for number field'),
+        '#type' => 'select',
+        '#multiple' => TRUE,
+        '#options' => $options_number_field,
+        '#default_value' => $this->getSettings()['sum_fields'],
+        '#states' => [
+          'visible' => [
+            'select[name$="[mode]"]' => ['value' => 'bootstrapTable'],
+          ],
+        ],
+      ];
+    }
     if (\Drupal::service('module_handler')->moduleExists('quick_data')) {
       $settingForm['import'] = [
         '#title' => $this->t('Import link title'),
@@ -476,6 +518,9 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
               'data-field' => $field_name,
               'data-sortable' => "true",
             ];
+            if(!empty($setting['sum_fields']) && in_array($field_name,$setting['sum_fields'] )){
+              $table_header[$field_name]['data-footer-formatter'] = 'sumFormatter';
+            }
           }
           $table['#header'] = $table_header;
           if (!empty($setting['footer_text'])) {
@@ -494,6 +539,10 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
                 ],
               ],
             ];
+            $table['#attributes']["data-show-footer"] = 'true';
+          }
+          if (!empty($setting['sum_fields'])) {
+            $table['#attributes']["data-show-footer"] = 'true';
           }
           $table['#attached']['library'][] = 'paragraphs_table/bootstrapTable';
           break;
@@ -1320,7 +1369,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
   private function setCustomPermissions(FieldDefinitionInterface $field_definition, FieldItemListInterface $items) {
     $field_permissions_type = $field_definition->getFieldStorageDefinition()
       ->getThirdPartySettings('field_permissions');
-    $this->typePermission = $field_permissions_type['permission_type'];
+    $this->typePermission = !empty($field_permissions_type['permission_type']) ? $field_permissions_type['permission_type'] : FALSE;
     if ($this->typePermission == 'custom') {
       $user = \Drupal::currentUser();
       $fieldName = $field_definition->getName();

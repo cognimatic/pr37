@@ -65,10 +65,10 @@ tr .form-item,
   display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
+  vertical-align: middle;
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
-  vertical-align: middle;
 }
 
 .form-item__label[for] {

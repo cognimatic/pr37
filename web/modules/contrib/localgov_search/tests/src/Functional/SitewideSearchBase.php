@@ -6,6 +6,7 @@ use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\search_api\Entity\Index;
+use Drupal\search_api\Utility\Utility;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
@@ -41,7 +42,23 @@ class SitewideSearchBase extends BrowserTestBase {
    */
   protected static $modules = [
     'localgov_search',
+    'block',
+    'big_pipe',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(): void {
+    parent::setUp();
+
+    // Do not use a batch for tracking the initial items after creating an
+    // index when running the tests via the GUI. Otherwise, it seems Drupal's
+    // Batch API gets confused and the test fails.
+    if (!Utility::isRunningInCli()) {
+      \Drupal::state()->set('search_api_use_tracking_batch', FALSE);
+    }
+  }
 
   /**
    * Test sidewide search works.
@@ -119,13 +136,7 @@ class SitewideSearchBase extends BrowserTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
 
-    // Index content.
-    $index = Index::load('localgov_sitewide_search');
-    $index->indexItems();
-
-    // Which cache is this that needs clearing. DB test doesn't need it, solr
-    // does.
-    drupal_flush_all_caches();
+    $this->indexItems();
 
     // Check search form.
     $url = Url::fromRoute('view.localgov_sitewide_search.sitewide_search_page');
@@ -142,6 +153,34 @@ class SitewideSearchBase extends BrowserTestBase {
     $this->submitForm(['s' => $body2], 'Apply');
     $this->assertSession()->pageTextContains($title2);
     $this->assertSession()->pageTextContains($summary2);
+
+    // Check caching of search field.
+    $url_front = Url::fromRoute('<front>');
+    $url_search = Url::fromRoute('view.localgov_sitewide_search.sitewide_search_page');
+    $url_search_title = Url::fromRoute('view.localgov_sitewide_search.sitewide_search_page', [], ['query' => ['s' => $title1]]);
+    $url_search_canary = Url::fromRoute('view.localgov_sitewide_search.sitewide_search_page', [], ['query' => ['s' => 'canary']]);
+    // Search page.
+    $this->drupalGet($url_search_title);
+    $this->assertSession()->pageTextContains($title1);
+    $this->drupalGet($url_search_title);
+    $this->drupalGet($url_search);
+    $this->assertSession()->pageTextNotContains($title1);
+    // Block.
+    $this->drupalPlaceBlock('localgov_sitewide_search_block', ['region' => 'header']);
+    $this->drupalGet($url_search_canary);
+    $this->drupalGet($url_front);
+    $this->assertSession()->responseNotContains('canary');
+  }
+
+  /**
+   * Run index items.
+   *
+   * Allow backend specific tests to override.
+   */
+  protected function indexItems() {
+    // Index content.
+    $index = Index::load('localgov_sitewide_search');
+    $index->indexItems();
   }
 
 }

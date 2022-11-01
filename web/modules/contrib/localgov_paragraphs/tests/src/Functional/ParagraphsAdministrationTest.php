@@ -10,6 +10,19 @@ use Drupal\Tests\paragraphs\Functional\WidgetLegacy\ParagraphsTestBase;
 class ParagraphsAdministrationTest extends ParagraphsTestBase {
 
   /**
+   * Skip schema check for third_party_settings config from media_library_edit.
+   *
+   * See https://www.drupal.org/project/media_library_edit/issues/3315757.
+   *
+   * @var string[]
+   */
+  protected static $configSchemaCheckerExclusions = [
+    'core.entity_form_display.paragraph.localgov_featured_campaign.default',
+    'core.entity_form_display.paragraph.localgov_image.default',
+    'core.entity_form_display.paragraph.localgov_newsroom_teaser.default',
+  ];
+
+  /**
    * Modules to enable.
    *
    * @var array

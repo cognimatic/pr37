@@ -41,7 +41,7 @@ function simple_styleguide_theme() {
       'variables' => [
         'pattern_id' => NULL,
         'pattern' => NULL,
-      ]
+      ],
     ],
   ];
 }

@@ -4,9 +4,15 @@ type: theme
 core_version_requirement: ^8.8 || ^9
 base theme: "localgov_base"
 
-libraries:
-  - localgov_scarfolk/variables
-  - localgov_scarfolk/overrides
+libraries-extend:
+  localgov_base/global:
+    - localgov_scarfolk/global
+  localgov_base/alert-banner:
+    - localgov_scarfolk/alert-banner
+  localgov_base/banner:
+    - localgov_scarfolk/banner
+  localgov_base/ia-block:
+    - localgov_scarfolk/ia-block
 
 regions:
   tabs: "Tabs"

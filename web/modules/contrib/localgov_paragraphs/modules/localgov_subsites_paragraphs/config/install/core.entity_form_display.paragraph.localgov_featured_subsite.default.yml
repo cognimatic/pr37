@@ -9,6 +9,7 @@ dependencies:
   module:
     - link
     - media_library
+    - media_library_edit
 id: paragraph.localgov_featured_subsite.default
 targetEntityType: paragraph
 bundle: localgov_featured_subsite
@@ -19,7 +20,9 @@ content:
     weight: 1
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     region: content
   localgov_featured_subsite_link:
     weight: 0

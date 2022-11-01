@@ -19,6 +19,7 @@ class SitewideSearchTest extends SitewideSearchBase {
   protected static $modules = [
     'localgov_search',
     'localgov_search_db',
+    'big_pipe',
   ];
 
 }

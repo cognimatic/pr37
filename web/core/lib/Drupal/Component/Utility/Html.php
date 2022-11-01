@@ -384,7 +384,7 @@ EOD;
    */
   public static function decodeEntities(?string $text): string {
     if (is_null($text)) {
-      trigger_error('Passing null to ' . __METHOD__ . ' is deprecated in drupal:10.1.0 and is prohibited starting in drupal:11.0.0. Pass a string instead. See https://www.drupal.org/project/drupal/issues/3255637.', E_USER_DEPRECATED);
+      trigger_error('Passing null to ' . __METHOD__ . ' is deprecated in Drupal:10.1.0 and will trigger a PHP error from Drupal:11.0.0. Pass a string instead. See https://www.drupal.org/project/drupal/issues/3255637.', E_USER_DEPRECATED);
     }
     return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
   }
@@ -425,7 +425,7 @@ EOD;
    */
   public static function escape(?string $text): string {
     if (is_null($text)) {
-      trigger_error('Passing null to Html::escape() is deprecated in drupal:10.1.0 and is prohibited starting in drupal:11.0.0. Pass a string instead. See https://www.drupal.org/project/drupal/issues/3255637.', E_USER_DEPRECATED);
+      trigger_error('Passing null to Html::escape() is deprecated in Drupal:10.1.0 and will trigger a PHP error from Drupal:11.0.0. Pass a string instead. See https://www.drupal.org/project/drupal/issues/3255637.', E_USER_DEPRECATED);
     }
     return htmlspecialchars($text ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
   }

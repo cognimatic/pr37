@@ -6,7 +6,7 @@ core_version_requirement: ^8 || ^9
 package: styleguide
 configure: simple_styleguide.styleguide_settings
 
-# Information added by Drupal.org packaging script on 2020-04-30
-version: '8.x-1.8'
+# Information added by Drupal.org packaging script on 2022-10-20
+version: '8.x-1.9'
 project: 'simple_styleguide'
-datestamp: 1588267937
+datestamp: 1666289059

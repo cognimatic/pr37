@@ -6,6 +6,7 @@ dependencies:
     - paragraphs.paragraphs_type.localgov_video
   module:
     - media_library
+    - media_library_edit
 id: paragraph.localgov_video.default
 targetEntityType: paragraph
 bundle: localgov_video

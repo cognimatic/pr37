@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Class StyleguidePatternForm.
+ * Admin config form for adding styleguide patterns.
  *
  * @package Drupal\simple_styleguide\Form
  */
@@ -41,7 +41,7 @@ class StyleguidePatternForm extends EntityForm {
       '#title' => $this->t('Description'),
       '#format' => 'full_html',
       '#rows' => 5,
-      '#default_value' => ($styleguide_pattern->description['value'] ?: ''),
+      '#default_value' => ($styleguide_pattern->description['value'] ?? ''),
     ];
 
     $form['pattern'] = [

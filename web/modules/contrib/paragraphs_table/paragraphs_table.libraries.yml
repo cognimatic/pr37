@@ -27,6 +27,7 @@ bootstrapTable:
     //cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.21.0/extensions/export/bootstrap-table-export.min.js: {type: external, minified: true }
     //cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.21.0/extensions/copy-rows/bootstrap-table-copy-rows.min.js: {type: external, minified: true }
     //cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.21.0/extensions/print/bootstrap-table-print.min.js: {type: external, minified: true }
+    js/bootstrap-tables.js: { }
   css:
     component:
       //unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css: { type: external, minified: true }

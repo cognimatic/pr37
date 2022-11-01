@@ -261,7 +261,7 @@ class FormattableMarkup implements MarkupInterface, \Countable {
   protected static function placeholderEscape($value): string {
     if (is_null($value)) {
       trigger_error(
-        'Passing null to ' . __METHOD__ . ' is deprecated in drupal:10.1.0 and is prohibited starting in drupal:11.0.0. Pass a string or ' . MarkupInterface::class . ' instead. See https://www.drupal.org/project/drupal/issues/3255637.',
+        'Passing null to ' . __METHOD__ . ' is deprecated in Drupal:10.1.0 and will trigger a PHP error from Drupal:11.0.0. Pass a string or ' . MarkupInterface::class . ' instead. See https://www.drupal.org/project/drupal/issues/3255637.',
         E_USER_DEPRECATED
       );
       return '';

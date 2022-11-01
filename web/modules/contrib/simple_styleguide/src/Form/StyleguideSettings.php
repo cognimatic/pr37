@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Class StyleguideSettings.
+ * Admin config form for selecting pre-made styleguide patterns.
  *
  * @package Drupal\simple_styleguide\Form
  */
@@ -43,24 +43,23 @@ class StyleguideSettings extends ConfigFormBase {
       '#type' => 'checkboxes',
       '#title' => $this->t('Default Patterns'),
       '#options' => [
-        'headings' => 'headings',
-        'text' => 'text',
-        'lists' => 'lists',
-        'blockquote' => 'blockquote',
-        'rule' => 'horizontal rule',
-        'table' => 'table',
-        'alerts' => 'alerts',
-        'breadcrumbs' => 'breadcrumbs',
-        'forms' => 'forms',
-        'buttons' => 'buttons',
-        'pagination' => 'pagination',
+        'headings' => $this->t('headings'),
+        'text' => $this->t('text'),
+        'lists' => $this->t('lists'),
+        'blockquote' => $this->t('blockquote'),
+        'rule' => $this->t('horizontal rule'),
+        'table' => $this->t('table'),
+        'alerts' => $this->t('alerts'),
+        'breadcrumbs' => $this->t('breadcrumbs'),
+        'forms' => $this->t('forms'),
+        'buttons' => $this->t('buttons'),
+        'pagination' => $this->t('pagination'),
       ],
       '#default_value' => (!empty($config->get('default_patterns')) && count($config->get('default_patterns')) > 0) ? $config->get('default_patterns') : [],
     ];
 
-    $button_link = Url::fromRoute('entity.styleguide_pattern.collection')->toString();
     $form['custom'] = [
-      '#markup' => '<p><a href="' . $button_link . '" class="button">Create Custom Styleguide Patterns</a></p>',
+      '#markup' => '<p>Custom styleguide patterns can be added on the patterns page.</p>',
     ];
 
     $form['color_palette'] = [

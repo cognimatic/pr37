@@ -6,6 +6,7 @@ dependencies:
     - paragraphs.paragraphs_type.localgov_banner_secondary
   module:
     - media_library
+    - media_library_edit
 id: paragraph.localgov_banner_secondary.default
 targetEntityType: paragraph
 bundle: localgov_banner_secondary
@@ -15,7 +16,9 @@ content:
     weight: 0
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     type: media_library_widget
     region: content
 hidden:

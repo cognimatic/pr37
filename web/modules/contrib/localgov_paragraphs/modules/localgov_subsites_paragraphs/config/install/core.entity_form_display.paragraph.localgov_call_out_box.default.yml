@@ -13,6 +13,7 @@ dependencies:
   module:
     - link
     - media_library
+    - media_library_edit
     - text
 id: paragraph.localgov_call_out_box.default
 targetEntityType: paragraph
@@ -24,7 +25,9 @@ content:
     weight: 6
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     region: content
   localgov_body_text:
     weight: 2

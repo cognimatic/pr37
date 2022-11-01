@@ -157,6 +157,11 @@ function localgov_subsites_paragraphs_preprocess_paragraph(&$variables) {
     // Check media item's position.
     $variables['media_position'] = $paragraph->get('localgov_media_position')->first()->value;
 
+    // Check component's media size.
+    if ($paragraph->hasField('localgov_media_with_text_size') && !$paragraph->get('localgov_media_with_text_size')->isEmpty()) {
+      $variables['media_size'] = $paragraph->get('localgov_media_with_text_size')->first()->value;
+    }
+
     // Check component's style.
     $variables['style'] = $paragraph->get('localgov_media_with_text_style')->first()->value;
 
