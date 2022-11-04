@@ -1452,6 +1452,51 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/migmag' => array(
+            'pretty_version' => '1.8.1',
+            'version' => '1.8.1.0',
+            'reference' => '1.8.1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/migmag',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'drupal/migmag_callback_upgrade' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.8.1',
+            ),
+        ),
+        'drupal/migmag_menu_link_migrate' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.8.1',
+            ),
+        ),
+        'drupal/migmag_process' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.8.1',
+            ),
+        ),
+        'drupal/migmag_process_lookup_replace' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.8.1',
+            ),
+        ),
+        'drupal/migmag_rollbackable' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.8.1',
+            ),
+        ),
+        'drupal/migmag_rollbackable_replace' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.8.1',
+            ),
+        ),
         'drupal/migrate_file' => array(
             'pretty_version' => '2.1.1',
             'version' => '2.1.1.0',
@@ -1737,6 +1782,15 @@
             'reference' => '8.x-3.0-rc4',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/site_audit',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'drupal/smart_sql_idmap' => array(
+            'pretty_version' => '1.1.0',
+            'version' => '1.1.0.0',
+            'reference' => '1.1.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/smart_sql_idmap',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

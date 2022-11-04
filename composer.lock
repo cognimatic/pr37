@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "acb3d2818f9cf53fdd99f3f6cc6c88c2",
+    "content-hash": "30e124347a8b49b7659f45f72714f0e0",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -8053,6 +8053,67 @@
             }
         },
         {
+            "name": "drupal/migmag",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/migmag.git",
+                "reference": "1.8.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/migmag-1.8.1.zip",
+                "reference": "1.8.1",
+                "shasum": "d944bb896ff84d3df5d5177febacd5b3559955b1"
+            },
+            "require": {
+                "drupal/core": "^8.9 || ^9 || ^10"
+            },
+            "replace": {
+                "drupal/migmag_callback_upgrade": "self.version",
+                "drupal/migmag_menu_link_migrate": "self.version",
+                "drupal/migmag_process": "self.version",
+                "drupal/migmag_process_lookup_replace": "self.version",
+                "drupal/migmag_rollbackable": "self.version",
+                "drupal/migmag_rollbackable_replace": "self.version"
+            },
+            "require-dev": {
+                "drupal/eme": "^1@alpha",
+                "drupal/migmag_process": "*",
+                "drupal/migmag_rollbackable": "*",
+                "drupal/smart_sql_idmap": "^1.1@beta",
+                "drupal/tecla": "^1@RC",
+                "drush/drush": "^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.8.1",
+                    "datestamp": "1659090450",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "huzooka",
+                    "homepage": "https://www.drupal.org/user/281301"
+                }
+            ],
+            "description": "Toolset and utilities for Drupal migrations.",
+            "homepage": "https://www.drupal.org/project/migmag",
+            "support": {
+                "source": "https://git.drupalcode.org/project/migmag",
+                "issues": "https://www.drupal.org/project/issues/migmag"
+            }
+        },
+        {
             "name": "drupal/migrate_file",
             "version": "2.1.1",
             "source": {
@@ -9735,6 +9796,55 @@
             "homepage": "https://www.drupal.org/project/site_audit",
             "support": {
                 "source": "https://git.drupalcode.org/project/site_audit"
+            }
+        },
+        {
+            "name": "drupal/smart_sql_idmap",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/smart_sql_idmap.git",
+                "reference": "1.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/smart_sql_idmap-1.1.0.zip",
+                "reference": "1.1.0",
+                "shasum": "f5e0602fca9a49a2ed3e2901046dc58fbe678926"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.1.0",
+                    "datestamp": "1658916952",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "huzooka",
+                    "homepage": "https://www.drupal.org/user/281301"
+                }
+            ],
+            "description": "A SQL id map for migrations with long plugin IDs",
+            "homepage": "https://www.drupal.org/project/smart_sql_idmap",
+            "keywords": [
+                "Drupal",
+                "Migration"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/smart_sql_idmap",
+                "issues": "https://www.drupal.org/project/issues/smart_sql_idmap"
             }
         },
         {
