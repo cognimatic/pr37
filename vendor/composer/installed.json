@@ -9642,6 +9642,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "Fix schema #3315757": "https://git.drupalcode.org/issue/media_library_edit-3315757/-/commit/9b590f1d93d8c0f750c50d90c422343ecf5e9e72.patch"
                 }
             },
             "installation-source": "dist",
@@ -9861,6 +9864,57 @@
                 "docs": "https://www.drupal.org/docs/8/modules/metatag"
             },
             "install-path": "../../web/modules/contrib/metatag"
+        },
+        {
+            "name": "drupal/migrate_file",
+            "version": "2.1.1",
+            "version_normalized": "2.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/migrate_file.git",
+                "reference": "2.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/migrate_file-2.1.1.zip",
+                "reference": "2.1.1",
+                "shasum": "3e573ad33e4ab9bf8821107d8ca0e867e9110452"
+            },
+            "require": {
+                "drupal/core": "^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.1.1",
+                    "datestamp": "1647985110",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "drclaw",
+                    "homepage": "https://www.drupal.org/user/823702"
+                }
+            ],
+            "description": "Additional support for migrating files including downloading remote files and using remote uris (without download)",
+            "homepage": "https://www.drupal.org/project/migrate_file",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/migrate_file",
+                "issues": "https://www.drupal.org/project/issues/migrate_file"
+            },
+            "install-path": "../../web/modules/contrib/migrate_file"
         },
         {
             "name": "drupal/migrate_manifest",

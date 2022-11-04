@@ -1452,6 +1452,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/migrate_file' => array(
+            'pretty_version' => '2.1.1',
+            'version' => '2.1.1.0',
+            'reference' => '2.1.1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/migrate_file',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/migrate_manifest' => array(
             'pretty_version' => '3.0.2',
             'version' => '3.0.2.0',
