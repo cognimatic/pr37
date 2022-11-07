@@ -1,0 +1,42 @@
+source:
+  plugin: content_entity
+  
+  constants:
+    SOURCE_DOMAIN: 'https://drupal9.ddev.site:4432/'
+    DRUPAL_FILE_DIRECTORY: 'public://media_library/'
+process:
+  filename: filename
+  replaced_filepath:
+    -
+        plugin: str_replace
+        source: filepath
+        search: "sites/default/files/"
+        replace: ""
+  source_full_path:
+    -
+        plugin: concat
+        delimiter: /
+        source:
+            - constants/migrate_files_path
+            - '@replaced_filepath'
+    -
+        plugin: urlencode
+  uri:
+    plugin: file_copy
+    source:
+        - '@source_full_path'
+        - uri
+  filemime: filemime
+  status: status
+  created: timestamp
+  changed: timestamp
+  uid: uid    
+  
+  
+destination:
+  plugin: 'entity:media'
+  default_bundle: image
+
+migration_dependencies:
+  required: {}
+  optional: {}
