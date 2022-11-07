@@ -9,7 +9,7 @@ migration_tags:
 migration_group: im_group
 label: 'Media entities'
 source:
-  plugin: content_entity
+  plugin: content_entity:media
   scheme: public
   constants:
     SOURCE_DOMAIN: 'https://drupal9.ddev.site:4432/'

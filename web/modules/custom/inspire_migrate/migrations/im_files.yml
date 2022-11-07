@@ -1,5 +1,5 @@
 source:
-  plugin: content_entity
+  plugin: content_entity:file
   
   constants:
     SOURCE_DOMAIN: 'https://drupal9.ddev.site:4432/'
