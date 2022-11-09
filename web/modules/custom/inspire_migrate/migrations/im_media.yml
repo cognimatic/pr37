@@ -1,13 +1,14 @@
+id: im_media
+label: 'Media entities'
 langcode: en
 status: true
 dependencies: {  }
-id: im_media
 class: Drupal\migrate\Plugin\Migration
 migration_tags:
-  - ABC
-  - Media
-migration_group: im_group
-label: 'Media entities'
+  - abc
+  - media
+
+
 source:
   plugin: content_entity:media
   scheme: public

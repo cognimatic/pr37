@@ -1,10 +1,11 @@
 type: module
-name: Media Migration of ABC 
+name: Migration of ABC legacy content
 description: 'Migration and translation of content from ABC D9 website to D9 website designed by Inspire '
 package: Inspire Migrate
 core_version_requirement: ^8 || ^9
 dependencies:
   - drupal:migrate
   - drupal:migrate_plus
-  - drupal:migrate_files
+  - drupal:migrate_file
   - drupal:migrate_tools
+  - drupal:migrate_drupal_d8

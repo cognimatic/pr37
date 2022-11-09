@@ -1,42 +1,93 @@
+id: im_files
+label: Migrate public files from ABC legacy D9 to Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - files
+
 source:
-  plugin: content_entity:file
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: file
   
   constants:
-    SOURCE_DOMAIN: 'https://drupal9.ddev.site:4432/'
-    DRUPAL_FILE_DIRECTORY: 'public://media_library/'
+    SOURCE_DOMAIN: 'https://argyll-bute.gov.uk'
+    DRUPAL_FILE_DIRECTORY: 'public://migrated_files/'
 process:
-  filename: filename
-  replaced_filepath:
+  filename:
     -
-        plugin: str_replace
-        source: filepath
-        search: "sites/default/files/"
-        replace: ""
+      plugin: get
+      source: filename
+  source_public_absolute_path:
+    -
+      plugin: str_replace
+      source: uri
+      search: 'public://'
+      replace: 'sites/default/files/'
   source_full_path:
     -
-        plugin: concat
-        delimiter: /
-        source:
-            - constants/migrate_files_path
-            - '@replaced_filepath'
+      plugin: concat
+      delimiter: /
+      source:
+        - constants/SOURCE_DOMAIN
+        - '@source_public_absolute_path'
     -
-        plugin: urlencode
+      plugin: urlencode
+  destination_filename:
+    - plugin: callback
+      callable: basename
+      source: filename
+    - plugin: skip_on_empty
+      method: row
+      message: 'Cannot import empty filename.'
+      
+  destination_path:
+    -
+      plugin: concat
+      source:
+        - constants/DRUPAL_FILE_DIRECTORY
+        - '@destination_filename'
+    -
+      plugin: urlencode
+      
   uri:
-    plugin: file_copy
-    source:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: '@source_full_path'
+      message: 'File field_name does not exist'
+    -
+      plugin: file_copy
+      source:
         - '@source_full_path'
-        - uri
-  filemime: filemime
-  status: status
-  created: timestamp
-  changed: timestamp
-  uid: uid    
-  
-  
+        - '@destination_path'        
+  filemime:
+    -
+      plugin: get
+      source: filemime
+  filesize:
+    -
+      plugin: get
+      source: filesize
+  status:
+    -
+      plugin: get
+      source: status
+  created:
+    -
+      plugin: get
+      source: timestamp
+  changed:
+    -
+      plugin: get
+      source: timestamp
+  uid:
+    -
+      plugin: default_value
+      default_value: 1
 destination:
-  plugin: 'entity:media'
-  default_bundle: image
-
-migration_dependencies:
-  required: {}
-  optional: {}
+  plugin: 'entity:file'
+migration_dependencies: null

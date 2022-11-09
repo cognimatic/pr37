@@ -1497,6 +1497,15 @@
                 0 => '1.8.1',
             ),
         ),
+        'drupal/migrate_drupal_d8' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => '8.x-1.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/migrate_drupal_d8',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/migrate_file' => array(
             'pretty_version' => '2.1.1',
             'version' => '2.1.1.0',

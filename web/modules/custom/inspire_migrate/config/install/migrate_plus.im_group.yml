@@ -1,6 +1,0 @@
-id: im_group
-label: Inspire Migration Group
-source_type: Drupal 9
-shared_configuration:
-  source:
-    key: migrate
