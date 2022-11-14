@@ -1,0 +1,30 @@
+id: im_media_doc
+label: 'Media document entities migration from ABC legacy D9 to Inspire D9'
+langcode: en
+status: true
+dependencies: {  }
+
+migration_tags:
+  - abc
+  - media
+
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: media  
+  bundle: document
+
+process:
+  uid:
+    -
+      plugin: default_value
+      default_value: 1
+  bundle:
+    -
+      plugin: default_value
+      default_value: document
+  
+destination:
+  plugin: 'entity:media'
+migration_dependencies: null

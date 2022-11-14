@@ -36,6 +36,13 @@ process:
         - '@source_public_absolute_path'
     -
       plugin: urlencode
+  desination_path:
+    - plugin: callback
+      callable: dirname
+      source: filename
+    - plugin: skip_on_empty
+      method: row
+      message: 'Cannot import empty path.'  
   destination_filename:
     - plugin: callback
       callable: basename
@@ -49,6 +56,7 @@ process:
       plugin: concat
       source:
         - constants/DRUPAL_FILE_DIRECTORY
+        - '@destination_path'
         - '@destination_filename'
     -
       plugin: urlencode

@@ -101,8 +101,10 @@ class ContentEntity extends SqlBase {
       if ($data['status']) {
         // If requested by configuration, filter by a bundle. Don't filter
         // if it isn't configured.
-        if ($bundle && $data['bundle'] == $bundle) {
-          $fields[$data['field_name']] = $data;
+        if ($bundle) {
+          if ($data['bundle'] == $bundle) {
+            $fields[$data['field_name']] = $data;
+          }
         }
         else {
           $fields[$data['field_name']] = $data;
