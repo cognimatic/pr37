@@ -1542,6 +1542,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'drupal/migrate_skip_on_404' => array(
+            'pretty_version' => '1.1.1',
+            'version' => '1.1.1.0',
+            'reference' => '1.1.1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/migrate_skip_on_404',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/migrate_tools' => array(
             'pretty_version' => '6.0.0',
             'version' => '6.0.0.0',

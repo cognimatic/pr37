@@ -36,7 +36,7 @@ process:
         - '@source_public_absolute_path'
     -
       plugin: urlencode
-  desination_path:
+  desination_dir:
     - plugin: callback
       callable: dirname
       source: filename
@@ -56,7 +56,7 @@ process:
       plugin: concat
       source:
         - constants/DRUPAL_FILE_DIRECTORY
-        - '@destination_path'
+        - '@destination_dir'
         - '@destination_filename'
     -
       plugin: urlencode
@@ -68,10 +68,15 @@ process:
       source: '@source_full_path'
       message: 'File field_name does not exist'
     -
+      plugin: skip_on_404
+      method: row
+      source: '@source_full_path'
+      message: 'Source file not available'
+    -
       plugin: file_copy
       source:
         - '@source_full_path'
-        - '@destination_path'        
+        - '@destination_path' 
   filemime:
     -
       plugin: get
