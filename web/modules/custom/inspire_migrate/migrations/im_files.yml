@@ -15,7 +15,6 @@ source:
   
   constants:
     SOURCE_DOMAIN: 'https://argyll-bute.gov.uk'
-    DRUPAL_FILE_DIRECTORY: 'public://migrated_files/'
 process:
   filename:
     -
@@ -36,28 +35,12 @@ process:
         - '@source_public_absolute_path'
     -
       plugin: urlencode
-  desination_dir:
-    - plugin: callback
-      callable: dirname
-      source: filename
-    - plugin: skip_on_empty
-      method: row
-      message: 'Cannot import empty path.'  
-  destination_filename:
-    - plugin: callback
-      callable: basename
-      source: filename
-    - plugin: skip_on_empty
-      method: row
-      message: 'Cannot import empty filename.'
-      
   destination_path:
     -
-      plugin: concat
-      source:
-        - constants/DRUPAL_FILE_DIRECTORY
-        - '@destination_dir'
-        - '@destination_filename'
+      plugin: str_replace
+      source: uri
+      search: 'public://'
+      replace: 'public://migrated_files/'
     -
       plugin: urlencode
       
