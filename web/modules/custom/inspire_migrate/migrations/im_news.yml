@@ -16,9 +16,37 @@ source:
   bundle: news_release
   
 process:
+  skip_old_content:
+    plugin: skip_on_condition
+    source: field_pr_pubdate/0/value
+    condition:
+      plugin: older_than
+      format: 'Y-m-d\TH:i:s' #the format of the source date
+      value: '2018-05-20T12:00:00'
+    method: row
+    message: 'This article is pre- May 2018.'  
+    
   title: title
-  body/value: body/0/value
-  body/summary: body/0/summary
+  body/value: 
+    plugin: str_replace
+    source: body/0/value
+    regex: true
+    search: '/track\.vuelio\.uk\.com\/z\.z\?.*?\"/'
+    replace: '/track\.vuelio\.uk\.com\"'
+  stripped_body_text:
+    plugin: callback
+    callable: strip_tags
+    source: '@body/value'
+  multi_spaces_removed:
+    plugin: str_replace
+    source: '@stripped_body_text'
+    regex: true
+    search: '/\s\s+/'
+    replace: ' '
+  body/summary: 
+    plugin: substr
+    source: '@multi_spaces_removed'
+    length: 240
   body/format: 
     -
       plugin: default_value
@@ -32,10 +60,10 @@ process:
     settings:
       validate_format: false
    
-  field_media_image:
+  field_media_image/target_id:
     plugin: migration_lookup
     migration: im_media_image
-    source: field_main_news_image
+    source: field_main_news_image/0/target_id
     
   localgov_newsroom: 
     plugin: default_value

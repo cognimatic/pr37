@@ -1,0 +1,4 @@
+services:
+  plugin.manager.migrate_conditions.condition:
+    class: Drupal\migrate_conditions\ConditionPluginManager
+    parent: default_plugin_manager

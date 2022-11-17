@@ -1,0 +1,53 @@
+id: in_migrate_map_test
+label: "InMigrateMap Test"
+source:
+  plugin: embedded_data
+  data_rows:
+    - id: 17
+      lookup: 25
+    - id: 25
+      lookup: 17
+    - id: 33
+      lookup: 33
+    - id: 13
+      lookup: 123
+    - id: 44
+      lookup: 13
+  ids:
+    id:
+      type: integer
+process:
+  # This skip is so we can show what happens when a row is in the map but skipped.
+  _skip_13:
+    plugin: skip_on_condition
+    method: row
+    condition: equals(13)
+    source: id
+  found:
+    plugin: evaluate_condition
+    source: lookup
+    condition:
+      plugin: in_migrate_map
+      migration: in_migrate_map_test
+  not_found:
+    plugin: evaluate_condition
+    source: lookup
+    condition: not:in_migrate_map(in_migrate_map_test)
+  found_include_skipped:
+    plugin: evaluate_condition
+    source: lookup
+    condition:
+      plugin: in_migrate_map
+      migration: in_migrate_map_test
+      include_skipped: true
+  title:
+    plugin: concat
+    delimiter: '-'
+    source:
+      - id
+      - '@found'
+      - '@not_found'
+      - '@found_include_skipped'
+destination:
+  plugin: entity:node
+  default_bundle: node_lookup

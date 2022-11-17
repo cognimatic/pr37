@@ -1,0 +1,12 @@
+name: 'Migreate Conditions Test Migrations'
+type: module
+description: 'Provides test migrations to test migrate_conditions.'
+package: Testing
+# version: VERSION
+dependencies:
+  - migrate_conditions:migrate_conditions
+
+# Information added by Drupal.org packaging script on 2022-11-10
+version: '2.0.1'
+project: 'migrate_conditions'
+datestamp: 1668111847

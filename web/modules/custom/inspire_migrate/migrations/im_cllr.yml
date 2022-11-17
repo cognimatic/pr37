@@ -1,0 +1,86 @@
+id: im_cllr
+label: Migrate Councillors from ABC legacy D9 to Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - news
+  - content
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: councillors
+
+process:
+  title: title
+  body/value: body/0/value
+  body/summary: body/0/summary
+  body/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+  
+  field_address: field_address
+  field_contracts/value: field_contracts_with_the_authori/0/value
+  field_contracts/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+    
+  field_election_expenses/value: field_election_expenses/0/value
+  field_election_expenses/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+    
+  field_email: field_email
+  
+  field_gifts/value: field_gifts_and_hospitatily/0/value
+  field_gifts/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+    
+  field_houses/value: field_houses_land_and_buildings/0/value
+  field_houses/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+  
+  
+  
+  
+  
+  
+  field_media_image:
+    plugin: migration_lookup
+    migration: im_media_image
+    source: field_main_news_image
+     
+  
+  uid:
+      plugin: default_value
+      default_value: 1
+  created: created
+  changed: timestamp
+  status: status
+  
+  moderation_state:
+    plugin: static_map
+    source: status
+    map:
+      0: draft
+      1: published
+    default_value: draft
+  url: url
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  type: councillor
+  
+destination:
+  plugin: 'entity:node'
+  default_bundle: councillor
+
+migration_dependencies: 
+  required:
+    - im_media_image
