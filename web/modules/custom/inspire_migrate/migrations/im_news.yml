@@ -1,0 +1,71 @@
+id: im_news
+label: Migrate News releases from ABC legacy D9 to Articles in Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - news
+  - content
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: news_release
+  
+process:
+  title: title
+  body/value: body/0/value
+  body/summary: body/0/summary
+  body/format: 
+    -
+      plugin: default_value
+      default_value: 'wysiwyg'
+   
+  localgov_news_date: 
+    plugin: format_date
+    source:  field_pr_pubdate/0/value
+    from_format: 'Y-m-d\TH:i:s'
+    to_format: 'Y-m-d'
+    settings:
+      validate_format: false
+   
+  field_media_image:
+    plugin: migration_lookup
+    migration: im_media_image
+    source: field_main_news_image
+    
+  localgov_newsroom: 
+    plugin: default_value
+    default_value: 72    
+  
+  uid:
+      plugin: default_value
+      default_value: 1
+  created: created
+  changed: timestamp
+  status: status
+  
+  moderation_state:
+    plugin: static_map
+    source: status
+    map:
+      0: draft
+      1: published
+    default_value: draft
+  url: url
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  type: localgov_news_article
+  
+destination:
+  plugin: 'entity:node'
+  default_bundle: localgov_news_article
+
+migration_dependencies: 
+  required:
+    - im_media_image
+     
