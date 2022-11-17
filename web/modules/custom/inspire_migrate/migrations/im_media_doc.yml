@@ -14,17 +14,84 @@ source:
   key: migrate
   entity_type: media  
   bundle: document
+  
+  constants:
+    FALLBACK_IMAGE_SOURCE_ID: 50915
 
 process:
   uid:
     -
       plugin: default_value
       default_value: 1
-  bundle:
+  raw_name:
     -
-      plugin: default_value
-      default_value: document
+      plugin: get
+      source: name
+      
+  name_no_ext: 
+    -
+      plugin: str_replace
+      source: '@raw_name'
+      regex: true
+      search: '/\.[^.]*$/'
+      replace: ''
+  name_no_dashes:
+    -
+      plugin: str_replace
+      source: '@name_no_ext'
+      search: ['_', '-']
+      replace: [' ', ' ']
+  name_no_spaces:
+    -
+      plugin: str_replace
+      source: '@name_no_dashes'
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+  
+  name:
+    -
+      plugin: callback
+      callable: ucwords
+      source: '@name_no_spaces'
+  
+  source_target: field_media_document/0/target_id   
+  source_thumbnail: 
+    -
+      plugin: get
+      source: thumbnail__target_id
+    -
+      plugin: skip_on_empty
+      method: row
+  
+  thumbnail__target_id: 
+    -
+      plugin: migration_lookup
+      migration: im_files
+      source: '@source_thumbnail'
+    -
+      plugin: skip_on_empty
+      method: process
+      message: "No thumbnail available"
+  
+  field_media_document/target_id: 
+    -
+      plugin: migration_lookup
+      migration: im_files
+      source: '@source_target'
+    -
+      plugin: skip_on_empty
+      method: row  
+  
+  field_media_document/description: field_media_document/0/description
+  field_media_document/display: field_media_document/0/display    
+  
+  created: created
+  changed: timestamp    
   
 destination:
   plugin: 'entity:media'
-migration_dependencies: null
+  default_bundle: document
+migration_dependencies: 
+  required:
+    - im_files
