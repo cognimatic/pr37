@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98071648383b5b6738b804e20d031e03",
+    "content-hash": "018a72c6000026c3c127352220398d50",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -8324,6 +8324,58 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/migrate_file",
                 "issues": "https://www.drupal.org/project/issues/migrate_file"
+            }
+        },
+        {
+            "name": "drupal/migrate_process_trim",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/migrate_process_trim.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/migrate_process_trim-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "655fe50b7038652746fa631b2422982f769d8eb5"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1658336346",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "hinte",
+                    "homepage": "https://www.drupal.org/user/3276368"
+                },
+                {
+                    "name": "socketwench",
+                    "homepage": "https://www.drupal.org/user/65793"
+                }
+            ],
+            "description": "Provides trim, ltrim, and rtrim process plugins for migrations",
+            "homepage": "https://www.drupal.org/project/migrate_process_trim",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/migrate_process_trim",
+                "issues": "https://www.drupal.org/project/issues/migrate_process_trim"
             }
         },
         {

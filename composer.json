@@ -54,6 +54,7 @@
         "drupal/migrate_devel": "^2.0@alpha",
         "drupal/migrate_drupal_d8": "^1.0",
         "drupal/migrate_file": "^2.1",
+        "drupal/migrate_process_trim": "^2.0",
         "drupal/migrate_skip_on_404": "^1.1",
         "drupal/module_filter": "^3.2",
         "drupal/paragraphs_table": "^1.9",

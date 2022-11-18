@@ -10289,6 +10289,61 @@
             "install-path": "../../web/modules/contrib/migrate_plus"
         },
         {
+            "name": "drupal/migrate_process_trim",
+            "version": "2.0.0",
+            "version_normalized": "2.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/migrate_process_trim.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/migrate_process_trim-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "655fe50b7038652746fa631b2422982f769d8eb5"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1658336346",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "hinte",
+                    "homepage": "https://www.drupal.org/user/3276368"
+                },
+                {
+                    "name": "socketwench",
+                    "homepage": "https://www.drupal.org/user/65793"
+                }
+            ],
+            "description": "Provides trim, ltrim, and rtrim process plugins for migrations",
+            "homepage": "https://www.drupal.org/project/migrate_process_trim",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/migrate_process_trim",
+                "issues": "https://www.drupal.org/project/issues/migrate_process_trim"
+            },
+            "install-path": "../../web/modules/contrib/migrate_process_trim"
+        },
+        {
             "name": "drupal/migrate_skip_on_404",
             "version": "1.1.1",
             "version_normalized": "1.1.1.0",

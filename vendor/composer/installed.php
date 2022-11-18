@@ -1551,6 +1551,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'drupal/migrate_process_trim' => array(
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
+            'reference' => '2.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/migrate_process_trim',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/migrate_skip_on_404' => array(
             'pretty_version' => '1.1.1',
             'version' => '1.1.1.0',

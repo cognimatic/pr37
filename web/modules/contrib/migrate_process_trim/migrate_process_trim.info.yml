@@ -1,0 +1,11 @@
+name: 'Migrate Process Trim'
+type: module
+description: 'Provides trim, ltrim, and rtrim process plugins for migrations'
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: 'Migration'
+
+# Information added by Drupal.org packaging script on 2022-07-20
+version: '2.0.0'
+project: 'migrate_process_trim'
+datestamp: 1658336349
