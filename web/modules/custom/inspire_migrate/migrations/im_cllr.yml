@@ -19,29 +19,6 @@ process:
   
   localgov_directory_title_sort: field_cllr_surname
   
-  body/value: body/0/value
-  body/format: 
-    plugin: default_value
-    default_value: 'wysiwyg'
-  body/summary:
-    -
-      # Use Drupal text summary function on Body text
-      # Strip HTML tags after to allow trim to work
-      plugin: callback
-      callable: text_summary
-      source: '@body/value'
-    -
-      # Remove HTML tags
-      plugin: callback
-      callable: strip_tags
-    -
-      # Remove multiple spaces
-      plugin: str_replace
-      regex: true
-      search: '/\s\s+/'
-      replace: ' '
-
-  
   # field_address: field_address
   field_address_text_: field_address
   
@@ -53,8 +30,22 @@ process:
   # Note source field is plain text
   field_election_expenses: field_election_expenses
     
-  field_email: field_email
-  
+  field_email: 
+    -
+      plugin: callback
+      callable: strip_tags
+      source: field_email/0/value
+    -
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      plugin: trim
+    - 
+      plugin: substr
+      start: 0
+      length: 320
+      
   field_gifts/value: field_gifts_and_hospitatily/0/value
   field_gifts/format: 
     plugin: default_value
@@ -117,9 +108,11 @@ process:
       plugin: skip_on_empty
       source: field_surgery_date
       method: process
-    - 
-      plugin: explode
-      delimiter: ','
+    -
+      plugin: sub_process
+      process:
+        value: value
+        
 
   field_surgery/value: field_surgery/0/value
   field_surgery/format: 
@@ -128,43 +121,57 @@ process:
   
   field_telephone: field_telephone_text_
   
-  field_ward:
-    -
-      plugin: get
-      source: field_ward/0/value
+  field_ward/target_id:
     - 
       plugin: skip_on_empty
+      source: field_ward/0/value
       method: process
-#    -
-#      plugin: sub_process
-#      source: field_ward/0/value # May need static look up for TID
-#      process:
-#        target_id: tid
-  
-  ward_id:
-  -
-    plugin: static_map
-    source: field_group/0/value
-    map:
-      'Liberal Democrats': 2
-      'Argyll First': 26
-      'Scottish National Party': 1
-      'Alliance of Independent Councillors': 24
-      'The Argyll & Bute Independent Councillors Group': 25
-      'Conservative': 3
-      'Independent': 4
-      'Argyll and Bute Independent Councillors Group': 25
-      'Scottish Labour Party': 5
-      'Reform Group': 27
-
-  localgov_directory_facets_select:
-      - 
-        plugin: entity_generate
-        source: ward_id
-        bundle_key: id
-        bundle: political_party
-        entity_type: localgov_directories_facets
+      message: "Invalid ward"
+    -
+      plugin: static_map
+      default_value: NULL
+      map:
+        'Bute and Cowal': 3
+        'Isle of Bute': 4
+        'Rothesay': 5
+        'Cowal': 6
+        'Dunoon': 7
+        'Oban South and the Isles': 9
+        'Oban North and Lorn': 10
+        'Helensburgh and Lomond': 14
+        'Lomond North': 15
+        'Helensburgh Central': 16
+        'Helensburgh and Lomond South': 17
+        'South Kintyre': 19
+        'Campbelltown': 20
+        'Kintyre and the Islands': 21
+        'Islay': 22
+        'Mid Argyll': 23
     
+  
+    
+  localgov_directory_facets_select/target_id:
+    - 
+      plugin: skip_on_empty
+      source: field_group/0/value
+      method: process
+    -
+      plugin: static_map
+      source: field_group/0/value
+      default_value: NULL
+      map:
+        'Liberal Democrats': 2
+        'Argyll First': 26
+        'Scottish National Party': 1
+        'Alliance of Independent Councillors': 24
+        'The Argyll & Bute Independent Councillors Group': 25
+        'Conservative': 3
+        'Independent': 4
+        'Argyll and Bute Independent Councillors Group': 25
+        'Scottish Labour Party': 5
+        'Reform Group': 27
+    
+
   uid:
       plugin: default_value
       default_value: 1
