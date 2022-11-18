@@ -21,36 +21,46 @@ process:
     source: field_pr_pubdate/0/value
     condition:
       plugin: older_than
-      format: 'Y-m-d\TH:i:s' #the format of the source date
-      value: '2018-05-20T12:00:00'
+      format: 'Y-m-d\TH:i:s'
+      value: '2018-05-20T23:59:59'
     method: row
-    message: 'This article is pre- May 2018.'  
+    message: 'This article is pre- 21 May 2018.'  
     
   title: title
-  body/value: 
-    plugin: str_replace
-    source: body/0/value
-    regex: true
-    search: '/track\.vuelio\.uk\.com\/z\.z\?.*?\"/'
-    replace: '/track\.vuelio\.uk\.com\"'
-  stripped_body_text:
-    plugin: callback
-    callable: strip_tags
-    source: '@body/value'
-  multi_spaces_removed:
-    plugin: str_replace
-    source: '@stripped_body_text'
-    regex: true
-    search: '/\s\s+/'
-    replace: ' '
-  body/summary: 
-    plugin: substr
-    source: '@multi_spaces_removed'
-    length: 240
-  body/format: 
+  body/value:
     -
-      plugin: default_value
-      default_value: 'wysiwyg'
+      # Remove invalid Jango tracking code
+      plugin: str_replace
+      source: body/0/value
+      regex: true
+      search: '/track\.vuelio\.uk\.com\/z\.z\?.*?\"/'
+      replace: '/track\.vuelio\.uk\.com\"'
+    - 
+      # Remove Facebook URL paths and tokens
+      plugin: str_replace     
+      regex: true
+      search: '/facebook\.com\/?.*?\"/'
+      replace: '/facebook\.com\/\"'
+  body/summary:
+    -
+      # Use Drupal text summary function on Body
+      plugin: callback
+      callable: text_summary
+      source: '@body/value'
+    -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+
+  body/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
    
   localgov_news_date: 
     plugin: format_date

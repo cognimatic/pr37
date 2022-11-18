@@ -5,7 +5,6 @@ status: true
 dependencies: {  }
 migration_tags:
   - abc
-  - news
   - content
   
 source:
@@ -17,22 +16,42 @@ source:
 
 process:
   title: title
+  
+  localgov_directory_title_sort: field_cllr_surname
+  
   body/value: body/0/value
-  body/summary: body/0/summary
   body/format: 
     plugin: default_value
     default_value: 'wysiwyg'
+  body/summary:
+    -
+      # Use Drupal text summary function on Body text
+      # Strip HTML tags after to allow trim to work
+      plugin: callback
+      callable: text_summary
+      source: '@body/value'
+    -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+
   
-  field_address: field_address
+  # field_address: field_address
+  field_address_text_: field_address
+  
   field_contracts/value: field_contracts_with_the_authori/0/value
   field_contracts/format: 
     plugin: default_value
     default_value: 'wysiwyg'
-    
-  field_election_expenses/value: field_election_expenses/0/value
-  field_election_expenses/format: 
-    plugin: default_value
-    default_value: 'wysiwyg'
+  
+  # Note source field is plain text
+  field_election_expenses: field_election_expenses
     
   field_email: field_email
   
@@ -46,17 +65,106 @@ process:
     plugin: default_value
     default_value: 'wysiwyg'
   
+  field_interests/value: field_interests/0/value
+  field_interests/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
   
+  field_committees/value: field_committees/0/value
+  field_committees/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
   
-  
-  
-  
-  field_media_image:
+  field_otherbodies/value: field_otherbodies/0/value
+  field_otherbodies/format: 
+    plugin: default_value
+    default_value: 'wysiwyg' 
+    
+  field_mobile: field_mobile
+   
+  field_non_financial_interests/value: field_non_financial_interests/0/value
+  field_non_financial_interests/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+    
+  field_photo/target_id:
     plugin: migration_lookup
     migration: im_media_image
-    source: field_main_news_image
+    source: field_photo/0/target_id
      
+  field_related_undertakings/value: field_related_undertakings/0/value
+  field_related_undertakings/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+    
+  field_remuneration/value: field_remuneration/0/value
+  field_remuneration/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+      
+  field_chairmanships/value: field_chairmanships/0/value
+  field_chairmanships/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+      
+  field_shares_and_securities/value: field_shares_and_securities/0/value
+  field_shares_and_securities/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+      
+  field_surgery_date: 
+    - 
+      plugin: skip_on_empty
+      source: field_surgery_date
+      method: process
+    - 
+      plugin: explode
+      delimiter: ','
+
+  field_surgery/value: field_surgery/0/value
+  field_surgery/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
   
+  field_telephone: field_telephone_text_
+  
+  field_ward:
+    -
+      plugin: get
+      source: field_ward/0/value
+    - 
+      plugin: skip_on_empty
+      method: process
+#    -
+#      plugin: sub_process
+#      source: field_ward/0/value # May need static look up for TID
+#      process:
+#        target_id: tid
+  
+  ward_id:
+  -
+    plugin: static_map
+    source: field_group/0/value
+    map:
+      'Liberal Democrats': 2
+      'Argyll First': 26
+      'Scottish National Party': 1
+      'Alliance of Independent Councillors': 24
+      'The Argyll & Bute Independent Councillors Group': 25
+      'Conservative': 3
+      'Independent': 4
+      'Argyll and Bute Independent Councillors Group': 25
+      'Scottish Labour Party': 5
+      'Reform Group': 27
+
+  localgov_directory_facets_select:
+      - 
+        plugin: entity_generate
+        source: ward_id
+        bundle_key: id
+        bundle: political_party
+        entity_type: localgov_directories_facets
+    
   uid:
       plugin: default_value
       default_value: 1

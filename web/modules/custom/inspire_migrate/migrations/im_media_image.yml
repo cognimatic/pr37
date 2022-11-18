@@ -34,7 +34,7 @@ process:
       source: '@source_thumbnail'
     -
       plugin: skip_on_empty
-      method: row  
+      method: process  
       
   thumbnail__alt: thumbnail__alt    
   

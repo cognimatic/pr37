@@ -23,37 +23,27 @@ process:
     -
       plugin: default_value
       default_value: 1
-  raw_name:
+  name:
     -
       plugin: get
       source: name
-      
-  name_no_ext: 
     -
       plugin: str_replace
-      source: '@raw_name'
       regex: true
       search: '/\.[^.]*$/'
       replace: ''
-  name_no_dashes:
     -
       plugin: str_replace
-      source: '@name_no_ext'
       search: ['_', '-']
       replace: [' ', ' ']
-  name_no_spaces:
     -
       plugin: str_replace
-      source: '@name_no_dashes'
       regex: true
       search: '/\s\s+/'
       replace: ' '
-  
-  name:
     -
       plugin: callback
       callable: ucwords
-      source: '@name_no_spaces'
   
   source_target: field_media_document/0/target_id   
   source_thumbnail: 
