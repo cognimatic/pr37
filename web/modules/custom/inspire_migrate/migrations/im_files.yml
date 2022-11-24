@@ -43,6 +43,11 @@ process:
       replace: 'public://migrated_files/'
     -
       plugin: urlencode
+    -
+      # Spaces %20 can be re-encoded as %2520
+      plugin: str_replace
+      search: '%2520'
+      replace: '%20'
       
   uri:
     -
