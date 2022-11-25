@@ -1,0 +1,220 @@
+id: im_transport
+label: Migrate Transport timetables from ABC legacy D9 to Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - content
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: transport_timetable
+
+process:
+  title: title
+  
+  _original_body: 
+    -
+      plugin: skip_on_empty
+      source: body/0/value
+      method: process
+         
+    # Remove domain name from URLs
+    -
+      plugin: str_replace
+      regex: true
+      search: '/http\:\/\/argyllbute-d8\.argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    -
+      plugin: str_replace
+      regex: true
+      search: '/https?\:\/\/?(www\.)?argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    
+    -
+      plugin: convert_text_uuids
+      migrations:
+        im_media_image
+        im_media_doc     
+    -
+      # Remove this plugin before final migration - points to wrong files folder
+      plugin: str_replace
+      search: '/sites/default/files/'
+      replace: '/sites/default/files/migrated-files/'
+      
+  body/summary:
+    -
+      # Use Drupal text summary function on Body
+      plugin: callback
+      callable: text_summary
+      source: body/0/value
+    -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+      
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+
+  body/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+      
+  _operator_details:
+    -
+      plugin: skip_on_empty
+      source: field_tt_op_details/0/value
+      method: process
+         
+    # Remove domain name from URLs
+    -
+      plugin: str_replace
+      regex: true
+      search: '/http\:\/\/argyllbute-d8\.argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    -
+      plugin: str_replace
+      regex: true
+      search: '/https?\:\/\/?(www\.)?argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    
+    -
+      plugin: convert_text_uuids
+      migrations:
+        im_media_image
+        im_media_doc     
+    -
+      # Remove this plugin before final migration - points to wrong files folder
+      plugin: str_replace
+      search: '/sites/default/files/'
+      replace: '/sites/default/files/migrated-files/'
+  
+  body/value:
+    plugin: concat
+    delimiter: '<hr>'
+    source:
+      - '@_original_body'
+      - '@_operator_details'
+      
+  localgov_directory_name:
+    -
+      plugin: callback
+      callable: strip_tags
+      source: '@_operator_details'
+    -
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      plugin: substr
+      length: 255
+    
+  localgov_directory_files/target_id:
+    -
+      plugin: skip_on_empty
+      source: field_tt_pdf_timetable/0/target_id
+      method: process
+    -
+      # Assume Docs only
+      plugin: migration_lookup
+      migration: im_media_doc
+    -
+      # If lookup fails
+      plugin: skip_on_empty
+      method: process
+  
+  localgov_directory_website/uri:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: field_tt_url_link/0/value
+    -
+      plugin: dom
+      method: import
+    -
+      plugin: dom_select
+      selector: //a/@href
+      limit: 1 
+    -
+      plugin: extract
+      index:
+        - 0
+  
+  
+  localgov_directory_facets_select/target_id:
+    - 
+      plugin: skip_on_empty
+      source: field_tt_type/0/value
+      method: process
+    -
+      plugin: static_map
+      default_value: NULL
+      map:
+        'Bus': 28
+        'Ferry': 29
+        'Train': 30
+        'Plane': 31
+
+  field_region/target_id:
+    - 
+      plugin: skip_on_empty
+      source: taxonomy_vocabulary_1/0/target_id
+      method: process
+      message: "Invalid region"
+    -
+      plugin: static_map
+      default_value: NULL
+      map:
+        '3': 3 # Bute and Cowal
+        '4': 14 # Helensburgh and Lomond
+        '1': 18 # Mid Argyll, Kintyre and Islay
+        '2': 8 # Oban, Lorn and the Isles
+
+  field_tt_service_no: field_tt_service_no/0/value  
+      
+  uid:
+    plugin: default_value
+    default_value: 1
+  
+  created: created
+  changed: timestamp
+  status: status
+  
+  moderation_state:
+    plugin: static_map
+    source: status
+    map:
+      0: draft
+      1: published
+    default_value: draft
+      
+  
+
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  type: transport_timetable
+  
+destination:
+  plugin: 'entity:node'
+  default_bundle: transport_timetable
+  
+migration_dependencies: 
+  required:
+    - im_media_image
+    - im_media_doc
+    - im_files
+
