@@ -115,6 +115,47 @@ process:
       plugin: node_menu_parent
       source: nid
     -
+      plugin: static_map
+      default_value: NULL
+      map:
+        # Source MLID: Service NID - MLID based on DISTINCT p1 
+        # Could include p2
+        # Use following to get MLIDs at parent levels, and manually map
+        # SELECT distinct p1,p2
+        # FROM menu_tree 
+        # WHERE menu_name = 'secondary-menu' AND route_param_key LIKE '%node=%' AND depth>=2
+        
+        # ** NEEDS UPDATE OF SOURCE MLIDs PRIOR TO FINAL MIGRATION**
+        #        40 Housing 
+        #        49 Education and learning
+        #        64 ABC
+        #        70 Recreation and leisure
+        #        24 Business
+        #        29 Roads and travel
+        #        35 Social care and health
+        #        44 Planning and building
+        #        58 Birth, death, marriage
+        #        54 Waste and recycling
+        #        59 Environment
+        #        53 Council tax and benefits
+        #        67 Community
+        #        28 Law and licensing   
+        
+        '1127': 40
+        '1128': 49
+        '1129': 64
+        '1130': 70
+        '1131': 24
+        '1132': 29
+        '1133': 35
+        '1134': 44
+        '1311': 58
+        '1313': 54
+        '1325': 59
+        '1350': 53
+        '1399': 67
+        '1409': 28
+    -
       # If lookup fails
       plugin: skip_on_empty
       method: process
