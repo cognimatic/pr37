@@ -109,32 +109,16 @@ process:
       0: draft
       1: published
     default_value: draft
-    
-  url: url
-  
-  _url: url
-  
-  _path: path
-  
-  _random_number:
-    plugin: default_value
-    default_value: 54
-    
-  
-  _menu_link: menu_link
-  
-  _nid: nid
-  
-  localgov_services_parent:
+      
+  localgov_services_parent: 
     -
-      plugin: entity_lookup
-      entity_type: node
-      value_key: nid
-      source: '@_random_number'
+      plugin: node_menu_parent
+      source: nid
     -
-      plugin: default_value
-      default_value: 54  
-  
+      # If lookup fails
+      plugin: skip_on_empty
+      method: process
+
   langcode:
     plugin: default_value
     default_value: 'en'  
