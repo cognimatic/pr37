@@ -1,0 +1,245 @@
+id: im_care
+label: Migrate Care Resource from ABC legacy D9 to Directory entry Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - content
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: care_resource
+
+process:
+  title: title
+  
+  body/summary:
+    -
+      # Use Drupal text summary function on Body
+      plugin: callback
+      callable: text_summary
+      source: body/0/value
+    -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+      
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+  
+  body/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+    
+  _original_body: 
+    -
+      plugin: skip_on_empty
+      source: body/0/value
+      method: process
+         
+    # Remove domain name from URLs
+    -
+      plugin: str_replace
+      regex: true
+      search: '/http\:\/\/argyllbute-d8\.argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    -
+      plugin: str_replace
+      regex: true
+      search: '/https?\:\/\/?(www\.)?argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    
+    -
+      plugin: convert_text_uuids
+      migrations:
+        im_media_image
+        im_media_doc     
+    -
+      # Remove this plugin before final migration - points to wrong files folder
+      plugin: str_replace
+      search: '/sites/default/files/'
+      replace: '/sites/default/files/migrated-files/'
+      
+  _care_inspec:  
+    -
+      plugin: skip_on_empty
+      source: field_care_inspectorate_registra/0/value
+      method: process
+    - 
+      plugin: concat
+      delimiter: ': '
+      source:
+        - 'Care Inspectorate registration number'
+        - '@_care_inspec'
+  
+  _last_inspec:
+    -
+      plugin: skip_on_empty
+      source: field_date_of_last_inspection/0/value
+      method: process
+    - 
+      plugin: format_date
+      from_format: 'Y-m-d'
+      to_format: 'j M Y'
+      settings:
+        validate_format: false
+    -
+      plugin: concat
+      delimiter: ': '
+      source:
+        - 'Date of last inspection'
+        - '@_last_inspec'
+   
+  _grade_inspec:
+    -
+      plugin: skip_on_empty
+      source: field_grade_from_last_inspection/0/value
+      method: process
+    -
+      plugin: concat
+      delimiter: ': '
+      source:
+        - 'Grade of last inspection'
+        - '@_grade_inspec'
+  
+  _area_cov:
+    -
+      plugin: skip_on_empty
+      source: field_cr_areas_covered/0/value
+      method: process
+    -
+      plugin: concat
+      delimiter: ': '
+      source:
+        - 'Areas covered'
+        - '@_grade_inspec'
+        
+#  _serv_prov:
+#    -
+#      plugin: skip_on_empty
+#      source: field_service_provided
+#      method: process
+#    -
+#      plugin: sub_process
+#      process:
+#        -
+#          value: value
+#        -
+#          plugin: static_map
+#          default_value: NULL
+#          map:
+#            'care_homes': 'Care Home'
+#            'carers_support_service': 'Carers Support Service'
+#            'day_care': 'Day Care'
+#            'learning_disability': 'Mental Health and Learning Disability Support'
+#            'children_families': 'Children and Families'
+#            'unregistered': 'Unregistered Services'
+#            
+#    -
+#      plugin: concat
+#      delimiter: ': '
+#      source:
+#        - 'Services provided'
+#        - '@_serv_prov'
+#        
+#        
+  body/value:
+    plugin: concat
+    delimiter: '<br>'
+    source:
+      - '@_original_body'
+      - '@_care_inspec' 
+      - '@_last_inspec'
+      - '@_grade_inspec'
+      - '@_area_cov'
+#      - '@_serv_prov'
+#  
+  _address_text: field_cr_address
+  
+  localgov_directory_name:
+      plugin: skip_on_empty
+      source: field_main_contact/0/value
+      method: process
+      
+  localgov_directory_job_title:
+      plugin: skip_on_empty
+      source: field_job_title/0/value
+      method: process
+#      
+# # localgov_directory_address:
+# 
+#
+  localgov_directory_phone:
+      plugin: skip_on_empty
+      source: field_cr_telephone/0/value
+      method: process
+      
+  localgov_directory_website:
+      plugin: skip_on_empty
+      source: field_cr_website/0/value
+      method: process
+#      
+#  
+#    
+#  localgov_directory_facets_select/target_id:
+#    -
+#      plugin: skip_on_empty
+#      source: field_service_provided
+#      method: process
+#    -
+#      plugin: sub_process
+#      process:
+#        -
+#          value: value
+#        -
+#          plugin: static_map
+#          default_value: NULL
+#          map:
+#            'care_homes': 32
+#            'carers_support_service': 33
+#            'day_care': 34
+#            'learning_disability': 35
+#            'children_families': 36
+#            'unregistered': 37
+    
+
+  uid:
+      plugin: default_value
+      default_value: 1
+  created: created
+  changed: timestamp
+  status: status
+  
+  moderation_state:
+    plugin: static_map
+    source: status
+    map:
+      0: draft
+      1: published
+    default_value: draft
+  url: url
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  type: localgov_directories_venue
+  
+destination:
+  plugin: 'entity:node'
+  default_bundle: localgov_directories_venue
+
+migration_dependencies: 
+  required:
+    - im_media_image

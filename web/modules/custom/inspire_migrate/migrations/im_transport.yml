@@ -152,6 +152,18 @@ process:
       plugin: extract
       index:
         - 0
+    -
+      plugin: skip_on_empty
+      method: process    
+    # Need to exclude /sites/default/files if returned in field
+    -
+      plugin: skip_on_condition
+      method: process
+      condition:
+        plugin: matches
+        regex: /\/sites\/default\/files/i
+      message: 'Cannot handle local files in URL'
+      
   
   
   localgov_directory_facets_select/target_id:
