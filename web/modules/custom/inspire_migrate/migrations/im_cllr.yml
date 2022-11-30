@@ -157,7 +157,6 @@ process:
       method: process
     -
       plugin: static_map
-      source: field_group/0/value
       default_value: NULL
       map:
         'Liberal Democrats': 2

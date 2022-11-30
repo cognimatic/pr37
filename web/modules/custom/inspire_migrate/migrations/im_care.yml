@@ -79,11 +79,9 @@ process:
       source: field_care_inspectorate_registra/0/value
       method: process
     - 
-      plugin: concat
-      delimiter: ': '
-      source:
-        - 'Care Inspectorate registration number'
-        - '@_care_inspec'
+      plugin: add_string
+      insert: '<div class="field__label">Care Inspectorate registration number:</div> '
+      place: before
   
   _last_inspec:
     -
@@ -97,11 +95,9 @@ process:
       settings:
         validate_format: false
     -
-      plugin: concat
-      delimiter: ': '
-      source:
-        - 'Date of last inspection'
-        - '@_last_inspec'
+      plugin: add_string
+      insert: '<div class="field__label">Date of last inspection:</div> '
+      place: before
    
   _grade_inspec:
     -
@@ -109,11 +105,9 @@ process:
       source: field_grade_from_last_inspection/0/value
       method: process
     -
-      plugin: concat
-      delimiter: ': '
-      source:
-        - 'Grade of last inspection'
-        - '@_grade_inspec'
+      plugin: add_string
+      insert: '<div class="field__label">Grade of last inspection:</div> '
+      place: before
   
   _area_cov:
     -
@@ -121,17 +115,17 @@ process:
       source: field_cr_areas_covered/0/value
       method: process
     -
-      plugin: concat
-      delimiter: ': '
-      source:
-        - 'Areas covered'
-        - '@_grade_inspec'
+      plugin: add_string
+      insert: '<div class="field__label">Areas covered:</div> '
+      place: before
         
-#  _serv_prov:
-#    -
-#      plugin: skip_on_empty
-#      source: field_service_provided
-#      method: process
+  _serv_prov:
+    -
+      plugin: skip_on_empty
+      source: field_service_provided
+      method: process 
+
+     
 #    -
 #      plugin: sub_process
 #      process:
@@ -148,14 +142,7 @@ process:
 #            'children_families': 'Children and Families'
 #            'unregistered': 'Unregistered Services'
 #            
-#    -
-#      plugin: concat
-#      delimiter: ': '
-#      source:
-#        - 'Services provided'
-#        - '@_serv_prov'
-#        
-#        
+
   body/value:
     plugin: concat
     delimiter: '<br>'
@@ -165,9 +152,8 @@ process:
       - '@_last_inspec'
       - '@_grade_inspec'
       - '@_area_cov'
-#      - '@_serv_prov'
-#  
-  _address_text: field_cr_address
+  
+  _address_text: field_cr_address/0/value
   
   localgov_directory_name:
       plugin: skip_on_empty
@@ -191,30 +177,59 @@ process:
       plugin: skip_on_empty
       source: field_cr_website/0/value
       method: process
-#      
-#  
-#    
-#  localgov_directory_facets_select/target_id:
-#    -
-#      plugin: skip_on_empty
-#      source: field_service_provided
-#      method: process
-#    -
-#      plugin: sub_process
-#      process:
-#        -
-#          value: value
-#        -
-#          plugin: static_map
-#          default_value: NULL
-#          map:
-#            'care_homes': 32
-#            'carers_support_service': 33
-#            'day_care': 34
-#            'learning_disability': 35
-#            'children_families': 36
-#            'unregistered': 37
+      
+  localgov_directory_channels:
+    plugin: default_value
+    default_value: 8
     
+  localgov_directory_facets_select:
+    -
+      plugin: skip_on_empty
+      source: field_service_provided
+      method: process
+      message: "No services provided"
+    -
+      plugin: sub_process
+      process:  
+      -
+        plugin: static_map
+        source: value
+        default_value: NULL
+        map:
+          'care_homes': 32
+          'carers_support_service': 33
+          'day_care': 34
+          'learning_disability': 35
+          'children_families': 36
+          'unregistered': 37
+      -
+        plugin: extract
+        index:
+          - 0
+  
+  field_region:
+    # Can only accept single value in field
+    -
+      plugin: skip_on_empty
+      source: field_cr_areas_covered/0/value
+      method: process
+      message: "No areas covered"
+    -
+      # Can only accept one value 
+      plugin: static_map
+      default_value: NULL
+      map:
+        'Isle of Bute': 4
+        'Isle of Bute.': 4
+        'Dunoon': 7
+        'Oban': 25
+        'Helensburgh': 24
+        'Mid Argyll': 23
+        'Cowal and Bute': 3
+        'Cowal': 6
+        'Campbeltown': 20
+        'Ardlui': 15
+      
 
   uid:
       plugin: default_value
