@@ -211,8 +211,6 @@ process:
     plugin: default_value
     default_value: 9
   
-  _type: field_type/0/value
-  
   localgov_directory_facets_select/target_id:
     -
       plugin: skip_on_empty

@@ -1,0 +1,149 @@
+id: im_privacy
+label: Migrate Privacy notices from ABC legacy D9 to Service pages Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - content
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: privacy_notice
+
+process:
+  title: title
+  
+  body/value: 
+    -
+      plugin: skip_on_empty
+      source: body/0/value
+      method: process
+         
+    # Remove domain name from URLs
+    -
+      plugin: str_replace
+      regex: true
+      search: '/http\:\/\/argyllbute-d8\.argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    -
+      plugin: str_replace
+      regex: true
+      search: '/https?\:\/\/?(www\.)?argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    
+      # Remove excess line breaks which seems to mess with XPath when tags are 
+      # broken over more than one line
+    -
+      plugin: str_replace
+      regex: true
+      search: '/\r|\n/'
+      replace: ' '      
+    -
+      plugin: convert_text_uuids
+      migrations:
+        im_media_image
+        im_media_doc     
+    -
+      # Remove this plugin before final migration - points to wrong files folder
+      plugin: str_replace
+      search: '/sites/default/files/'
+      replace: '/sites/default/files/migrated-files/'
+      
+  body/summary:
+    -
+      # Use Drupal text summary function on Body
+      plugin: callback
+      callable: text_summary
+      source: body/0/value
+    # Replace line breaks with spaces
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: str_replace
+      search: '<br>'
+      replace: ' '
+    -
+      plugin: str_replace
+      search: '</p>'
+      replace: ' '
+    -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+      
+  body/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+      
+  localgov_services_parent: 
+    -
+      plugin: static_map
+      source: field_service/0/value
+      default_value: NULL
+      map:
+        1: 53 # Council tax, rates and benefits
+        2: 49 # Education
+        4: 28 # Licensing and regulatory
+        5: 44 # Planning and building standards
+        6: 29 # Roads and amenities
+        7: 35 # Social care
+        8: 30 # Transport
+        9: 64 # Commercial services
+    -
+      # If lookup fails ignore this field
+      plugin: skip_on_empty
+      method: process
+  
+  localgov_topic_classified:
+    plugin: default_value
+    # Tagged with 'Privacy' term
+    default_value: 123
+      
+  uid:
+    plugin: default_value
+    default_value: 1
+  
+  created: created
+  changed: timestamp
+  status: status
+  
+  moderation_state:
+    plugin: static_map
+    source: status
+    map:
+      0: draft
+      1: published
+    default_value: draft
+
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  type: localgov_services_page
+  
+destination:
+  plugin: 'entity:node'
+  default_bundle: localgov_services_page
+  
+
+migration_dependencies: 
+  required:
+    - im_media_image
+    - im_media_doc
+    - im_files
+
