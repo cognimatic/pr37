@@ -1,0 +1,189 @@
+id: im_consult
+label: Migrate Consultation from ABC legacy D9 to Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - content
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: consultation
+
+process:
+  title: title
+  
+  body/summary:
+    -
+      # Use Drupal text summary function on Body
+      plugin: callback
+      callable: text_summary
+      source: body/0/value
+    # Replace line breaks with spaces
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: str_replace
+      search: '<br>'
+      replace: ' '
+    -
+      plugin: str_replace
+      search: '</p>'
+      replace: ' '
+    -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+   
+  
+  body/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+    
+  body/value: 
+    -
+      plugin: skip_on_empty
+      source: body/0/value
+      method: process
+         
+    # Remove domain name from URLs
+    -
+      plugin: str_replace
+      regex: true
+      search: '/http\:\/\/argyllbute-d8\.argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    -
+      plugin: str_replace
+      regex: true
+      search: '/https?\:\/\/?(www\.)?argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    
+    -
+      plugin: convert_text_uuids
+      migrations:
+        im_media_image
+        im_media_doc     
+    -
+      # Remove this plugin before final migration - points to wrong files folder
+      plugin: str_replace
+      search: '/sites/default/files/'
+      replace: '/sites/default/files/migrated-files/'
+      
+  field_con_dates/value: field_con_dates/0/value
+  
+  field_con_dates/end_value: field_con_dates/0/end_value
+
+  localgov_directory_name:
+      plugin: skip_on_empty
+      source: field_cons_contact/0/value
+      method: process
+
+  localgov_directory_email:
+    -
+      plugin: skip_on_empty
+      source: field_cons_email/0/value
+      method: process
+    -
+      plugin: callback
+      callable: strip_tags
+    -
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      plugin: trim
+    - 
+      plugin: substr
+      start: 0
+      length: 320
+
+  field_link_to_results: field_link_to_results
+
+  localgov_directory_phone:
+    -
+      plugin: skip_on_empty
+      source: field_cons_telephone/0/value
+      method: process
+    -
+      plugin: substr
+      start: 0
+      length: 12
+
+  localgov_directory_files:
+    -
+      plugin: skip_on_empty
+      source: field_upload
+      method: process
+    -   
+      plugin: sub_process
+      process:  
+        target_id:
+          plugin: migration_lookup
+          source: target_id
+          migration: im_media_doc
+
+  localgov_directory_channels:
+    plugin: default_value
+    default_value: 14
+
+
+  field_region:
+    # Can only accept single value in field
+    -
+      plugin: skip_on_empty
+      source: field_con_geo/0/value
+      method: process
+      message: "No areas covered"
+    -
+      # Can only accept one value 
+      plugin: static_map
+      default_value: NULL
+      map:
+        'Bute and Cowal': 3
+        'Helensburgh and Lomond': 14
+        'Mid Argyll, Kintyre and Islay': 18
+        'Oban, Lorn and the Isles': 8
+
+  uid:
+      plugin: default_value
+      default_value: 1
+  created: created
+  changed: timestamp
+  status: status
+  
+  moderation_state:
+    plugin: static_map
+    source: status
+    map:
+      0: draft
+      1: published
+    default_value: draft
+  url: url
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  type: consultation
+  
+destination:
+  plugin: 'entity:node'
+  default_bundle: consultation
+
+migration_dependencies: 
+  required:
+    - im_media_doc
