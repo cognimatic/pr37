@@ -59,6 +59,18 @@ process:
       plugin: callback
       callable: text_summary
       source: body/0/value
+    # Replace line breaks with spaces
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: str_replace
+      search: '<br>'
+      replace: ' '
+    -
+      plugin: str_replace
+      search: '</p>'
+      replace: ' '
     -
       # Remove HTML tags
       plugin: callback

@@ -1,5 +1,5 @@
-id: im_care
-label: Migrate Care Resource from ABC legacy D9 to Directory entry Inspire D9
+id: im_child
+label: Migrate Childcare from ABC legacy D9 to Directory entry Inspire D9
 langcode: en
 status: true
 dependencies: {  }
@@ -12,7 +12,7 @@ source:
   scheme: public
   key: migrate
   entity_type: node
-  bundle: care_resource
+  bundle: childcare
 
 process:
   title: title
@@ -45,7 +45,6 @@ process:
       regex: true
       search: '/\s\s+/'
       replace: ' '
-      
     -
       # Remove non breaking spaces
       plugin: str_replace
@@ -88,49 +87,62 @@ process:
   _care_inspec:  
     -
       plugin: skip_on_empty
-      source: field_care_inspectorate_registra/0/value
+      source: field_last_cc_inspection_date/0/value
       method: process
     - 
       plugin: add_string
-      insert: '<div class="field__label">Care Inspectorate registration number:</div> '
+      insert: '<div class="field__label">Last Care Commission inspection date:</div> '
       place: before
   
   _last_inspec:
     -
       plugin: skip_on_empty
-      source: field_date_of_last_inspection/0/value
+      source: field_last_cc_inspection_date/0/value
       method: process
-    - 
-      plugin: format_date
-      from_format: 'Y-m-d'
-      to_format: 'j M Y'
-      settings:
-        validate_format: false
     -
       plugin: add_string
-      insert: '<div class="field__label">Date of last inspection:</div> '
+      insert: '<div class="field__label">Date of last HMIE inspection:</div> '
       place: before
    
-  _grade_inspec:
+  _lunch:
     -
       plugin: skip_on_empty
-      source: field_grade_from_last_inspection/0/value
+      source: field_lunch_provided/0/value
       method: process
     -
       plugin: add_string
       insert: '<div class="field__label">Grade of last inspection:</div> '
       place: before
   
-  _area_cov:
+  _address_text: 
     -
       plugin: skip_on_empty
-      source: field_cr_areas_covered/0/value
+      source: field_address_childcare/0/value
       method: process
     -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' ' 
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
       plugin: add_string
-      insert: '<div class="field__label">Areas covered:</div> '
+      insert: '<p> '
       place: before
-
+    -
+      plugin: add_string
+      insert: '</p> '
+      place: after
+      
   body/value:
     plugin: concat
     delimiter: '<br>'
@@ -138,65 +150,98 @@ process:
       - '@_original_body'
       - '@_care_inspec' 
       - '@_last_inspec'
-      - '@_grade_inspec'
-      - '@_area_cov'
-  
-  _address_text: field_cr_address/0/value
-  
+      - '@_lunch'
+      - '@_address_text'
+
   localgov_directory_name:
       plugin: skip_on_empty
-      source: field_main_contact/0/value
+      source: field_contact_name/0/value
       method: process
       
-  localgov_directory_job_title:
-      plugin: skip_on_empty
-      source: field_job_title/0/value
-      method: process
+  localgov_directory_email:
+    -
+      plugin: callback
+      callable: strip_tags
+      source: field_e_mail/0/value
+    -
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      plugin: trim
+    - 
+      plugin: substr
+      start: 0
+      length: 320
 #      
 # # localgov_directory_address:
 # 
 #
   localgov_directory_phone:
-      plugin: skip_on_empty
-      source: field_cr_telephone/0/value
-      method: process
-      
-  localgov_directory_website:
-      plugin: skip_on_empty
-      source: field_cr_website/0/value
-      method: process
-      
-  localgov_directory_channels:
-    plugin: default_value
-    default_value: 8
-    
-  localgov_directory_facets_select:
     -
       plugin: skip_on_empty
-      source: field_service_provided
+      source: field_telephone_childcare/0/value
       method: process
-      message: "No services provided"  
+    -
+      plugin: substr
+      start: 0
+      length: 12
+      
+  localgov_directory_website:
+    -
+      plugin: skip_on_empty
+      source: field_website/0/value
+      method: process
+    -
+      plugin: dom
+      method: import
+    -
+      plugin: dom_select
+      selector: //a/@href
+      limit: 1 
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: extract
+      index:
+        - 0
+
+  localgov_directory_channels:
+    plugin: default_value
+    default_value: 9
+  
+  _type: field_type/0/value
+  
+  localgov_directory_facets_select/target_id:
+    -
+      plugin: skip_on_empty
+      source: field_type/0/value
+      method: process
+      message: "No types defined"  
     -    
-      plugin: sub_process
-      process:  
-        target_id:
-          plugin: static_map
-          source: value
-          default_value: NULL
-          map:
-            'care_homes': 32
-            'care_at_home': 38
-            'carers_support_service': 33
-            'day_care': 34
-            'learning_disability': 35
-            'children_families': 36
-            'unregistered': 37
+      plugin: static_map
+      default_value: NULL
+      map:
+        'Independent Provider': 40
+        'INDEPENDENT': 40
+        'Voluntary Provider': 39
+        'VOLUNTARY': 39
+        'Local Authority Standalone': 42
+        'Local Authority': 41
+        'LOCAL AUTHORITY': 41
+        'Private': 43
+        'PRIVATE': 43
+        'Funded Childminder': 44
+        'Funded Childminder and Private Childminder': 44
+        'Partner Childminder': 45
+        'Childminder': 46
     
   field_region:
     # Can only accept single value in field
     -
       plugin: skip_on_empty
-      source: field_cr_areas_covered/0/value
+      source: field_area/0/value
       method: process
       message: "No areas covered"
     -
@@ -211,9 +256,17 @@ process:
         'Helensburgh': 24
         'Mid Argyll': 23
         'Cowal and Bute': 3
+        'BUTE and COWAL': 3
         'Cowal': 6
         'Campbeltown': 20
         'Ardlui': 15
+        'Bute and Cowal': 3
+        'Helensburgh and Lomond': 14
+        'HELENSBURGH and LOMOND': 14
+        'Mid Argyll, Kintyre and Islay': 18
+        'MID ARGYLL, KINTYRE and ISLAY': 18
+        'Oban, Lorn and the Isles': 8
+        'OBAN, LORN and THE ISLES': 8
       
 
   uid:
