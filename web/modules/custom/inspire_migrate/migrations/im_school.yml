@@ -1,0 +1,275 @@
+id: im_school
+label: Migrate School from ABC legacy D9 to Directory entry Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - content
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: school
+
+process:
+  title: title
+  
+  body/summary:
+    -
+      # Use Drupal text summary function on Body
+      plugin: callback
+      callable: text_summary
+      source: body/0/value
+    # Replace line breaks with spaces
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: str_replace
+      search: '<br>'
+      replace: ' '
+    -
+      plugin: str_replace
+      search: '</p>'
+      replace: ' '
+    -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+   
+  
+  body/format: 
+    plugin: default_value
+    default_value: 'wysiwyg'
+    
+  _original_body: 
+    -
+      plugin: skip_on_empty
+      source: body/0/value
+      method: process
+         
+    # Remove domain name from URLs
+    -
+      plugin: str_replace
+      regex: true
+      search: '/http\:\/\/argyllbute-d8\.argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    -
+      plugin: str_replace
+      regex: true
+      search: '/https?\:\/\/?(www\.)?argyll-bute\.gov\.uk\//i'
+      replace: '/'
+    
+    -
+      plugin: convert_text_uuids
+      migrations:
+        im_media_image
+        im_media_doc     
+    -
+      # Remove this plugin before final migration - points to wrong files folder
+      plugin: str_replace
+      search: '/sites/default/files/'
+      replace: '/sites/default/files/migrated-files/'
+      
+  _hmie_inspec:  
+    -
+      plugin: skip_on_empty
+      source: field_sch_hmie/0/value
+      method: process
+    - 
+      plugin: add_string
+      insert: '<div class="field__label">HMIE inspection Reports:</div> '
+      place: before
+  
+   
+  _address_text: 
+    -
+      plugin: skip_on_empty
+      source: field_sch_address/0/value
+      method: process
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' ' 
+      
+  body/value:
+    plugin: concat
+    delimiter: '<br>'
+    source:
+      - '@_original_body'
+      - '@_hmie_inspec' 
+      - '@_address_text'
+
+  localgov_directory_name:
+    plugin: skip_on_empty
+    source: field_headteacher/0/value
+    method: process
+      
+  localgov_directory_email:
+    -
+      plugin: skip_on_empty
+      source: field_sch_email/0/value
+      method: process
+    -
+      plugin: dom
+      method: import
+    -
+      plugin: dom_select
+      selector: //a/@href
+      limit: 1 
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: extract
+      index:
+        - 0
+    -
+      plugin: substr
+      start: 7 # will remove mailto: prefix
+#      
+# # localgov_directory_address:
+# 
+#
+  localgov_directory_phone:
+    -
+      plugin: skip_on_empty
+      source: field_sch_telephone/0/value
+      method: process
+    -
+      plugin: substr
+      start: 0
+      length: 12
+      
+  localgov_directory_website/uri: 
+    plugin: skip_on_empty
+    source: field_sch_website/0/uri
+    method: process
+
+  _denom:
+    -
+      plugin: skip_on_empty
+      source: field_demomination/0/value
+      method: process
+    - 
+      plugin: static_map
+      default_value: NULL
+      map:
+        1: 47 # Non-denominational
+        2: 48 # Denominational
+      
+  _elc:
+    -
+      plugin: skip_on_empty
+      source: field_early_learning_and_childca/0/value
+      method: process
+    - 
+      plugin: static_map
+      default_value: NULL
+      map:
+        1: 49 # ELC available
+  
+  _gaelic:
+    -
+      plugin: skip_on_empty
+      source: field_gaelic_medium/0/value
+      method: process
+    - 
+      plugin: static_map
+      default_value: NULL
+      map:
+        1: 50 # Gaelic medium available
+        
+  _ilc:
+    -
+      plugin: skip_on_empty
+      source: field_integrated_learning_centre/0/value
+      method: process
+    - 
+      plugin: static_map
+      default_value: NULL
+      map:
+        1: 51 # Integrated Learning Centre available
+
+  localgov_directory_facets_select:
+    -
+      plugin: concat
+      delimiter: ','
+      source: 
+        - '@_denom'
+        - '@_elc'
+        - '@_gaelic'
+        - '@_ilc'
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: explode
+      delimiter: ','
+   
+  localgov_directory_channels:
+    plugin: default_value
+    default_value: 10
+    
+  localgov_directory_files:
+    -
+      plugin: skip_on_empty
+      source: field_upload
+      method: process
+    -   
+      plugin: sub_process
+      process:  
+        target_id:
+          plugin: migration_lookup
+          source: target_id
+          migration: im_media_doc
+      
+
+  uid:
+      plugin: default_value
+      default_value: 1
+  created: created
+  changed: timestamp
+  status: status
+  
+  moderation_state:
+    plugin: static_map
+    source: status
+    map:
+      0: draft
+      1: published
+    default_value: draft
+  
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  type: localgov_directories_venue
+  
+destination:
+  plugin: 'entity:node'
+  default_bundle: localgov_directories_venue
+
+migration_dependencies: 
+  required:
+    - im_media_doc
