@@ -1,0 +1,51 @@
+id: im_cc
+label: Migrate Community Councils from CSV list to Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - content
+ 
+source:
+  scheme: public
+  plugin: csv
+  path: modules/custom/inspire_migrate/comm_councils.csv
+  ids: [ID]
+
+process:
+  title: Location
+
+  field_region:
+    -
+      plugin: skip_on_empty
+      source: Area
+      method: process
+      message: "No areas covered"
+    -
+      plugin: static_map
+      default_value: NULL
+      map:
+        'Bute and Cowal': 3
+        'Helensburgh and Lomond': 14
+        'Mid Argyll, Kintyre and Islay': 18
+        'Oban, Lorn and the Isles': 8
+
+  uid:
+      plugin: default_value
+      default_value: 1
+  
+  moderation_state:
+     plugin: default_value
+     default_value: published
+    
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  type: community_council
+  
+destination:
+  plugin: 'entity:node'
+  default_bundle: community_council
+
+migration_dependencies: null
