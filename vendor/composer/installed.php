@@ -1569,6 +1569,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/migrate_source_csv' => array(
+            'pretty_version' => '3.5.0',
+            'version' => '3.5.0.0',
+            'reference' => '8.x-3.5',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/migrate_source_csv',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/migrate_tools' => array(
             'pretty_version' => '6.0.0',
             'version' => '6.0.0.0',
