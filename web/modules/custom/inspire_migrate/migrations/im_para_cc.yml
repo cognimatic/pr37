@@ -1,0 +1,63 @@
+id: im_para_cc
+label: Migrate Community Councillors from ABC legacy D9 to Parapgraphs within Community Councils Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - paragraphs
+  - community_councils
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: community_councillors
+
+process:
+   
+  field_cc_name: title
+  
+  localgov_contact_phone: 
+    -
+      plugin: skip_on_empty
+      source: field_cc_phone/0/value
+      method: process
+    -
+      plugin: substr
+      start: 0
+      length: 12
+     
+  localgov_contact_email:
+    -
+      plugin: skip_on_empty
+      source: field_cc_email/0/value
+      method: process
+    -
+      plugin: dom
+      method: import
+    -
+      plugin: dom_select
+      selector: //a/@href
+      limit: 1 
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: extract
+      index:
+        - 0
+    -
+      plugin: substr
+      start: 7 # will remove mailto: prefix
+
+  
+  
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: community_councillor
+
+migration_dependencies: 
+  required:
+    - im_cc
