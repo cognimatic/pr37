@@ -52,12 +52,13 @@ process:
       plugin: substr
       start: 7 # will remove mailto: prefix
 
-  
+  field_location_temp: 
+    plugin: skip_on_empty
+    source: field_cc_location/0/value
+    method: process
   
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: community_councillor
 
-migration_dependencies: 
-  required:
-    - im_cc
+migration_dependencies: null

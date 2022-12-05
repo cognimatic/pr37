@@ -30,6 +30,34 @@ process:
         'Helensburgh and Lomond': 14
         'Mid Argyll, Kintyre and Islay': 18
         'Oban, Lorn and the Isles': 8
+  field_community_councillors:
+    -
+      source: Location
+      plugin: find_councillors
+    -
+      plugin: skip_on_empty
+      method: process
+      message: "No location matches"
+    -
+      plugin: sub_process
+      process:  
+        target_id: '0'
+        target_revision_id: '1'
+
+  
+#  field_community_councillors: 
+#    -
+#      plugin: skip_on_empty
+#      source: Location
+#      method: process
+#      message: "No areas covered"
+#    -
+#      plugin: entity_lookup
+#      value_key: field_location_temp
+#      entity_type: paragraph
+#      bundle: community_councillor
+#      ignore_case: true
+
 
   uid:
       plugin: default_value
@@ -48,4 +76,6 @@ destination:
   plugin: 'entity:node'
   default_bundle: community_council
 
-migration_dependencies: null
+migration_dependencies: 
+  required:
+    - im_para_cc
