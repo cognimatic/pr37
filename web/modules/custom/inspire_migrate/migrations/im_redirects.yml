@@ -1,0 +1,98 @@
+id: im_redirects
+label: Migrate aliases only from ABC legacy D9 to redirects in Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - redirect
+  
+source:
+  scheme: public
+  plugin: csv
+  path: modules/custom/inspire_migrate/aliases.csv # path, alias
+  header_row_count: 1
+  ids: [path]
+  # Assume Path is unique identifier in the source CSV.
+  keys:
+    - path
+  
+  constants:
+    redirect_prefix: 'internal:/node/'
+    uid_admin: 1
+    status_code: 301
+
+process:
+  _nid:
+    -
+      plugin: substr
+      source: path
+      start: 6 # strips /node/ from start of path to retreive NID
+    -
+      plugin: migration_lookup
+      migration: 
+        # - im_camera
+        - im_care
+        - im_child
+        - im_cllr
+        # - im_consult
+        - im_licence
+        - im_news
+        - im_page
+        # - im_place
+        - im_privacy
+        - im_school
+        - im_transport     
+    -
+       plugin: skip_on_empty
+       method: row
+       message: "No source NID found"
+      
+    
+  
+  # This will be the path as on the old website
+  redirect_source: 
+    plugin: substr
+    source: alias
+    start: 1 # strips leading /
+  
+    
+ 
+  # The redirect destination is supposed be a URI of the form "internal:/node/NID".
+  #
+  # The URI will be used by the redirect module to get the respective path alias for the node. Even if the alias
+  # changes sometime in the future, the redirect will start pointing to the new alias instead of breaking.
+  redirect_redirect:
+    plugin: concat
+    source:
+      - constants/redirect_prefix
+      - '@_nid'
+  
+  
+  
+  
+  status: 
+    plugin: default_value
+    default_value: 1
+  status_code: constants/status_code
+  uid: constants/uid_admin
+
+  
+destination:
+  plugin: 'entity:redirect'
+  
+
+migration_dependencies: 
+  required:
+    # - im_camera
+    - im_care
+    - im_child
+    - im_cllr
+    # - im_consult
+    - im_licence
+    - im_news
+    - im_page
+    # - im_place
+    - im_privacy
+    - im_school
+    - im_transport
