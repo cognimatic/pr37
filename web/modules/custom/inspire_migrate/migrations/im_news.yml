@@ -123,7 +123,7 @@ process:
       0: draft
       1: published
     default_value: draft
-  url: url
+
   langcode:
     plugin: default_value
     default_value: 'en'  
