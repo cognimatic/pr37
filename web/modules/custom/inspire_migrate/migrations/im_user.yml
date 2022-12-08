@@ -1,0 +1,89 @@
+id: im_user
+label: Migrate Users from ABC legacy D9 to Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - users
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: user
+  id: uid
+  order_by:
+    key: uid
+    order: DESC
+ 
+process:
+  _skip_if_anon:
+    plugin: skip_on_value
+    source: uid
+    value: 0
+    method: row
+    message: "Anon user account ignored"
+  _skip_if_blocked:
+    plugin: skip_on_value
+    source: status
+    value: 0
+    method: row
+    message: "User was blocked"
+  mail: mail
+  init: init
+  pass: pass
+  timezone: timezone
+  created: created
+  changed: changed
+  status: status
+  login: login
+  
+  name: name
+  
+  field_fname: field_fname/0/value
+  field_lname: field_lname/0/value
+  
+  field_identifier: field_identifier/0/value
+
+  #field_address_line_1
+  #field_address_line_2
+  #field_address_line_3
+  #
+  #field_town
+  #field_user_postcode
+  field_civica_ref: field_civica_ref/0/value
+
+  field_ucrn: field_ucrn/0/value
+  field_uprn: field_uprn/0/value
+
+  field_email_from_myaccount: field_email_from_myaccount/0/value 
+  
+  roles:
+    -
+      plugin: skip_on_empty
+      source: roles
+      method: process
+    -
+      plugin: sub_process
+      process:
+        target_id:
+          -
+            plugin: static_map
+            source: target_id
+            default_value: NULL
+            map:
+              administrator: developer
+              myaccount_user: myaccount_user
+          -
+            plugin: skip_on_empty
+            method: process
+  
+
+  
+destination:
+  plugin: 'entity:user'
+  md5_passwords: true
+  
+
+migration_dependencies: {  }
