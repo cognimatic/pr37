@@ -24,14 +24,50 @@ process:
       format: 'Y-m-d\TH:i:s'
       value: '2018-05-20T23:59:59'
     method: row
-    message: 'This article is pre- 21 May 2018.'  
+    message: 'This article is pre- 21 May 2018.' 
+    
+  _unpublished:
+    plugin: skip_on_value
+    source: status
+    method: row
+    value: 0  
     
   title: title
   body/value:
     -
+      plugin: skip_on_empty
+      source: body/0/value
+      method: process
+    # Remove inline PHP
+    -
+      plugin: str_replace
+      regex: true
+      search: '/\<\?php((.|\n)*)\?\>/mi'
+      replace: ' '
+    -
+      plugin: skip_on_empty
+      method: row
+      
+    # Remove class and style atributes
+    -
+      plugin: dom
+      method: import
+    -
+      plugin: dom_remove
+      mode: attribute
+      selector: //*[@style]
+      attribute: style
+    -
+      plugin: dom_remove
+      mode: attribute
+      selector: //*[@class]
+      attribute: class
+    -
+      plugin: dom
+      method: export
+    -
       # Remove invalid Jango tracking code
       plugin: str_replace
-      source: body/0/value
       regex: true
       search: '/track\.vuelio\.uk\.com\/z\.z\?.*?\"/'
       replace: '/track\.vuelio\.uk\.com\"'
@@ -53,6 +89,25 @@ process:
       regex: true
       search: '/https?\:\/\/?(www\.)?argyll-bute\.gov\.uk\//i'
       replace: '/'
+      # Remove excess line breaks which seems to mess with XPath when tags are 
+      # broken over more than one line
+    -
+      plugin: str_replace
+      regex: true
+      search: '/\r|\n/'
+      replace: ' '      
+    -
+      plugin: convert_text_uuids
+      migrations:
+        im_media_image
+        im_media_doc
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+    -
     -
       # Remove this plugin before final migration - points to wrong files folder
       plugin: str_replace

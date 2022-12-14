@@ -15,6 +15,12 @@ source:
   bundle: page
 
 process:
+  _unpublished:
+    plugin: skip_on_value
+    source: status
+    method: row
+    value: 0
+
   title: title
   
   body/value: 
@@ -22,7 +28,34 @@ process:
       plugin: skip_on_empty
       source: body/0/value
       method: process
-         
+    # Remove inline PHP
+    -
+      plugin: str_replace
+      regex: true
+      search: '/\<\?php((.|\n)*)\?\>/mi'
+      replace: ' '
+    -
+      plugin: skip_on_empty
+      method: row
+      
+    # Remove class and style atributes
+    -
+      plugin: dom
+      method: import
+    -
+      plugin: dom_remove
+      mode: attribute
+      selector: //*[@style]
+      attribute: style
+    -
+      plugin: dom_remove
+      mode: attribute
+      selector: //*[@class]
+      attribute: class
+    -
+      plugin: dom
+      method: export
+      
     # Remove domain name from URLs
     -
       plugin: str_replace
@@ -46,7 +79,13 @@ process:
       plugin: convert_text_uuids
       migrations:
         im_media_image
-        im_media_doc     
+        im_media_doc
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
     -
       # Remove this plugin before final migration - points to wrong files folder
       plugin: str_replace
@@ -58,7 +97,7 @@ process:
       # Use Drupal text summary function on Body
       plugin: callback
       callable: text_summary
-      source: body/0/value
+      source: '@body/value'
     # Replace line breaks with spaces
     -
       plugin: skip_on_empty
@@ -173,8 +212,6 @@ process:
         
 # If you have the time  recommend doing MLID mapping for sub-levels 
 # too based on YAML structure. Sub services in destination D9 site:
-# SELECT n.nid, d.title FROM node n, node_field_data d
-# WHERE d.type="localgov_services_sublanding" AND d.nid=n.nid;
 #
 # 25	Business Rates
 # 26	Trading standards
@@ -211,6 +248,37 @@ process:
 # 69	Social enterprise
 # 70	Recreation and leisure
 
+
+        1420: 25 #Business Rates
+        1421: 26	#Trading standards
+        1454: 30	#Public transport
+        1453: 31	#Roads and maintenance
+        1448: 36	#Care and carers
+        1449: 37	#Help for adults
+        1452: 38	#Help for older and disabled people
+        1447: 39	#Help for young people
+        1436: 41	#Aids and adaptations
+        1433: 42	#Housing advice
+        1434: 43	#Private housing
+        1431: 45	#Planning
+        1457: 46	#Building standards
+        1459: 48	#Renewables and regeneration
+        1477: 50	#Schools
+        1521: 50
+        1522: 50
+        1443: 50
+        1519: 50
+        1481: 51	#Early learning and childcare
+        1445: 52	#Adult learning
+        1427: 52
+        1518: 56	#Bin collections
+        1441: 57	#Commercial waste
+        1438: 60	#Environmental health
+        1492: 62	#Rural
+        1440: 63	#Animals and animal welfare
+        1496: 65	#Elections
+        1487: 66	#Emergencies and civil contingencies
+        1423: 70	#Recreation and leisure
         
     -
       # If lookup fails ignore this field
