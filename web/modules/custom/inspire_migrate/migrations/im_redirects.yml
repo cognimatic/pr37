@@ -12,10 +12,17 @@ source:
   plugin: csv
   path: modules/custom/inspire_migrate/aliases.csv # path, alias
   header_row_count: 1
-  ids: [path]
+  ids: [nid]
   # Assume Path is unique identifier in the source CSV.
   keys:
-    - path
+    - nid
+    
+    #Source SQL file:
+    #SELECT SUBSTRING(p.path, 7) AS nid, p.alias
+    #FROM path_alias p, node_field_data n
+    #WHERE p.path LIKE '/node/%'
+    #AND n.nid=SUBSTRING(p.path, 7)
+    #AND n.status=1;
   
   constants:
     redirect_prefix: 'internal:/node/'
@@ -25,11 +32,8 @@ source:
 process:
   _nid:
     -
-      plugin: substr
-      source: path
-      start: 6 # strips /node/ from start of path to retreive NID
-    -
       plugin: migration_lookup
+      source: nid
       migration: 
         # - im_camera
         - im_care
@@ -51,10 +55,15 @@ process:
     
   
   # This will be the path as on the old website
-  redirect_source: 
-    plugin: substr
-    source: alias
-    start: 1 # strips leading /
+  redirect_source:
+    -
+      plugin: str_replace
+      source: alias
+      search: '//'
+      replace: '/'
+    -
+      plugin: substr
+      start: 1 # strips leading /
   
     
  
