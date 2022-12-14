@@ -15,6 +15,12 @@ source:
   bundle: care_resource
 
 process:
+  _unpublished:
+    plugin: skip_on_value
+    source: status
+    method: row
+    value: 0 
+    
   title: title
   
   body/summary:
