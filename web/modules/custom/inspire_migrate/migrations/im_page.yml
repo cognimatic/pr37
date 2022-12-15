@@ -52,6 +52,10 @@ process:
       mode: attribute
       selector: //*[@class]
       attribute: class
+    # Remove IFRAMEs - cannot render in Drupal
+    -
+      plugin: dom_remove
+      selector: //iframe
     -
       plugin: dom
       method: export
