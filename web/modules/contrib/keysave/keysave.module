@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Attach libaries to allow keyboard save to the relevant forms.
+ */
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function keysave_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $keysave_library = 'keysave/listen';
+  // Include some forms explicitly by form_id.
+  $forms_to_enable = [
+    'user_admin_permissions',
+    'system_modules',
+    'system_modules_uninstall',
+  ];
+  if (in_array($form_id, $forms_to_enable)) {
+    $form['#attached']['library'][] = $keysave_library;
+    return;
+  }
+  $callback_object = $form_state->getFormObject();
+  // Include forms that extend ConfigFormBase or EntityForm.
+  $subclass_checks = [
+    'Drupal\Core\Form\ConfigFormBase',
+    'Drupal\Core\Entity\EntityForm',
+  ];
+  foreach ($subclass_checks as $subclass_check) {
+    if (is_subclass_of($callback_object, $subclass_check)) {
+      $form['#attached']['library'][] = $keysave_library;
+    }
+  }
+  // Include xome forms explicitly by base_form_id.
+  $callback_base = '';
+  if (method_exists($callback_object, 'getBaseFormId')) {
+    $callback_base = $callback_object->getBaseFormId();
+  }
+  if ($callback_base) {
+    // Remaining check requires a value for $callback_base.
+    return;
+  }
+  $base_forms_to_enable = [
+    'field_config_form',
+    'entity_form_display_form',
+  ];
+  if (in_array($callback_base, $base_forms_to_enable)) {
+    $form['#attached']['library'][] = $keysave_library;
+    return;
+  }
+}

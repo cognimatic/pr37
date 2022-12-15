@@ -1333,6 +1333,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/keysave' => array(
+            'pretty_version' => '1.0.0-beta1',
+            'version' => '1.0.0.0-beta1',
+            'reference' => '1.0.0-beta1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/keysave',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/layout_builder_base' => array(
             'pretty_version' => 'dev-1.x',
             'version' => 'dev-1.x',

@@ -42,6 +42,7 @@
         "drupal/httpswww": "^2.0",
         "drupal/image_effects": "^3.3",
         "drupal/image_resize_filter": "^1.1",
+        "drupal/keysave": "^1.0@beta",
         "drupal/layout_builder_base": "1.x-dev@dev",
         "drupal/linkchecker": "^1.0@beta",
         "drupal/mail_login": "^2.6",

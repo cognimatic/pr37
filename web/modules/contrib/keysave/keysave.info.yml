@@ -1,0 +1,9 @@
+name: 'Key Save'
+description: 'Allows content creators to save their content via Command-S or Control-S'
+type: module
+core_version_requirement: ^8 || ^9 || ^10
+
+# Information added by Drupal.org packaging script on 2022-12-08
+version: '1.0.0-beta1'
+project: 'keysave'
+datestamp: 1670518027

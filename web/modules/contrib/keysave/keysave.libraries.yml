@@ -1,0 +1,6 @@
+listen:
+  version: 1.x
+  js:
+    js/listen.js: {}
+  dependencies:
+    - core/once
