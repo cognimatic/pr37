@@ -97,6 +97,9 @@ process:
       search: '/\r|\n/'
       replace: ' '      
     -
+      plugin: skip_on_empty
+      method: row
+    -
       plugin: convert_text_uuids
       migrations:
         im_media_image
