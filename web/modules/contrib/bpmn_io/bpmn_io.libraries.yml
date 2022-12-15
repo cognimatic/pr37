@@ -1,6 +1,6 @@
 core:
   remote: https://github.com/bpmn-io/bpmn-js
-  version: 8.7.1
+  version: 11.0.5
   js:
     webpack/bpmn-modeller.js: { preprocess: false }
   css:

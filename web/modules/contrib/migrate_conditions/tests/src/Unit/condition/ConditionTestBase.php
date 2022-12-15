@@ -25,12 +25,13 @@ abstract class ConditionTestBase extends UnitTestCase {
    */
   public function testEvaluate($source, $configuration, $property_value, $expected) {
     $row = $this->createMock('Drupal\migrate\Row');
+    $map = [['some_source_property', $source]];
     if (isset($configuration['property'])) {
-      $row->expects($this->any())
-        ->method('get')
-        ->with($configuration['property'])
-        ->willReturn($property_value);
+      $map[] = [$configuration['property'], $property_value];
     }
+    $row->expects($this->any())
+      ->method('get')
+      ->willReturnMap($map);
     $class = $this->conditionClass;
     $condition = new $class($configuration, $this->conditionId, []);
     $this->assertSame($expected, $condition->evaluate($source, $row));
@@ -38,6 +39,12 @@ abstract class ConditionTestBase extends UnitTestCase {
     $configuration['negate'] = empty($configuration['negate']);
     $negated_condition = new $class($configuration, $this->conditionId, []);
     $this->assertSame(!$expected, $negated_condition->evaluate($source, $row));
+    // Use source configuration on condition.
+    $configuration['source'] = 'some_source_property';
+    // Reset negation.
+    $configuration['negate'] = empty($configuration['negate']);
+    $condition_with_configured_source = new $class($configuration, $this->conditionId, []);
+    $this->assertSame($expected, $condition_with_configured_source->evaluate(NULL, $row));
   }
 
   /**

@@ -307,7 +307,7 @@ class AdminFunctionalityTest extends BrowserTestBase {
     $session->pageTextContains('Every 0 weeks');
     $session->pageTextContains('Never');
     $session->pageTextContains('Disabled');
-    $session->pageTextContains('Last backups');
+    $session->pageTextContains('All backups');
 
     // Edit an existing schedule - turn on the default schedule.
     $this->drupalGet('admin/config/development/backup_migrate/schedule/edit/daily_schedule');

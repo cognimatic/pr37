@@ -2,13 +2,13 @@
 
 namespace Drupal\httpswww\EventSubscriber;
 
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -48,10 +48,10 @@ class HttpsWwwRedirectSubscriber implements EventSubscriberInterface {
   /**
    * Executes a redirect if one is needed based on config.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The event to process.
    */
-  public function redirect(GetResponseEvent $event) {
+  public function redirect(RequestEvent $event) {
 
     // Quit if it's not enabled.
     if (empty($this->config->get('enabled'))) {

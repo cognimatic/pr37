@@ -27,21 +27,34 @@ class Notify extends PluginBase implements PluginCallerInterface {
    */
   public function configSchema(array $params = []) {
     $schema = [];
-
     // Backup configuration.
     if ($params['operation'] == 'backup') {
       $schema['groups']['notify'] = [
         'title' => 'Email Settings',
       ];
+
       $schema['fields']['notify_success_enable'] = [
         'group' => 'notify',
         'type' => 'boolean',
         'title' => 'Send an email if backup succeeds',
       ];
-      $schema['fields']['notify_sucess_email'] = [
+      $schema['fields']['notify_success_email'] = [
         'group' => 'notify',
         'type' => 'text',
         'title' => 'Email Address for Success Notices',
+        'default_value' => \Drupal::config('system.site')->get('mail'),
+        'description' => 'The email added to send a notification about backup.',
+      ];
+
+      $schema['fields']['notify_failure_enable'] = [
+        'group' => 'notify',
+        'type' => 'boolean',
+        'title' => 'Send an email if backup fails',
+      ];
+      $schema['fields']['notify_failure_email'] = [
+        'group' => 'notify',
+        'type' => 'text',
+        'title' => 'Email Address for Failure Notices',
         'default_value' => \Drupal::config('system.site')->get('mail'),
         'description' => 'The email added to send a notification about backup.',
       ];
@@ -83,20 +96,26 @@ class Notify extends PluginBase implements PluginCallerInterface {
   /**
    * Call notification function if backup was succeed
    */
-  public function backupSucceed() {
+  public function backupSuccess() {
     if ($this->config->get('notify_success_enable')) {
       $subject = 'Backup finished successfully';
       $body = t('Site backup succeeded ' . \Drupal::config('system.site')->get('name'));
-      $recipient = $this->config->get('notify_sucess_email');
-      $this->sendNotification($subject, $body, $recipient);
+      $recipient = $this->config->get('notify_success_email');
+      $this->sendNotification('backup_success', $subject, $body, $recipient);
     }
   }
 
   /**
-   *
+   * Call notification function if backup was failed.
    */
-  public function backupFail(\Exception $e) {
-
+  public function backupFailure(\Exception $e) {
+    if ($this->config->get('notify_failure_enable')) {
+      $subject = t('Backup finished with failure');
+      $body = t('Site backup failed ' . \Drupal::config('system.site')->get('name') . "\n");
+      $body = $body . t('Exception Message: ') . $e;
+      $recipient = $this->config->get('notify_success_email');
+      $this->sendNotification('backup_failure', $subject, $body, $recipient);
+    }
   }
 
   /**
@@ -116,8 +135,8 @@ class Notify extends PluginBase implements PluginCallerInterface {
    * @param $body
    * @param $recipient
    */
-  protected function sendNotification($subject, $body, $recipient) {
-    \Drupal::service('backup_migrate.mailer')->send($recipient, $subject, $body);
+  protected function sendNotification($key, $subject, $body, $recipient) {
+    \Drupal::service('backup_migrate.mailer')->send($key, $recipient, $subject, $body);
   }
 
   /**

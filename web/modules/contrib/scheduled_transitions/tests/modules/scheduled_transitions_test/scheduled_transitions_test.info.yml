@@ -4,7 +4,7 @@ package: Testing
 dependencies:
   - entity_test_revlog
 
-# Information added by Drupal.org packaging script on 2022-09-30
-version: '2.3.0-rc1'
+# Information added by Drupal.org packaging script on 2022-12-05
+version: '2.3.0'
 project: 'scheduled_transitions'
-datestamp: 1664539020
+datestamp: 1670235103

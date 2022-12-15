@@ -22,6 +22,10 @@ use Drupal\migrate_conditions\Plugin\ConditionBase;
  * - negate: (optional) Whether the result of the callable function should be
  *   negated. Defaults to FALSE. You can also negate the result of the
  *   callable function by using 'not:callback' as the plugin id.
+ * - source: (optional) Property or array of properties on which to evaluate
+ *   the condition. If not set, the condition will be evaluated on the source
+ *   passed to the ::evaluate() method, typically the source of the process
+ *   plugin that is using this condition.
  *
  * Examples:
  *

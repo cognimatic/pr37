@@ -1,0 +1,134 @@
+id: configured_source_test
+label: "Configured Test"
+source:
+  plugin: embedded_data
+  data_rows:
+    - id: 17
+      string: 'this is a string'
+      array:
+        one: first
+        two: second
+      number: 123
+      hundred: 100
+  ids:
+    id:
+      type: integer
+process:
+  id: id
+  array_is_array:
+    plugin: evaluate_condition
+    source: string
+    condition:
+      plugin: callback
+      callable: is_array
+      source: array
+  number_gate_open:
+    plugin: if_condition
+    source: id
+    condition:
+      plugin: greater_than
+      source: number
+      property: hundred
+    else_get: hundred
+  number_gate_closed:
+    plugin: if_condition
+    source: id
+    condition:
+      plugin: less_than
+      source: number
+      property: hundred
+    else_get: hundred
+  tricky_inheritance:
+    plugin: evaluate_condition
+    source: number
+    condition:
+      plugin: and
+      conditions:
+        -
+          plugin: callback
+          callable: is_string
+          source: string
+        -
+          plugin: equals(123)
+  switch_test:
+    plugin: switch_on_condition
+    source: number
+    cases:
+      -
+        condition: equals(100)
+        default_value: first
+      -
+        condition:
+          plugin: equals
+          value: '100'
+          source: hundred
+        default_value: second
+  iterate:
+    plugin: if_condition
+    source: string
+    condition:
+      plugin: and
+      source: array
+      iterate: true
+      conditions:
+        one:
+          plugin: equals(first)
+        two:
+          plugin: equals(second)
+    else_get: hundred
+  iterate_again:
+    plugin: if_condition
+    source: string
+    condition:
+      plugin: and
+      source: array
+      iterate: true
+      conditions:
+        one:
+          plugin: equals(first)
+        two:
+          plugin: equals(123)
+          source: number
+    else_get: hundred
+  do_not_iterate:
+    plugin: if_condition
+    source: string
+    condition:
+      plugin: and
+      source: array
+      conditions:
+        one:
+          plugin: equals(first)
+        two:
+          plugin: equals(123)
+          source: number
+    else_get: hundred
+  nully:
+    plugin: evaluate_condition
+    source: string
+    condition:
+      plugin: is_null
+      source: fake_property
+  double:
+    plugin: evaluate_condition
+    condition:
+      plugin: has_element
+      source:
+        - number
+        - hundred
+      condition:
+        plugin: equals
+        value: 100
+  double_trouble:
+    plugin: evaluate_condition
+    condition:
+      plugin: all_elements
+      source:
+        - number
+        - hundred
+      condition:
+        plugin: equals
+        value: 100
+destination:
+  plugin: config
+  config_name: configured_source_test.settings

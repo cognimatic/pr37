@@ -29,6 +29,12 @@ By DamienMcKenna: Updated CHANGELOG.txt for recent 5.0.x changes already present
 #3268401 by DamienMcKenna, Mok7tar, robcarr, crutch, solideogloria, donpwinston:
   filectime() and filesize() receiving NULL values.
 #3309301 by DamienMcKenna: Adjust site restore check to be less strict.
+#3305241 by DamienMcKenna, WagnerMelo: Improve test coverage, fix D10 issues.
+#3133933 by DamienMcKenna, ramonvasconcelos, larisse, paulocs, mrinalini9,
+  alexanderj, solideogloria, pflora: Send email on failure.
+#3258786 by DamienMcKenna, Universaldenker, keithn, elber, fchandler, Grevil:
+  Using empty file as ZipArchive is deprecated.
+#3247231 by DamienMcKenna, guille_rodri: Sort in queryFiles function.
 
 
 Backup and Migrate 5.0.2, 2022-08-19

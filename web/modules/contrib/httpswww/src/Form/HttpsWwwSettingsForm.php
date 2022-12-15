@@ -38,8 +38,8 @@ class HttpsWwwSettingsForm extends ConfigFormBase {
       '#type' => 'fieldset',
       '#title' => $this->t('Redirect status'),
       '#description'   => $this->t('' .
-        '&bull; Make sure your site is accessible for the options you select before enabling the module.<br>' .
-        '&bull; If you don\'t have the "Bypass HTTPS/www redirects" permission and are on a different domain than what you select, you will be logged out when saving.<br>' .
+        '&bull; Make sure your site is accessible for the options you select before enabling redirects.<br>' .
+        '&bull; If you don\'t have the "Bypass HTTPS and WWW Redirects" permission and are on a different domain than what you select, you will be logged out when saving.<br>' .
         '&bull; Once enabled, avoid making any further changes as it may affect SEO.'
       ),
     ];

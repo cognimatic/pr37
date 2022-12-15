@@ -22,6 +22,10 @@ use Drupal\migrate_conditions\Plugin\LogicalConditionBase;
  * - negate: (optional) Whether the 'or' condition should be negated.
  *   Defaults to FALSE. You can also negate the 'or' plugin by using
  *   'not:or' as the plugin id.
+ * - source: (optional) Property or array of properties on which to evaluate
+ *   the condition. If not set, the condition will be evaluated on the source
+ *   passed to the ::evaluate() method, typically the source of the process
+ *   plugin that is using this condition.
  *
  * Examples:
  *
@@ -68,6 +72,28 @@ use Drupal\migrate_conditions\Plugin\LogicalConditionBase;
  *         title
  *           plugin: empty
  * @endcode
+ *
+ * The previous example can alternatively be written by configuring
+ * the source separately for the OR-ed conditions.
+ *
+ * @code
+ * process:
+ *   missing_data:
+ *     plugin: evaluate_condition
+ *     condition:
+ *       plugin: or
+ *       conditions:
+ *         missing_alt:
+ *           plugin: empty
+ *           source: field_image/alt
+ *         missing_title:
+ *           plugin: empty
+ *           source: field_image/title
+ * @endcode
+ *
+ * Note the array keys missing_alt and missing_title are not important in
+ * this case. The array keys are very important when iterate is TRUE. This
+ * example just aims to demonstrate how the syntax allows semantic code.
  *
  * @MigrateConditionsConditionPlugin(
  *   id = "or"

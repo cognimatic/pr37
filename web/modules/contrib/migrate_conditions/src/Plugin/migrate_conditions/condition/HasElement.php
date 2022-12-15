@@ -25,6 +25,10 @@ use Drupal\migrate_conditions\Plugin\ArrayConditionBase;
  * - negate: (optional) Whether to negate the has_element condition.
  *   Defaults to FALSE. You can also negate the 'has_element' plugin by using
  *   'not:has_element' as the plugin id.
+ * - source: (optional) Property or array of properties on which to evaluate
+ *   the condition. If not set, the condition will be evaluated on the source
+ *   passed to the ::evaluate() method, typically the source of the process
+ *   plugin that is using this condition.
  *
  * Example:
  *

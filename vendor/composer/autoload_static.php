@@ -280,6 +280,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
+            'Dflydev\\DotAccessData\\' => 22,
             'Defuse\\Crypto\\' => 14,
             'DeepCopy\\' => 9,
             'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
@@ -966,6 +967,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             2 => __DIR__ . '/..' . '/doctrine/persistence/lib/Doctrine/Common',
             3 => __DIR__ . '/..' . '/doctrine/reflection/lib/Doctrine/Common',
         ),
+        'Dflydev\\DotAccessData\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dflydev/dot-access-data/src',
+        ),
         'Defuse\\Crypto\\' => 
         array (
             0 => __DIR__ . '/..' . '/defuse/php-encryption/src',
@@ -1122,10 +1127,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Dflydev\\PlaceholderResolver' => 
             array (
                 0 => __DIR__ . '/..' . '/dflydev/placeholder-resolver/src',
-            ),
-            'Dflydev\\DotAccessData' => 
-            array (
-                0 => __DIR__ . '/..' . '/dflydev/dot-access-data/src',
             ),
             'Dflydev\\DotAccessConfiguration' => 
             array (
@@ -1285,6 +1286,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'PHPUnit\\Framework\\MockObject\\CannotUseOnlyMethodsException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/CannotUseOnlyMethodsException.php',
         'PHPUnit\\Framework\\MockObject\\ClassAlreadyExistsException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ClassAlreadyExistsException.php',
         'PHPUnit\\Framework\\MockObject\\ClassIsFinalException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ClassIsFinalException.php',
+        'PHPUnit\\Framework\\MockObject\\ClassIsReadonlyException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ClassIsReadonlyException.php',
         'PHPUnit\\Framework\\MockObject\\ConfigurableMethod' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/ConfigurableMethod.php',
         'PHPUnit\\Framework\\MockObject\\ConfigurableMethodsAlreadyInitializedException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ConfigurableMethodsAlreadyInitializedException.php',
         'PHPUnit\\Framework\\MockObject\\DuplicateMethodException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/DuplicateMethodException.php',

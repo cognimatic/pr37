@@ -166,7 +166,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
       ],
       'chart_type' => [
         '#title' => $this->t('Chart type'),
-        '#description' => '<a href="https://developers-dot-devsite-v2-prod.appspot.com/chart/interactive/docs/gallery" target="_blank">Google charts</a>',
+        '#description' => '<a href="https://developers-dot-devsite-v2-prod.appspot.com/chart/interactive/docs/gallery" target="_blank">' . $this->t('Google charts') . '</a>',
         '#type' => 'select',
         '#default_value' => $this->getSettings()['chart_type'],
         '#options' => $this->googleChartsOption(),
@@ -216,7 +216,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
       ],
       'ajax' => [
         '#title' => $this->t('Load table with ajax'),
-        '#description' => $this->t('User for big data, ajax will load table data'),
+        '#description' => $this->t('You can use for big data, it will call ajax to load table data'),
         '#type' => 'checkbox',
         '#default_value' => $this->getSettings()['ajax'],
         '#states' => [
@@ -254,19 +254,19 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     $bundle = $form["#bundle"];
     $entityFieldManager = \Drupal::service('entity_field.manager');
     $fieldDefinitions = $entityFieldManager->getFieldDefinitions($entity_type, $bundle);
-    if(!empty($fieldDefinitions[$field_name])){
+    if (!empty($fieldDefinitions[$field_name])) {
       $target_bundles = $fieldDefinitions[$field_name]->getSettings()["handler_settings"]["target_bundles"];
       $target_bundle = current($target_bundles);
       $paragraphs_entity = \Drupal::entityTypeManager()->getStorage($target_type)
         ->create(['type' => $target_bundle]);
       $field_definitions = $paragraphs_entity->getFieldDefinitions();
-      $typSupport = [ 'integer',  'number', 'number_integer', 'bigint_item_default',
+      $typSupport = ['integer', 'number', 'number_integer', 'bigint_item_default',
         'float', 'list_float', 'decimal',
       ];
-      foreach ($field_definitions as $fieldName => $field_definition){
-        if($field_definition instanceof FieldConfig){
+      foreach ($field_definitions as $fieldName => $field_definition) {
+        if ($field_definition instanceof FieldConfig) {
           $type = $field_definition->getType();
-          if(in_array($type, $typSupport)){
+          if (in_array($type, $typSupport)) {
             $options_number_field[$fieldName] = $field_definition->getLabel();
           }
         }
@@ -390,7 +390,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     $context = [
       'paragraph_name' => $bundles[$type]['label'],
       'paragraph_type' => $type,
-      'entity_type' => $entity->getType(),
+      'entity_type' => $entity->getEntityTypeId() != 'user' ? $entity->getType() : 'user',
       'entity_field' => $field_name_current,
       'entity_id' => $entityId,
     ];
@@ -430,7 +430,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
               }
               if (empty($notEmptyColumn[$field_name])) {
                 unset($table_header[$field_name]);
-                foreach ($table_rows as $delta => &$row) {
+                foreach ($table_rows as &$row) {
                   if (isset($row['data'][$field_name])) {
                     unset($row['data'][$field_name]);
                   }
@@ -518,7 +518,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
               'data-field' => $field_name,
               'data-sortable' => "true",
             ];
-            if(!empty($setting['sum_fields']) && in_array($field_name,$setting['sum_fields'] )){
+            if (!empty($setting['sum_fields']) && in_array($field_name, $setting['sum_fields'])) {
               $table_header[$field_name]['data-footer-formatter'] = 'sumFormatter';
             }
           }
@@ -593,7 +593,10 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     }
     $addButton = NULL;
     $userRoles = \Drupal::currentUser()->getRoles();
-    if ($entityId && (($hasPermission && $this->customPermissions['create']) || in_array('administrator', $userRoles))) {
+    $cardinality = $field_definition->getFieldStorageDefinition()->get('cardinality');
+    if ($entityId &&
+      (($hasPermission && $this->customPermissions['create']) || in_array('administrator', $userRoles)) &&
+      ($cardinality == -1 || $cardinality > $items->count())) {
       $destination = \Drupal::service('path.current')->getPath();
       $dialog_width = 800;
       $addButton = [
@@ -1162,82 +1165,16 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
       }
       $datatable_options['columns'][] = $column_options;
     }
-
-    $languages = [
-      'af' => 'Afrikaans',
-      'am' => 'Amharic',
-      'ar' => 'Arabic',
-      'az' => 'Azerbaijan',
-      'be' => 'Belarusian',
-      'bg' => 'Bulgarian',
-      'ca' => 'Catalan',
-      'cs' => 'Czech',
-      'cy' => 'Welsh',
-      'da' => 'Danish',
-      'de' => 'German',
-      'el' => 'Greek',
-      'eo' => 'Esperanto',
-      'es' => 'Spanish',
-      'et' => 'Estonian',
-      'eu' => 'Basque',
-      'fa' => 'Persian',
-      'fi' => 'Finnish',
-      'fr' => 'French',
-      'ga' => 'Irish',
-      'gl' => 'Galician',
-      'gu' => 'Gujarati',
-      'he' => 'Hebrew',
-      'hi' => 'Hindi',
-      'hr' => 'Croatian',
-      'hu' => 'Hungarian',
-      'hy' => 'Armenian',
-      'id' => 'Indonesian',
-      'is' => 'Icelandic',
-      'it' => 'Italian',
-      'ja' => 'Japanese',
-      'ka' => 'Georgian',
-      'kk' => 'Kazakh',
-      'km' => 'Khmer',
-      'ko' => 'Korean',
-      'ku' => 'Kurdish',
-      'ky' => 'Kyrgyz',
-      'lo' => 'Lao',
-      'lt' => 'Lithuanian',
-      'lv' => 'Latvian',
-      'mk' => 'Macedonian',
-      'ml' => 'Malay',
-      'mn' => 'Mongolian',
-      'ne' => 'Nepali',
-      'nl' => 'Dutch',
-      'nb' => 'Norwegian-Bokmal',
-      'nn' => 'Norwegian-Nynorsk',
-      'pa' => 'Punjabi',
-      'pl' => 'Polish',
-      'pt' => 'Portuguese',
-      'ro' => 'Romanian',
-      'ru' => 'Russian',
-      'si' => 'Sinhala',
-      'sk' => 'Slovak',
-      'sl' => 'Slovenian',
-      'sq' => 'Albanian',
-      'sr' => 'Serbian',
-      'sv' => 'Swedish',
-      'sw' => 'Swahili',
-      'ta' => 'Tamil',
-      'te' => 'telugu',
-      'th' => 'Thai',
-      'tr' => 'Turkish',
-      'uk' => 'Ukrainian',
-      'ur' => 'Urdu',
-      'vi' => 'Vietnamese',
-      'fil' => 'Filipino',
-      'zh-hans' => 'Chinese',
-      'zh-hant' => 'Chinese',
+    $langNonSupport = ['ast', 'bn', 'bo', 'bs', 'dz', 'fo', 'fy', 'gd', 'gsw',
+      'ht', 'jv', 'kn', 'mg', 'mr', 'ms', 'my', 'oc', 'sco', 'se', 'tyv',
+      'ug', 'xx',
     ];
-    if (!empty($languages[$langcode])) {
+    $explode = explode('-', $langcode);
+    $langcode = current($explode);
+    if (!empty($langcode) && !isset($langNonSupport[$langcode])) {
       $cdn_lang = '//cdn.datatables.net/plug-ins/';
       $version = '1.12.1';
-      $language_url = $cdn_lang . $version . '/i18n/' . $languages[$langcode] . '.json';
+      $language_url = $cdn_lang . $version . '/i18n/' . $langcode . '.json';
       $datatable_options['language']['url'] = $language_url;
     }
 

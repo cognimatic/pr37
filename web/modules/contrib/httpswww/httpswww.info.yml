@@ -1,11 +1,11 @@
-name: 'HTTPS/www Redirects'
+name: 'HTTPS and WWW Redirect'
 type: module
 description: 'Redirects to HTTPS with or without the "www" prefix.'
-core_version_requirement: ^8.7.7 || ^9
+core_version_requirement: ^8.7.7 || ^9 || ^10
 configure: httpswww.settings
 package: 'Other'
 
-# Information added by Drupal.org packaging script on 2020-09-26
-version: '2.0.0'
+# Information added by Drupal.org packaging script on 2022-12-10
+version: '2.0.1'
 project: 'httpswww'
-datestamp: 1601133584
+datestamp: 1670690338

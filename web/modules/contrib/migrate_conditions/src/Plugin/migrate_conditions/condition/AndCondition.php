@@ -22,6 +22,10 @@ use Drupal\migrate_conditions\Plugin\LogicalConditionBase;
  * - negate: (optional) Whether the 'and' condition should be negated.
  *   Defaults to FALSE. You can also negate the 'and' plugin by using
  *   'not:and' as the plugin id.
+ * - source: (optional) Property or array of properties on which to evaluate
+ *   the condition. If not set, the condition will be evaluated on the source
+ *   passed to the ::evaluate() method, typically the source of the process
+ *   plugin that is using this condition.
  *
  * Examples:
  *
@@ -90,6 +94,27 @@ use Drupal\migrate_conditions\Plugin\LogicalConditionBase;
  *         -
  *           plugin: equals
  *           value: 'in charge'
+ * @endcode
+ *
+ * The previous example is likely clearer if we configure the source
+ * of each condition separately, rather than relying on the source
+ * passed to the process plugin.
+ *
+ * @code
+ * process:
+ *   large_and_in_charge:
+ *     plugin: evaluate_condition
+ *     condition:
+ *       plugin: and
+ *       conditions:
+ *         -
+ *           plugin: equals
+ *           value: 'large'
+ *           source: source_size
+ *         -
+ *           plugin: equals
+ *           value: 'in charge'
+ *           source: source_comportment
  * @endcode
  *
  * @MigrateConditionsConditionPlugin(

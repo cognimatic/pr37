@@ -171,7 +171,7 @@ function paragraphs_table_preprocess_field_multiple_value_form(&$variables) {
  * Get table header.
  */
 function _paragraphs_table_header($fields, $show_all = FALSE, $rowWeightCol = FALSE, $is_new = FALSE) {
-  $header = empty($show_all) ? [''] : [];
+  $header = empty($show_all) ? ['data' => ['']] : [];
   foreach ($fields as $field_name => $field) {
     $header[] = [
       'data' => $field->getLabel(),

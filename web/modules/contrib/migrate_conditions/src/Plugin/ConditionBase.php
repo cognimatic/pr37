@@ -21,6 +21,13 @@ abstract class ConditionBase extends PluginBase implements ConditionInterface {
   protected $negated;
 
   /**
+   * Properties to override the source value passed to evaluate().
+   *
+   * @var string|string[]
+   */
+  protected $source;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition) {
@@ -32,6 +39,7 @@ abstract class ConditionBase extends PluginBase implements ConditionInterface {
       }
     }
     $this->negated = $configuration['negate'] ?? FALSE;
+    $this->source = $configuration['source'] ?? NULL;
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
 
@@ -39,6 +47,9 @@ abstract class ConditionBase extends PluginBase implements ConditionInterface {
    * {@inheritdoc}
    */
   public function evaluate($source, Row $row) {
+    if ($this->source) {
+      $source = $this->getSource($row);
+    }
     return ($this->doEvaluate($source, $row) xor $this->negated);
   }
 
@@ -54,5 +65,19 @@ abstract class ConditionBase extends PluginBase implements ConditionInterface {
    *   TRUE if the condition evaluates as TRUE.
    */
   abstract protected function doEvaluate($source, Row $row);
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getSource(Row $row) {
+    if (is_string($this->source)) {
+      return $row->get($this->source);
+    }
+    $return = [];
+    foreach ($this->source as $property) {
+      $return[] = $row->get($property);
+    }
+    return $return;
+  }
 
 }

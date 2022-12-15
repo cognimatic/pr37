@@ -8,6 +8,7 @@
 }
 #bpmn-io .property-panel {
   position: absolute;
+  z-index: 9;
   top: 0;
   right: 0;
   width: 310px;
@@ -24,6 +25,7 @@
   width: 4px;
   height: 100%;
   cursor: ew-resize;
+  z-index: 11;
 }
 #bpmn-io .bio-properties-panel-header {
   margin-bottom: 0;
@@ -33,23 +35,40 @@
 }
 #bpmn-io >.actions {
   position: fixed;
-  bottom: 0;
-  padding: 10px;
-  background-color: #fff;
-}
-#bpmn-io .save-button:hover {
-  cursor: pointer;
-}
-body.gin--horizontal-toolbar #bpmn-io >.actions,
-body.gin--vertical-toolbar #bpmn-io >.actions {
-  top: 50px;
-  right: 30px;
+  top: 0;
+  right: 0;
+  width: auto;
   bottom: unset;
   z-index: 101;
   background-color: unset;
+  padding: 0;
+  margin-left: min(5vw, 48px);
+  margin-right: min(5vw, 48px);
+  text-align: right;
 }
-body.gin--horizontal-toolbar #bpmn-io >.actions {
-  top: 100px;
+#bpmn-io >.actions input {
+  margin-bottom: 0;
+}
+#bpmn-io >.actions input:last-of-type {
+  margin-right: 0;
+}
+#bpmn-io >.actions input:hover {
+  cursor: pointer;
+}
+body.toolbar-horizontal #bpmn-io >.actions,
+body.toolbar-vertical #bpmn-io >.actions {
+  top: 39px;
+}
+body.toolbar-tray-open.toolbar-horizontal #bpmn-io >.actions {
+  top: 79px;
+}
+body.toolbar-horizontal.toolbar-fixed.gin--horizontal-toolbar #bpmn-io >.actions,
+body.toolbar-horizontal.toolbar-fixed.gin--vertical-toolbar #bpmn-io >.actions {
+  top: calc(var(--gin-toolbar-y-offset, var(--ginHorizontalToolbarOffset, 0)) + var(--gin-toolbar-secondary-height, var(--ginToolbarSecondaryHeight, 0)));
+}
+body.environment-indicator.toolbar-horizontal.toolbar-fixed.gin--horizontal-toolbar #bpmn-io >.actions,
+body.environment-indicator.toolbar-horizontal.toolbar-fixed.gin--vertical-toolbar #bpmn-io >.actions {
+  top: calc(var(--gin-toolbar-y-offset, var(--ginHorizontalToolbarOffset, 0)) + var(--gin-toolbar-secondary-height, var(--ginToolbarSecondaryHeight, 0)) + 34px);
 }
 div[data-drupal-messages=""],
 .messages-list {
@@ -93,7 +112,8 @@ div[data-drupal-messages=""] .messages__wrapper,
 .djs-context-pad .bpmn-icon-data-object,
 .djs-context-pad .bpmn-icon-data-store,
 .djs-context-pad .bpmn-icon-participant,
-.djs-context-pad .bpmn-icon-group {
+.djs-context-pad .bpmn-icon-group,
+.djs-context-pad .bpmn-icon-screw-wrench {
   display: none;
 }
 .cmd-element-template-chooser .cmd-change-menu__entry_header {

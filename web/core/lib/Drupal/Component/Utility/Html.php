@@ -373,7 +373,7 @@ EOD;
    * will convert "&eacute;" to "é", whereas Html::escape() will not convert "é"
    * to "&eacute;".
    *
-   * @param string|null $text
+   * @param string $text
    *   The text to decode entities in.
    *
    * @return string
@@ -382,9 +382,10 @@ EOD;
    * @see html_entity_decode()
    * @see \Drupal\Component\Utility\Html::escape()
    */
-  public static function decodeEntities(?string $text): string {
+  public static function decodeEntities($text): string {
     if (is_null($text)) {
-      trigger_error('Passing null to ' . __METHOD__ . ' is deprecated in Drupal:10.1.0 and will trigger a PHP error from Drupal:11.0.0. Pass a string instead. See https://www.drupal.org/project/drupal/issues/3255637.', E_USER_DEPRECATED);
+      @trigger_error('Passing NULL to ' . __METHOD__ . ' is deprecated in drupal:9.5.0 and will trigger a PHP error from drupal:11.0.0. Pass a string instead. See https://www.drupal.org/node/3318826', E_USER_DEPRECATED);
+      return '';
     }
     return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
   }
@@ -412,7 +413,7 @@ EOD;
    * '#markup' is not recommended. Use the '#plain_text' key instead and the
    * renderer will autoescape the text.
    *
-   * @param string|null $text
+   * @param string $text
    *   The input text.
    *
    * @return string
@@ -423,11 +424,12 @@ EOD;
    *
    * @ingroup sanitization
    */
-  public static function escape(?string $text): string {
+  public static function escape($text): string {
     if (is_null($text)) {
-      trigger_error('Passing null to Html::escape() is deprecated in Drupal:10.1.0 and will trigger a PHP error from Drupal:11.0.0. Pass a string instead. See https://www.drupal.org/project/drupal/issues/3255637.', E_USER_DEPRECATED);
+      @trigger_error('Passing NULL to ' . __METHOD__ . ' is deprecated in drupal:9.5.0 and will trigger a PHP error from drupal:11.0.0. Pass a string instead. See https://www.drupal.org/node/3318826', E_USER_DEPRECATED);
+      return '';
     }
-    return htmlspecialchars($text ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
   }
 
   /**

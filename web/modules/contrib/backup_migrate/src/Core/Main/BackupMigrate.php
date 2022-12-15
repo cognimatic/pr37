@@ -97,11 +97,11 @@ class BackupMigrate implements BackupMigrateInterface {
       }
 
       // Let plugins react to a successful operation.
-      $this->plugins()->call('backupSucceed', $file);
+      $this->plugins()->call('backupSuccess', $file);
     }
     catch (\Exception $e) {
       // Let plugins react to a failed operation.
-      $this->plugins()->call('backupFail', $e);
+      $this->plugins()->call('backupFailure', $e);
 
       // The consuming software needs to deal with this.
       throw $e;

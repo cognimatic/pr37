@@ -610,7 +610,7 @@ abstract class BaseLayoutBase extends MultiWidthLayoutBase {
         if (!empty($style)) {
           $uri = ImageStyle::load($style)->buildUrl($image->getFileUri());
         }
-        $url = file_create_url($uri);
+        $url = \Drupal::service('file_url_generator')->generateAbsoluteString($uri);
 
         $build['#attributes']['style'] = 'background-image: url("' . $url . '")';
       }

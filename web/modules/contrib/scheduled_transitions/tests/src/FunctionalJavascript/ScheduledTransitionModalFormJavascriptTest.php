@@ -40,7 +40,7 @@ class ScheduledTransitionModalFormJavascriptTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * Tests revision logs.

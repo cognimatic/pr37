@@ -95,6 +95,9 @@ abstract class LogicalConditionBase extends ConditionBase implements ContainerFa
    * {@inheritdoc}
    */
   public function evaluate($source, Row $row) {
+    if ($this->source) {
+      $source = $this->getSource($row);
+    }
     if ($this->iterate && !is_array($source)) {
       throw new MigrateException("If the 'iterate' property is true, the source must be an array.");
     }

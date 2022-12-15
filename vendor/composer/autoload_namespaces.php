@@ -14,7 +14,6 @@ return array(
     'Stack' => array($vendorDir . '/stack/builder/src'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
     'Dflydev\\PlaceholderResolver' => array($vendorDir . '/dflydev/placeholder-resolver/src'),
-    'Dflydev\\DotAccessData' => array($vendorDir . '/dflydev/dot-access-data/src'),
     'Dflydev\\DotAccessConfiguration' => array($vendorDir . '/dflydev/dot-access-configuration/src'),
     'DaveChild\\TextStatistics' => array($vendorDir . '/davechild/textstatistics/src'),
     'Console' => array($vendorDir . '/pear/console_getopt'),

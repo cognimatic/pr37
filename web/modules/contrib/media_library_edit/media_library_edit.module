@@ -107,7 +107,7 @@ function media_library_edit_field_widget_form_alter(&$element, FormStateInterfac
                     'width' => $dialog_options['width'],
                     'classes' => ['ui-dialog-content' => 'media-library-edit__modal'],
                   ]),
-                  'data-dialog-type' => 'dialog',
+                  'data-dialog-type' => 'modal',
                 ],
                 '#attached' => [
                   'library' => [

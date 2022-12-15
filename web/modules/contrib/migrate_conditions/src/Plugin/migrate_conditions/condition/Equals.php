@@ -16,6 +16,10 @@ use Drupal\migrate_conditions\Plugin\SimpleComparisonBase;
  * - negate: (optional) Whether to negate the 'equals' condition.
  *   Defaults to FALSE. You can also negate the 'equals' plugin by using
  *   'not:equals' as the plugin id.
+ * - source: (optional) Property or array of properties on which to evaluate
+ *   the condition. If not set, the condition will be evaluated on the source
+ *   passed to the ::evaluate() method, typically the source of the process
+ *   plugin that is using this condition.
  *
  * Examples:
  *

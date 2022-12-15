@@ -6,7 +6,7 @@ package: Testing
 dependencies:
   - migrate_conditions:migrate_conditions
 
-# Information added by Drupal.org packaging script on 2022-11-10
-version: '2.0.1'
+# Information added by Drupal.org packaging script on 2022-11-20
+version: '2.1.0'
 project: 'migrate_conditions'
-datestamp: 1668111847
+datestamp: 1668903686

@@ -404,7 +404,7 @@ class BlockClassBulkOperationsForm extends ConfigFormBase {
         // Uppercase so show this message.
         if ($default_case == 'lowercase') {
 
-          $form_state->setErrorByName('operation', $this->t('You selected to convert all classes to lowercase but your configuration is to use all with Uppercase. Please see you settings <a href="/admin/config/content/block-class/settings">here</a>'));
+          $form_state->setErrorByName('operation', $this->t('You selected to convert all classes to lowercase but your configuration is to use all with Uppercase. Please see <a href="/admin/config/content/block-class/settings">your settings here</a>'));
 
         }
 
@@ -424,7 +424,7 @@ class BlockClassBulkOperationsForm extends ConfigFormBase {
         // lowercase so show this message.
         if ($default_case == 'uppercase') {
 
-          $form_state->setErrorByName('operation', $this->t('You selected to convert all classes to lowercase but your configuration is to use all with Uppercase. Please see you settings <a href="/admin/config/content/block-class/settings">here</a>'));
+          $form_state->setErrorByName('operation', $this->t('You selected to convert all classes to lowercase but your configuration is to use all with Uppercase. Please see <a href="/admin/config/content/block-class/settings">your settings here</a>'));
 
         }
 

@@ -38,7 +38,7 @@ class ScheduledTransitionSettingsFormTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * Tests automation/cron settings.

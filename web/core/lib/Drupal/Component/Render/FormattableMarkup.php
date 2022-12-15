@@ -131,11 +131,11 @@ class FormattableMarkup implements MarkupInterface, \Countable {
    * @param array $args
    *   An associative array of replacements. Each array key should be the same
    *   as a placeholder in $string. The corresponding value should be a string
-   *   or an object that implements
-   *   \Drupal\Component\Render\MarkupInterface. The value replaces the
-   *   placeholder in $string. Sanitization and formatting will be done before
-   *   replacement. The type of sanitization and formatting depends on the first
-   *   character of the key:
+   *   or an object that implements \Drupal\Component\Render\MarkupInterface.
+   *   Null args[] values are deprecated in Drupal 9.5 and will fail in
+   *   Drupal 11.0. The value replaces the placeholder in $string. Sanitization
+   *   and formatting will be done before replacement. The type of sanitization
+   *   and formatting depends on the first character of the key:
    *   - @variable: When the placeholder replacement value is:
    *     - A string, the replaced value in the returned string will be sanitized
    *       using \Drupal\Component\Utility\Html::escape().
@@ -196,6 +196,14 @@ class FormattableMarkup implements MarkupInterface, \Countable {
   protected static function placeholderFormat($string, array $args) {
     // Transform arguments before inserting them.
     foreach ($args as $key => $value) {
+      if (is_null($value)) {
+        // It's probably a bug to provide a null value for the placeholder arg,
+        // and in D11 this will no longer be allowed. When this trigger_error
+        // is removed, also remove isset $value checks inside the switch{}
+        // below.
+        @trigger_error(sprintf('Deprecated NULL placeholder value for key (%s) in: "%s". This will throw a PHP error in drupal:11.0.0. See https://www.drupal.org/node/3318826', (string) $key, (string) $string), E_USER_DEPRECATED);
+        $value = '';
+      }
       switch ($key[0]) {
         case '@':
           // Escape if the value is not an object from a class that implements
@@ -205,7 +213,7 @@ class FormattableMarkup implements MarkupInterface, \Countable {
           // contexts, may still be an instance of
           // \Drupal\Component\Render\MarkupInterface, so this placeholder type
           // must not be used within HTML attributes, JavaScript, or CSS.
-          $args[$key] = static::placeholderEscape($value ?? '');
+          $args[$key] = static::placeholderEscape($value);
           break;
 
         case ':':
@@ -220,7 +228,7 @@ class FormattableMarkup implements MarkupInterface, \Countable {
           // on it prior to passing it in as a placeholder value of this type.
           // @todo Add some advice and stronger warnings.
           //   https://www.drupal.org/node/2569041.
-          $args[$key] = Html::escape($value ?? '');
+          $args[$key] = Html::escape($value);
           break;
 
         case '%':
@@ -229,7 +237,7 @@ class FormattableMarkup implements MarkupInterface, \Countable {
           // per the warning above about
           // \Drupal\Component\Render\MarkupInterface and also due to the
           // wrapping markup.
-          $args[$key] = isset($value) ? '<em class="placeholder">' . static::placeholderEscape($value) . '</em>' : '';
+          $args[$key] = '<em class="placeholder">' . static::placeholderEscape($value) . '</em>';
           break;
 
         default:
@@ -252,21 +260,13 @@ class FormattableMarkup implements MarkupInterface, \Countable {
   /**
    * Escapes a placeholder replacement value if needed.
    *
-   * @param string|\Drupal\Component\Render\MarkupInterface|null $value
+   * @param string|\Drupal\Component\Render\MarkupInterface $value
    *   A placeholder replacement value.
    *
    * @return string
    *   The properly escaped replacement value.
    */
-  protected static function placeholderEscape($value): string {
-    if (is_null($value)) {
-      trigger_error(
-        'Passing null to ' . __METHOD__ . ' is deprecated in Drupal:10.1.0 and will trigger a PHP error from Drupal:11.0.0. Pass a string or ' . MarkupInterface::class . ' instead. See https://www.drupal.org/project/drupal/issues/3255637.',
-        E_USER_DEPRECATED
-      );
-      return '';
-    }
-
+  protected static function placeholderEscape($value) {
     return $value instanceof MarkupInterface ? (string) $value : Html::escape($value);
   }
 

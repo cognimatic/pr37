@@ -6,7 +6,7 @@ Source: https://www.drupal.org/files/issues/2022-10-20/3099026-42.patch
 
 
 Add type declaration html-escape decodeEntitties FormattableMarkup-placeholderEscape 3255637
-Source: https://www.drupal.org/files/issues/2022-10-28/3255637-74.patch
+Source: https://www.drupal.org/files/issues/2022-12-06/3255637-10.x-127.patch
 
 
 Fix tests running with paratest. See https://www.drupal.org/project/drupal/issues/3192365

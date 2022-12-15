@@ -40,7 +40,7 @@ class ScheduledTransitionRescheduleFormTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * Test rescheduling.

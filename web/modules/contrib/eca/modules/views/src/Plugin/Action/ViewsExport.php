@@ -30,14 +30,15 @@ class ViewsExport extends ViewsQuery {
    * {@inheritdoc}
    */
   public function execute($object = NULL): void {
-    if (!($display = $this->getDisplay())) {
+    if (!$this->getDisplay() || !isset($this->view)) {
       return;
     }
     if ($this->configuration['load_results_into_token']) {
       parent::execute();
     }
     else {
-      $display->execute();
+      $this->view->preExecute();
+      $this->view->execute();
     }
     $this->view->display_handler->buildRenderable($this->view->args, FALSE);
     /** @var \Drupal\Core\Render\RendererInterface $renderer */
@@ -117,7 +118,7 @@ class ViewsExport extends ViewsQuery {
    * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state): void {
-    $this->configuration['load_results_into_token'] = $form_state->getValue('load_results_into_token');
+    $this->configuration['load_results_into_token'] = !empty($form_state->getValue('load_results_into_token'));
     $this->configuration['token_for_filename'] = $form_state->getValue('token_for_filename');
     $this->configuration['filename'] = $form_state->getValue('filename');
     parent::submitConfigurationForm($form, $form_state);

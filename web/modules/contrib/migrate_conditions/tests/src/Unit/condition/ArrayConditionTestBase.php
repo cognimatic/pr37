@@ -49,7 +49,10 @@ abstract class ArrayConditionTestBase extends UnitTestCase {
    */
   public function testEvaluate($source, $configuration, $sub_evaluate_map, $expected) {
     $row = $this->createMock('Drupal\migrate\Row');
-
+    $row->expects($this->any())
+      ->method('get')
+      ->with('some_source_property')
+      ->willReturn($source);
     $map = [];
     foreach ($sub_evaluate_map as $source_then_return) {
       $map[] = [$source_then_return[0], $row, $source_then_return[1]];
@@ -70,6 +73,12 @@ abstract class ArrayConditionTestBase extends UnitTestCase {
     $configuration['negate'] = empty($configuration['negate']);
     $negated_condition = new $class($configuration, $this->conditionId, [], $condition_manager);
     $this->assertSame(!$expected, $negated_condition->evaluate($source, $row));
+    // Use source configuration on condition.
+    $configuration['source'] = 'some_source_property';
+    // Reset negation.
+    $configuration['negate'] = empty($configuration['negate']);
+    $condition_with_configured_source = new $class($configuration, $this->conditionId, [], $condition_manager);
+    $this->assertSame($expected, $condition_with_configured_source->evaluate(NULL, $row));
   }
 
   /**

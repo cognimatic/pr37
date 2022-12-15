@@ -8,7 +8,7 @@ _meta:
     a39ba204-ea13-4f42-b30d-8370278e40cf: media
     acfb5e02-f92b-4822-9f09-d5802314dd52: taxonomy_term
     90c4eac2-84a2-42c5-a7d6-8d6f79a4e1da: node
-    6bff53ac-9af4-476f-95fa-b2c6f1ca423f: node
+    04dc2cb5-69f9-443b-9db3-e818855880b7: node
 default:
   revision_uid:
     -
@@ -61,4 +61,4 @@ default:
       entity: 90c4eac2-84a2-42c5-a7d6-8d6f79a4e1da
   localgov_newsroom:
     -
-      entity: 6bff53ac-9af4-476f-95fa-b2c6f1ca423f
+      entity: 04dc2cb5-69f9-443b-9db3-e818855880b7

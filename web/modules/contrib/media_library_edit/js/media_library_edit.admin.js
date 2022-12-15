@@ -27,4 +27,16 @@
     },
   };
 
+  Drupal.behaviors.MediaLibraryWidgetModalScrollTop = {
+    attach: function() {
+      $(window)
+        .once()
+        .on('dialog:aftercreate', function(dialog, settings, $element) {
+          if ($element[0].classList.contains('media-library-edit__modal')) {
+            $element[0].scrollTop = 0;
+          }
+        });
+    }
+  };
+
 })(jQuery, Drupal, window);

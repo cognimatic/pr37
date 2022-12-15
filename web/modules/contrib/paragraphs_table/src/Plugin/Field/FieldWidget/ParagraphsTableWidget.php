@@ -85,7 +85,7 @@ class ParagraphsTableWidget extends ParagraphsWidget {
       $modes = $display->getFormModeOptionsByBundle("paragraph", $bundle);
     }
     else {
-      $modes = ['default' => $this->t("Default"),];
+      $modes = ['default' => $this->t("Default")];
     }
 
     $elements['form_mode'] = [

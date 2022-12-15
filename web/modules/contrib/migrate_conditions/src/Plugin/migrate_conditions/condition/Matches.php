@@ -15,6 +15,10 @@ use Drupal\migrate_conditions\Plugin\ConditionBase;
  * - regex: The regex to match against.
  * - negate: (optional) Whether the 'matches' condition should be negated.
  *   Defaults to FALSE.
+ * - source: (optional) Property or array of properties on which to evaluate
+ *   the condition. If not set, the condition will be evaluated on the source
+ *   passed to the ::evaluate() method, typically the source of the process
+ *   plugin that is using this condition.
  *
  * Examples:
  *

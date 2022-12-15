@@ -13,7 +13,7 @@ CONTENTS OF THIS FILE
 INTRODUCTION
 ------------
 
-This modules lets you easily set your preferred URL with or without the "www"
+This module lets you easily set your preferred URL with or without the "www"
 prefix, and optionally forcing an HTTPS redirect. No code changes required.
 
  * For a full description of the module, visit the project page:
@@ -44,21 +44,21 @@ Please note that before changing any configuration you must make sure your site
 is accessible for the options you choose. You also need to have a valid SSL
 certificate installed for HTTPS to work.
 
-Navigate to Administration » Configuration » System » HTTPS/www settings
-to change configuration settings.
+Navigate to "Administration » Configuration » System » HTTPS and WWW Redirect
+settings" to change configuration settings.
 
 Note that if you check the "Enabled redirects" checkbox and don't have the
-"Bypass HTTPS/www redirects" permission and if you are on a different URL than
-what you have selected, you will be logged out when saving.
+"Bypass HTTPS and WWW Redirects" permission and if you are on a different URL
+than what you have selected, you will be logged out when saving.
 
 
-Configure the user permissions in Administration » People » Permissions:
+Configure the user permissions under "Administration » People » Permissions":
 
- * Administer HTTPS/www redirects
-   Users with this permissions will be able to change URL and how users access
-   the website.
+ * Administer HTTPS and WWW Redirects
+   Users with this permission will be able to change URL and how users access
+   the website. Give this permission to trusted users only.
 
- * Bypass HTTPS/www redirects
+ * Bypass HTTPS and WWW Redirects
    Users with this permission will be unaffected by the settings and will not
    be redirected.
 
@@ -66,16 +66,16 @@ Configure the user permissions in Administration » People » Permissions:
 TROUBLESHOOTING
 ---------------
 
- * Users experience an endless redirect.
+  * Users experience an endless redirect.
 
-   - Try to clear the cache. If that doesn't work, see the next point, and
-     please report the issue.
+    - Try to clear the cache. If that doesn't work, see the next point, and
+      please report the issue.
 
- * If you lock yourself out of the site, add the below line to your
-   settings.php file and you should have access to your site again using the
-   URL you used previously.
+  * If you lock yourself out of the site, add the below line to your
+    settings.php file, and you should have access to your site again using the
+    URL you used previously.
 
-       $config['httpswww.settings']['enabled'] = FALSE;
+        $config['httpswww.settings']['enabled'] = FALSE;
 
 
 FAQ
@@ -84,8 +84,8 @@ FAQ
 Q: I got logged out when I saved configuration settings. Why is that?
 
 A: It means you have access to change configuration, but you don't have the
-"Bypass HTTPS/www redirects" permission. Additionally, if you don't have the
-"Bypass" permission and you are on a different URL than the one you select, you
+"Bypass HTTPS and WWW Redirects" permission. Additionally, if you don't have the
+"Bypass" permission, and you are on a different URL than the one you select, you
 will get logged out due to the URL being considered as different domain.
 
 

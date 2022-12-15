@@ -49,6 +49,10 @@ abstract class LogicalConditionTestBase extends UnitTestCase {
    */
   public function testEvaluate($source, $evaluates, $configuration, $expected) {
     $row = $this->createMock('Drupal\migrate\Row');
+    $row->expects($this->any())
+      ->method('get')
+      ->with('some_source_property')
+      ->willReturn($source);
 
     $conditions = [];
     for ($i = 0; $i < count($configuration['conditions']); $i++) {
@@ -75,6 +79,17 @@ abstract class LogicalConditionTestBase extends UnitTestCase {
     $configuration['negate'] = empty($configuration['negate']);
     $negated_condition = new $class($configuration, $this->conditionId, [], $condition_manager);
     $this->assertSame(!$expected, $negated_condition->evaluate($source, $row));
+
+    // Use source configuration on condition.
+    $configuration['source'] = 'some_source_property';
+    // Reset negation.
+    $configuration['negate'] = empty($configuration['negate']);
+    $condition_manager = $this->createMock('\Drupal\Component\Plugin\PluginManagerInterface');
+    $condition_manager->expects($this->any())
+      ->method('createInstance')
+      ->willReturnOnConsecutiveCalls(...$conditions);
+    $condition_with_configured_source = new $class($configuration, $this->conditionId, [], $condition_manager);
+    $this->assertSame($expected, $condition_with_configured_source->evaluate(NULL, $row));
   }
 
   /**

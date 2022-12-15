@@ -70,7 +70,8 @@ class ContentEntityEvent extends EventBase implements CleanupInterface {
   public static function definitions(): array {
     return [
       'bundlecreate' => [
-        'label' => 'Create content entity bundle',
+        'label' => 'Initialize content entity bundle',
+        'description' => 'An entity bundle object is being created (instantiated) on runtime, without being saved.',
         'event_name' => ContentEntityEvents::BUNDLECREATE,
         'event_class' => ContentEntityBundleCreate::class,
         'tags' => Tag::CONFIG | Tag::WRITE | Tag::PERSISTENT | Tag::AFTER,
@@ -82,13 +83,15 @@ class ContentEntityEvent extends EventBase implements CleanupInterface {
         'tags' => Tag::CONFIG | Tag::WRITE | Tag::PERSISTENT | Tag::AFTER,
       ],
       'create' => [
-        'label' => 'Create content entity',
+        'label' => 'Initialize content entity',
+        'description' => 'An entity object is being created (instantiated) on runtime, without being saved.',
         'event_name' => ContentEntityEvents::CREATE,
         'event_class' => ContentEntityCreate::class,
         'tags' => Tag::CONTENT | Tag::WRITE | Tag::RUNTIME | Tag::AFTER,
       ],
       'revisioncreate' => [
-        'label' => 'Create content entity revision',
+        'label' => 'Initialize content entity revision',
+        'description' => 'An entity revision object is being created (instantiated) on runtime, without being saved.',
         'event_name' => ContentEntityEvents::REVISIONCREATE,
         'event_class' => ContentEntityRevisionCreate::class,
         'tags' => Tag::CONTENT | Tag::WRITE | Tag::RUNTIME | Tag::AFTER,
@@ -113,30 +116,35 @@ class ContentEntityEvent extends EventBase implements CleanupInterface {
       ],
       'presave' => [
         'label' => 'Presave content entity',
+        'description' => 'Before a new or existing entity gets saved (persistently created or changed).',
         'event_name' => ContentEntityEvents::PRESAVE,
         'event_class' => ContentEntityPreSave::class,
         'tags' => Tag::CONTENT | Tag::WRITE | Tag::PERSISTENT | Tag::BEFORE,
       ],
       'insert' => [
         'label' => 'Insert content entity',
+        'description' => 'After a new entity got saved (persistently created).',
         'event_name' => ContentEntityEvents::INSERT,
         'event_class' => ContentEntityInsert::class,
         'tags' => Tag::CONTENT | Tag::WRITE | Tag::PERSISTENT | Tag::AFTER,
       ],
       'update' => [
         'label' => 'Update content entity',
+        'description' => 'After an existing entity got saved (persistently changed).',
         'event_name' => ContentEntityEvents::UPDATE,
         'event_class' => ContentEntityUpdate::class,
         'tags' => Tag::CONTENT | Tag::WRITE | Tag::PERSISTENT | Tag::AFTER,
       ],
       'translationcreate' => [
-        'label' => 'Create content entity translation',
+        'label' => 'Initialize content entity translation',
+        'description' => 'An entity translation object is being created (instantiated) on runtime, without being saved.',
         'event_name' => ContentEntityEvents::TRANSLATIONCREATE,
         'event_class' => ContentEntityTranslationCreate::class,
         'tags' => Tag::CONTENT | Tag::WRITE | Tag::RUNTIME | Tag::AFTER,
       ],
       'translationinsert' => [
         'label' => 'Insert content entity translation',
+        'description' => 'After a new entity translation got saved (persistently created).',
         'event_name' => ContentEntityEvents::TRANSLATIONINSERT,
         'event_class' => ContentEntityTranslationInsert::class,
         'tags' => Tag::CONTENT | Tag::WRITE | Tag::PERSISTENT | Tag::AFTER,
@@ -241,6 +249,7 @@ class ContentEntityEvent extends EventBase implements CleanupInterface {
         '#type' => 'textfield',
         '#title' => $this->t('Event ID'),
         '#default_value' => $this->configuration['event_id'],
+        '#description' => $this->t('The id of the custom event (entity aware). Leave empty to trigger all entity aware events.'),
       ];
     }
     else {
@@ -255,11 +264,13 @@ class ContentEntityEvent extends EventBase implements CleanupInterface {
           '#type' => 'textfield',
           '#title' => $this->t('Restrict by field (machine name)'),
           '#default_value' => $this->configuration['field_name'],
+          '#description' => $this->t('The machine name of the field to restrict the event trigger.'),
         ];
         $form['token_name'] = [
           '#type' => 'textfield',
           '#title' => $this->t('Token name holding the selection'),
           '#default_value' => $this->configuration['token_name'],
+          '#description' => $this->t('The name of the token to hold the selection.'),
         ];
       }
     }

@@ -2,6 +2,6 @@ httpswww.settings:
   path: '/admin/config/system/httpswww'
   defaults:
     _form: '\Drupal\httpswww\Form\HttpsWwwSettingsForm'
-    _title: 'HTTPS/www settings'
+    _title: 'HTTPS and WWW Redirect settings'
   requirements:
     _permission: 'administer httpswww'

@@ -18,6 +18,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * - negate: (optional) Whether the 'entity_exists' condition should be negated.
  *   Defaults to FALSE. You can also negate the 'entity_exists' plugin by using
  *   'not:entity_exists' as the plugin id.
+ * - source: (optional) Property or array of properties on which to evaluate
+ *   the condition. If not set, the condition will be evaluated on the source
+ *   passed to the ::evaluate() method, typically the source of the process
+ *   plugin that is using this condition.
  *
  * Examples:
  *

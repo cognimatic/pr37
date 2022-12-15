@@ -446,10 +446,41 @@ class Eca extends ConfigEntityBase implements EntityWithPluginCollectionInterfac
    */
   protected function validatePlugin(PluginFormInterface $plugin, array &$fields, string $type, string $plugin_id, string $label): bool {
     if ($plugin instanceof ConfigurableInterface) {
-      // Convert potential strings from pseudo-checkboxes back to boolean.
-      foreach ($plugin->defaultConfiguration() as $key => $value) {
-        if (is_bool($value) && isset($fields[$key]) && !is_bool($fields[$key])) {
-          $fields[$key] = mb_strtolower($fields[$key]) === 'yes';
+      foreach ($plugin->defaultConfiguration() + ['replace_tokens' => FALSE] as $key => $value) {
+        // Convert potential strings from pseudo-checkboxes (for example a
+        // dropdown with "yes" or "no" options).
+        if (is_bool($value) && isset($fields[$key]) && is_string($fields[$key]) && in_array(mb_strtolower($fields[$key]), ['yes', 'no'], TRUE)) {
+          if (mb_strtolower($fields[$key]) === 'yes') {
+            $fields[$key] = TRUE;
+          }
+          else {
+            // Unset from the fields array. An unchecked checkbox is like
+            // no value is provided on form submission.
+            unset($fields[$key]);
+            // When plugin configuration is being used on form building,
+            // the default value will be used. This makes sure, that the
+            // default value is treated like an unchecked checkbox.
+            $plugin->setConfiguration([$key => FALSE] + $plugin->getConfiguration());
+          }
+        }
+      }
+
+      // Identify number fields and replace them with a valid numeric value if
+      // the field is configured with a token. This is important to get those
+      // fields through form validation without issues.
+      // @todo Add support for nested form fields like e.g. in container/fieldset.
+      $numeric_fields = [];
+      $form = [];
+      $form_state = new FormState();
+      foreach ($plugin->buildConfigurationForm($form, $form_state) as $key => $form_field) {
+        if (isset($form_field['#type'], $fields[$key]) &&
+          ($form_field['#type'] === 'number') &&
+          (mb_substr((string) $fields[$key], 0, 1) === '[') &&
+          (mb_substr((string) $fields[$key], -1, 1) === ']') &&
+          (mb_strlen((string) $fields[$key]) <= 255)) {
+          // Remember the original configuration value.
+          $numeric_fields[$key] = $fields[$key];
+          $fields[$key] = $form_field['#min'] ?? 0;
         }
       }
     }
@@ -513,6 +544,11 @@ class Eca extends ConfigEntityBase implements EntityWithPluginCollectionInterfac
     }
     // Collect the resulting form field values.
     $fields = ($plugin instanceof ConfigurableInterface ? $plugin->getConfiguration() : []) + $fields;
+
+    // Restore tokens for numeric configuration fields.
+    foreach ($numeric_fields as $key => $original_value) {
+      $fields[$key] = $original_value;
+    }
     return TRUE;
   }
 

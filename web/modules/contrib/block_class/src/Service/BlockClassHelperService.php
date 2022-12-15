@@ -158,55 +158,61 @@ class BlockClassHelperService {
     // Get the block class.
     $block_classes = $entity->getThirdPartySetting('block_class', 'classes');
 
-    $attributes = $entity->getThirdPartySetting('block_class', 'attributes');
+    // Only process non-empty values.
+    if (!empty($block_classes)) {
 
-    switch ($default_case) {
+      switch ($default_case) {
 
-      case 'uppercase':
+        case 'uppercase':
 
-        $block_classes = strtoupper($block_classes);
+          $block_classes = strtoupper($block_classes);
 
-        break;
+          break;
 
-      case 'lowercase':
+        case 'lowercase':
 
-        $block_classes = strtolower($block_classes);
+          $block_classes = strtolower($block_classes);
 
-        break;
+          break;
+
+      }
+
+      // Set the Third Party Settings.
+      $entity->setThirdPartySetting('block_class', 'classes', $block_classes);
+
+      // Get the config object.
+      $config = $this->configFactory->getEditable('block_class.settings');
+
+      // Get the current classes stored.
+      $block_classes_stored = $config->get('block_classes_stored');
+
+      // Get the array from JSON.
+      $block_classes_stored = Json::decode($block_classes_stored ?? '');
+
+      // Verify if is empty.
+      if (empty($block_classes_stored)) {
+        $block_classes_stored = [];
+      }
+
+      // Get the current class and export to array.
+      $current_block_classes = explode(' ', $block_classes ?? '');
+
+      // Use the key the same as value.
+      $current_block_classes = array_combine($current_block_classes, $current_block_classes);
+
+      // Merge with the current one.
+      $block_classes_to_store = array_merge($block_classes_stored, $current_block_classes);
+
+      // Get as JSON.
+      $block_classes_to_store = Json::encode($block_classes_to_store);
+
+      // Store in the config.
+      $config->set('block_classes_stored', $block_classes_to_store);
+
+      // Save.
+      $config->save();
 
     }
-
-    // Set the Third Party Settings.
-    $entity->setThirdPartySetting('block_class', 'classes', $block_classes);
-
-    // Get the config object.
-    $config = $this->configFactory->getEditable('block_class.settings');
-
-    // Get the current classes stored.
-    $block_classes_stored = $config->get('block_classes_stored');
-
-    // Get the array from JSON.
-    $block_classes_stored = Json::decode($block_classes_stored ?? '');
-
-    // Verify if is empty.
-    if (empty($block_classes_stored)) {
-      $block_classes_stored = [];
-    }
-
-    // Get the current class and export to array.
-    $current_block_classes = explode(' ', $block_classes ?? '');
-
-    // Use the key the same as value.
-    $current_block_classes = array_combine($current_block_classes, $current_block_classes);
-
-    // Merge with the current one.
-    $block_classes_to_store = array_merge($current_block_classes, $current_block_classes);
-
-    // Get as JSON.
-    $block_classes_to_store = Json::encode($block_classes_to_store);
-
-    // Store in the config.
-    $config->set('block_classes_stored', $block_classes_to_store);
 
     // Store the id replacement in the settings only if it is enabled in the
     // Global Settings page.
@@ -226,24 +232,21 @@ class BlockClassHelperService {
       // Get the block class.
       $replaced_id = $entity->getThirdPartySetting('block_class', 'replaced_id');
 
-      // Avoid store empty values, so save the current config and skip without
-      // $replaced_id.
-      if (empty(trim($replaced_id ?? ''))) {
+      // Avoid storing empty values.
+      if (!empty(trim($replaced_id ?? ''))) {
+
+        // Remove the extra spaces.
+        $id_replacement_stored[$entity->id()] = trim($replaced_id);
+
+        // Get as JSON.
+        $id_replacement_to_store = Json::encode($id_replacement_stored);
+
+        // Store in the config.
+        $config->set('id_replacement_stored', $id_replacement_to_store);
+
+        // Save.
         $config->save();
-        return;
       }
-
-      // Remove the extra spaces.
-      $id_replacement_stored[$entity->id()] = trim($replaced_id);
-
-      // Get as JSON.
-      $id_replacement_to_store = Json::encode($id_replacement_stored);
-
-      // Store in the config.
-      $config->set('id_replacement_stored', $id_replacement_to_store);
-
-      // Save.
-      $config->save();
 
     }
 
@@ -252,10 +255,15 @@ class BlockClassHelperService {
       return FALSE;
     }
 
+    // Get the current attributes.
+    $attributes = $entity->getThirdPartySetting('block_class', 'attributes');
+
     // Initial value.
     $attribute_keys_stored = '{}';
 
     $attribute_value_stored = '{}';
+
+    $attributes_inline_stored = '{}';
 
     // Get the keys stored.
     if (!empty($config->get('attribute_keys_stored'))) {
@@ -266,10 +274,16 @@ class BlockClassHelperService {
       $attribute_value_stored = $config->get('attribute_value_stored');
     }
 
+    if (!empty($config->get('attributes_inline'))) {
+      $attributes_inline_stored = $config->get('attributes_inline');
+    }
+
     // Decode this to get an array with those values.
     $attribute_keys_stored = Json::decode($attribute_keys_stored ?? '');
 
     $attribute_value_stored = Json::decode($attribute_value_stored ?? '');
+
+    $attributes_inline_stored = Json::decode($attributes_inline_stored ?? '');
 
     // Verify if it's empty and set a default array on this.
     if (empty($attribute_keys_stored)) {
@@ -280,6 +294,10 @@ class BlockClassHelperService {
       $attribute_value_stored = [];
     }
 
+    if (empty($attributes_inline_stored)) {
+      $attributes_inline_stored = [];
+    }
+
     // Get the array with the values.
     $current_attributes = explode(PHP_EOL, $attributes ?? '');
 
@@ -288,6 +306,10 @@ class BlockClassHelperService {
 
     // Do a foreach to get all items.
     foreach ($current_attributes as $current_attribute) {
+
+      if (empty($current_attribute)) {
+        continue;
+      }
 
       // Get the attribute inline to be stored.
       $attribute_inline = str_replace('|', '=', $current_attribute);
@@ -329,7 +351,7 @@ class BlockClassHelperService {
 
     $attribute_value_stored = array_merge($attribute_value_stored, $attribute_value_stored);
 
-    $attributes_inline = array_merge($attributes_inline, $attributes_inline);
+    $attributes_inline = array_merge($attributes_inline_stored, $attributes_inline);
 
     // Encode that to store in JSON.
     $attribute_keys_stored = Json::encode($attribute_keys_stored);
@@ -500,7 +522,11 @@ class BlockClassHelperService {
 
     // Add all classes.
     foreach ($classes_array as $class) {
-      $variables['attributes']['class'][] = Html::cleanCssIdentifier($class, $filter_css_identifier);
+      // Skip cleanCssIdentifier if the option "Allow Special Char" is enabled.
+      if ($config->get('enable_special_chars') == FALSE) {
+        $class = Html::cleanCssIdentifier($class, $filter_css_identifier);
+      }
+      $variables['attributes']['class'][] = $class;
     }
   }
 
@@ -539,7 +565,7 @@ class BlockClassHelperService {
     $help_text = $this->t('Customize the styling of this block by adding CSS classes.');
 
     // Put the Modal with all items used.
-    $help_text .= ' <div class="show-items-used">' . $this->t('<a href="@url_used_items_list@" class="use-ajax" data-dialog-options="{&quot;width&quot;:800}" data-dialog-type="modal">Click here</a> to see all the classes used.</div>', [
+    $help_text .= ' <div class="show-items-used">' . $this->t('<a href="@url_used_items_list@" class="use-ajax" data-dialog-options="{&quot;width&quot;:800}" data-dialog-type="modal">See all the classes used</a>.</div>', [
       '@url_used_items_list@' => $url_used_items_list,
     ]);
 
@@ -588,7 +614,7 @@ class BlockClassHelperService {
       $form['class']['third_party_settings']['block_class']['classes'] = [
         '#type' => $field_type,
         '#title' => $this->t('CSS class(es)'),
-        '#description' => $this->t('Customize the styling of this block by adding CSS classes. Separate multiple classes by spaces. The maxlength configured is @maxlength_block_class_field@. If necessary you can update it <a href="/admin/config/content/block-class/settings">here</a>. This class will appear in the first level of block. <a href="@image_path@/example-1.png">Click here</a> to see a example', [
+        '#description' => $this->t('Customize the styling of this block by adding CSS classes. Separate multiple classes by spaces. The maxlength configured is @maxlength_block_class_field@. If necessary you can <a href="/admin/config/content/block-class/settings">update it here</a>. This class will appear in the first level of block. <a href="@image_path@/example-1.png">See an example</a>', [
           '@maxlength_block_class_field@' => $maxlength_block_class_field,
           '@image_path@' => $image_path,
         ]),
@@ -787,7 +813,7 @@ class BlockClassHelperService {
         $help_text = $this->t('Customize the this block by adding attributes. E.g. "data-block-type"="admin"');
 
         // Update the help text with the Modal to show this for the user.
-        $help_text .= ' - <div class="show-items-used">' . $this->t('<a href="@url_used_attribute_list@" class="use-ajax" data-dialog-options="{&quot;width&quot;:800}" data-dialog-type="modal">Click here</a> to see all the attributes used.', [
+        $help_text .= ' - <div class="show-items-used">' . $this->t('<a href="@url_used_attribute_list@" class="use-ajax" data-dialog-options="{&quot;width&quot;:800}" data-dialog-type="modal">See all the attributes used</a>.', [
           '@url_used_attribute_list@' => $url_used_attribute_list,
         ]);
 
@@ -1089,6 +1115,14 @@ class BlockClassHelperService {
 
       }
 
+      // Validate if key and value are populated.
+      if (empty($attribute_key) || empty($attribute_value)) {
+
+        $form_state->setErrorByName('multiple_attributes][third_party_settings][block_class][attribute_' . $index . '][attribute_key_' . $index, $this->t('To apply attribute is necessary put "key" and "value"'));
+
+        return FALSE;
+      }
+
       // Search by duplicated attributes.
       $attribute_already_exists = array_search($attribute_key, $attribute_keys);
 
@@ -1289,6 +1323,7 @@ class BlockClassHelperService {
       unset($multiple_items['add_another_item']);
       unset($multiple_items['remove_item']);
       unset($multiple_items['attributes']);
+      unset($multiple_items['multiple_attributes']);
       unset($multiple_items['classes']);
 
       // Run a foreach in all items.

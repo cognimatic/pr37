@@ -22,6 +22,7 @@ datatables:
 bootstrapTable:
   version: 1.21.0
   js:
+    //unpkg.com/tableexport.jquery.plugin/tableExport.min.js: { type: external, minified: true, crossorigin: anonymous }
     //unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js: {type: external, minified: true }
     //cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.21.0/extensions/mobile/bootstrap-table-mobile.min.js: {type: external, minified: true }
     //cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.21.0/extensions/export/bootstrap-table-export.min.js: {type: external, minified: true }

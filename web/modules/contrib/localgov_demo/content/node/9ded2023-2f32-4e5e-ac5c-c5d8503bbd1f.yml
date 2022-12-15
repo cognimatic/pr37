@@ -47,7 +47,7 @@ default:
       value: false
   revision_translation_affected:
     -
-      value: true    
+      value: true
   moderation_state:
     -
       value: published
@@ -408,10 +408,11 @@ default:
             -
               value:
                 layout_paragraphs:
-                  region: ''
-                  parent_uuid: ''
+                  region: 'top'
+                  parent_uuid: e8192108-3bd2-4fec-951c-74d814e8779b
                   layout: ''
                   config: {  }
+                  parent_delta: 4
           localgov_heading_level:
             -
               value: h3

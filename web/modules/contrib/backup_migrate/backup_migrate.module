@@ -342,6 +342,19 @@ function backup_migrate_module_version() {
  * Implements hook_mail().
 */
 function backup_migrate_mail($key, &$message, $params) {
-  $message['subject'] = $key;
-  $message['body'] = $params;
+  if (isset($params['subject'])) {
+    $subject = $params['subject'];
+  }
+  elseif ($key == 'backup_success') {
+    $subject = 'The backup succeeded';
+  }
+  elseif ($key == 'backup_failure') {
+    $subject = 'The backup failed';
+  }
+
+  if (!empty($subject)) {
+    $message['from'] = \Drupal::config('system.site')->get('mail');
+    $message['subject'] = $subject;
+    $message['body'][] = $params['message'];
+  }
 }

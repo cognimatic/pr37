@@ -200,6 +200,10 @@ class BlockClassController extends ControllerBase {
         continue;
       }
 
+      if (empty($attributes)) {
+        $attributes = '';
+      }
+
       // Put one attribute per line.
       $attributes = str_replace(PHP_EOL, '<br>', $attributes);
 
@@ -258,7 +262,7 @@ class BlockClassController extends ControllerBase {
     $table .= '</thead>';
     $table .= '<tbody>';
 
-    $block_classes_stored = [];
+    $block_classes_stored = '';
 
     $config = $this->configFactory->getEditable('block_class.settings');
 
@@ -270,8 +274,10 @@ class BlockClassController extends ControllerBase {
     // Get the array.
     $block_classes_stored = Json::decode($block_classes_stored);
 
-    // Get the array values and id in the keys.
-    $block_classes_stored = array_values($block_classes_stored);
+    if ($block_classes_stored != NULL) {
+      // Get the array values and id in the keys.
+      $block_classes_stored = array_values($block_classes_stored);
+    }
 
     foreach ($block_classes_stored as $block_class) {
 
