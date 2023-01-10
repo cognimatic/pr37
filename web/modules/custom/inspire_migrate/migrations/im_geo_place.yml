@@ -26,35 +26,35 @@ process:
     plugin: skip_on_condition
     condition: empty
     method: row
-    
-  title: 
+  
+  _address:
+    - 
+      plugin: concat
+      source: 
+        - field_location_address/0/address_line1
+        - field_location_address/0/address_line2
+        - field_location_address/0/locality
+        - field_location_address/0/country_code
+      delimiter: ' ' 
     -
+      # Remove multiple spaces
       plugin: str_replace
-      source: title
       regex: true
-      search: '/\r|\n/'
-      replace: ' '   
+      search: '/\s\s+/'
+      replace: ' '
     -
-      plugin: substr
-      length: 40
-      
-  label: '@title'
-  
-  # postal_address/given_name: given_name
-  # postal_address/family_name: family_name
-#  postal_address/organization: field_location_address/organization
-#  postal_address/address_line1: field_location_address/address_line1
-#  postal_address/address_line2: field_location_address/address_line2
-#  postal_address/locality: field_location_address/locality
-#  postal_address/postal_code: field_location_address/postal_code
-#  postal_address/country_code: field_location_address/country_code
-  
-#  location/lat: field_location/lat
-#  location/lng: field_location/lng
-
-  
+      plugin: trim
     
-  location: field_location
+    
+  label: title
+  
+  location: 
+    plugin: if_condition
+    source: field_location
+    condition: not:empty
+    else_process:
+      plugin: geo_code_address
+      source: '@_address'
 
   uid:
       plugin: default_value

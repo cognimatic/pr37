@@ -111,7 +111,6 @@ process:
       search: '/\s\s+/'
       replace: ' '
     -
-    -
       # Remove this plugin before final migration - points to wrong files folder
       plugin: str_replace
       search: '/sites/default/files/'
