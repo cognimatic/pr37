@@ -15,7 +15,7 @@ datatables:
     js/datatables.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupalSettings
 
@@ -39,7 +39,7 @@ googleCharts:
     js/googlecharts.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupalSettings
 
@@ -48,7 +48,7 @@ paste-clipboard:
     js/paste-clipboard.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupalSettings
 
@@ -57,6 +57,6 @@ paragraphsTable:
     js/paragraphsTable.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupalSettings

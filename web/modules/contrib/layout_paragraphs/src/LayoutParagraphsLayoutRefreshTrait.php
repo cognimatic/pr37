@@ -4,7 +4,7 @@ namespace Drupal\layout_paragraphs;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Drupal\layout_paragraphs\Event\LayoutParagraphsUpdateLayoutEvent;
 
 /**
@@ -30,7 +30,7 @@ trait LayoutParagraphsLayoutRefreshTrait {
   /**
    * The event dispatcher service.
    *
-   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+   * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
    */
   protected $eventDispatcher;
 
@@ -97,14 +97,14 @@ trait LayoutParagraphsLayoutRefreshTrait {
    */
   protected function needsRefresh() {
     $event = new LayoutParagraphsUpdateLayoutEvent($this->originalLayoutParagraphsLayout, $this->layoutParagraphsLayout);
-    $this->eventDispatcher()->dispatch(LayoutParagraphsUpdateLayoutEvent::EVENT_NAME, $event);
+    $this->eventDispatcher()->dispatch($event, LayoutParagraphsUpdateLayoutEvent::EVENT_NAME);
     return $event->needsRefresh;
   }
 
   /**
    * Returns the event dispatcher service.
    *
-   * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
+   * @return \Symfony\Contracts\EventDispatcher\EventDispatcherInterface
    *   The event dispatcher service.
    */
   protected function eventDispatcher() {

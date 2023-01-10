@@ -254,6 +254,7 @@ td.checkbox,
 }
 #permissions th {
   position: sticky;
+  z-index: 1;
   top: 39px;
 }
 .toolbar-tray-open.toolbar-horizontal #permissions th {
@@ -311,13 +312,13 @@ html.js .fpa-filter-form {
   display: table;
 }
 .dummy-checkbox {
-  display: none;
+  display: none !important;
 }
 .fpa-authenticated-role-behavior input[type="checkbox"] {
-  display: none;
+  display: none !important;
 }
 .fpa-authenticated-role-behavior input[type="checkbox"].rid-anonymous,
 .fpa-authenticated-role-behavior input[type="checkbox"].rid-authenticated,
 .fpa-authenticated-role-behavior input[type="checkbox"].dummy-checkbox {
-  display: inline-block;
+  display: inline-block !important;
 }

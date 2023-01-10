@@ -1,8 +1,8 @@
-(function ($) {
+(function (Drupal, $, once) {
   Drupal.behaviors.googlecharts = {
     attach: function (context, settings) {
       $.each(settings.googleCharts, function (selector) {
-        $(selector, context).once('googleCharts').each(function () {
+        $(once('googleCharts', selector, context)).each(function () {
           // Check if table contains expandable hidden rows.
           const options = drupalSettings.googleCharts[selector]['options'];
           const type = drupalSettings.googleCharts[selector]['type'];
@@ -49,4 +49,4 @@
     }
   };
 
-})(jQuery);
+}(Drupal, jQuery, once));

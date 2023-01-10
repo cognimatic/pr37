@@ -48,7 +48,7 @@ class MigrateToolsCommands extends DrushCommands {
   /**
    * Migrate message logger.
    */
-  protected ?Drush9LogMigrateMessage $migrateMessage = null;
+  protected ?Drush9LogMigrateMessage $migrateMessage = NULL;
 
   /**
    * MigrateToolsCommands constructor.
@@ -405,11 +405,13 @@ class MigrateToolsCommands extends DrushCommands {
 
     // Take it one group at a time, importing the migrations within each group.
     foreach ($migrations as $group_id => $migration_list) {
-      array_walk(
-        $migration_list,
-        [$this, 'executeMigration'],
-        $options
-      );
+      // Don't execute disabled migrations.
+      foreach ($migration_list as $migration_id => $migration) {
+        if ($migration->getStatus() == MigrationInterface::STATUS_DISABLED) {
+          continue;
+        }
+        $this->executeMigration($migration, $migration_id, $options);
+      }
     }
   }
 
@@ -753,7 +755,7 @@ class MigrateToolsCommands extends DrushCommands {
       foreach ($source->fields() as $machine_name => $description) {
         $table[] = [
           'machine_name' => $machine_name,
-          'description' => strip_tags($description),
+          'description' => strip_tags((string) $description),
         ];
       }
       return new RowsOfFields($table);

@@ -4,14 +4,9 @@ namespace Drupal\entity_hierarchy\Form;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\entity_hierarchy\Information\ParentCandidateInterface;
-use Drupal\entity_hierarchy\Storage\EntityTreeNodeMapperInterface;
-use Drupal\entity_hierarchy\Storage\NestedSetNodeKeyFactory;
-use Drupal\entity_hierarchy\Storage\NestedSetStorageFactory;
 use Drupal\Core\Entity\ContentEntityForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -178,12 +173,6 @@ class HierarchyChildrenForm extends ContentEntityForm {
         $form['children'][$child]['operations']['#links']['edit'] = [
           'title' => t('Edit'),
           'url' => $childEntity->toUrl('edit-form'),
-        ];
-      }
-      if ($childEntity->access('delete') && $childEntity->hasLinkTemplate('delete-form')) {
-        $form['children'][$child]['operations']['#links']['delete'] = [
-          'title' => t('Delete'),
-          'url' => $childEntity->toUrl('delete-form'),
         ];
       }
     }

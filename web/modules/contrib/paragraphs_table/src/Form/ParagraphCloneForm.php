@@ -2,14 +2,56 @@
 
 namespace Drupal\paragraphs_table\Form;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityForm;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Paragraph Clone Form class.
  */
 class ParagraphCloneForm extends ContentEntityForm {
+
+  /**
+   * The entity field manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
+
+  /**
+   * Constructs a BookOutlineForm object.
+   *
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   *   The entity repository.
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface|null $entity_type_bundle_info
+   *   The entity type bundle service.
+   * @param \Drupal\Component\Datetime\TimeInterface|null $time
+   *   The time service.
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
+   *   The entity field manager.
+   */
+  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL, EntityFieldManagerInterface $entity_field_manager) {
+    parent::__construct($entity_repository, $entity_type_bundle_info, $time);
+    $this->entityFieldManager = $entity_field_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity.repository'),
+      $container->get('entity_type.bundle.info'),
+      $container->get('datetime.time'),
+      $container->get('entity_field.manager'),
+    );
+  }
+
   /**
    * The entity being cloned by this form.
    *
@@ -30,7 +72,7 @@ class ParagraphCloneForm extends ContentEntityForm {
 
     // Create a duplicate.
     $paragraph = $this->entity = $this->entity->createDuplicate();
-    $paragraph->set('created', \Drupal::time()->getRequestTime());
+    $paragraph->set('created', $this->time->getRequestTime());
     $paragraph->setOwnerId($account->id());
     $paragraph->setRevisionAuthorId($account->id());
   }
@@ -48,8 +90,7 @@ class ParagraphCloneForm extends ContentEntityForm {
     $parent = $host->id();
     $field = $entity->get('parent_field_name')->value;
 
-    $entityFieldManager = \Drupal::service('entity_field.manager')
-      ->getFieldDefinitions($entity_type, $bundle);
+    $entityFieldManager = $this->entityFieldManager->getFieldDefinitions($entity_type, $bundle);
 
     $form['#title'] = $this->t('Clone %type item %id', [
       '%type' => $entityFieldManager[$field]->getLabel(),

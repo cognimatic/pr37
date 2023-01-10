@@ -53,7 +53,7 @@ namespace Drupal\Tests\migrate_tools\Kernel {
       'sync' => FALSE,
     ];
 
-    private ?MigrateToolsCommands $commands = null;
+    private ?MigrateToolsCommands $commands = NULL;
     private MigrationPluginManagerInterface $migrationPluginManager;
 
     /**
@@ -96,8 +96,8 @@ namespace Drupal\Tests\migrate_tools\Kernel {
       $this->assertSame(3, $row['imported']);
       $this->assertSame('Idle', $row['status']);
 
-      // Migrate status should not display migrate_drupal migrations if no source
-      // database is defined.
+      // Migrate status should not display migrate_drupal migrations if no
+      // source database is defined.
       \Drupal::service('module_installer')->uninstall([
         'migrate_tools_test',
       ]);

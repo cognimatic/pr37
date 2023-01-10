@@ -91,7 +91,7 @@ class LpHostEntityListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var $entity \Drupal\layout_paragraphs_custom_host_entity_test\LpHostEntityInterface */
+    /** @var \Drupal\layout_paragraphs_custom_host_entity_test\LpHostEntityInterface $entity */
     $row['id'] = $entity->id();
     $row['title'] = $entity->toLink();
     $row['status'] = $entity->isEnabled() ? $this->t('Enabled') : $this->t('Disabled');

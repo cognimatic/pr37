@@ -25,8 +25,8 @@ function layout_paragraphs_custom_host_entity_test_theme() {
  *
  * @param array $variables
  *   An associative array containing:
- *   - elements: An associative array containing the lp host entity information and any
- *     fields attached to the entity.
+ *   - elements: An associative array containing the lp host entity information
+ *     and any fields attached to the entity.
  *   - attributes: HTML attributes for the containing element.
  */
 function template_preprocess_lp_host_entity(array &$variables) {

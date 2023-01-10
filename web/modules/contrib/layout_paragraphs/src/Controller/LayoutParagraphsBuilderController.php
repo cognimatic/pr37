@@ -7,11 +7,13 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Ajax\AjaxHelperTrait;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Symfony\Component\HttpFoundation\Request;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\layout_paragraphs\LayoutParagraphsLayout;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\layout_paragraphs\Ajax\LayoutParagraphsEventCommand;
 use Drupal\layout_paragraphs\LayoutParagraphsLayoutTempstoreRepository;
 
 /**
@@ -67,6 +69,8 @@ class LayoutParagraphsBuilderController extends ControllerBase {
   /**
    * Builds the layout paragraphs builder form.
    *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The HTTP request object.
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *   The parent entity that contains a layout.
    * @param string $field_name
@@ -77,16 +81,19 @@ class LayoutParagraphsBuilderController extends ControllerBase {
    * @return mixed
    *   An ajax response or the form.
    */
-  public function build(ContentEntityInterface $entity, $field_name, $view_mode) {
-
-    $layout_paragraphs_layout = $this->getLayoutParagraphsLayout($entity, $field_name, $view_mode);
+  public function build(Request $request, ContentEntityInterface $entity, $field_name, $view_mode) {
     $form = $this->formBuilder()->getForm(
       '\Drupal\layout_paragraphs\Form\LayoutParagraphsBuilderForm',
-      $layout_paragraphs_layout
+      $entity,
+      $field_name,
+      $view_mode
     );
     if ($this->isAjax()) {
+      $lpb_classname = $request->query->get('lpb-classname', NULL);
+      $layout = $form['layout_paragraphs_builder_ui']['#layout_paragraphs_layout'];
       $response = new AjaxResponse();
-      $response->addCommand(new ReplaceCommand('[data-lpb-id="' . $layout_paragraphs_layout->id() . '"]', $form));
+      $response->addCommand(new ReplaceCommand('.' . $lpb_classname, $form));
+      $response->addCommand(new LayoutParagraphsEventCommand($layout, '', 'builder:open'));
       return $response;
     }
     return $form;
@@ -101,34 +108,12 @@ class LayoutParagraphsBuilderController extends ControllerBase {
    *   The parent entity that contains a layout.
    * @param string $field_name
    *   The name of the reference field.
-   * @param string $view_mode
-   *   The view mode.
    *
    * @return \Drupal\Core\Access\AccessResult
    *   The access result.
    */
-  public function access(AccountInterface $account, ContentEntityInterface $entity, $field_name, $view_mode) {
-    return $this->layoutParagraphsBuilderAccess->access($account, $this->getLayoutParagraphsLayout($entity, $field_name, $view_mode));
-  }
-
-  /**
-   * Returns a layout paragraphs layout.
-   *
-   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
-   *   The entity.
-   * @param string $field_name
-   *   The reference field name.
-   * @param string $view_mode
-   *   The view mode.
-   *
-   * @return \Drupal\layout_paragraphs\LayoutParagraphsLayout
-   *   The layout.
-   */
-  protected function getLayoutParagraphsLayout(ContentEntityInterface $entity, string $field_name, string $view_mode) {
-    $render_display = EntityViewDisplay::collectRenderDisplay($entity, $view_mode);
-    $renderer = $render_display->getRenderer($field_name);
-    $layout_paragraphs_settings = $renderer->getSettings() + ['reference_field_view_mode' => $view_mode];
-    return new LayoutParagraphsLayout($entity->{$field_name}, $layout_paragraphs_settings);
+  public function access(AccountInterface $account, ContentEntityInterface $entity, $field_name) {
+    return $this->layoutParagraphsBuilderAccess->access($account, new LayoutParagraphsLayout($entity->$field_name));
   }
 
 }

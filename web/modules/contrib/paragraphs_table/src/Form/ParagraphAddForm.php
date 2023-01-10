@@ -8,14 +8,17 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\field_group\FormatterHelper;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphsTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class InsertComponentForm.
@@ -53,12 +56,43 @@ class ParagraphAddForm extends ContentEntityForm {
   protected $hostField;
 
   /**
+   * The current route match.
+   *
+   * @var \Drupal\Core\Routing\RouteMatchInterface
+   */
+  protected $routeMatch;
+
+  /**
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * The current Request object.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request
+   */
+  protected $requestStack;
+
+  /**
+   * The entity being cloned by this form.
+   *
+   * @var \Drupal\paragraphs\ParagraphInterface
+   */
+  protected $originalEntity;
+
+  /**
    * {@inheritDoc}
    */
-  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, ModuleHandlerInterface $module_handler) {
+  public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time, ModuleHandlerInterface $module_handler, EntityTypeManagerInterface $entity_type_manager, RouteMatchInterface $route_match, Request $request) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
     $this->setModuleHandler($module_handler);
-    $paragraph_type = \Drupal::routeMatch()->getParameter('paragraph_type');
+    $this->routeMatch = $route_match;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->requestStack = $request;
+    $paragraph_type = $route_match->getParameter('paragraph_type');
     if (!empty($paragraph_type)) {
       $this->setParagraph($this->newParagraph($paragraph_type));
     }
@@ -73,6 +107,9 @@ class ParagraphAddForm extends ContentEntityForm {
       $container->get('entity_type.bundle.info'),
       $container->get('datetime.time'),
       $container->get('module_handler'),
+      $container->get('entity_type.manager'),
+      $container->get('current_route_match'),
+      $container->get('request_stack')->getCurrentRequest()
     );
   }
 
@@ -98,13 +135,6 @@ class ParagraphAddForm extends ContentEntityForm {
   }
 
   /**
-   * The entity being cloned by this form.
-   *
-   * @var \Drupal\paragraphs\ParagraphInterface
-   */
-  protected $originalEntity;
-
-  /**
    * {@inheritdoc}
    */
   protected function prepareEntity() {
@@ -117,7 +147,7 @@ class ParagraphAddForm extends ContentEntityForm {
 
     // Create a duplicate.
     $paragraph = $this->entity = $this->entity->createDuplicate();
-    $paragraph->set('created', \Drupal::time()->getRequestTime());
+    $paragraph->set('created', $this->time->getRequestTime());
     $paragraph->setOwnerId($account->id());
     $paragraph->setRevisionAuthorId($account->id());
   }
@@ -126,13 +156,13 @@ class ParagraphAddForm extends ContentEntityForm {
    * {@inheritDoc}
    *
    * @param array $form
-   *   The form array.
+   *   The form arrays.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The layout paragraphs layout object.
    * @param \Drupal\paragraphs\Entity\Paragraph $paragraph
    *   The paragraph entity.
    * @param string $host_type
-   *   The entity type.
+   *   The entity types.
    * @param string $host_field
    *   The entity field.
    * @param int $host_id
@@ -155,7 +185,7 @@ class ParagraphAddForm extends ContentEntityForm {
     if (!$form_state->has('entity_form_initialized')) {
       $this->init($form_state);
     }
-    $this->host = \Drupal::entityTypeManager()->getStorage($host_type)->load($host_id);
+    $this->host = $this->entityTypeManager->getStorage($host_type)->load($host_id);
     $this->entity = $paragraph;
     $this->hostField = $host_field;
     $param = [$paragraph->getEntityTypeId(), $host_type, $host_field, $host_id];
@@ -194,7 +224,7 @@ class ParagraphAddForm extends ContentEntityForm {
     $display = EntityFormDisplay::collectRenderDisplay($this->entity, $form_mode);
     $form_state->set('form_display', $display);
     $display->buildForm($this->entity, $form, $form_state);
-    $formatTable = \Drupal::request()->get('formatTable');
+    $formatTable = $this->requestStack->get('formatTable');
     if ($formatTable) {
       $fields = [];
       $header = [];
@@ -219,6 +249,9 @@ class ParagraphAddForm extends ContentEntityForm {
         }
         if (empty($headerTitle) && !empty($field[0]['#title'])) {
           $headerTitle = $field[0]['#title'];
+        }
+        if (empty($headerTitle) && !empty($field["widget"]['target_id']['#title'])) {
+          $headerTitle = $field["widget"]['target_id']['#title'];
         }
         $header[$fieldName] = $headerTitle;
         $form['paragraphTableAdd'][0][$fieldName] = $field;
@@ -266,8 +299,7 @@ class ParagraphAddForm extends ContentEntityForm {
 
     // Support for Field Group module based on Paragraphs module.
     // @todo Remove as part of https://www.drupal.org/node/2640056
-    $moduleHandler = \Drupal::service('module_handler');
-    if ($moduleHandler->moduleExists('field_group')) {
+    if ($this->moduleHandler->moduleExists('field_group')) {
       $context = [
         'entity_type' => $this->entity->getEntityTypeId(),
         'bundle' => $this->entity->bundle(),
@@ -330,12 +362,7 @@ class ParagraphAddForm extends ContentEntityForm {
     $paragraph->save();
     $this->host->get($this->hostField)->appendItem($paragraph);
     $this->host->save();
-    /*
-     * $this->entity = \Drupal::entityTypeManager()
-     * ->getStorage($this->entity->getEntityTypeId())
-     * ->loadUnchanged($this->entity->id());
-     */
-    $request = $this->getRequest();
+    $request = $this->requestStack;
     if (!empty($request->query) && $request->query->has('destination')) {
       $destination = $request->query->get('destination');
       if (strpos($destination, '/') !== 0) {
@@ -382,11 +409,10 @@ class ParagraphAddForm extends ContentEntityForm {
    *   The new paragraph.
    */
   protected function newParagraph(ParagraphsTypeInterface $paragraph_type) {
-    $entityTypeManager = \Drupal::entityTypeManager();
-    $entity_type = $entityTypeManager->getDefinition('paragraph');
+    $entity_type = $this->entityTypeManager->getDefinition('paragraph');
     $bundle_key = $entity_type->getKey('bundle');
     /** @var \Drupal\paragraphs\ParagraphInterface $paragraph_entity */
-    $paragraph = $entityTypeManager->getStorage('paragraph')
+    $paragraph = $this->entityTypeManager->getStorage('paragraph')
       ->create([$bundle_key => $paragraph_type->id()]);
     return $paragraph;
   }

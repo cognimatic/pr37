@@ -3,7 +3,6 @@
 namespace Drupal\entity_hierarchy_microsite\Plugin\Block;
 
 use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\entity_hierarchy_microsite\Plugin\MicrositePluginTrait;
@@ -27,30 +26,6 @@ class MicrositeMenu extends SystemMenuBlock implements ContainerFactoryPluginInt
 
   use MicrositePluginTrait {
     create as traitCreate;
-    buildConfigurationForm as traitBuildConfigurationForm;
-    submitConfigurationForm as traitSubmitConfigurationForm;
-    defaultConfiguration as traitDefaultConfiguration;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function defaultConfiguration() {
-    return parent::defaultConfiguration() + $this->traitDefaultConfiguration();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    return parent::buildConfigurationForm($form, $form_state) + $this->traitBuildConfigurationForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    return parent::submitConfigurationForm($form, $form_state) + $this->traitSubmitConfigurationForm($form, $form_state);
   }
 
   /**
@@ -117,7 +92,6 @@ class MicrositeMenu extends SystemMenuBlock implements ContainerFactoryPluginInt
       if (count($parameters->activeTrail) >= $level) {
         // Active trail array is child-first. Reverse it, and pull the new menu
         // root based on the parent of the configured start level.
-        $menu_trail_ids = array_reverse(array_values($parameters->activeTrail));
         if ($depth > 0) {
           $parameters->setMaxDepth(min($level - 1 + $depth - 1, $this->menuTree->maxDepth()));
         }

@@ -455,7 +455,9 @@ class EntityReferenceItemTest extends FieldKernelTestBase {
     ]);
 
     $errors = $entity->validate();
-    $this->assertCount(0, $errors);
+    $this->assertCount(1, $errors);
+    $this->assertEquals(new FormattableMarkup('This entity (%type: %label) cannot be referenced.', ['%type' => 'node', '%label' => $title]), $errors[0]->getMessage());
+    $this->assertEquals('field_test_node.0.entity', $errors[0]->getPropertyPath());
 
     // Publish the node and try again.
     $node->setPublished();
@@ -501,13 +503,19 @@ class EntityReferenceItemTest extends FieldKernelTestBase {
     ]);
 
     $errors = $entity->validate();
-    $this->assertCount(0, $errors);
+    $this->assertCount(2, $errors);
+    $this->assertEquals(new FormattableMarkup('This entity (%type: %label) cannot be referenced.', ['%type' => 'node', '%label' => $unsaved_unpublished_node_title]), $errors[0]->getMessage());
+    $this->assertEquals('field_test_node.0.entity', $errors[0]->getPropertyPath());
+    $this->assertEquals(new FormattableMarkup('This entity (%type: %label) cannot be referenced.', ['%type' => 'node', '%label' => $saved_unpublished_node->id()]), $errors[1]->getMessage());
+    $this->assertEquals('field_test_node.1.target_id', $errors[1]->getPropertyPath());
 
     // Publish one of the nodes and try again.
     $saved_unpublished_node->setPublished();
     $saved_unpublished_node->save();
     $errors = $entity->validate();
-    $this->assertCount(0, $errors);
+    $this->assertCount(1, $errors);
+    $this->assertEquals(new FormattableMarkup('This entity (%type: %label) cannot be referenced.', ['%type' => 'node', '%label' => $unsaved_unpublished_node_title]), $errors[0]->getMessage());
+    $this->assertEquals('field_test_node.0.entity', $errors[0]->getPropertyPath());
 
     // Publish the last invalid node and try again.
     $unsaved_unpublished_node->setPublished();

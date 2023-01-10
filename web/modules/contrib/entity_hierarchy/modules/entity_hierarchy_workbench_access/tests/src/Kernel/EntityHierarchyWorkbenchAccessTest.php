@@ -49,7 +49,7 @@ class EntityHierarchyWorkbenchAccessTest extends EntityHierarchyKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'entity_hierarchy',
     'system',
     'user',
@@ -67,7 +67,7 @@ class EntityHierarchyWorkbenchAccessTest extends EntityHierarchyKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     EntityKernelTestBase::setUp();
     $this->installEntitySchema(static::ENTITY_TYPE);
     $this->installEntitySchema('section_association');
@@ -147,7 +147,7 @@ class EntityHierarchyWorkbenchAccessTest extends EntityHierarchyKernelTestBase {
   /**
    * Tests integration.
    */
-  public function testWorkbenchAccessIntegration() {
+  public function testWorkbenchAccessIntegration(): void {
     // Get UID 1 out of the way.
     $root = $this->createUser();
     $this->container->get('account_switcher')->switchTo($root);

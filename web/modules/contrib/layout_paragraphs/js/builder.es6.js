@@ -19,7 +19,7 @@
       const { element, method } = uiElement;
       $container[method]($(element).addClass('js-lpb-ui'));
     });
-    Drupal.behaviors.AJAX.attach($container[0], drupalSettings);
+    Drupal.attachBehaviors($container[0], drupalSettings);
   }
 
   /**

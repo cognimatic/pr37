@@ -31,7 +31,7 @@ class ChooseComponentController extends ControllerBase {
   /**
    * The entity type bundle info service.
    *
-   * @var Drupal\Core\Entity\EntityTypeBundleInfo
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfo
    */
   protected $entityTypeBundleInfo;
 
@@ -77,17 +77,10 @@ class ChooseComponentController extends ControllerBase {
    *   The build array.
    */
   public function list(Request $request, LayoutParagraphsLayout $layout_paragraphs_layout) {
-
-    $route_name = 'layout_paragraphs.builder.insert';
     $route_params = [
       'layout_paragraphs_layout' => $layout_paragraphs_layout->id(),
     ];
-    $query_params = [
-      'parent_uuid' => $request->query->get('parent_uuid', NULL),
-      'region' => $request->query->get('region', NULL),
-      'sibling_uuid' => $request->query->get('sibling_uuid', NULL),
-      'placement' => $request->query->get('placement', NULL),
-    ];
+    $query_params = $this->getQueryParams($request);
     // If inserting a new item adjecent to a sibling component, the region
     // passed in the URL will be incorrect if the existing sibling component
     // was dragged into another region. In that case, always use the existing
@@ -100,26 +93,61 @@ class ChooseComponentController extends ControllerBase {
     // If there is only one type to render,
     // return the component form instead of a list of links.
     if (count($types) === 1) {
-      $type_name = key($types);
-      $type = $this->entityTypeManager()->getStorage('paragraphs_type')->load($type_name);
-      $form = $this->formBuilder()->getForm(
-        '\Drupal\layout_paragraphs\Form\InsertComponentForm',
-        $layout_paragraphs_layout,
-        $type,
-        $query_params['parent_uuid'],
-        $query_params['region'],
-        $query_params['sibling_uuid'],
-        $query_params['placement']
-      );
-      if ($this->isAjax()) {
-        $response = new AjaxResponse();
-        $selector = Dialog::dialogSelector($layout_paragraphs_layout);
-        $response->addCommand(new OpenDialogCommand($selector, $form['#title'], $form, Dialog::dialogSettings()));
-        return $response;
-      }
-      return $form;
+      return $this->componentForm(key($types), $layout_paragraphs_layout, $query_params);
     }
+    else {
+      return $this->componentMenu($types, $route_params, $query_params);
+    }
+  }
 
+  /**
+   * Returns a layout paragraphs component form using Ajax if appropriate.
+   *
+   * @param string $type_name
+   *   The component (paragraph) type.
+   * @param \Drupal\layout_paragraphs\LayoutParagraphsLayout $layout_paragraphs_layout
+   *   The layout paragraphs layout object.
+   * @param array $query_params
+   *   An array of query parameters.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse|array
+   *   An ajax response or form render array.
+   */
+  protected function componentForm(string $type_name, LayoutParagraphsLayout $layout_paragraphs_layout, array $query_params) {
+    $type = $this->entityTypeManager()->getStorage('paragraphs_type')->load($type_name);
+    $form = $this->formBuilder()->getForm(
+      '\Drupal\layout_paragraphs\Form\InsertComponentForm',
+      $layout_paragraphs_layout,
+      $type,
+      $query_params['parent_uuid'],
+      $query_params['region'],
+      $query_params['sibling_uuid'],
+      $query_params['placement']
+    );
+    if ($this->isAjax()) {
+      $response = new AjaxResponse();
+      $selector = Dialog::dialogSelector($layout_paragraphs_layout);
+      $response->addCommand(new OpenDialogCommand($selector, $form['#title'], $form, Dialog::dialogSettings()));
+      return $response;
+    }
+    return $form;
+  }
+
+  /**
+   * Returns a rendered menu of component types.
+   *
+   * @param array $types
+   *   The component types.
+   * @param array $route_params
+   *   The route parameters.
+   * @param array $query_params
+   *   The query parameters.
+   *
+   * @return array
+   *   The component menu render array.
+   */
+  protected function componentMenu(array $types, array $route_params, array $query_params) {
+    $route_name = 'layout_paragraphs.builder.insert';
     foreach ($types as &$type) {
       $url_route_params = $route_params + ['paragraph_type' => $type['id']];
       $url_options = ['query' => $query_params];
@@ -128,7 +156,6 @@ class ChooseComponentController extends ControllerBase {
         'class' => ['use-ajax'],
       ]);
     }
-
     $section_components = array_filter($types, function ($type) {
       return $type['is_section'] === TRUE;
     });
@@ -156,7 +183,24 @@ class ChooseComponentController extends ControllerBase {
       ],
     ];
     return $component_menu;
+  }
 
+  /**
+   * Returns an array of the query parameters to be paseed to a component form.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request object.
+   *
+   * @return array
+   *   An array of query paramters.
+   */
+  protected function getQueryParams(Request $request) {
+    return [
+      'parent_uuid' => $request->query->get('parent_uuid', NULL),
+      'region' => $request->query->get('region', NULL),
+      'sibling_uuid' => $request->query->get('sibling_uuid', NULL),
+      'placement' => $request->query->get('placement', NULL),
+    ];
   }
 
   /**
@@ -180,7 +224,7 @@ class ChooseComponentController extends ControllerBase {
     // @todo Document and add tests for what is happening here.
     $component_types = $this->getComponentTypes($layout);
     $event = new LayoutParagraphsAllowedTypesEvent($component_types, $layout, $parent_uuid, $region);
-    $this->eventDispatcher->dispatch(LayoutParagraphsAllowedTypesEvent::EVENT_NAME, $event);
+    $this->eventDispatcher->dispatch($event, LayoutParagraphsAllowedTypesEvent::EVENT_NAME);
     return $event->getTypes();
   }
 
@@ -259,7 +303,7 @@ class ChooseComponentController extends ControllerBase {
       foreach ($bundles as $machine_name => $bundle) {
         $return_bundles[$machine_name] = [
           'label' => $bundle['label'],
-          'weight' => isset($drag_drop_settings[$machine_name]['weight']) ? $drag_drop_settings[$machine_name]['weight'] : $weight,
+          'weight' => $drag_drop_settings[$machine_name]['weight'] ?? $weight,
         ];
         $weight++;
       }

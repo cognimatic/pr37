@@ -4,9 +4,17 @@ namespace Drupal\paragraphs_table\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityReferenceSelection\SelectionPluginManagerInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Form\FormState;
+use Drupal\Core\Path\CurrentPathStack;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Cache\CacheableMetadata;
@@ -18,6 +26,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Plugin implementation of the 'paragraphs_table_formatter' formatter.
@@ -60,6 +69,69 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
   protected $entityDisplayRepository;
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
+   * The renderer service.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
+   * The module handler service.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
+   * The current path.
+   *
+   * @var \Drupal\Core\Path\CurrentPathStack
+   */
+  protected $currentPath;
+
+  /**
+   * Entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * The selection plugin manager.
+   *
+   * @var \Drupal\Core\Entity\EntityReferenceSelection\SelectionPluginManagerInterface
+   */
+  protected $selectionManager;
+
+  /**
+   * The current Request object.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request
+   */
+  protected $requestStack;
+
+  /**
+   * The entity field manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected $entityFieldManager;
+
+  /**
+   * The entity type bundle info service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
+   */
+  protected $entityTypeBundleInfo;
+
+  /**
    * Constructs a FormatterBase object.
    *
    * @param string $plugin_id
@@ -78,10 +150,37 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
    *   Any third party settings.
    * @param \Drupal\Core\Entity\EntityDisplayRepositoryInterface $entity_display_repository
    *   The entity display repository.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The render service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   The current user.
+   * @param \Drupal\Core\Path\CurrentPathStack $current_path
+   *   The current path.
+   * @param \Drupal\Core\Entity\EntityReferenceSelection\SelectionPluginManagerInterface $selection_manager
+   *   The selection plugin manager.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
+   *   The entity field manager.
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
+   *   The entity type bundle service.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityDisplayRepositoryInterface $entity_display_repository) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityDisplayRepositoryInterface $entity_display_repository, RendererInterface $renderer, ModuleHandlerInterface $module_handler, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, CurrentPathStack $current_path, SelectionPluginManagerInterface $selection_manager, Request $request, EntityFieldManagerInterface $entity_field_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->entityDisplayRepository = $entity_display_repository;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->renderer = $renderer;
+    $this->moduleHandler = $module_handler;
+    $this->currentUser = $current_user;
+    $this->currentPath = $current_path;
+    $this->selectionManager = $selection_manager;
+    $this->requestStack = $request;
+    $this->entityFieldManager = $entity_field_manager;
+    $this->entityTypeBundleInfo = $entity_type_bundle_info;
   }
 
   /**
@@ -96,7 +195,16 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
-      $container->get('entity_display.repository')
+      $container->get('entity_display.repository'),
+      $container->get('renderer'),
+      $container->get('module_handler'),
+      $container->get('entity_type.manager'),
+      $container->get('current_user'),
+      $container->get('path.current'),
+      $container->get('plugin.manager.entity_reference_selection'),
+      $container->get('request_stack')->getCurrentRequest(),
+      $container->get('entity_field.manager'),
+      $container->get('entity_type.bundle.info')
     );
   }
 
@@ -250,17 +358,21 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     $options_number_field = [];
     $target_type = $this->getFieldSetting('target_type');
     $field_name = $this->fieldDefinition->getName();
-    $entity_type = $form["#entity_type"];
-    $bundle = $form["#bundle"];
-    $entityFieldManager = \Drupal::service('entity_field.manager');
-    $fieldDefinitions = $entityFieldManager->getFieldDefinitions($entity_type, $bundle);
+    $entity_type = $this->fieldDefinition->getTargetEntityTypeId();
+    $bundle_info = $this->entityTypeBundleInfo->getBundleInfo($entity_type);
+    foreach ($bundle_info as $bundle => $label) {
+      $fieldDefinitions = $this->entityFieldManager->getFieldDefinitions($entity_type, $bundle);
+      if (!empty($fieldDefinitions[$field_name])) {
+        break;
+      }
+    }
     if (!empty($fieldDefinitions[$field_name])) {
       $target_bundles = $fieldDefinitions[$field_name]->getSettings()["handler_settings"]["target_bundles"];
       $target_bundle = current($target_bundles);
-      $paragraphs_entity = \Drupal::entityTypeManager()->getStorage($target_type)
+      $paragraphs_entity = $this->entityTypeManager->getStorage($target_type)
         ->create(['type' => $target_bundle]);
       $field_definitions = $paragraphs_entity->getFieldDefinitions();
-      $typSupport = ['integer', 'number', 'number_integer', 'bigint_item_default',
+      $typSupport = ['integer', 'number', 'number_integer', 'bigint',
         'float', 'list_float', 'decimal',
       ];
       foreach ($field_definitions as $fieldName => $field_definition) {
@@ -287,7 +399,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
         ],
       ];
     }
-    if (\Drupal::service('module_handler')->moduleExists('quick_data')) {
+    if ($this->moduleHandler->moduleExists('quick_data')) {
       $settingForm['import'] = [
         '#title' => $this->t('Import link title'),
         '#description' => $this->t("Leave it blank if you don't want to import csv data"),
@@ -309,7 +421,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     $summary[] = $this->t('Rendered as @view_mode', ['@view_mode' => !empty($view_modes[$view_mode]) ? $view_modes[$view_mode] : $view_mode]);
 
     if (!empty($this->getSetting('caption'))) {
-      $summary[] = $this->t('Caption') . ': ' . strip_tags($this->getSetting('caption'));
+      $summary[] = $this->t('Caption: @caption', ['@caption' => strip_tags($this->getSetting('caption'))]);
     }
     if (!empty($this->getSetting('vertical'))) {
       $summary[] = $this->t('Table mode vertical');
@@ -349,7 +461,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     $targetType = $this->getFieldSetting('target_type');
     $field_definition = $items->getFieldDefinition();
     // Support field permission.
-    if (\Drupal::moduleHandler()->moduleExists('field_permissions')) {
+    if ($this->moduleHandler->moduleExists('field_permissions')) {
       $this->setCustomPermissions($field_definition, $items);
       if (!$this->customPermissions['view']) {
         return [];
@@ -360,7 +472,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     // In edit Mode if entity have multiple paragraphs table
     // we will have 1st paragraphs field.
     $field_name_current = $field_definition->getName();
-    $request = \Drupal::request()->request;
+    $request = $this->requestStack->request;
     if ($field_name_current != $trigger_name = $request->get('_triggering_add_paragraphs')) {
       if ($entity->hasField($trigger_name) && empty($request->get('edit_' . $trigger_name))) {
         $items = $entity->get($trigger_name);
@@ -383,7 +495,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     }
 
     // Context for header or footer.
-    $selectionHandler = \Drupal::service('plugin.manager.entity_reference_selection')->getSelectionHandler($field_definition);
+    $selectionHandler = $this->selectionManager->getSelectionHandler($field_definition);
     $bundles = $selectionHandler->entityTypeBundleInfo->getBundleInfo($targetType);
 
     $type = key($handler["target_bundles"]);
@@ -398,12 +510,11 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     foreach ($handler["target_bundles"] as $targetBundle) {
       $table = $table_header = $fields = [];
       /** @var \Drupal\paragraphs\ParagraphInterface $paragraphs_entity */
-      $paragraphs_entity = \Drupal::entityTypeManager()->getStorage($targetType)
+      $paragraphs_entity = $this->entityTypeManager->getStorage($targetType)
         ->create(['type' => $targetBundle]);
       $field_definitions = $paragraphs_entity->getFieldDefinitions();
       $view_mode = $setting['view_mode'];
-      $viewDisplay = \Drupal::service('entity_display.repository')
-        ->getViewDisplay($targetType, $targetBundle, $view_mode);
+      $viewDisplay = $this->entityDisplayRepository->getViewDisplay($targetType, $targetBundle, $view_mode);
       $components = $viewDisplay->getComponents();
       uasort($components, 'Drupal\Component\Utility\SortArray::sortByWeightElement');
 
@@ -587,17 +698,17 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
 
       }
       // Alter table results.
-      \Drupal::moduleHandler()
+      $this->moduleHandler
         ->alter('paragraphs_table_formatter', $table, $table_id);
       $output[] = $table;
     }
     $addButton = NULL;
-    $userRoles = \Drupal::currentUser()->getRoles();
+    $userRoles = $this->currentUser->getRoles();
     $cardinality = $field_definition->getFieldStorageDefinition()->get('cardinality');
     if ($entityId &&
       (($hasPermission && $this->customPermissions['create']) || in_array('administrator', $userRoles)) &&
       ($cardinality == -1 || $cardinality > $items->count())) {
-      $destination = \Drupal::service('path.current')->getPath();
+      $destination = $this->currentPath->getPath();
       $dialog_width = 800;
       $addButton = [
         '#type' => 'container',
@@ -630,10 +741,15 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
         ],
       ];
       if (!empty($setting["import"]) &&
-        \Drupal::service('module_handler')->moduleExists('quick_data')) {
+        $this->moduleHandler->moduleExists('quick_data')) {
         $addButton['import-button'] = [
           '#type' => 'link',
-          '#title' => Markup::create('<i class="bi bi-filetype-csv"></i> ' . $this->t($setting["import"])),
+          '#title' => Markup::create(
+            implode(' ', [
+              '<i class="bi bi-filetype-csv"></i>',
+              $this->t('@import', ['@import' => $setting["import"]]),
+            ])
+          ),
           '#url' => Url::fromRoute('quick_data.paragraph.import', $params = [
             'type' => $targetType,
             'bundle' => $field_definition->getTargetEntityTypeId(),
@@ -749,7 +865,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
   protected function getEntities(FieldItemListInterface $items) {
     $entity_type = $this->fieldDefinition->getFieldStorageDefinition()
       ->getSetting('target_type');
-    $entity_storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+    $entity_storage = $this->entityTypeManager->getStorage($entity_type);
     $entities = [];
     foreach ($items as $item) {
       $entity_id = $item->getValue()['target_id'];
@@ -780,7 +896,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
    * {@inheritdoc}
    */
   public function getData($type, $bundle, $entities, $fields, &$notEmptyColumn, $view_mode = 'default') {
-    $storage = \Drupal::entityTypeManager()->getStorage('entity_view_display');
+    $storage = $this->entityTypeManager->getStorage('entity_view_display');
     // When a display renderer doesn't exist, fall back to the default.
     $renderer = $storage->load(implode('.', [$type, $bundle, $view_mode]));
     $setting = $this->getSettings();
@@ -789,7 +905,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
       $table_entity = $renderer->build($entitie);
       foreach ($fields as $field_name => $field) {
         $table_entity[$field_name]['#label_display'] = 'hidden';
-        $value = trim(strip_tags(\Drupal::service('renderer')->render($table_entity[$field_name])));
+        $value = trim(strip_tags($this->renderer->render($table_entity[$field_name])));
         if (in_array($field->getType(), [
           'integer',
           'list_integer',
@@ -881,10 +997,10 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
   }
 
   /**
-   * Prepare all of the given entities for rendering with applicable fields.
+   * Prepare all the given entities for rendering with applicable fields.
    */
   protected function getPreparedRenderedEntities($type, $bundle, $entities, $fields, &$notEmptyColumn, $view_mode = 'default', $show_operation = FALSE) {
-    $storage = \Drupal::entityTypeManager()->getStorage('entity_view_display');
+    $storage = $this->entityTypeManager->getStorage('entity_view_display');
     // When a display renderer doesn't exist, fall back to the default.
     $renderer = $storage->load(implode('.', [$type, $bundle, $view_mode]));
     if (empty($renderer)) {
@@ -901,7 +1017,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
       $paragraphs_id = $entity->get('id')->value;
       foreach ($fields as $field_name => $field) {
         $table_entity[$field_name]['#label_display'] = 'hidden';
-        $value = \Drupal::service('renderer')->render($table_entity[$field_name]);
+        $value = $this->renderer->render($table_entity[$field_name]);
         if (!empty($value)) {
           $notEmptyColumn[$field_name] = TRUE;
         }
@@ -999,7 +1115,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
         ],
       ],
     ];
-    $userRoles = \Drupal::currentUser()->getRoles();
+    $userRoles = $this->currentUser->getRoles();
     if (!in_array('administrator', $userRoles)) {
       if (!$this->customPermissions['edit']) {
         unset($operation['#links']['edit']);
@@ -1014,9 +1130,9 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     }
 
     // Alter row operation.
-    \Drupal::moduleHandler()
+    $this->moduleHandler
       ->alter('paragraphs_table_operations', $operation, $paragraphsId);
-    return \Drupal::service('renderer')->render($operation);
+    return $this->renderer->render($operation);
   }
 
   /**
@@ -1308,7 +1424,7 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
       ->getThirdPartySettings('field_permissions');
     $this->typePermission = !empty($field_permissions_type['permission_type']) ? $field_permissions_type['permission_type'] : FALSE;
     if ($this->typePermission == 'custom') {
-      $user = \Drupal::currentUser();
+      $user = $this->currentUser;
       $fieldName = $field_definition->getName();
       $this->customPermissions['create'] = $user->hasPermission('create ' . $fieldName);
       $this->customPermissions['view'] = $user->hasPermission('view ' . $fieldName);

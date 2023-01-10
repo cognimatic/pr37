@@ -1,8 +1,8 @@
-(function ($) {
+(function (Drupal, $, once) {
   Drupal.behaviors.paragraphsTable = {
     attach: function (context, settings) {
       $.each(settings.paragraphsTable, function (selector) {
-        $(selector, context).once('paragraphsTable').each(function () {
+        $(once('paragraphsTable', selector, context)).each(function () {
           const settings = drupalSettings.paragraphsTable[selector];
           $.getJSON( settings['url'], function ( data ) {
             let row,tbody = [];
@@ -21,4 +21,4 @@
     }
   };
 
-})(jQuery);
+}(Drupal, jQuery, once));

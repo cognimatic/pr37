@@ -80,8 +80,9 @@ class EntityController extends ControllerBase {
     $ids[$entity->id()] = $entity;
     $this->tempStoreFactory->get('convert_bundles_ids')
       ->set($this->currentUser, $ids);
+    $basepath = \Drupal::request()->getBasePath() ?? '';
 
-    return $this->redirect('convert_bundles.form', [], ['query' => ['destination' => '/' . $entity->getEntityTypeId() . '/' . $entity->id()]]);
+    return $this->redirect('convert_bundles.form', [], ['query' => ['destination' => $basepath . '/' . $entity->getEntityTypeId() . '/' . $entity->id()]]);
   }
 
 }

@@ -7,7 +7,7 @@
 
 use Drupal\Core\Url;
 use Drupal\Component\Utility\Html;
-use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -71,6 +71,14 @@ function layout_paragraphs_theme() {
         'edit_access' => FALSE,
         'duplicate_access' => FALSE,
         'delete_access' => FALSE,
+      ],
+    ],
+    'layout_paragraphs_insert_component_btn' => [
+      'variables' => [
+        'title' => NULL,
+        'weight' => NULL,
+        'attributes' => [],
+        'url' => NULL,
       ],
     ],
     'layout_paragraphs_builder_component_menu' => [
@@ -312,7 +320,7 @@ function _layout_paragraphs_form_field_weights(array &$form, FormStateInterface 
  * https://www.drupal.org/project/drupal/issues/3040556
  * (It is not possible to react to an entity being duplicated)
  */
-function layout_paragraphs_paragraph_presave(Paragraph $paragraph) {
+function layout_paragraphs_paragraph_presave(ParagraphInterface $paragraph) {
   $behavior_settings = $paragraph->getAllBehaviorSettings();
   $parent_uuid = $behavior_settings['layout_paragraphs']['parent_uuid'] ?? NULL;
   if (empty($parent_uuid)) {
@@ -373,17 +381,73 @@ function layout_paragraphs_paragraph_presave(Paragraph $paragraph) {
  * The returned list contains all of the referenced entities,
  * including the passed $paragraph.
  *
- * @param \Drupal\paragraphs\Entity\Paragraph $paragraph
+ * @param \Drupal\paragraphs\ParagraphInterface $paragraph
  *   The paragraph to use for finding the complete list of siblings.
  *
  * @return \Drupal\Core\Field\EntityReferenceFieldItemList
  *   The list of paragraphs.
  */
-function _layout_paragraphs_get_paragraphs(Paragraph $paragraph) {
+function _layout_paragraphs_get_paragraphs(ParagraphInterface $paragraph) {
   $host = $paragraph->getParentEntity();
   $parent_field = $paragraph->get('parent_field_name');
   $field_name = $parent_field->first()->getString();
   /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $item_list */
   $item_list = $host->get($field_name);
   return $item_list->referencedEntities();
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function layout_paragraphs_library_info_alter(&$libraries, $extension) {
+  if ($extension !== 'layout_paragraphs') {
+    return;
+  }
+
+  foreach ($libraries as $name => &$library) {
+    if (!isset($library['cdn']) || !isset($library['directory'])) {
+      continue;
+    }
+    if (\Drupal::service('library.libraries_directory_file_finder')->find($name)) {
+      continue;
+    }
+    layout_paragraphs_alter_library_recursive($library, $library['cdn']);
+  }
+}
+
+/**
+ * Alter layout_paragraph libraries.
+ *
+ * @param array $library
+ *   A layout_paragraphs library defined in layout_paragraphs.libraries.yml.
+ * @param array $cdn
+ *   A associative array of library paths mapped to CDN URL.
+ */
+function layout_paragraphs_alter_library_recursive(array &$library, array $cdn) {
+  foreach ($library as $key => &$value) {
+    // CSS and JS files are listed in associative arrays keyed via string.
+    if (!is_string($key) || !is_array($value)) {
+      continue;
+    }
+
+    // Ignore the CDN's associative array.
+    if ($key === 'cdn') {
+      continue;
+    }
+
+    // Replace the CDN sources (i.e. /library/*) with the CDN URL destination
+    // (https://cdnjs.cloudflare.com/ajax/libs/*).
+    foreach ($cdn as $source => $destination) {
+      if (strpos($key, $source) === 0) {
+        $uri = str_replace($source, $destination, $key);
+        $library[$uri] = $value;
+        $library[$uri]['type'] = 'external';
+        unset($library[$key]);
+        break;
+      }
+    }
+
+    // Recurse downward to find nested libraries.
+    layout_paragraphs_alter_library_recursive($value, $cdn);
+  }
 }

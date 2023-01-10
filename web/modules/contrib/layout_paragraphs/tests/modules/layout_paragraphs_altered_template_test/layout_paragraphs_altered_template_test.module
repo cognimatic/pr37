@@ -11,5 +11,5 @@
  * Replaces the paragraphs template directory with test templates.
  */
 function layout_paragraphs_altered_template_test_theme_registry_alter(&$theme_registry) {
-  $theme_registry['paragraph']['path'] = drupal_get_path('module', 'layout_paragraphs_altered_template_test') . '/templates';
+  $theme_registry['paragraph']['path'] = \Drupal::service('extension.list.module')->getPath('layout_paragraphs_altered_template_test') . '/templates';
 }

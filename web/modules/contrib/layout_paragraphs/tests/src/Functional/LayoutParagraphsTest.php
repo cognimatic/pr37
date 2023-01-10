@@ -84,6 +84,27 @@ class LayoutParagraphsTest extends BrowserTestBase {
   }
 
   /**
+   * Tests library alteration.
+   */
+  public function testLibraries() {
+    $this->loginWithPermissions([
+      'create page content',
+    ]);
+    $this->drupalGet('node/add/page');
+    $this->assertSession()->responseContains('https://cdnjs.cloudflare.com/ajax/libs/dragula/');
+    $this->assertSession()->responseNotContains('/libraries/dragula/');
+
+    $this->container->get('module_installer')->install([
+      'test_layout_paragraphs_libraries',
+    ]);
+    drupal_flush_all_caches();
+
+    $this->drupalGet('node/add/page');
+    $this->assertSession()->responseContains('/libraries/dragula/');
+    $this->assertSession()->responseNotContains('https://cdnjs.cloudflare.com/ajax/libs/dragula/');
+  }
+
+  /**
    * Creates a new user with provided permissions and logs them in.
    *
    * @param array $permissions

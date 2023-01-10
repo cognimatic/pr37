@@ -3,10 +3,15 @@
 namespace Drupal\paragraphs_table\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
 use Drupal\field\FieldConfigInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\paragraphs_table\Plugin\Field\FieldFormatter\ParagraphsTableFormatter;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Returns responses for paragraphs item routes.
@@ -26,6 +31,65 @@ class AjaxController extends ControllerBase {
    * @var object
    */
   protected $fieldsDefinition;
+
+  /**
+   * The module handler to invoke hooks on.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
+   * The renderer.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected RendererInterface $renderer;
+
+  /**
+   * The entity display repository service.
+   *
+   * @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface
+   */
+  protected EntityDisplayRepositoryInterface $entityDisplayRepository;
+
+  /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected RequestStack $requestStack;
+
+  /**
+   * Ajax Controller constructor.
+   *
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler to invoke hooks on.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer.
+   * @param \Drupal\Core\Entity\EntityDisplayRepositoryInterface $entity_display_repository
+   *   The entity display repository service.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
+   */
+  public function __construct(ModuleHandlerInterface $module_handler, RendererInterface $renderer, EntityDisplayRepositoryInterface $entity_display_repository, RequestStack $request_stack) {
+    $this->moduleHandler = $module_handler;
+    $this->renderer = $renderer;
+    $this->entityDisplayRepository = $entity_display_repository;
+    $this->requestStack = $request_stack;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('module_handler'),
+      $container->get('renderer'),
+      $container->get('entity_display.repository'),
+      $container->get('request_stack')->getCurrentRequest()
+    );
+  }
 
   /**
    * Return output JSON object value.
@@ -54,7 +118,7 @@ class AjaxController extends ControllerBase {
         $setting['show_operation'] = TRUE;
       }
       $components = $this->getComponents($paragraph_field, $setting['view_mode']);
-      $typeLabel = \Drupal::request()->get('type');
+      $typeLabel = $this->requestStack->get('type');
       if (empty($typeLabel)) {
         $typeLabel = 'data';
       }
@@ -104,8 +168,7 @@ class AjaxController extends ControllerBase {
    */
   protected function getFieldSetting($entity, $field_name) {
     $bundle = $entity->bundle();
-    $repository = \Drupal::service('entity_display.repository');
-    $viewDisplay = $repository->getViewDisplay($entity->getEntityTypeId(), $bundle, 'default');
+    $viewDisplay = $this->entityDisplayRepository->getViewDisplay($entity->getEntityTypeId(), $bundle, 'default');
     $fieldComponent = $viewDisplay->getComponent($field_name);
     return $fieldComponent['settings'];
   }
@@ -119,8 +182,7 @@ class AjaxController extends ControllerBase {
     $targetType = $field_definition->getSetting('target_type');
     $fieldsDefinitions = $this->entityTypeManager()->getStorage($targetType)
       ->create(['type' => $targetBundle])->getFieldDefinitions();
-    $repository = \Drupal::service('entity_display.repository');
-    $viewDisplay = $repository->getViewDisplay($targetType, $targetBundle, $view_mode);
+    $viewDisplay = $this->entityDisplayRepository->getViewDisplay($targetType, $targetBundle, $view_mode);
     $components = $viewDisplay->getComponents();
     uasort($components, 'Drupal\Component\Utility\SortArray::sortByWeightElement');
     foreach ($components as $field_name => $component) {
@@ -147,7 +209,7 @@ class AjaxController extends ControllerBase {
       $objectData = new \stdClass();
       foreach ($components as $field_name => $field) {
         $table_entity[$field_name]['#label_display'] = 'hidden';
-        $value = trim(strip_tags(\Drupal::service('renderer')->render($table_entity[$field_name])));
+        $value = trim(strip_tags($this->renderer->render($table_entity[$field_name])));
         if (in_array($this->fieldsDefinition[$field_name]->getType(), [
           'integer',
           'list_integer',
@@ -195,7 +257,7 @@ class AjaxController extends ControllerBase {
       $table_entity = $this->renderBuild->build($entity);
       foreach ($components as $field_name => $field) {
         $table_entity[$field_name]['#label_display'] = 'hidden';
-        $value = trim(\Drupal::service('renderer')->render($table_entity[$field_name]));
+        $value = trim($this->renderer->render($table_entity[$field_name]));
         if (!is_numeric($value) && empty($value) && !empty($setting["empty_cell_value"])) {
           $value = $setting["empty_cell_value"];
         }
@@ -224,7 +286,7 @@ class AjaxController extends ControllerBase {
 
       foreach ($components as $field_name => $field) {
         $table_entity[$field_name]['#label_display'] = 'hidden';
-        $value = trim(strip_tags(\Drupal::service('renderer')->render($table_entity[$field_name])));
+        $value = trim(strip_tags($this->renderer->render($table_entity[$field_name])));
         if (in_array($this->fieldsDefinition[$field_name]->getType(), [
           'integer',
           'list_integer',
@@ -298,9 +360,8 @@ class AjaxController extends ControllerBase {
     ];
 
     // Alter row operation.
-    \Drupal::moduleHandler()
-      ->alter('paragraphs_table_operations', $operation, $paragraphsId);
-    return \Drupal::service('renderer')->render($operation);
+    $this->moduleHandler->alter('paragraphs_table_operations', $operation, $paragraphsId);
+    return $this->renderer->render($operation);
   }
 
 }

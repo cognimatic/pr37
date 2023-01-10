@@ -1,6 +1,7 @@
-name: Entity hierarchy microsites
+name: Entity Hierarchy Microsites
 description: 'Provides microsites based on an entity hierarchy'
-core_version_requirement: ^8.8 || ^9.0
+package: "Entity Hierarchy"
+core_version_requirement: ^9.0 || ^10.0
 type: module
 dependencies:
   - entity_hierarchy:entity_hierarchy
@@ -10,7 +11,7 @@ dependencies:
   - drupal:menu_ui
 configure: entity.entity_hierarchy_microsite.collection
 
-# Information added by Drupal.org packaging script on 2021-04-04
-version: '8.x-2.27'
+# Information added by Drupal.org packaging script on 2022-11-29
+version: '3.3.3'
 project: 'entity_hierarchy'
-datestamp: 1617576104
+datestamp: 1669764763

@@ -2,7 +2,7 @@
 
 namespace Drupal\layout_paragraphs\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Drupal\layout_paragraphs\LayoutParagraphsLayout;
 
 /**

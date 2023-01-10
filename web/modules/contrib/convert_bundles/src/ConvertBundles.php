@@ -2,8 +2,11 @@
 
 namespace Drupal\convert_bundles;
 
+use Drupal\Core\Entity\RevisionableInterface;
+use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Field\EntityReferenceFieldItemList;
 
 /**
  * ConvertBundles.
@@ -132,7 +135,7 @@ class ConvertBundles {
       if ($from == $to) {
         $update_fields[] = $from;
       }
-      elseif (in_array($from, $fields_new_to) && in_array($from, $userInput)) {
+      elseif (in_array($from, $fields_new_to) && !in_array($from, $userInput)) {
         $map_fields['create_new'][] = [
           'field' => $from,
           'value' => $to,
@@ -184,7 +187,6 @@ class ConvertBundles {
     $results = [];
     $db = Database::getConnection();
     // Base tables have 'nid' and 'type' columns.
-
     $definition = \Drupal::entityTypeManager()->getDefinition($entity_type);
     $id = $definition->getKey('id');
     $type = $definition->getKey('bundle');
@@ -238,6 +240,11 @@ class ConvertBundles {
     foreach ($current_ids as $key => $id) {
       $old_entity = $entities[$id];
       $entity = \Drupal::entityTypeManager()->getStorage($entity_type)->load($id);
+
+      if ($entity instanceof RevisionableInterface) {
+        $entity = \Drupal::entityTypeManager()->getStorage($entity_type)->createRevision($entity);
+      }
+
       foreach ($map_fields as $map_from => $map_to) {
         if (isset($map_to['field']) && $map_to['field'] == 'remove') {
           continue;
@@ -281,6 +288,16 @@ class ConvertBundles {
           }
         }
         elseif ($map_to['field'] == 'append_to_body') {
+
+          if ($old_entity->get($map_from) instanceof EntityReferenceFieldItemList) {
+            $target_type = $old_entity->get($map_from)->getSetting('target_type');
+            if ($target_type == 'media') {
+              $media = $old_entity->get($map_from)->entity;
+              $uuid = $media->uuid();
+              $value = '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $uuid . '"></drupal-media>';
+            }
+          }
+
           $body = $entity->get('body')->getValue()[0];
           $markup = Markup::create($body['value'] . '<strong>' . $map_to['from_label'] . '</strong><p>' . $value . '</p>');
           $entity->get('body')->setValue([
@@ -294,6 +311,17 @@ class ConvertBundles {
         elseif (!empty($value)) {
           $entity->set($map_to['field'], $old_entity->get($map_from)->getValue());
         }
+      }
+
+      if ($entity instanceof RevisionableInterface) {
+        $entity->setNewRevision(TRUE);
+      }
+      if ($entity instanceof RevisionLogInterface) {
+        $old_bundle = $old_entity->bundle();
+        $new_bundle = $entity->bundle();
+        $revision_log = "Converted from {$old_bundle} to {$new_bundle}.";
+        $entity->setRevisionLogMessage($revision_log);
+        $entity->setRevisionCreationTime(\Drupal::time()->getRequestTime());
       }
       $entity->save();
 

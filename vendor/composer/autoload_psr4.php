@@ -91,6 +91,7 @@ return array(
     'SimpleSAML\\Module\\authX509\\' => array($vendorDir . '/simplesamlphp/simplesamlphp/modules/authX509/lib'),
     'SimpleSAML\\Module\\adfs\\' => array($vendorDir . '/simplesamlphp/simplesamlphp/modules/adfs/lib'),
     'SimpleSAML\\Composer\\' => array($vendorDir . '/simplesamlphp/composer-module-installer/src'),
+    'SimpleSAML\\Assert\\' => array($vendorDir . '/simplesamlphp/assert/src'),
     'SimpleSAML\\' => array($vendorDir . '/simplesamlphp/simplesamlphp/lib/SimpleSAML'),
     'SelfUpdate\\' => array($vendorDir . '/consolidation/self-update/src'),
     'Seld\\PharUtils\\' => array($vendorDir . '/seld/phar-utils/src'),

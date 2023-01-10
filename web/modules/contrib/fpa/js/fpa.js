@@ -504,27 +504,27 @@
     // Role checkboxes toggle all visible permissions for this column.
     this.dom.section_right
       .delegate('th[' + this.attr.role + '] input[type="checkbox"].fpa-checkboxes-toggle', 'change', $.proxy(function fpa_role_permissions_toggle(e) {
-        
+
         var $this = $(e.currentTarget);
-        
+
         // Get visible rows selectors.
         var filters = this.get_filter_selectors(this.dom.filter.val());
-        
+
         this.dom.table_wrapper
           .detach()
           .each($.proxy(function (index, element) {
-            
+
             var rid = $this.closest('[' + this.attr.role + ']').attr(this.attr.role);
-            
+
             $(element)
               .find([
                 'tr' + filters.join(''),
                 'td.checkbox[' + this.attr.role + '="' + rid + '"]',
-                'input[type="checkbox"][name]'
+                'input:not(:disabled)[type="checkbox"][name]'
               ].join(' ')) // Array is easier to read, separated for descendant selectors.
-              
-              .attr('checked', $this.attr('checked'))
-              
+
+              .prop('checked', e.currentTarget.checked)
+
               .filter('.rid-2') // Following only applies to "Authenticated User" role.
               .each(this.dummy_checkbox_behavior)
             ;
@@ -552,10 +552,10 @@
             $(element)
               .find('td.checkbox')
               .filter(this.build_role_selectors().join(','))
-              .find('input[type="checkbox"][name]')
-              
-              .attr('checked', e.currentTarget.checked)
-              
+              .find('input[type="checkbox"][name]:not(:disabled)')
+
+              .prop('checked', e.currentTarget.checked)
+
               .filter('.rid-2') // Following only applies to "Authenticated User" role.
               .each(this.dummy_checkbox_behavior)
             ;
@@ -653,14 +653,29 @@
           $(e.currentTarget).triggerHandler('resize.drupal-tableheader');
         })
       ;
+      // Fix selection checkbox of the whole column.
+      $("#permissions").click(
+        function(evt) {
+          if ($(evt.target).hasClass('fpa-checkboxes-toggle')) {
+            if($(evt.target).is(":checked")){
+              //top checkbox is checked.
+              //$(this).parent().attr("fpa-role");
+              $("#permissions tbody td[fpa-role='" + $(evt.target).parent().attr("fpa-role") + "'] .form-checkbox:visible:not(:disabled)").prop("checked", true);
+            }
+            else {
+              //top checkbox is not checked.
+              $("#permissions tbody td[fpa-role='" + $(evt.target).parent().attr("fpa-role") + "'] .form-checkbox:visible:not(:disabled)").prop("checked", false);
+            }
+          }
+        }
+      );
 
-      console.log('fpa');
       new Fpa(context, settings.fpa);
     }
   };
   
   // Override Drupal core's Authenticated role checkbox behavior.
-  Drupal.behaviors.permissions.attach = $.noop;
-  
+  Drupal.behaviors.permissions.attach = function() {};
+
   // Drupal.behaviors.formUpdated.attach = $.noop;
 })(jQuery, Drupal, window, document);

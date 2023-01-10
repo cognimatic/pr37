@@ -39,17 +39,24 @@ class HideWeightFieldFunctionalTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->setupEntityHierarchyField(static::ENTITY_TYPE, static::ENTITY_TYPE, static::FIELD_NAME);
     $this->additionalSetup();
     $this->setupEntityFormDisplay(self::ENTITY_TYPE, self::ENTITY_TYPE, self::FIELD_NAME);
+    $this->getEntityFormDisplay(self::ENTITY_TYPE, self::ENTITY_TYPE, 'default')
+      ->setComponent(self::FIELD_NAME, [
+        'type' => 'entity_reference_hierarchy_autocomplete',
+        'weight' => 20,
+        'settings' => ['hide_weight' => FALSE] + EntityReferenceHierarchyAutocomplete::defaultSettings(),
+      ])
+      ->save();
   }
 
   /**
    * Tests ordered storage in nested set tables.
    */
-  public function testReordering() {
+  public function testReordering(): void {
     $this->drupalLogin($this->drupalCreateUser([], NULL, TRUE));
     $this->drupalGet('/entity_test/add');
     $assert = $this->assertSession();
@@ -80,7 +87,7 @@ class HideWeightFieldFunctionalTest extends BrowserTestBase {
   /**
    * Tests weight element can be hidden on Select widget.
    */
-  public function testHideWeightSelectWidget() {
+  public function testHideWeightSelectWidget(): void {
     $this->drupalLogin($this->drupalCreateUser([], NULL, TRUE));
     $this->drupalGet('/entity_test/add');
     $assert = $this->assertSession();

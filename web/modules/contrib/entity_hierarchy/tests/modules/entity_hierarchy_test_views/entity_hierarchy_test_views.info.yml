@@ -6,7 +6,7 @@ dependencies:
   - drupal:views
   - entity_hierarchy:entity_hierarchy
 
-# Information added by Drupal.org packaging script on 2021-04-04
-version: '8.x-2.27'
+# Information added by Drupal.org packaging script on 2022-11-29
+version: '3.3.3'
 project: 'entity_hierarchy'
-datestamp: 1617576104
+datestamp: 1669764763

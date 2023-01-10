@@ -19,11 +19,37 @@ seamlessly with existing paragraph reference fields.
 - Leverages Drupal’s Layout API for building layouts.
 - Uses the paragraphs behaviors API for storing layout data.
 
+### Installation
+
+**With composer**
+- Ensure asset packagist has been set up for your project.
+  - Visit
+  https://www.drupal.org/docs/develop/using-composer/manage-dependencies#third-party-libraries
+  for further information.
+- Run `composer require bower-asset/dragula drupal/paragraphs drupal/layout_paragraphs`
+- Install Layout Paragraps.
+
+**Without composer**
+- Download the [Dragula dist folder](https://github.com/bevacqua/dragula/tree/master/dist)
+- Copy the dist folder inside your "libraries" folder, so the path structure is
+as follows:
+  - /libraries/dragula/dist/dragula.min.js
+  - /libraries/dragula/dist/dragula.min.css
+- Install the the [Paragraphs module](https://www.drupal.org/project/paragraphs)
+and the [Layout Paragraphs module](https://www.drupal.org/project/layout_paragraphs)
+as you would normally install a contributed Drupal module.
+
+**Using the Content Delivery Network**
+- Install the the [Paragraphs module](https://www.drupal.org/project/paragraphs)
+and the [Layout Paragraphs module](https://www.drupal.org/project/layout_paragraphs)
+as you would normally install a contributed Drupal module.
+- The Dragual library will be automatically loaded via CDN if no local library
+exists.
+
+Visit "[Installing Modules](https://www.drupal.org/node/1897420)", if you have
+trouble installing the module.
+
 ### Getting Started
-- Make sure the [Paragraphs module](https://www.drupal.org/project/paragraphs)
-  is installed.
-- Download/Require (`composer require drupal/layout_paragraphs`) and install
-  Layout Paragraphs.
 - Create a new paragraph type (admin > structure > paragraph types) to use for
   layout sections. Your new paragraph type can have whatever fields you wish,
   although no fields are required for the module to work.

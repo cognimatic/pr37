@@ -90,8 +90,8 @@ class ParagraphsTableWidget extends ParagraphsWidget {
 
     $elements['form_mode'] = [
       '#type' => 'select',
-      '#title' => t('Form mode'),
-      '#description' => t('Select which form mode is displayed'),
+      '#title' => $this->t('Form mode'),
+      '#description' => $this->t('Select which form mode is displayed'),
       '#options' => $modes,
       '#default_value' => !empty($this->getSetting('form_mode')) ? $this->getSetting('form_mode') : 'default',
     ];

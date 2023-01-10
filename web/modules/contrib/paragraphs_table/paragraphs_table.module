@@ -20,7 +20,7 @@ function paragraphs_table_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.paragraphs_table':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('This module provides both a field formatter and a widget for the Paragraphs entity type') . '</p>';
+      $output .= '<p>' . t('This module provides both a field formatter and a widget table for the Paragraphs entity type') . '</p>';
       return $output;
 
     default:
@@ -36,7 +36,7 @@ function _paragraphs_table_hidden_label(&$field_form) {
   }
   // Remove title field date.
   if (!empty($field_form['#type'])){
-    if (in_array($field_form['#type'], ['select', 'managed_file'])) {
+    if (in_array($field_form['#type'], ['select', 'managed_file', 'entity_autocomplete'])) {
       $field_form['#title_display'] = 'invisible';
     }
     if ($field_form['#type'] == 'datetime') {
@@ -119,7 +119,7 @@ function paragraphs_table_preprocess_field_multiple_value_form(&$variables) {
           unset($variables["table"]["#caption"]);
         }
         elseif ($element["#paragraphsTable"]["#paste_clipboard"]) {
-          $variables['table']['#prefix'] = '<a class="paste-paragraphs-clipboard" data-table="'.$variables["table"]["#attributes"]["id"].'" href="#'.$variables["table"]["#attributes"]["id"].'">'. t('Paste from excel').'</a>';
+          $variables['table']['#prefix'] = '<a class="paste-paragraphs-clipboard" data-table="'.$variables["table"]["#attributes"]["id"].'" href="#'.$variables["table"]["#attributes"]["id"].'" data-bs-toggle="tooltip" data-bs-title="'. t('Paste from excel').'"><i class="bi bi-clipboard-check"></i></a>';
           $variables['table']['#attached']['library'][] = 'paragraphs_table/paste-clipboard';
         }
       }
@@ -171,7 +171,7 @@ function paragraphs_table_preprocess_field_multiple_value_form(&$variables) {
  * Get table header.
  */
 function _paragraphs_table_header($fields, $show_all = FALSE, $rowWeightCol = FALSE, $is_new = FALSE) {
-  $header = empty($show_all) ? ['data' => ['']] : [];
+  $header = empty($show_all) ? ['data' => ''] : [];
   foreach ($fields as $field_name => $field) {
     $header[] = [
       'data' => $field->getLabel(),
@@ -212,7 +212,7 @@ function _paragraphs_table_row($fields, $rows_data, $show_all = FALSE) {
     $rows_data[1]["data"]["#access"] === FALSE) {
     return FALSE;
   }
-  if (!empty($rows_data[1]["data"]["subform"])) {
+  if (!empty($rows_data[1]["data"]["subform"]) && !empty($rows_data[1]['data']['#paragraph_type'])) {
     $subform = $rows_data[1]["data"]["subform"];
   }
   else {

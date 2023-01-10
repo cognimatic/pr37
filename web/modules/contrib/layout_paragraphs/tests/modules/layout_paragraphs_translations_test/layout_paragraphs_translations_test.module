@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Assists in testing translation functionality for Layout Paragraphs.
+ */
+
+/**
  * Implements hook_theme().
  */
 function layout_paragraphs_translations_test_theme() {

@@ -7,17 +7,53 @@ use Drupal\Core\Ajax\AjaxHelperTrait;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\paragraphs\ParagraphsTypeInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Returns responses for paragraphs item routes.
  */
-class ParagraphsItemController extends ControllerBase {
+class ParagraphsItemController extends ControllerBase implements ContainerInjectionInterface {
 
   use AjaxHelperTrait;
+
+  /**
+   * The entity repository.
+   *
+   * @var \Drupal\Core\Entity\EntityRepositoryInterface
+   */
+  protected $entityRepository;
+
+  /**
+   * Form builder will be used via Dependency Injection.
+   *
+   * @var \Drupal\Core\Form\FormBuilderInterface
+   */
+  protected $formBuilder;
+
+  /**
+   * CompanyController constructor.
+   */
+  public function __construct(EntityRepositoryInterface $entity_repository, FormBuilderInterface $form_builder) {
+    $this->entityRepository = $entity_repository;
+    $this->formBuilder = $form_builder;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity.repository'),
+      $container->get('form_builder')
+    );
+  }
 
   /**
    * Provides the paragraphs item submission form.
@@ -40,14 +76,13 @@ class ParagraphsItemController extends ControllerBase {
   public function add(ParagraphsType $paragraph_type, $entity_type, $entity_field, $entity_id) {
     $paragraph = $this->newParagraph($paragraph_type);
     $load_form = 'Drupal\paragraphs_table\Form\ParagraphAddForm';
-    $form_state = (new FormState())
-      ->addBuildInfo('args', [
-        $paragraph,
-        $entity_type,
-        $entity_field,
-        $entity_id,
-      ]);
-    $form = \Drupal::formBuilder()->buildForm(
+    $form_state = (new FormState())->addBuildInfo('args', [
+      $paragraph,
+      $entity_type,
+      $entity_field,
+      $entity_id,
+    ]);
+    $form = $this->formBuilder->buildForm(
       $load_form,
       $form_state,
       $paragraph,
@@ -77,7 +112,7 @@ class ParagraphsItemController extends ControllerBase {
    *   The new paragraph.
    */
   protected function newParagraph(ParagraphsTypeInterface $paragraph_type) {
-    $entityTypeManager = \Drupal::entityTypeManager();
+    $entityTypeManager = $this->entityTypeManager();
     $entity_type = $entityTypeManager->getDefinition('paragraph');
     $bundle_key = $entity_type->getKey('bundle');
     /** @var \Drupal\paragraphs\ParagraphInterface $paragraph_entity */
@@ -122,8 +157,7 @@ class ParagraphsItemController extends ControllerBase {
    *   The page title.
    */
   public function pageTitle(Paragraph $paragraph = NULL) {
-    return \Drupal::service('entity.repository')
-      ->getTranslationFromContext($paragraph)
+    return $this->entityRepository->getTranslationFromContext($paragraph)
       ->label() . ' #' . $paragraph->id();
   }
 

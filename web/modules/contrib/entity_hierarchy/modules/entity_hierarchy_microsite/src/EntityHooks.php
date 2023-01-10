@@ -3,6 +3,7 @@
 namespace Drupal\entity_hierarchy_microsite;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Drupal\entity_hierarchy\Information\ParentCandidateInterface;
 use Drupal\entity_hierarchy_microsite\Entity\MicrositeInterface;
@@ -18,8 +19,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   https://www.drupal.org/project/drupal/issues/3001284 is in as that would
  *   allow us to specify cache tags which would trigger refreshing the
  *   derivatives automatically.
+ *
+ * @internal
  */
 class EntityHooks implements ContainerInjectionInterface {
+
+  /**
+   * Menu link tree.
+   *
+   * @var \Drupal\Core\Menu\MenuLinkTreeInterface
+   */
+  protected $menuLinkTree;
 
   /**
    * Menu link manager.
@@ -50,6 +60,11 @@ class EntityHooks implements ContainerInjectionInterface {
   protected $menuLinkDiscovery;
 
   /**
+   * @var \Drupal\entity_hierarchy_microsite\MenuRebuildProcessor
+   */
+  private MenuRebuildProcessor $menuRebuildProcessor;
+
+  /**
    * Constructs a new EntityHooks.
    *
    * @param \Drupal\Core\Menu\MenuLinkManagerInterface $menuLinkManager
@@ -60,12 +75,25 @@ class EntityHooks implements ContainerInjectionInterface {
    *   Microsite lookup.
    * @param \Drupal\entity_hierarchy_microsite\MicrositeMenuLinkDiscoveryInterface $menuLinkDiscovery
    *   Discovery.
+   * @param \Drupal\Core\Menu\MenuLinkTreeInterface $menuLinkTree
+   *   Menu link tree.
+   * @param \Drupal\entity_hierarchy_microsite\MenuRebuildProcessor $menuRebuildProcessor
+   *   Menu rebuild processor.
    */
-  public function __construct(MenuLinkManagerInterface $menuLinkManager, ParentCandidateInterface $parentCandidate, ChildOfMicrositeLookupInterface $childOfMicrositeLookup, MicrositeMenuLinkDiscoveryInterface $menuLinkDiscovery) {
+  public function __construct(
+    MenuLinkManagerInterface $menuLinkManager,
+    ParentCandidateInterface $parentCandidate,
+    ChildOfMicrositeLookupInterface $childOfMicrositeLookup,
+    MicrositeMenuLinkDiscoveryInterface $menuLinkDiscovery,
+    MenuLinkTreeInterface $menuLinkTree,
+    MenuRebuildProcessor $menuRebuildProcessor
+  ) {
+    $this->menuLinkTree = $menuLinkTree;
     $this->menuLinkManager = $menuLinkManager;
     $this->parentCandidate = $parentCandidate;
     $this->childOfMicrositeLookup = $childOfMicrositeLookup;
     $this->menuLinkDiscovery = $menuLinkDiscovery;
+    $this->menuRebuildProcessor = $menuRebuildProcessor;
   }
 
   /**
@@ -76,7 +104,9 @@ class EntityHooks implements ContainerInjectionInterface {
       $container->get('plugin.manager.menu.link'),
       $container->get('entity_hierarchy.information.parent_candidate'),
       $container->get('entity_hierarchy_microsite.microsite_lookup'),
-      $container->get('entity_hierarchy_microsite.menu_link_discovery')
+      $container->get('entity_hierarchy_microsite.menu_link_discovery'),
+      $container->get('menu.link_tree'),
+      $container->get('entity_hierarchy_microsite.menu_rebuild_processor')
     );
   }
 
@@ -124,9 +154,16 @@ class EntityHooks implements ContainerInjectionInterface {
   public function onNodeUpdate(NodeInterface $node) {
     $original = $node->original;
     foreach ($this->parentCandidate->getCandidateFields($node) as $field) {
-      if ($node->hasField($field) && (!$node->get($field)->isEmpty() || !$original->get($field)->isEmpty()) ||
-        ($node->{$field}->target_id !== $original->{$field}->target_id ||
-        $node->{$field}->weight !== $original->{$field}->weight)) {
+      if ($node->hasField($field) &&
+        (
+          // Either the new version or the old version has no parent.
+          $node->get($field)->isEmpty() !== $original->get($field)->isEmpty() ||
+          // Or the parent changed.
+          (int) $node->{$field}->target_id !== (int) $original->{$field}->target_id ||
+          // Or the weight changed.
+          (int) $node->{$field}->weight !== (int) $original->{$field}->weight
+        )
+      ) {
         if ($microsites = $this->childOfMicrositeLookup->findMicrositesForNodeAndField($node, $field)) {
           foreach ($microsites as $microsite) {
             $this->updateMenuForMicrosite($microsite);
@@ -135,7 +172,7 @@ class EntityHooks implements ContainerInjectionInterface {
         }
         if ($microsites = $this->childOfMicrositeLookup->findMicrositesForNodeAndField($original, $field)) {
           // This item is no longer in the microsite, so we need to trigger
-          // its removal
+          // its removal.
           $plugin_id = 'entity_hierarchy_microsite:' . $original->uuid();
           if ($this->menuLinkManager->hasDefinition($plugin_id)) {
             $this->menuLinkManager->removeDefinition($plugin_id);
@@ -172,7 +209,9 @@ class EntityHooks implements ContainerInjectionInterface {
    *   TRUE if is an update.
    */
   public function onMicrositePostSave(MicrositeInterface $microsite, $isUpdate) {
-    $this->updateMenuForMicrosite($microsite);
+    if ($microsite->shouldGenerateMenu() || ($microsite->original instanceof MicrositeInterface && $microsite->original->shouldGenerateMenu())) {
+      $this->updateMenuForMicrosite($microsite);
+    }
   }
 
   /**
@@ -182,14 +221,7 @@ class EntityHooks implements ContainerInjectionInterface {
    *   Microsite.
    */
   protected function updateMenuForMicrosite(MicrositeInterface $microsite) {
-    foreach ($this->menuLinkDiscovery->getMenuLinkDefintions($microsite) as $uuid => $definition) {
-      $plugin_id = 'entity_hierarchy_microsite:' . $uuid;
-      if ($this->menuLinkManager->hasDefinition($plugin_id)) {
-        $this->menuLinkManager->updateDefinition($plugin_id, $definition, FALSE);
-        continue;
-      }
-      $this->menuLinkManager->addDefinition($plugin_id, $definition);
-    }
+    $this->menuRebuildProcessor->markRebuildNeeded();
   }
 
   /**

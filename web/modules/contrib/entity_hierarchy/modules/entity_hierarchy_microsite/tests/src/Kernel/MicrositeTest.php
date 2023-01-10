@@ -14,17 +14,19 @@ class MicrositeTest extends EntityHierarchyMicrositeKernelTestBase {
   /**
    * Tests the microsite entity.
    */
-  public function testMicrositeEntity() {
+  public function testMicrositeEntity(): void {
     $media = $this->createImageMedia();
     $microsite = Microsite::create([
       'name' => 'Subsite',
       'home' => $this->parent,
       'logo' => $media,
+      'generate_menu' => TRUE,
     ]);
     $microsite->save();
     $this->assertEquals('Subsite', $microsite->label());
     $this->assertEquals($this->parent->id(), $microsite->getHome()->id());
     $this->assertEquals($media->id(), $microsite->getLogo()->id());
+    $this->assertTrue($microsite->shouldGenerateMenu());
   }
 
 }
