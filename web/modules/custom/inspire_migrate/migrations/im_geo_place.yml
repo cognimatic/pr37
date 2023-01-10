@@ -1,0 +1,75 @@
+id: im_geo_place
+label: Migrate Place address & location from ABC legacy D9 to Geo address Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - geo
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: place
+
+process:
+  _unpublished:
+    plugin: skip_on_value
+    source: status
+    method: row
+    value: 0 
+  
+  postal_address: 
+    source: field_location_address
+    plugin: skip_on_condition
+    condition: empty
+    method: row
+    
+  title: 
+    -
+      plugin: str_replace
+      source: title
+      regex: true
+      search: '/\r|\n/'
+      replace: ' '   
+    -
+      plugin: substr
+      length: 40
+      
+  label: '@title'
+  
+  # postal_address/given_name: given_name
+  # postal_address/family_name: family_name
+#  postal_address/organization: field_location_address/organization
+#  postal_address/address_line1: field_location_address/address_line1
+#  postal_address/address_line2: field_location_address/address_line2
+#  postal_address/locality: field_location_address/locality
+#  postal_address/postal_code: field_location_address/postal_code
+#  postal_address/country_code: field_location_address/country_code
+  
+#  location/lat: field_location/lat
+#  location/lng: field_location/lng
+
+  
+    
+  location: field_location
+
+  uid:
+      plugin: default_value
+      default_value: 1
+  created: created
+  changed: timestamp
+  status: status
+  
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  
+  
+destination:
+  plugin: 'entity:localgov_geo'
+  default_bundle: address
+
+migration_dependencies: null
