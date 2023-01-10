@@ -163,6 +163,9 @@
             "drupal/core": {
                     "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2022-10-20/3099026-42.patch"
             },
+            "drupal/geocoder": {
+                "Posibility to skip geocoding on migration if value is not empty 3301512": "https://www.drupal.org/files/issues/2022-08-03/geocoder-allow_skip_on_migration_not_empty-3301512-2.patch"
+            },
             "drupal/migrate_drupal_d8": {
                     "Fix bundle logic to select fields correctly 3134305": "https://www.drupal.org/files/issues/2021-07-16/3134305-fix-bundle-logic-5.patch"
             },

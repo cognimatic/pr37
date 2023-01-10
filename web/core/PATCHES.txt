@@ -5,3 +5,11 @@ Claro preprocessing of field multiple value forms 3099026
 Source: https://www.drupal.org/files/issues/2022-10-20/3099026-42.patch
 
 
+Fix tests running with paratest. See https://www.drupal.org/project/drupal/issues/3192365
+Source: https://www.drupal.org/files/issues/2021-01-12/3192365-3.patch
+
+
+Users can't reference unpublished content even when they have access to it. See https://www.drupal.org/project/drupal/issues/2845144
+Source: https://www.drupal.org/files/issues/2022-06-17/2845144-67.patch
+
+

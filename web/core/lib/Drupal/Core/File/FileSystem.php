@@ -247,11 +247,12 @@ class FileSystem implements FileSystemInterface {
    */
   protected function mkdirCall($uri, $mode, $recursive, $context) {
     if (is_null($context)) {
-      return mkdir($uri, $mode, $recursive);
+      $success = @mkdir($uri, $mode, $recursive);
     }
     else {
-      return mkdir($uri, $mode, $recursive, $context);
+      $success = @mkdir($uri, $mode, $recursive, $context);
     }
+    return $success || (file_exists($uri) && $mode === (fileperms($uri) & 0777));
   }
 
   /**

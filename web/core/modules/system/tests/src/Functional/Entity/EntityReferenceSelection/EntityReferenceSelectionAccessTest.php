@@ -170,6 +170,7 @@ class EntityReferenceSelectionAccessTest extends KernelTestBase {
           'article' => [
             $nodes['published1']->id() => $node_labels['published1'],
             $nodes['published2']->id() => $node_labels['published2'],
+            $nodes['unpublished']->id() => $node_labels['unpublished'],
           ],
         ],
       ],
@@ -205,7 +206,11 @@ class EntityReferenceSelectionAccessTest extends KernelTestBase {
         'arguments' => [
           ['Node unpublished', 'CONTAINS'],
         ],
-        'result' => [],
+        'result' => [
+          'article' => [
+            $nodes['unpublished']->id() => $node_labels['unpublished'],
+          ],
+        ],
       ],
     ];
     $this->assertReferenceable($selection_options, $referenceable_tests, 'Node handler');

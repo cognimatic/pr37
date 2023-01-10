@@ -117,3 +117,39 @@ geolocation.map_provider.google_maps:
     gestureHandling:
       type: string
       label: 'Smart scrolling'
+    mapTypeControl:
+      type: integer
+      label: 'Map controls'
+    streetViewControl:
+      type: integer
+      label: 'Street view'
+    zoomControl:
+      type: integer
+      label: 'Zoom control'
+    scrollwheel:
+      type: integer
+      label: 'Scrool wheel'
+    draggable:
+      type: integer
+      label: 'Draggable'
+    info_auto_display:
+      type: integer
+      label: 'Display info'
+    style:
+      type: string
+      label: 'JSON encoded style'
+    marker_icon_path:
+      type: string
+      label: 'Marker icon path'
+    disableAutoPan:
+      type: integer
+      label: 'Disable auto pan'
+    fullscreenControl:
+      type: integer
+      label: 'Fullscreen control'
+    preferScrollingToZooming:
+      type: integer
+      label: 'Prefer scrolling to zooming'
+    disableDoubleClickZoom:
+      type: integer
+      label: 'Disable double click zoom'

@@ -198,8 +198,10 @@ class FacetBlock extends BlockBase implements ContainerFactoryPluginInterface {
   public function blockAccess(AccountInterface $account) {
     $facet = $this->getFacet();
     return AccessResult::allowedIf(
-      !$facet->getOnlyVisibleWhenFacetSourceIsVisible()
-      || ($facet->getFacetSource() && $facet->getFacetSource()->isRenderedInCurrentRequest())
+      $facet->getFacetSource() && (
+        !$facet->getOnlyVisibleWhenFacetSourceIsVisible()
+        || $facet->getFacetSource()->isRenderedInCurrentRequest()
+      )
     )->addCacheableDependency($facet);
   }
 

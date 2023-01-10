@@ -5340,7 +5340,9 @@
                     }
                 },
                 "patches_applied": {
-                    "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2022-10-20/3099026-42.patch"
+                    "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2022-10-20/3099026-42.patch",
+                    "Fix tests running with paratest. See https://www.drupal.org/project/drupal/issues/3192365": "https://www.drupal.org/files/issues/2021-01-12/3192365-3.patch",
+                    "Users can't reference unpublished content even when they have access to it. See https://www.drupal.org/project/drupal/issues/2845144": "https://www.drupal.org/files/issues/2022-06-17/2845144-67.patch"
                 }
             },
             "installation-source": "dist",
@@ -7609,6 +7611,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "Don't render facet block if backend isn't available: https://www.drupal.org/project/facets/issues/3311856": "https://git.drupalcode.org/issue/facets-3311856/-/commit/765d5ef4228906c7f201e116763f3018a7867c96.patch"
                 }
             },
             "installation-source": "dist",
@@ -8143,6 +8148,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "Posibility to skip geocoding on migration if value is not empty 3301512": "https://www.drupal.org/files/issues/2022-08-03/geocoder-allow_skip_on_migration_not_empty-3301512-2.patch"
                 }
             },
             "installation-source": "dist",
@@ -8370,6 +8378,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "Fix schema #3138668": "https://www.drupal.org/files/issues/2021-01-27/geolocation-google-maps-schema-update-3138668-5.patch"
                 }
             },
             "installation-source": "dist",
@@ -9856,6 +9867,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "Fix schema #3315757": "https://git.drupalcode.org/issue/media_library_edit-3315757/-/commit/9b590f1d93d8c0f750c50d90c422343ecf5e9e72.patch"
                 }
             },
             "installation-source": "dist",
