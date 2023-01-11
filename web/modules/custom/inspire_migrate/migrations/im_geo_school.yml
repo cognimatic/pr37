@@ -1,0 +1,124 @@
+id: im_geo_school
+label: Migrate Shcool address & location from ABC legacy D9 to Geo address Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - geo
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: school
+
+process:
+  _unpublished:
+    plugin: skip_on_value
+    source: status
+    method: row
+    value: 0 
+  
+  
+    
+  
+  _address:
+    -
+      plugin: skip_on_empty
+      source: field_sch_address/0/value
+      method: process
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      # Replace all types of line breaks with spaces
+      plugin: str_replace
+      search: '\n'
+      replace: ' ' 
+    -
+      plugin: str_replace
+      search: '\r'
+      replace: ' '
+    -
+      plugin: str_replace
+      search: '<br>'
+      replace: ' '
+    -
+      plugin: str_replace
+      search: '<br />'
+      replace: ' '
+    -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      plugin: str_replace
+      search: ','
+      replace: ' '
+    - 
+      # Remove postcode - messes with geocoding
+      plugin: str_replace
+      regex: true
+      search: '/([A-Za-z][A-Ha-hJ-Yj-y]?[0-9][A-Za-z0-9]? ?[0-9][A-Za-z]{2}|[Gg][Ii][Rr] ?0[Aa]{2})/'
+      replace: ' '
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' ' 
+    -
+      plugin: trim
+  
+  _name_address:
+    plugin: concat
+    source:
+      - title
+      - '@_address'
+    delimiter: ' '
+    
+  label: title
+  
+  location: 
+    plugin: if_condition
+    source: field_location
+    condition: not:empty
+    else_process:
+      plugin: geo_code_address
+      source: '@_address'
+
+  postal_address: 
+  # Reverse geo-code address
+    -
+      # If first attempt at geocoding has failed
+      plugin: skip_on_empty
+      source: '@location'
+      method: row
+    -
+      plugin: rev_geocode_address
+      source: '@_address'
+      
+  # Org name is School name
+  postal_address/0/organization: title
+
+  uid:
+      plugin: default_value
+      default_value: 1
+  created: created
+  changed: timestamp
+  status: status
+  
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  
+  
+destination:
+  plugin: 'entity:localgov_geo'
+  default_bundle: address
+
+migration_dependencies: null

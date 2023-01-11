@@ -9,10 +9,10 @@ use Drupal\Core\Database\Database;
 
 /**
  * @MigrateProcessPlugin(
- *   id = "geo_code_address"
+ *   id = "rev_geocode_address"
  * )
  */
-class GeoCodeAddress extends ProcessPluginBase {
+class ReverseCodeAddress extends ProcessPluginBase {
 
   /**
    * {@inheritdoc}
@@ -31,27 +31,18 @@ class GeoCodeAddress extends ProcessPluginBase {
         watchdog_exception('geolocation', $e);
         return NULL;
       }
+
       if (isset($addressCollection)) {
-        $location = [];
-
-        $lat = $addressCollection->first()->getCoordinates()->getLatitude();
-        $lon = $addressCollection->first()->getCoordinates()->getLongitude();
-
-        $plat = number_format((float) $lat, 5, '.');
-        $plon = number_format((float) $lon, 5, '.');
-
-        $location[0]['value'] = "POINT (" . $plon . " " . $plat . ")";
-        $location[0]['geo_type'] = "Point";
-        $location[0]['lat'] = $lat;
-        $location[0]['top'] = $lat;
-        $location[0]['bottom'] = $lat;
-        $location[0]['lon'] = $lon;
-        $location[0]['left'] = $lon;
-        $location[0]['right'] = $lon;
+        $postal_address = [];
+        $postal_address[0]['address_line1'] = $addressCollection->first()->getStreetName();
+        $postal_address[0]['address_line2'] = $addressCollection->first()->getSubLocality();
+        $postal_address[0]['locality'] = $addressCollection->first()->getLocality();
+        $postal_address[0]['postal_code'] = $addressCollection->first()->getPostalCode();
+        $postal_address[0]['country_code'] = $addressCollection->first()->getCountry()->getCode();
 
         // \Drupal::logger('inspire_migrate')->notice('Lat: ' . $lat . ' Longitude: ' . $lon);
 
-        return $location;
+        return $postal_address;
       }
       else {
         return NULL;
