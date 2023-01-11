@@ -1,5 +1,5 @@
-id: im_geo_school
-label: Migrate Shcool address & location from ABC legacy D9 to Geo address Inspire D9
+id: im_geo_care
+label: Migrate Care resource address & location from ABC legacy D9 to Geo address Inspire D9
 langcode: en
 status: true
 dependencies: {  }
@@ -12,7 +12,7 @@ source:
   scheme: public
   key: migrate
   entity_type: node
-  bundle: school
+  bundle: care_resource
 
 process:
   _unpublished:
@@ -21,13 +21,10 @@ process:
     method: row
     value: 0 
   
-  
-    
-  
   _address:
     -
       plugin: skip_on_empty
-      source: field_sch_address/0/value
+      source: field_cr_address/0/value
       method: process
     -
       # Remove non breaking spaces
@@ -45,27 +42,9 @@ process:
       replace: ' '
     -
       plugin: str_replace
-      search: '<br>'
-      replace: ' '
-    -
-      plugin: str_replace
-      search: '<br />'
-      replace: ' '
-    -
-      # Remove HTML tags
-      plugin: callback
-      callable: strip_tags
-    -
-      plugin: str_replace
       search: ','
       replace: ' '
     - 
-      # Remove postcode - messes with geocoding
-      plugin: str_replace
-      regex: true
-      search: '/([A-Za-z][A-Ha-hJ-Yj-y]?[0-9][A-Za-z0-9]? ?[0-9][A-Za-z]{2}|[Gg][Ii][Rr] ?0[Aa]{2})/'
-      replace: ' '
-    -
       # Remove multiple spaces
       plugin: str_replace
       regex: true
@@ -73,8 +52,7 @@ process:
       replace: ' ' 
     -
       plugin: trim
-  
-     
+    
   label: title
   
   location: 
@@ -96,7 +74,7 @@ process:
       plugin: rev_geocode_address
       source: '@_address'
       
-  # Org name is School name
+  # Org name is Care Resource name
   postal_address/0/organization: title
 
   uid:
