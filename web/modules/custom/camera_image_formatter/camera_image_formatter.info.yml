@@ -1,0 +1,7 @@
+name: Camera Image Formatter
+description: Converts a text filename to render image for road cameras
+package: Inspire
+core_version_requirement: ^9 || ^10
+type: module
+dependencies:
+ - field
