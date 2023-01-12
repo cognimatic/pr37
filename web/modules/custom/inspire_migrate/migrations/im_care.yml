@@ -23,41 +23,6 @@ process:
     
   title: title
   
-  body/summary:
-    -
-      # Use Drupal text summary function on Body
-      plugin: callback
-      callable: text_summary
-      source: body/0/value
-    # Replace line breaks with spaces
-    -
-      plugin: skip_on_empty
-      method: process
-    -
-      plugin: str_replace
-      search: '<br>'
-      replace: ' '
-    -
-      plugin: str_replace
-      search: '</p>'
-      replace: ' '
-    -
-      # Remove HTML tags
-      plugin: callback
-      callable: strip_tags
-    -
-      # Remove multiple spaces
-      plugin: str_replace
-      regex: true
-      search: '/\s\s+/'
-      replace: ' '
-      
-    -
-      # Remove non breaking spaces
-      plugin: str_replace
-      search: '&nbsp;'
-      replace: ' '
-  
   body/format: 
     plugin: default_value
     default_value: 'wysiwyg'
@@ -137,6 +102,8 @@ process:
       insert: '<div class="field__label">Areas covered:</div> '
       place: before
 
+  _address_text: field_cr_address/0/value
+
   body/value:
     plugin: concat
     delimiter: '<br>'
@@ -146,8 +113,43 @@ process:
       - '@_last_inspec'
       - '@_grade_inspec'
       - '@_area_cov'
+      - '@_address_text'
   
-  _address_text: field_cr_address/0/value
+  body/summary:
+    # Replace line breaks with spaces
+    -
+      plugin: skip_on_empty
+      source: '@body/value'
+      method: process
+    -
+      plugin: str_replace
+      search: '<br>'
+      replace: ' '
+    -
+      plugin: str_replace
+      search: '</p>'
+      replace: ' '
+    -
+      # Remove HTML tags
+      plugin: callback
+      callable: strip_tags
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+    -
+      plugin: trim
+    -
+      # Use Drupal text summary function on Body
+      plugin: callback
+      callable: text_summary
   
   localgov_directory_name:
       plugin: skip_on_empty
@@ -221,7 +223,11 @@ process:
         'Campbeltown': 20
         'Ardlui': 15
       
-
+  localgov_location/target_id:
+    plugin: migration_lookup
+    source: nid
+    migration: im_geo_care
+    
   uid:
       plugin: default_value
       default_value: 1
