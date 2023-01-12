@@ -31,7 +31,8 @@ class WebserviceMock implements WebserviceInterface {
   }
 
   private function getFixture($filename) {
-    $fixtures_path = drupal_get_path('module', 'abc_bins') . '/fixtures';
+    $fixtures_path = Drupal\Core\Extension\ExtensionPathResolver::getPath('module', 'abc_bins');
+    $fixtures_path .= '/fixtures';
     $json = file_get_contents($fixtures_path . '/' . $filename);
     return json_decode($json);
   }

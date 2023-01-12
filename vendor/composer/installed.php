@@ -250,6 +250,12 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'container-interop/container-interop' => array(
+            'dev_requirement' => true,
+            'replaced' => array(
+                0 => '^1.2.0',
+            ),
+        ),
         'cweagans/composer-patches' => array(
             'pretty_version' => '1.7.3',
             'version' => '1.7.3.0',
@@ -1954,6 +1960,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'drupal/upgrade_status' => array(
+            'pretty_version' => '4.0.0-alpha1',
+            'version' => '4.0.0.0-alpha1',
+            'reference' => '4.0.0-alpha1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/upgrade_status',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'drupal/userswitch' => array(
             'pretty_version' => '1.9.0',
             'version' => '1.9.0.0',
@@ -2221,6 +2236,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'laminas/laminas-servicemanager' => array(
+            'pretty_version' => '3.20.0',
+            'version' => '3.20.0.0',
+            'reference' => 'bc2c2cbe2dd90db8b9d16b0618f542692b76ab59',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-servicemanager',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'laminas/laminas-stdlib' => array(
             'pretty_version' => '3.11.0',
             'version' => '3.11.0.0',
@@ -2229,6 +2253,15 @@
             'install_path' => __DIR__ . '/../laminas/laminas-stdlib',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'laminas/laminas-text' => array(
+            'pretty_version' => '2.10.0',
+            'version' => '2.10.0.0',
+            'reference' => '40f7acdb284d41553d32db811e704d6e15e415b4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laminas/laminas-text',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'league/container' => array(
             'pretty_version' => '4.2.0',
@@ -2499,6 +2532,15 @@
             'install_path' => __DIR__ . '/../masterminds/html5',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'mathieuviossat/arraytotexttable' => array(
+            'pretty_version' => 'v1.0.9',
+            'version' => '1.0.9.0',
+            'reference' => '518ec338fe62e92c064a9d3d3bc8c64fb6e77d1c',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../mathieuviossat/arraytotexttable',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'mglaman/phpstan-drupal' => array(
             'pretty_version' => '1.1.26',
