@@ -35,3 +35,7 @@ blockquote {
   border-left: var(--border-large);
   border-color: var(--color-accent);
 }
+
+.leaflet-map-pane .leaflet-popup-content img {
+    min-width: 230px;
+}
