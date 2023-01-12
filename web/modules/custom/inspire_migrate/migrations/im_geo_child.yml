@@ -1,0 +1,96 @@
+id: im_geo_child
+label: Migrate Child Care resource address & location from ABC legacy D9 to Geo address Inspire D9
+langcode: en
+status: true
+dependencies: {  }
+migration_tags:
+  - abc
+  - geo
+  
+source:
+  plugin: d8_entity
+  scheme: public
+  key: migrate
+  entity_type: node
+  bundle: childcare
+
+process:
+  _unpublished:
+    plugin: skip_on_value
+    source: status
+    method: row
+    value: 0 
+  
+  _address:
+    -
+      plugin: skip_on_empty
+      source: field_address_childcare/0/value
+      method: process
+    -
+      # Remove non breaking spaces
+      plugin: str_replace
+      search: '&nbsp;'
+      replace: ' '
+    -
+      # Replace all types of line breaks with spaces
+      plugin: str_replace
+      search: '\n'
+      replace: ' ' 
+    -
+      plugin: str_replace
+      search: '\r'
+      replace: ' '
+    -
+      plugin: str_replace
+      search: ','
+      replace: ' '
+    - 
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' ' 
+    -
+      plugin: trim
+    
+  label: title
+  
+  location: 
+    -
+      plugin: skip_on_empty
+      source: '@_address'
+      method: row
+    -
+      plugin: geo_code_address
+
+  postal_address: 
+  # Reverse geo-code address
+    -
+      # If first attempt at geocoding has failed skip record
+      plugin: skip_on_empty
+      source: '@location'
+      method: row
+    -
+      plugin: rev_geocode_address
+      source: '@_address'
+      
+  # Org name is Care Resource name
+  postal_address/0/organization: title
+
+  uid:
+      plugin: default_value
+      default_value: 1
+  created: created
+  changed: timestamp
+  status: status
+  
+  langcode:
+    plugin: default_value
+    default_value: 'en'  
+  
+  
+destination:
+  plugin: 'entity:localgov_geo'
+  default_bundle: address
+
+migration_dependencies: null
