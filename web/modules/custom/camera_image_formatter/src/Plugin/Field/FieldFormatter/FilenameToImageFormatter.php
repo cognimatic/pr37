@@ -9,7 +9,7 @@ use Drupal\Core\Field\FieldItemListInterface;
  * 
  * @FieldFormatter(
  *   id = "camera_image_formatter_filename_to_image",
- *   label = @Translation("Render filename as image"),
+ *   label = @Translation("Render camera filename as image"),
  *   field_types = {
  *     "text", 
  *     "string"
