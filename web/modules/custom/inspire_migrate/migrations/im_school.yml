@@ -285,3 +285,4 @@ destination:
 migration_dependencies: 
   required:
     - im_media_doc
+    - im_geo_school

@@ -306,3 +306,4 @@ destination:
 migration_dependencies: 
   required:
     - im_media_image
+    - im_geo_child
