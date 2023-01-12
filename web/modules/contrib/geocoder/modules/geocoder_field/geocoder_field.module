@@ -230,9 +230,7 @@ function geocoder_field_entity_presave(EntityInterface $entity) {
     $providers = GeocoderProvider::loadMultiple($geocoder['providers']);
 
     // Skip Geocode/Reverse Geocode op is so requested for not empty value.
-    $skip_not_empty_migration = drupal_static('migration_skip_geocode_not_empty');
-    $skip_not_empty_value = !empty($skip_not_empty_migration) || !empty($geocoder['skip_not_empty_value']);
-    if ($skip_not_empty_value && isset($default_values) && !$default_values->isEmpty()) {
+    if (isset($geocoder['skip_not_empty_value']) && $geocoder['skip_not_empty_value'] && isset($default_values) && !$default_values->isEmpty()) {
       return;
     }
 

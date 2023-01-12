@@ -1,5 +1,5 @@
 name: Webform Capita Submission
 description: Links to payment portal after webform submission has been created
-core_version_requirement: ^8 || ^9 
-package: Custom
+core_version_requirement: ^9 || ^10
+package: ABC
 type: module
