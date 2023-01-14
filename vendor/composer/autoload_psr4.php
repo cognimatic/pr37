@@ -120,6 +120,7 @@ return array(
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'LocalgovDrupal\\OsPlacesGeocoder\\Tests\\' => array($vendorDir . '/localgovdrupal/localgov_os_places_geocoder_provider/tests'),
     'LocalgovDrupal\\OsPlacesGeocoder\\' => array($vendorDir . '/localgovdrupal/localgov_os_places_geocoder_provider/src'),
+    'League\\OAuth2\\Client\\' => array($vendorDir . '/league/oauth2-client/src'),
     'League\\Csv\\' => array($vendorDir . '/league/csv/src'),
     'League\\Container\\' => array($vendorDir . '/league/container/src'),
     'Laminas\\Text\\' => array($vendorDir . '/laminas/laminas-text/src'),

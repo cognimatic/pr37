@@ -214,6 +214,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         array (
             'LocalgovDrupal\\OsPlacesGeocoder\\Tests\\' => 38,
             'LocalgovDrupal\\OsPlacesGeocoder\\' => 32,
+            'League\\OAuth2\\Client\\' => 21,
             'League\\Csv\\' => 11,
             'League\\Container\\' => 17,
             'Laminas\\Text\\' => 13,
@@ -783,6 +784,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'LocalgovDrupal\\OsPlacesGeocoder\\' => 
         array (
             0 => __DIR__ . '/..' . '/localgovdrupal/localgov_os_places_geocoder_provider/src',
+        ),
+        'League\\OAuth2\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/oauth2-client/src',
         ),
         'League\\Csv\\' => 
         array (
