@@ -149,6 +149,7 @@ process:
       # Assume Docs only
       plugin: migration_lookup
       migration: im_media_doc
+      no_stub: true
     -
       # If lookup fails
       plugin: skip_on_empty
@@ -166,6 +167,9 @@ process:
       plugin: dom_select
       selector: //a/@href
       limit: 1 
+    -
+      plugin: skip_on_empty
+      method: process
     -
       plugin: extract
       index:

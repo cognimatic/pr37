@@ -17,12 +17,14 @@ source:
     SOURCE_DOMAIN: '/var/www/html/to-migrate/'
 process:
   filename: filename
+  
   source_public_absolute_path:
     -
       plugin: str_replace
       source: uri
       search: 'public://'
       replace: 'sites/default/files/'
+  
   source_full_path:
     -
       plugin: concat
@@ -31,6 +33,7 @@ process:
         - '@source_public_absolute_path'
     -
       plugin: urlencode
+      
   destination_path:
     -
       plugin: str_replace

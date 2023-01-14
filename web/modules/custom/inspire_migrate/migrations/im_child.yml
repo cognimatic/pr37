@@ -278,6 +278,7 @@ process:
     plugin: migration_lookup
     source: nid
     migration: im_geo_child
+    no_stub: true
 
   uid:
       plugin: default_value

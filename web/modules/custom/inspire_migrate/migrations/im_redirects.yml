@@ -34,6 +34,7 @@ process:
     -
       plugin: migration_lookup
       source: nid
+      no_stub: true
       migration: 
         # - im_camera
         - im_care

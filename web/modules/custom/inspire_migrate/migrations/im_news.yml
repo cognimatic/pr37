@@ -161,6 +161,7 @@ process:
     plugin: migration_lookup
     migration: im_media_image
     source: field_main_news_image/0/target_id
+    no_stub: true
     
   localgov_newsroom: 
     plugin: default_value

@@ -148,6 +148,7 @@ process:
       # Assume Docs only
       plugin: migration_lookup
       migration: im_media_doc
+      no_stub: true
     -
       # If lookup fails
       plugin: skip_on_empty

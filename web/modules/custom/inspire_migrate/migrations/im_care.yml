@@ -227,6 +227,7 @@ process:
     plugin: migration_lookup
     source: nid
     migration: im_geo_care
+    no_stub: true
     
   uid:
       plugin: default_value

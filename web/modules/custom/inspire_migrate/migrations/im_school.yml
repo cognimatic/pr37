@@ -252,11 +252,13 @@ process:
           plugin: migration_lookup
           source: target_id
           migration: im_media_doc
+          no_stub: true
    
   localgov_location/target_id:
     plugin: migration_lookup
     source: nid
     migration: im_geo_school
+    no_stub: true
 
   uid:
       plugin: default_value

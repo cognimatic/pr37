@@ -16,12 +16,18 @@ source:
   bundle: image
 
 process:
-  name: name
+
   
+  name: 
+    plugin: if_condition
+    source: name
+    condition: not:empty
+    else_get: field_media_image/0/alt
+      
   source_target: field_media_image/0/target_id
+ 
   source_thumbnail: thumbnail__target_id
-  
-     
+    
   uid:
     -
       plugin: default_value
@@ -43,9 +49,11 @@ process:
       plugin: migration_lookup
       migration: im_files
       source: '@source_target'
+      no_stub: true
     -
       plugin: skip_on_empty
-      method: row  
+      method: row
+      message: 'No file found'
   
   field_media_image/alt: field_media_image/0/alt
   field_media_image/title: field_media_image/0/title

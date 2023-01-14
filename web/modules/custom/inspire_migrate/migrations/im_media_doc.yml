@@ -14,9 +14,7 @@ source:
   key: migrate
   entity_type: media  
   bundle: document
-  
-  constants:
-    FALLBACK_IMAGE_SOURCE_ID: 50915
+ 
 
 process:
   uid:
@@ -25,13 +23,11 @@ process:
       default_value: 1
   name:
     -
-      plugin: get
-      source: name
-    -
       plugin: str_replace
+      source: name
       regex: true
       search: '/\.[^.]*$/'
-      replace: ''
+      replace: ' '
     -
       plugin: str_replace
       search: ['_', '-']
@@ -42,23 +38,32 @@ process:
       search: '/\s\s+/'
       replace: ' '
     -
+      # Remove multiple spaces
+      plugin: str_replace
+      regex: true
+      search: '/\s\s+/'
+      replace: ' '
+    -
+      # Capitalizes first char of each word
       plugin: callback
       callable: ucwords
   
-  source_target: field_media_document/0/target_id   
-  source_thumbnail: 
-    -
-      plugin: get
-      source: thumbnail__target_id
-    -
-      plugin: skip_on_empty
-      method: row
+  _source_target:
+    plugin: skip_on_empty
+    source: field_media_document/0/target_id
+    method: row
+    
+  _source_thumbnail: 
+    plugin: skip_on_empty
+    source: thumbnail__target_id
+    method: row
   
   thumbnail__target_id: 
     -
       plugin: migration_lookup
       migration: im_files
-      source: '@source_thumbnail'
+      source: '@_source_thumbnail'
+      no_stub: true
     -
       plugin: skip_on_empty
       method: process
@@ -68,7 +73,8 @@ process:
     -
       plugin: migration_lookup
       migration: im_files
-      source: '@source_target'
+      source: '@_source_target'
+      no_stub: true
     -
       plugin: skip_on_empty
       method: row  
