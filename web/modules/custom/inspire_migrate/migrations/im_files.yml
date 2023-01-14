@@ -14,12 +14,9 @@ source:
   entity_type: file
   
   constants:
-    SOURCE_DOMAIN: 'https://argyll-bute.gov.uk'
+    SOURCE_DOMAIN: '/var/www/html/to-migrate/'
 process:
-  filename:
-    -
-      plugin: get
-      source: filename
+  filename: filename
   source_public_absolute_path:
     -
       plugin: str_replace
@@ -29,7 +26,6 @@ process:
   source_full_path:
     -
       plugin: concat
-      delimiter: /
       source:
         - constants/SOURCE_DOMAIN
         - '@source_public_absolute_path'
@@ -65,26 +61,11 @@ process:
       source:
         - '@source_full_path'
         - '@destination_path' 
-  filemime:
-    -
-      plugin: get
-      source: filemime
-  filesize:
-    -
-      plugin: get
-      source: filesize
-  status:
-    -
-      plugin: get
-      source: status
-  created:
-    -
-      plugin: get
-      source: timestamp
-  changed:
-    -
-      plugin: get
-      source: timestamp
+  filemime: filemime
+  filesize: filesize
+  status: status
+  created: created
+  changed: timestamp
   uid:
     -
       plugin: default_value
