@@ -1951,6 +1951,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/twitter_block' => array(
+            'pretty_version' => '3.0.0-alpha1',
+            'version' => '3.0.0.0-alpha1',
+            'reference' => '8.x-3.0-alpha1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/twitter_block',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/type_tray' => array(
             'pretty_version' => '1.2.0',
             'version' => '1.2.0.0',
