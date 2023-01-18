@@ -18,11 +18,11 @@ class ReverseCodeAddress extends ProcessPluginBase {
    * {@inheritdoc}
    */
   public function transform($address, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-//    $provider_ids = ['localgov_default_osm', 'localgov_os_places'];
+    $provider_ids = ['localgov_os_places', 'localgov_default_osm'];
     if (!empty($address)) {
       // $providers =  \Drupal::entityTypeManager()->getStorage('geocoder_provider')->loadMultiple();
       // temporary fudge
-      $provider_ids = ['localgov_default_osm'];
+      // $provider_ids = ['localgov_default_osm'];
       $providers = \Drupal::entityTypeManager()->getStorage('geocoder_provider')->loadMultiple($provider_ids);
 
       try {
