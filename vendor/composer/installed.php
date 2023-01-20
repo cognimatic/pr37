@@ -1364,6 +1364,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/jquery_ui_datepicker' => array(
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
+            'reference' => '2.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/jquery_ui_datepicker',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/jquery_ui_menu' => array(
             'pretty_version' => '2.0.0',
             'version' => '2.0.0.0',
