@@ -1,0 +1,10 @@
+.status-normal{
+    color: green;
+}
+.status-severe{
+    color: red;
+}
+
+.status-issues{
+    color: orange;
+}
