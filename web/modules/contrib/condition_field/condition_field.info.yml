@@ -6,7 +6,7 @@ package: 'Field types'
 dependencies:
   - drupal:field
 
-# Information added by Drupal.org packaging script on 2022-05-31
-version: '2.0.1'
+# Information added by Drupal.org packaging script on 2023-01-15
+version: '2.0.2'
 project: 'condition_field'
-datestamp: 1654003534
+datestamp: 1673783209

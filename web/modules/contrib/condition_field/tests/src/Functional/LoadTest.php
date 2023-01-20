@@ -22,7 +22,7 @@ class LoadTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['condition_field'];
+  protected static $modules = ['condition_field'];
 
   /**
    * A user with permission to administer site configuration.

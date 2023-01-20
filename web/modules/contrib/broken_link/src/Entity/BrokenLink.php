@@ -78,7 +78,9 @@ class BrokenLink extends ContentEntityBase implements ContentEntityInterface {
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setConstraints([
         'type' => 'varchar',
-        'length' => 2000,
+      ])
+      ->setSettings([
+        'max_length' => 2000,
       ]);
 
     $fields['created'] = BaseFieldDefinition::create('timestamp')
@@ -94,7 +96,9 @@ class BrokenLink extends ContentEntityBase implements ContentEntityInterface {
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
       ->setConstraints([
         'type' => 'varchar',
-        'length' => 2000,
+      ])
+      ->setSettings([
+        'max_length' => 2000,
       ])
       ->setDescription(t('All http referers for one broken link url.'));
 

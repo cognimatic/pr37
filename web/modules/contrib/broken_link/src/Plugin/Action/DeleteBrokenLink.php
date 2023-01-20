@@ -23,7 +23,7 @@ class DeleteBrokenLink extends ActionBase implements ContainerFactoryPluginInter
   /**
    * The tempstore object.
    *
-   * @var \Drupal\user\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
@@ -63,7 +63,7 @@ class DeleteBrokenLink extends ActionBase implements ContainerFactoryPluginInter
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('user.private_tempstore'),
+      $container->get('tempstore.private'),
       $container->get('current_user')
     );
   }

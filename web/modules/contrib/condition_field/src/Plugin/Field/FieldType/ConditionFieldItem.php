@@ -104,7 +104,8 @@ class ConditionFieldItem extends FieldItemBase {
 
       $condition_plugins[$condition_id] = $condition->getPluginDefinition()['label'];
 
-      if (in_array($condition_id, $settings['enabled_plugins']) && $settings['enabled_plugins'][$condition_id] === TRUE) {
+      $condition_enabled = $settings['enabled_plugins'][$condition_id] ?? FALSE;
+      if (in_array($condition_id, $settings['enabled_plugins']) && $condition_enabled) {
         $enabled_plugins[] = $condition_id;
       }
     }

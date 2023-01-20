@@ -56,9 +56,8 @@ class ParagraphDeleteForm extends ContentEntityDeleteForm {
     if ($parent_field_item) {
       $parent_field->removeItem($parent_field_item->getName());
     }
-    else {
-      $this->entity->delete();
-    }
+    // Directly delete paragraphs. He does not make new revision.
+    $this->entity->delete();
 
     if ($this->shouldCreateNewRevision($parent)) {
       $this->saveNewRevision($parent);

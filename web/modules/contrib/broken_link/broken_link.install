@@ -77,3 +77,44 @@ function broken_link_update_8102() {
     $view->save();
   }
 }
+
+/**
+ * Update the existing field definitions query_string and referers
+ */
+function broken_link_update_8103() {
+  $entity_type_id = 'broken_link';
+  $field_names = ['query_string', 'referers'];
+
+  // Remove existing entities
+  $existingEntities = \Drupal::entityTypeManager()->getStorage('broken_link')->loadMultiple();
+  foreach($existingEntities as $entity) {
+    $entity->delete();
+  }
+
+  /** @var \Drupal\Core\Entity\EntityLastInstalledSchemaRepositoryInterface $schema_repository */
+  $schema_repository = \Drupal::service('entity.last_installed_schema.repository');
+  /** @var \Drupal\Core\Entity\EntityFieldManager $entity_field_manager */
+  $entity_field_manager = \Drupal::service('entity_field.manager');
+  $base_field_definitions = $entity_field_manager->getBaseFieldDefinitions($entity_type_id);
+
+  $update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  foreach($field_names as $field_name) {
+    $schema_repository->setLastInstalledFieldStorageDefinition($base_field_definitions[$field_name]);
+    $field_storage_definitions = $schema_repository->getLastInstalledFieldStorageDefinitions($entity_type_id);
+
+    // Update the serialized schema property.
+    $field_definition = $field_storage_definitions[$field_name];
+    $field_definition->setSetting('max_length', 2000);
+
+    $update_manager->updateFieldStorageDefinition($field_definition);
+
+    $schema_repository->setLastInstalledFieldStorageDefinitions($entity_type_id, $field_storage_definitions);
+  }
+
+  // Creating again pre-existing entities
+  foreach($existingEntities as $entity) {
+    $entity->enforceIsNew();
+    $entity->save();
+  }
+}
