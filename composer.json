@@ -42,6 +42,7 @@
         "drupal/fpa": "^3.0",
         "drupal/honeypot": "^2.1",
         "drupal/httpswww": "^2.0",
+        "drupal/iframe": "^2.21",
         "drupal/image_effects": "^3.3",
         "drupal/image_resize_filter": "^1.1",
         "drupal/jquery_ui_datepicker": "^2.0",

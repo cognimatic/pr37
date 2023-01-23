@@ -1310,6 +1310,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/iframe' => array(
+            'pretty_version' => '2.21.0',
+            'version' => '2.21.0.0',
+            'reference' => '8.x-2.21',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/iframe',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/image_effects' => array(
             'pretty_version' => '3.4.0',
             'version' => '3.4.0.0',
