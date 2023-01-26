@@ -13,6 +13,9 @@ source:
   key: migrate
   entity_type: node
   bundle: privacy_notice
+  
+  constants:
+    APPEND: 'Privacy Statement'
 
 process:
   _unpublished:
@@ -21,8 +24,15 @@ process:
     method: row
     value: 0 
     
-  title: title
-  
+    
+    
+  title: 
+    plugin: concat
+    delimiter: ' - '
+    source: 
+      - title
+      - constants/APPEND
+    
   body/value: 
     -
       plugin: skip_on_empty

@@ -273,12 +273,14 @@ process:
         'MID ARGYLL, KINTYRE and ISLAY': 18
         'Oban, Lorn and the Isles': 8
         'OBAN, LORN and THE ISLES': 8
-  
-  localgov_location/target_id:
-    plugin: migration_lookup
-    source: nid
-    migration: im_geo_child
-    no_stub: true
+
+# Ignore Geo references - too many mismatches  
+
+#  localgov_location/target_id:
+#    plugin: migration_lookup
+#    source: nid
+#    migration: im_geo_child
+#    no_stub: true
 
   uid:
       plugin: default_value
