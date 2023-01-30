@@ -96,7 +96,7 @@ class QueueMonitorBlock extends BlockBase {
 
     // check if we are open or closed and either show queue times or 'office closed' message
     if (!$this->callCenterIsOpen()) {
-      $callcenter_content = "<div class='alert alert-warning'>Our Contact Centre is currently closed, but you can still use the 'Report it' and 'Request it' sections of our website.</div>" ;
+      $callcenter_content = "<section class='alert alert-warning'><h2>Closed</h2>Our Contact Centre is currently closed, but you can still use the 'Report it' and 'Request it' sections of our website.</section>" ;
     }
     else {
 
@@ -104,19 +104,19 @@ class QueueMonitorBlock extends BlockBase {
 
       $callcenter_content = '';
       if ($calls === NULL){
-        $callcenter_content = "<div class='alert alert-danger'>Sorry, no data found.</div>";
+        $callcenter_content = "<section class='alert alert-primary'><h2>No data</h2>Sorry, cannot obtain data from the phone queue.</section>";
       }
       elseif ($calls == 0) {
-        $callcenter_content = "<br/>";
+        $callcenter_content = "<br>";
       }
       else if ($calls == 1) {
-        $callcenter_content = "<div class='alert alert-success'><strong>Current Contact Centre Call Volumes</strong><br>There is currently 1 caller in the Contact Centre phone queue.</div>";
+        $callcenter_content = "<section class='alert alert-success'><h2>Current Contact Centre Call Volumes</h2>There is currently 1 caller in the Contact Centre phone queue.</section>";
       }
       else if ($calls <= 3) {
-        $callcenter_content = "<div class='alert alert-warning'><strong>Current Contact Centre Call Volumes</strong><br>There are currently " . $calls . " callers in the Contact Centre phone queue.</div>";
+        $callcenter_content = "<section class='alert alert-warning'><h2>Current Contact Centre Call Volumes</h2>There are currently " . $calls . " callers in the Contact Centre phone queue.</section>";
       }
       else if ($calls > 3) {
-        $callcenter_content = "<div class='alert alert-danger'><strong>Current Contact Centre Call Volumes</strong><br>There are currently ".$calls . " callers in the Contact Centre phone queue.</div>";
+        $callcenter_content = "<section class='alert alert-danger'><h2>Current Contact Centre Call Volumes</h2>There are currently ".$calls . " callers in the Contact Centre phone queue.</section>";
       }
     }
     return $callcenter_content;
