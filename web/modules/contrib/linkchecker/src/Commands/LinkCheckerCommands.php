@@ -63,7 +63,7 @@ class LinkCheckerCommands extends DrushCommands {
     LinkCleanUp $linkCleanUp
   ) {
     parent::__construct();
-    $this->linkcheckerSetting = $configFactory->get('linkchecker.settings');;
+    $this->linkcheckerSetting = $configFactory->get('linkchecker.settings');
     $this->logger = $logger;
     $this->extractorBatch = $extractorBatch;
     $this->checkerBatch = $checkerBatch;
@@ -152,11 +152,11 @@ class LinkCheckerCommands extends DrushCommands {
     }
 
     if (empty($baseUrl)) {
-      throw new \Exception($this->t('You MUST configure the site base_url or provide --uri parameter.'));
+      throw new \Exception('You MUST configure the site base_url or provide --uri parameter.');
     }
 
     if (mb_strpos($baseUrl, 'http') !== 0) {
-      throw new \Exception($this->t('Base url should start with http scheme (http:// or https://)'));
+      throw new \Exception('Base url should start with http scheme (http:// or https://)');
     }
   }
 

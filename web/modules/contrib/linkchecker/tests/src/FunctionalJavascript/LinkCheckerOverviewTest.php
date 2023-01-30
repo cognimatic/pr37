@@ -32,7 +32,7 @@ class LinkCheckerOverviewTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->adminUser = $this->drupalCreateUser([
       'administer linkchecker',

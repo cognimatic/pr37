@@ -5,6 +5,23 @@
  * Attach libaries to allow keyboard save to the relevant forms.
  */
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function keysave_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the keysave module.
+    case 'help.page.keysave':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('When working in a configuration or entity form, overrides the browser default behaviour for command-s or control-s key combinations, to submit the form instead.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
 
 /**
  * Implements hook_form_alter().

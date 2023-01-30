@@ -57,7 +57,7 @@ class LinkcheckerLinkCheckerServiceTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->installSchema('system', 'sequences');
     $this->installEntitySchema('linkcheckerlink');

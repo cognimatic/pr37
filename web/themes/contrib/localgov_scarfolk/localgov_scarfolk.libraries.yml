@@ -18,4 +18,4 @@ banner:
 ia-block:
   css:
     theme:
-      ia-block.css: {}
+      css/components/ia-block.css: {}

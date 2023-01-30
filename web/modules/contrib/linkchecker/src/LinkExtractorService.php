@@ -199,7 +199,7 @@ class LinkExtractorService {
       // Decode HTML links into plain text links.
       // DOMDocument->loadHTML does not provide the RAW url from code. All html
       // entities are already decoded.
-      // @todo: Try to find a way to get the raw value.
+      // @todo Try to find a way to get the raw value.
       $urlDecoded = $url;
 
       // Prefix protocol relative urls with a protocol to allow link checking.
@@ -416,7 +416,9 @@ class LinkExtractorService {
 
     // Is url in domain blacklist?
     $urls = $this->linkcheckerSetting->get('check.disable_link_check_for_urls');
-    if (!empty($urls) && preg_match('/' . implode('|', array_map(function ($links) {return preg_quote($links, '/');}, preg_split('/(\r\n?|\n)/', $urls))) . '/', $url)) {
+    if (!empty($urls) && preg_match('/' . implode('|', array_map(function ($links) {
+      return preg_quote($links, '/');
+    }, preg_split('/(\r\n?|\n)/', $urls))) . '/', $url)) {
       return TRUE;
     }
 
@@ -456,9 +458,9 @@ class LinkExtractorService {
 
     $scheme = isset($uri['scheme']) ? $uri['scheme'] . '://' : '';
     $user = isset($uri['user']) ? $uri['user'] . ($uri['pass'] ? ':' . $uri['pass'] : '') . '@' : '';
-    $port = isset($uri['port']) ? $uri['port'] : 80;
+    $port = $uri['port'] ?? 80;
     $host = $uri['host'] . ($port != 80 ? ':' . $port : '');
-    $path = isset($uri['path']) ? $uri['path'] : '/';
+    $path = $uri['path'] ?? '/';
 
     // Glue the URL variables.
     $absoluteUrl = $scheme . $user . $host . $path;

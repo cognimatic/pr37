@@ -14,7 +14,7 @@
    *
    * @prop {Drupal~behaviorAttach} attach
    *   Attaches summary behaviors on content type edit forms.
-   */  
+   */
   Drupal.behaviors.linkcheckerContentTypes = {
     attach: function (context) {
       var $context = $(context);

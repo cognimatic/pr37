@@ -9,8 +9,9 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+
 /**
- * Class LinkCleanUp.
+ * Use to remove links.
  */
 class LinkCleanUp {
 

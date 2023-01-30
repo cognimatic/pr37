@@ -36,7 +36,7 @@ class LinkCheckerEditFormTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     // Create Basic page and Article node types.
     $node_type = NodeType::create([

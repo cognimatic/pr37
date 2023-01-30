@@ -85,7 +85,7 @@ class LinkcheckerLinkExtractorServiceTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->installSchema('system', 'sequences');
     $this->installSchema('node', 'node_access');
@@ -163,7 +163,7 @@ class LinkcheckerLinkExtractorServiceTest extends KernelTestBase {
       '@actual' => $countExtracted,
     ]));
 
-    foreach ($this->getRelativeUrls() as $relativeUrl => $url) {
+    foreach ($this->getRelativeUrls() as $url) {
       $this->assertTrue(in_array($url, $extracted), new FormattableMarkup('URL @url was not extracted!', ['@url' => $url]));
     }
   }

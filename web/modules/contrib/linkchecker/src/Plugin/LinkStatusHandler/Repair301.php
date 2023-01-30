@@ -27,7 +27,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * )
  */
 class Repair301 extends LinkStatusHandlerBase {
-
   /**
    * Current request.
    *
@@ -38,15 +37,37 @@ class Repair301 extends LinkStatusHandlerBase {
   /**
    * Repair301 constructor.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, QueueFactory $queueFactory, EntityTypeManagerInterface $entityTypeManager, AccountSwitcherInterface $accountSwitcher, ImmutableConfig $linkcheckerSetting, RequestStack $requestStack) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $queueFactory, $entityTypeManager, $accountSwitcher, $linkcheckerSetting);
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    QueueFactory $queueFactory,
+    EntityTypeManagerInterface $entityTypeManager,
+    AccountSwitcherInterface $accountSwitcher,
+    ImmutableConfig $linkcheckerSetting,
+    RequestStack $requestStack
+    ) {
+    parent::__construct(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $queueFactory,
+      $entityTypeManager,
+      $accountSwitcher,
+      $linkcheckerSetting
+    );
     $this->request = $requestStack->getCurrentRequest();
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition
+    ) {
     return new static(
       $configuration,
       $plugin_id,
@@ -62,7 +83,10 @@ class Repair301 extends LinkStatusHandlerBase {
   /**
    * {@inheritdoc}
    */
-  protected function getItems(LinkCheckerLinkInterface $link, ResponseInterface $response) {
+  protected function getItems(
+    LinkCheckerLinkInterface $link,
+    ResponseInterface $response
+  ) {
     // A HTTP status code of 301 tells us an existing link have changed to
     // a new link. The remote site owner was so kind to provide us the new
     // link and if we trust this change we are able to replace the old link
@@ -70,9 +94,7 @@ class Repair301 extends LinkStatusHandlerBase {
     $autoRepair301 = $this->linkcheckerSetting->get('error.action_status_code_301');
     $redirectUrl = $response->getHeaderLine('Location');
 
-    if ($autoRepair301
-      && $autoRepair301 <= $link->getFailCount()
-      && UrlHelper::isValid($redirectUrl, TRUE)) {
+    if ($autoRepair301 && $autoRepair301 <= $link->getFailCount() && UrlHelper::isValid($redirectUrl, TRUE)) {
       return parent::getItems($link, $response);
     }
     else {
@@ -83,19 +105,33 @@ class Repair301 extends LinkStatusHandlerBase {
   /**
    * {@inheritdoc}
    */
-  protected function doHandle(LinkCheckerLinkInterface $link, ResponseInterface $response, FieldableEntityInterface $entity) {
-    $autoRepair301 = $this->linkcheckerSetting->get('error.action_status_code_301');
+  protected function doHandle(
+        LinkCheckerLinkInterface $link,
+        ResponseInterface $response,
+        FieldableEntityInterface $entity
+    ) {
+    $autoRepair301 = $this->linkcheckerSetting->get(
+          'error.action_status_code_301'
+      );
     $redirectUrl = $response->getHeaderLine('Location');
 
-    if ($autoRepair301
-      && $autoRepair301 <= $link->getFailCount()
-      && UrlHelper::isValid($redirectUrl, TRUE)
-      && $link->isExists()) {
-      $values = $entity->get($link->getParentEntityFieldName())->getValue();
+    if (
+          $autoRepair301 &&
+          $autoRepair301 <= $link->getFailCount() &&
+          UrlHelper::isValid($redirectUrl, TRUE) &&
+          $link->isExists()
+      ) {
+      $values = $entity
+        ->get($link->getParentEntityFieldName())
+        ->getValue();
 
       foreach ($values as $key => $value) {
         if (isset($value['value'])) {
-          $values[$key]['value'] = $this->linkReplace($value['value'], $link->getUrl(), $redirectUrl);
+          $values[$key]['value'] = $this->linkReplace(
+                $value['value'],
+                $link->getUrl(),
+                $redirectUrl
+            );
         }
       }
 
@@ -119,7 +155,11 @@ class Repair301 extends LinkStatusHandlerBase {
    */
   protected function linkReplace($value, $oldLinkAbsolute, $newLinkAbsolute) {
     // Don't do any string replacement if one of the values is empty.
-    if (empty($value) || empty($oldLinkAbsolute) || empty($newLinkAbsolute)) {
+    if (
+          empty($value) ||
+          empty($oldLinkAbsolute) ||
+          empty($newLinkAbsolute)
+      ) {
       return $value;
     }
 
@@ -127,8 +167,11 @@ class Repair301 extends LinkStatusHandlerBase {
       $baseUrl = $this->request->getSchemeAndHttpHost();
     }
     else {
-      $httpProtocol = $this->linkcheckerSetting->get('default_url_scheme');
-      $baseUrl = $httpProtocol . $this->linkcheckerSetting->get('base_path');
+      $httpProtocol = $this->linkcheckerSetting->get(
+            'default_url_scheme'
+            );
+      $baseUrl =
+                $httpProtocol . $this->linkcheckerSetting->get('base_path');
     }
 
     // Remove protocols and hostname from local URLs.
@@ -143,26 +186,28 @@ class Repair301 extends LinkStatusHandlerBase {
     $newHtmlLink = UrlHelper::filterBadProtocol($newLink);
 
     // Replace links in link fields and text and Links weblink fields.
-    if (in_array($value, [
-      $oldHtmlLinkAbsolute,
-      $oldHtmlLink,
-      $oldLinkAbsolute,
-      $oldLink,
-    ])) {
+    if (
+          in_array($value, [
+            $oldHtmlLinkAbsolute,
+            $oldHtmlLink,
+            $oldLinkAbsolute,
+            $oldLink,
+          ])
+      ) {
       // Keep old and new links in the same encoding and format and short or
       // fully qualified.
-      $value = str_replace($oldHtmlLinkAbsolute, $newHtmlLinkAbsolute, $value);
+      $value = str_replace(
+            $oldHtmlLinkAbsolute,
+            $newHtmlLinkAbsolute,
+            $value
+        );
       $value = str_replace($oldHtmlLink, $newHtmlLink, $value);
       $value = str_replace($oldLinkAbsolute, $newLinkAbsolute, $value);
       $value = str_replace($oldLink, $newLink, $value);
     }
     else {
       // Create an array of links with HTML decoded and encoded URLs.
-      $oldLinks = [
-        $oldHtmlLinkAbsolute,
-        $oldHtmlLink,
-        $oldLink,
-      ];
+      $oldLinks = [$oldHtmlLinkAbsolute, $oldHtmlLink, $oldLink];
 
       // Remove duplicate URLs from array if URLs do not have URL parameters.
       // If more than one URL parameter exists - one URL in the array will have
@@ -227,10 +272,14 @@ class Repair301 extends LinkStatusHandlerBase {
           if (in_array($embed->getAttribute('src'), $oldLinks)) {
             $embed->setAttribute('src', $newHtmlLink);
           }
-          if (in_array($embed->getAttribute('pluginurl'), $oldLinks)) {
+          if (
+                in_array($embed->getAttribute('pluginurl'), $oldLinks)
+            ) {
             $embed->setAttribute('pluginurl', $newHtmlLink);
           }
-          if (in_array($embed->getAttribute('pluginspage'), $oldLinks)) {
+          if (
+                in_array($embed->getAttribute('pluginspage'), $oldLinks)
+            ) {
             $embed->setAttribute('pluginspage', $newHtmlLink);
           }
         }
@@ -266,26 +315,50 @@ class Repair301 extends LinkStatusHandlerBase {
           if (in_array($object->getAttribute('data'), $oldLinks)) {
             $object->setAttribute('data', $newHtmlLink);
           }
-          if (in_array($object->getAttribute('codebase'), $oldLinks)) {
+          if (
+                in_array($object->getAttribute('codebase'), $oldLinks)
+            ) {
             $object->setAttribute('codebase', $newHtmlLink);
           }
 
           // Finds param tags with links in the object tag.
           $params = $object->getElementsByTagName('param');
           foreach ($params as $param) {
-            // @todo
-            // - Try to replace links in unknown "flashvars" values
+            // @todo Try to replace links in unknown "flashvars" values
             //   (e.g., file=http://, data=http://).
-            $names = ['archive', 'filename', 'href', 'movie', 'src', 'url'];
-            if ($param->hasAttribute('name') && in_array($param->getAttribute('name'), $names)) {
-              if (in_array($param->getAttribute('value'), $oldLinks)) {
+            $names = [
+              'archive',
+              'filename',
+              'href',
+              'movie',
+              'src',
+              'url',
+            ];
+            if (
+                  $param->hasAttribute('name') &&
+                  in_array($param->getAttribute('name'), $names)
+              ) {
+              if (
+                    in_array(
+                        $param->getAttribute('value'),
+                        $oldLinks
+                    )
+                ) {
                 $param->setAttribute('value', $newHtmlLink);
               }
             }
 
             $srcs = ['movie'];
-            if ($param->hasAttribute('src') && in_array($param->getAttribute('src'), $srcs)) {
-              if (in_array($param->getAttribute('value'), $oldLinks)) {
+            if (
+                  $param->hasAttribute('src') &&
+                  in_array($param->getAttribute('src'), $srcs)
+              ) {
+              if (
+                    in_array(
+                        $param->getAttribute('value'),
+                        $oldLinks
+                    )
+                ) {
                 $param->setAttribute('value', $newHtmlLink);
               }
             }

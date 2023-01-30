@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Class LinkCheckerService.
+ * Defines service to check link.
  */
 class LinkCheckerService {
 

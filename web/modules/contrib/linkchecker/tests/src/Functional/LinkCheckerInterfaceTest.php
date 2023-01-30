@@ -20,7 +20,6 @@ use Drupal\Tests\BrowserTestBase;
  * @group linkchecker
  */
 class LinkCheckerInterfaceTest extends BrowserTestBase {
-
   use StringTranslationTrait;
 
   /**
@@ -61,7 +60,11 @@ class LinkCheckerInterfaceTest extends BrowserTestBase {
     $node_type->save();
     $node_body_field = node_add_body_field($node_type);
     $node_body_field->setThirdPartySetting('linkchecker', 'scan', TRUE);
-    $node_body_field->setThirdPartySetting('linkchecker', 'extractor', 'html_link_extractor');
+    $node_body_field->setThirdPartySetting(
+          'linkchecker',
+          'extractor',
+          'html_link_extractor'
+      );
     $node_body_field->save();
 
     $block_type = BlockContentType::create([
@@ -71,45 +74,73 @@ class LinkCheckerInterfaceTest extends BrowserTestBase {
     $block_type->save();
     $block_body_field = block_content_add_body_field($block_type->id());
     $block_body_field->setThirdPartySetting('linkchecker', 'scan', TRUE);
-    $block_body_field->setThirdPartySetting('linkchecker', 'extractor', 'html_link_extractor');
+    $block_body_field->setThirdPartySetting(
+          'linkchecker',
+          'extractor',
+          'html_link_extractor'
+      );
     $block_body_field->save();
 
     // Configure basic settings.
-    $this->config('linkchecker.settings')->set('default_url_scheme', 'http://')->save();
-    $this->config('linkchecker.settings')->set('base_path', 'example.org/')->save();
+    $this->config('linkchecker.settings')
+      ->set('default_url_scheme', 'http://')
+      ->save();
+    $this->config('linkchecker.settings')
+      ->set('base_path', 'example.org/')
+      ->save();
 
-    $this->config('linkchecker.settings')->set('check.disable_link_check_for_urls', '')->save();
-    $this->config('linkchecker.settings')->set('check_links_types', LinkCheckerLinkInterface::TYPE_ALL)->save();
+    $this->config('linkchecker.settings')
+      ->set('check.disable_link_check_for_urls', '')
+      ->save();
+    $this->config('linkchecker.settings')
+      ->set('check_links_types', LinkCheckerLinkInterface::TYPE_ALL)
+      ->save();
 
     // Core enables the URL filter for "Full HTML" by default.
     // -> Blacklist / Disable URL filter for testing.
-    $this->config('linkchecker.settings')->set('extract.filter_blacklist', ['filter_url' => 'filter_url'])->save();
+    $this->config('linkchecker.settings')
+      ->set('extract.filter_blacklist', ['filter_url' => 'filter_url'])
+      ->save();
 
     // Extract from all link checker supported HTML tags.
-    $this->config('linkchecker.settings')->set('extract.from_a', 1)->save();
-    $this->config('linkchecker.settings')->set('extract.from_audio', 1)->save();
-    $this->config('linkchecker.settings')->set('extract.from_embed', 1)->save();
-    $this->config('linkchecker.settings')->set('extract.from_iframe', 1)->save();
-    $this->config('linkchecker.settings')->set('extract.from_img', 1)->save();
-    $this->config('linkchecker.settings')->set('extract.from_object', 1)->save();
-    $this->config('linkchecker.settings')->set('extract.from_video', 1)->save();
+    $this->config('linkchecker.settings')
+      ->set('extract.from_a', 1)
+      ->save();
+    $this->config('linkchecker.settings')
+      ->set('extract.from_audio', 1)
+      ->save();
+    $this->config('linkchecker.settings')
+      ->set('extract.from_embed', 1)
+      ->save();
+    $this->config('linkchecker.settings')
+      ->set('extract.from_iframe', 1)
+      ->save();
+    $this->config('linkchecker.settings')
+      ->set('extract.from_img', 1)
+      ->save();
+    $this->config('linkchecker.settings')
+      ->set('extract.from_object', 1)
+      ->save();
+    $this->config('linkchecker.settings')
+      ->set('extract.from_video', 1)
+      ->save();
 
     $permissions = [
-      // Block permissions.
+          // Block permissions.
       'administer blocks',
-      // Comment permissions.
+          // Comment permissions.
       'administer comments',
       'access comments',
       'post comments',
       'skip comment approval',
       'edit own comments',
-      // Node permissions.
+          // Node permissions.
       'create page content',
       'edit own page content',
-      // Path aliase permissions.
+          // Path aliase permissions.
       'administer url aliases',
       'create url aliases',
-      // Content filter permissions.
+          // Content filter permissions.
       $full_html_format->getPermissionName(),
     ];
 
@@ -123,7 +154,10 @@ class LinkCheckerInterfaceTest extends BrowserTestBase {
    */
   public function testLinkCheckerCreateNodeWithBrokenLinks() {
     $url1 = 'http://example.com/node/broken/link';
-    $body = 'Lorem ipsum dolor sit amet <a href="' . $url1 . '">broken link</a> sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat';
+    $body =
+            'Lorem ipsum dolor sit amet <a href="' .
+            $url1 .
+            '">broken link</a> sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat';
 
     // Save folder names in variables for reuse.
     $random = new Random();
@@ -134,20 +168,32 @@ class LinkCheckerInterfaceTest extends BrowserTestBase {
     $edit = [];
     $edit['title[0][value]'] = $random->name(32);
     $edit['body[0][value]'] = $body;
-    //$edit["body[0][format]"] = 'full_html';
+    // $edit["body[0][format]"] = 'full_html';
     $edit['path[0][alias]'] = '/' . $folder1 . '/' . $folder2;
 
     // Extract only full qualified URLs.
-    $this->config('linkchecker.settings')->set('check_links_types', LinkCheckerLinkInterface::TYPE_EXTERNAL)->save();
+    $this->config('linkchecker.settings')
+      ->set('check_links_types', LinkCheckerLinkInterface::TYPE_EXTERNAL)
+      ->save();
 
     // Verify path input field appears on add "Basic page" form.
     $this->drupalGet('node/add/page');
     // Verify path input is present.
-    $this->assertFieldByName('path[0][alias]', '', 'Path input field present on add Basic page form.');
+    $this->assertFieldByName(
+          'path[0][alias]',
+          '',
+          'Path input field present on add Basic page form.'
+      );
 
     // Save node.
     $this->drupalPostForm('node/add/page', $edit, $this->t('Save'));
-    $this->assertText($this->t('@type @title has been created.', ['@type' => 'Basic page', '@title' => $edit["title[0][value]"]]), 'Node was created.');
+    $this->assertText(
+          $this->t('@type @title has been created.', [
+            '@type' => 'Basic page',
+            '@title' => $edit['title[0][value]'],
+          ]),
+          'Node was created.'
+      );
 
     $node = $this->drupalGetNodeByTitle($edit['title[0][value]']);
     $this->assertNotEmpty($node);
@@ -156,10 +202,16 @@ class LinkCheckerInterfaceTest extends BrowserTestBase {
     $link = $this->getLinkCheckerLinkByUrl($url1);
 
     if ($link) {
-      $this->assertIdentical($link->get('url')->value, $url1, new FormattableMarkup('URL %url found.', ['%url' => $url1]));
+      $this->assertIdentical(
+            $link->get('url')->value,
+            $url1,
+            new FormattableMarkup('URL %url found.', ['%url' => $url1])
+        );
     }
     else {
-      $this->fail(new FormattableMarkup('URL %url not found.', ['%url' => $url1]));
+      $this->fail(
+            new FormattableMarkup('URL %url not found.', ['%url' => $url1])
+            );
     }
   }
 
@@ -168,10 +220,15 @@ class LinkCheckerInterfaceTest extends BrowserTestBase {
    */
   public function testLinkCheckerCreateBlockWithBrokenLinks() {
     // Confirm that the add block link appears on block overview pages.
-    $this->drupalGet(Url::fromRoute('entity.block_content.collection')->toString());
+    $this->drupalGet(
+          Url::fromRoute('entity.block_content.collection')->toString()
+      );
 
     $url1 = 'http://example.com/block/broken/link';
-    $body = 'Lorem ipsum dolor sit amet <a href="' . $url1 . '">broken link</a> sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat';
+    $body =
+            'Lorem ipsum dolor sit amet <a href="' .
+            $url1 .
+            '">broken link</a> sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat';
 
     // Add a new custom block by filling out the input form on the
     // admin/structure/block/add page.
@@ -181,13 +238,26 @@ class LinkCheckerInterfaceTest extends BrowserTestBase {
       'info[0][value]' => $random->name(8),
       'body[0][value]' => $body,
     ];
-    $this->drupalPostForm(Url::fromRoute('block_content.add_page')->toString(), $custom_block, 'Save');
+    $this->drupalPostForm(
+          Url::fromRoute('block_content.add_page')->toString(),
+          $custom_block,
+          'Save'
+      );
 
     // Confirm that the custom block has been created, and then query the
     // created bid.
-    $this->assertText($this->t('@type @title has been created.', ['@type' => 'Basic block', '@title' => $custom_block['info[0][value]']]), 'Custom block successfully created.');
+    $this->assertText(
+          $this->t('@type @title has been created.', [
+            '@type' => 'Basic block',
+            '@title' => $custom_block['info[0][value]'],
+          ]),
+          'Custom block successfully created.'
+      );
     // Check that the block exists in the database.
-    $blocks = \Drupal::entityQuery('block_content')->accessCheck()->condition('info', $custom_block['info[0][value]'])->execute();
+    $blocks = \Drupal::entityQuery('block_content')
+      ->accessCheck()
+      ->condition('info', $custom_block['info[0][value]'])
+      ->execute();
     $block = BlockContent::load(reset($blocks));
     $this->assertNotEmpty($block);
 
@@ -195,12 +265,18 @@ class LinkCheckerInterfaceTest extends BrowserTestBase {
     $link = $this->getLinkCheckerLinkByUrl($url1);
 
     if ($link) {
-      $this->assertIdentical($link->get('url')->value, $url1, new FormattableMarkup('URL %url found.', ['%url' => $url1]));
+      $this->assertIdentical(
+            $link->get('url')->value,
+            $url1,
+            new FormattableMarkup('URL %url found.', ['%url' => $url1])
+        );
     }
     else {
-      $this->fail(new FormattableMarkup('URL %url not found.', ['%url' => $url1]));
+      $this->fail(
+            new FormattableMarkup('URL %url not found.', ['%url' => $url1])
+            );
     }
-   }
+  }
 
   /**
    * Get a link checker link entity by the given URl.

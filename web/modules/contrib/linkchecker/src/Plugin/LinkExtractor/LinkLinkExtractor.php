@@ -5,7 +5,7 @@ namespace Drupal\linkchecker\Plugin\LinkExtractor;
 use Drupal\linkchecker\Plugin\LinkExtractorBase;
 
 /**
- * Class LinkLinkExtractor.
+ * Extracts link from field.
  *
  * @LinkExtractor(
  *   id = "link_link_extractor",

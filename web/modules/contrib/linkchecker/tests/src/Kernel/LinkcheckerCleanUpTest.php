@@ -2,11 +2,8 @@
 
 namespace Drupal\Tests\linkchecker\Kernel;
 
-use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\linkchecker\Entity\LinkCheckerLink;
-use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 
@@ -52,7 +49,7 @@ class LinkcheckerCleanUpTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->installSchema('system', 'sequences');
     $this->installEntitySchema('node');
@@ -85,7 +82,7 @@ class LinkcheckerCleanUpTest extends KernelTestBase {
       'body' => [
         [
           'value' => '
-          <a href="http://httpstat.us/304">The nightmare continues</a>'
+          <a href="http://httpstat.us/304">The nightmare continues</a>',
         ],
       ],
     ]);
