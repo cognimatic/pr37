@@ -39,3 +39,34 @@ blockquote {
 .leaflet-map-pane .leaflet-popup-content img {
     min-width: 230px;
 }
+
+.lgd-region--tabs .tabs > ul > li a {
+    padding: 0.75rem;
+    font-weight: normal;
+}
+
+
+
+
+
+/* Temporary overrides - Kula - please remove as required rewrite/refactor below */
+
+.lgd-footer__post-footer{
+    color: var(--color-pre-footer-text);
+    background-color: var(--color-section-pre-footer-bg);
+}
+
+.lgd-footer__post-footer .callout{
+    background-color: grey;
+    border: 1px solid white;
+    box-shadow: 5px 5px black;
+    font-weight: 300;
+}
+
+.lgd-footer__post-footer h2, 
+.lgd-footer__post-footer h3,
+.lgd-footer__post-footer .callout,
+.lgd-footer__post-footer a{
+    color: white;
+}
+

@@ -33,7 +33,7 @@ class ServiceStatus extends BlockBase {
      */
     
     $db = \Drupal::database();
-    $services = $db->query("SELECT entity_id, title FROM node__field_show_alert_status_on_home_, node_field_data WHERE field_show_alert_status_on_home__value = 1 AND entity_id = nid");    
+    $services = $db->query("SELECT entity_id, title FROM node__field_show_alert_status_on_home_, node_field_data WHERE field_show_alert_status_on_home__value = 1 AND status = 1 AND entity_id = nid ORDER BY title");    
     foreach ($services AS $service) {
       $service_id = $service->entity_id;
       $service_name = $service->title;
@@ -55,9 +55,9 @@ class ServiceStatus extends BlockBase {
       
       if(isset($status_result)){
         if($status_result == '0-severe-impact'){
-          $service_status = "<i class='status-severe fa-sharp fa-solid fa-triangle-exclamation'></i>";
+          $service_status = "<i class='status-severe fa-sharp fa-solid fa-triangle-exclamation'>Severe</i>";
         } elseif ($status_result == '1-has-issues'){
-          $service_status = "<i class='status-issues fa-solid fa-circle-info'></i>";
+          $service_status = "<i class='status-issues fa-solid fa-circle-info'>Issues</i>";
         }
       }
       
@@ -67,6 +67,7 @@ class ServiceStatus extends BlockBase {
     $list .= "</ul>";
     
     $list .= "<p><a href='/service-status' title='More detail about status updates across Argyll and Bute'>Detailed status updates</a></p>";
+    $list .= "</div>";
     return [
       '#type' => 'markup',
       '#markup' => $list,
