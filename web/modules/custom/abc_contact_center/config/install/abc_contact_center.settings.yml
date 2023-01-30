@@ -4,4 +4,4 @@ opening_time: '09:00'
 closing_time: '17:00'
 contact_block_markup:
   value: ''
-  format: basic_html
+  format: wysiwyg
