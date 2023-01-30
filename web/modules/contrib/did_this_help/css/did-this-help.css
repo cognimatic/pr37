@@ -1,0 +1,104 @@
+.did-this-help {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.did-this-help .yes,
+.did-this-help .no {
+  text-align: left;
+  color: #333;
+  background-color: #cbd2d6;
+  display: inline-block;
+  padding: 6px 8px;
+  margin: 0px 10px 0px 0px;
+  text-decoration: none;
+  border: 0 #cbd2d6 solid;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.did-this-help .question {
+  margin-bottom: 1rem;
+}
+
+.did-this-help .grippie {
+  display: none;
+}
+
+.did-this-help .greeting,
+.did-this-help .form-item-message {
+  display: none;
+}
+
+.did-this-help .message-description {
+  display: none;
+}
+
+.did-this-help .form-item-message,
+.did-this-help .message-description,
+.did-this-help .form-submit {
+  margin: 4px 12px;
+}
+
+.did-this-help .form-textarea {
+  height: auto;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  -webkit-transition: border linear .2s,box-shadow linear .2s;
+  -moz-transition: border linear .2s,box-shadow linear .2s;
+  -ms-transition: border linear .2s,box-shadow linear .2s;
+  -o-transition: border linear .2s,box-shadow linear .2s;
+  transition: border linear .2s,box-shadow linear .2s;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  padding: 4px 6px;
+}
+
+.did-this-help .no-choice-wrapper {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  float: left;
+  min-width: 160px;
+  padding: 10px;
+  margin: 2px 0 0;
+  text-align: left;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  line-height: 1.6;
+}
+
+.did-this-help h3 {
+  margin: 4px 12px;
+}
+
+.did-this-help ul {
+  padding-left: 0;
+}
+
+.did-this-help ul li {
+  list-style: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.did-this-help ul li .answer-title {
+  padding: 4px 16px;
+}
+
+.did-this-help ul li:hover .answer-title,
+.did-this-help ul li.selected .answer-title {
+  background: #F26122;
+  color: #fff;
+}

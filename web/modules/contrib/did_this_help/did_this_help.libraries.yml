@@ -1,0 +1,9 @@
+did_this_help:
+  css:
+    theme:
+      css/did-this-help.css: {}
+  js:
+    js/did-this-help.js: {}
+  dependencies:
+    - core/jquery
+    - core/once

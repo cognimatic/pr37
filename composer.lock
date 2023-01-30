@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65e901c079427e6f81ebffa405849bd3",
+    "content-hash": "c00b3d509450b28aadb269df5a3e4375",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -4898,6 +4898,50 @@
                 "source": "https://gitlab.com/drupalspoons/devel",
                 "issues": "https://gitlab.com/drupalspoons/devel/-/issues",
                 "slack": "https://drupal.slack.com/archives/C012WAW1MH6"
+            }
+        },
+        {
+            "name": "drupal/did_this_help",
+            "version": "2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/did_this_help.git",
+                "reference": "2.0.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/did_this_help-2.0.5.zip",
+                "reference": "2.0.5",
+                "shasum": "091bbca2148a4f03eb9a643f532a8639e4008409"
+            },
+            "require": {
+                "drupal/core": "^9.2 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.5",
+                    "datestamp": "1671961653",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "levmyshkin",
+                    "homepage": "https://www.drupal.org/user/1079574"
+                }
+            ],
+            "description": "Displays block with \"Did this help\" (is useful) question and Yes/No options",
+            "homepage": "https://www.drupal.org/project/did_this_help",
+            "support": {
+                "source": "https://git.drupalcode.org/project/did_this_help"
             }
         },
         {

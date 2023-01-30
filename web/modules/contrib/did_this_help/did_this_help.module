@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * @file
+ * Displays block with Displays block with "Did this help" (is useful) question and Yes/No choice.
+ */
+
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_views_api().
+ */
+function did_this_help_views_api() {
+  return [
+    'api' => 3,
+    'path' => \Drupal::service('extension.list.module')->getPath('did_this_help') . '/views',
+  ];
+}
+
+// @todo Add DidThisHelpManager service.
+/**
+ * Send info and save Did this halp entry.
+ */
+function _did_this_help_send_info($data) {
+  $data['path'] = Html::escape($data['path']);
+  $data['title'] = Html::escape($data['title']);
+  $data['choice'] = Html::escape($data['choice']);
+  $data['choice_no'] = !empty($data['choice_no']) ? Html::escape($data['choice_no']) : '';
+  $message = $data['message'];
+  $message = Html::escape($message);
+  $data['message'] = substr($message, 0, 100);
+  $data['ip_address'] = Drupal::request()->getClientIp();
+
+  $row = _did_this_help_row_exist($data);
+
+  if (!empty($row)) {
+    $row = _did_this_help_row_update($data);
+  }
+  else {
+    $row = _did_this_help_row_save($data);
+  }
+
+  return $row;
+}
+
+/**
+ * Check if row entry already exists.
+ */
+function _did_this_help_row_exist($data) {
+  $result = \Drupal::database()->select('did_this_help', 'd')
+    ->fields('d')
+    ->condition('d.path', $data['path'])
+    ->condition('d.title', $data['title'])
+    ->condition('d.uid', $data['uid'])
+    ->condition('d.choice', $data['choice'])
+    ->condition('d.choice_no', $data['choice_no'])
+    ->condition('d.message', $data['message'])
+    ->condition('d.ip_address', $data['ip_address'])
+    ->execute()
+    ->fetchAll();
+
+  return $result;
+}
+
+/**
+ * Update a row entry.
+ */
+function _did_this_help_row_update($data) {
+  $fields = [
+    'path' => $data['path'],
+    'title' => $data['title'],
+    'uid' => $data['uid'],
+    'choice' => $data['choice'],
+    'choice_no' => $data['choice_no'],
+    'message' => $data['message'],
+    'ip_address' => $data['ip_address'],
+    'created' => time(),
+  ];
+
+  $result = \Drupal::database()->update('did_this_help')
+    ->fields($fields)
+    ->condition('path', $data['path'])
+    ->condition('title', $data['title'])
+    ->condition('uid', $data['uid'])
+    ->condition('choice', $data['choice'])
+    ->condition('choice_no', $data['choice_no'])
+    ->condition('message', $data['message'])
+    ->condition('ip_address', $data['ip_address'])
+    ->execute();
+
+  return $result;
+}
+
+/**
+ * Create a new row entry.
+ */
+function _did_this_help_row_save($data) {
+  $result = \Drupal::database()->insert('did_this_help')
+    ->fields([
+      'path' => $data['path'],
+      'title' => $data['title'],
+      'uid' => $data['uid'],
+      'choice' => $data['choice'],
+      'choice_no' => $data['choice_no'],
+      'message' => $data['message'],
+      'ip_address' => $data['ip_address'],
+      'created' => time(),
+    ])
+    ->execute();
+
+  return $result;
+}

@@ -1,0 +1,11 @@
+name: Did this help?
+type: module
+core_version_requirement: ^9.2 || ^10
+configure: did_this_help.settings
+description: Displays block with "Did this help" (is useful) question and Yes/No options
+package: Technocrat
+
+# Information added by Drupal.org packaging script on 2022-12-25
+version: '2.0.5'
+project: 'did_this_help'
+datestamp: 1671961655

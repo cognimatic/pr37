@@ -1,0 +1,10 @@
+did_this_help.settings:
+  type: config_object
+  label: 'Did this help? config'
+  mapping:
+    message:
+      type: string
+      label: 'Question'
+    no_answers:
+      type: string
+      label: '"No" answers'

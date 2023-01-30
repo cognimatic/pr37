@@ -1,0 +1,6 @@
+did_this_help.settings:
+  title: 'Did this help? settings'
+  description: 'Did this help? settings form'
+  parent: system.admin_config_content
+  route_name: did_this_help.settings
+  weight: 100

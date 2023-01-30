@@ -1,0 +1,7 @@
+did_this_help.settings:
+  path: '/admin/config/did_this_help/settings'
+  defaults:
+    _form: '\Drupal\did_this_help\Form\DidThisHelpSettingsForm'
+    _title: 'Did this help? settings'
+  requirements:
+    _permission: 'administer did this help'

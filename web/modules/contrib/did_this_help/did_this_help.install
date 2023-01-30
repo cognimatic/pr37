@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * Implementation of hook_schema().
+ */
+function did_this_help_schema() {
+  $schema['did_this_help'] = array(
+    'description' => 'Did this help? records',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Log entry ID',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'path' => array(
+        'description' => 'Page URL',
+        'type' => 'varchar',
+        'length' => '1024',
+        'not null' => TRUE,
+      ),
+      'title' => array(
+        'description' => 'Page title',
+        'type' => 'varchar',
+        'length' => '1024',
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'User ID',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'choice' => array(
+        'description' => 'Yes/No value',
+        'type' => 'varchar',
+        'length' => '32',
+        'not null' => TRUE,
+      ),
+      'choice_no' => array(
+        'description' => '"No" choice answer',
+        'type' => 'varchar',
+        'length' => '1024',
+        'not null' => FALSE,
+      ),
+      'message' => array(
+        'description' => '"No" choice message',
+        'type' => 'varchar',
+        'length' => '256',
+        'not null' => FALSE,
+      ),
+      'created' => array(
+        'description' => 'Date created timestamp',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'ip_address' => array(
+        'description' => 'Visitor IP address',
+        'type' => 'varchar',
+        'length' => '128',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Increase the length of "IP address" to 128 characters.
+ */
+function did_this_help_update_9001() {
+  $database = \Drupal::database();
+  $database->query("ALTER TABLE did_this_help MODIFY ip_address VARCHAR(128) NOT NULL COMMENT 'Visitor IP address'");
+}

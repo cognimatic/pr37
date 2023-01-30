@@ -1,0 +1,7 @@
+administer did this help:
+  title: 'Administer Did This Help?'
+  description: 'Change questions on Did This Help settings form.'
+  restrict access: true
+view did this help reports:
+  title: 'View Did This Help reports'
+  description: 'View Did This Help reports for separate and all pages.'

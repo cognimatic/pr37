@@ -966,6 +966,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'drupal/did_this_help' => array(
+            'pretty_version' => '2.0.5',
+            'version' => '2.0.5.0',
+            'reference' => '2.0.5',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/did_this_help',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/diff' => array(
             'pretty_version' => '1.1.0',
             'version' => '1.1.0.0',

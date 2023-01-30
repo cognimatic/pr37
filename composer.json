@@ -32,6 +32,7 @@
         "drupal/core-recommended": "^9.1",
         "drupal/csv_serialization": "^2.1",
         "drupal/db_maintenance": "^2.0",
+        "drupal/did_this_help": "^2.0",
         "drupal/eca": "^1.0",
         "drupal/editor_advanced_link": "^2.0",
         "drupal/editoria11y": "^1.0",
