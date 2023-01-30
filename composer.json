@@ -54,6 +54,7 @@
         "drupal/media_directories": "^2.0",
         "drupal/media_link_enhancements": "^1.0",
         "drupal/memcache": "^2.3",
+        "drupal/menu_block": "^1.10",
         "drupal/migmag": "^1.8",
         "drupal/migrate_conditions": "^2.0",
         "drupal/migrate_devel": "^2.0@alpha",

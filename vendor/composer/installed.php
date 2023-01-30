@@ -1510,6 +1510,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/menu_block' => array(
+            'pretty_version' => '1.10.0',
+            'version' => '1.10.0.0',
+            'reference' => '8.x-1.10',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/menu_block',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/metatag' => array(
             'pretty_version' => '1.22.0',
             'version' => '1.22.0.0',
