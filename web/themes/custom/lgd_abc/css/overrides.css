@@ -57,10 +57,11 @@ blockquote {
 }
 
 .lgd-footer__post-footer .callout{
-    background-color: grey;
+    background-color: rgba(255,255,255, 0.15);
     border: 1px solid white;
     box-shadow: 5px 5px black;
     font-weight: 300;
+    font-size: 1rem;
 }
 
 .lgd-footer__post-footer h2, 

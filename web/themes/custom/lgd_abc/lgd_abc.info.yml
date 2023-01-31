@@ -19,6 +19,7 @@ regions:
   banner: "Banner"
   breadcrumb: "Breadcrumb"
   messages: "Messages"
+  search_bar: "Enlarged search area"
   content_top: "Content top"
   content: "Content"
   content_bottom: "Content bottom"

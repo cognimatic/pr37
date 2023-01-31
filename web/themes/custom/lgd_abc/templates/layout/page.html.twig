@@ -111,7 +111,12 @@
 
 
 <main class="main" id="main-content"> {# The "skip to content" link jumps to here. #}
-
+    {% if has_search_bar %}
+        <div id="detailed-search-box">
+            {{ page.search_bar }}
+        </div>
+    {% endif %}
+    
   {% if has_content_top %}
     {{ page.content_top }}
   {% endif %}
