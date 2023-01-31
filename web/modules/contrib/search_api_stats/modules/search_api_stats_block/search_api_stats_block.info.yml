@@ -1,0 +1,13 @@
+name: Search API Stats Term Blocks
+description: "Display Drupal blocks for top search terms."
+type: module
+core_version_requirement: ^8 || ^9 || ^10
+package: Search
+
+dependencies:
+  - search_api_stats:search_api_stats
+
+# Information added by Drupal.org packaging script on 2022-08-03
+version: '8.x-1.0-alpha3'
+project: 'search_api_stats'
+datestamp: 1659520270

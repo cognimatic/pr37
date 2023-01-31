@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c00b3d509450b28aadb269df5a3e4375",
+    "content-hash": "f5a2094059ed240331a36af33a1e9a96",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -10272,6 +10272,113 @@
                 "source": "http://git.drupal.org/project/search_api_autocomplete.git",
                 "issues": "https://www.drupal.org/project/issues/search_api_autocomplete",
                 "irc": "irc://irc.freenode.org/drupal-search-api"
+            }
+        },
+        {
+            "name": "drupal/search_api_spellcheck",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/search_api_spellcheck.git",
+                "reference": "4.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/search_api_spellcheck-4.0.0.zip",
+                "reference": "4.0.0",
+                "shasum": "a1dfd60994f9bbee407e3ca68f4ff9b797b103a7"
+            },
+            "require": {
+                "drupal/core": "^9.2 || ^10.0",
+                "drupal/search_api": "~1.21"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "4.0.0",
+                    "datestamp": "1640512135",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Contributors",
+                    "homepage": "https://www.drupal.org/node/1150950/committers"
+                },
+                {
+                    "name": "mkalkbrenner",
+                    "homepage": "https://www.drupal.org/user/124705"
+                },
+                {
+                    "name": "welly",
+                    "homepage": "https://www.drupal.org/user/354705"
+                }
+            ],
+            "description": "Allows you to display search spellcheck suggestions in views.",
+            "homepage": "https://www.drupal.org/project/search_api_spellcheck",
+            "support": {
+                "source": "http://git.drupal.org/project/search_api_spellcheck.git",
+                "issues": "https://www.drupal.org/project/issues/search_api_spellcheck"
+            }
+        },
+        {
+            "name": "drupal/search_api_stats",
+            "version": "1.0.0-alpha3",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/search_api_stats.git",
+                "reference": "8.x-1.0-alpha3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/search_api_stats-8.x-1.0-alpha3.zip",
+                "reference": "8.x-1.0-alpha3",
+                "shasum": "aa8b4d69af9a887914ccc23258bcb173e4709f49"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10",
+                "drupal/search_api": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-alpha3",
+                    "datestamp": "1659520266",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "branana",
+                    "homepage": "https://www.drupal.org/user/758394"
+                },
+                {
+                    "name": "mandclu",
+                    "homepage": "https://www.drupal.org/user/52136"
+                },
+                {
+                    "name": "zterry95",
+                    "homepage": "https://www.drupal.org/user/1952394"
+                }
+            ],
+            "description": "Enabling the recording and presentation of statistics for the Search API module.",
+            "homepage": "https://www.drupal.org/project/search_api_stats",
+            "support": {
+                "source": "https://git.drupalcode.org/project/search_api_stats"
             }
         },
         {
@@ -23944,28 +24051,28 @@
         },
         {
             "name": "kint-php/kint",
-            "version": "4.2.3",
+            "version": "5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kint-php/kint.git",
-                "reference": "7601bfd95ccc50a1b903c2764b31d00919e8edd9"
+                "reference": "b2effe979abe59caf090b89b607fb0256e467139"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kint-php/kint/zipball/7601bfd95ccc50a1b903c2764b31d00919e8edd9",
-                "reference": "7601bfd95ccc50a1b903c2764b31d00919e8edd9",
+                "url": "https://api.github.com/repos/kint-php/kint/zipball/b2effe979abe59caf090b89b607fb0256e467139",
+                "reference": "b2effe979abe59caf090b89b607fb0256e467139",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6"
+                "php": ">=7.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
+                "friendsofphp/php-cs-fixer": "^3",
                 "phpspec/prophecy-phpunit": "^2",
-                "phpunit/phpunit": "^9.0",
-                "seld/phar-utils": "^1.0",
-                "symfony/finder": "^3.0 || ^4.0 || ^5.0",
-                "vimeo/psalm": "^4.0"
+                "phpunit/phpunit": "^9",
+                "seld/phar-utils": "^1",
+                "symfony/finder": "^4.0 || ^5.0 || ^6.0",
+                "vimeo/psalm": "^5@dev"
             },
             "suggest": {
                 "kint-php/kint-helpers": "Provides extra helper functions",
@@ -24003,9 +24110,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kint-php/kint/issues",
-                "source": "https://github.com/kint-php/kint/tree/4.2.3"
+                "source": "https://github.com/kint-php/kint/tree/5.0.2"
             },
-            "time": "2022-10-01T20:16:33+00:00"
+            "time": "2023-01-02T23:46:00+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
@@ -27022,6 +27129,7 @@
         "drupal/prod_check": 15,
         "drupal/rabbit_hole": 10,
         "drupal/scheduled_transitions": 10,
+        "drupal/search_api_stats": 15,
         "drupal/shs": 5,
         "drupal/site_audit": 5,
         "drupal/twitter_block": 15,
