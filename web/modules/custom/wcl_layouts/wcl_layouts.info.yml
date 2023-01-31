@@ -1,8 +1,0 @@
-name: Layouts (webcurl)
-description: Module that provides multiple layouts to build complex pages.
-package: Layout Builder
-type: module
-core: 8.x
-core_version_requirement: ^8 || ^9
-dependencies:
-  - drupal:layout_builder_base

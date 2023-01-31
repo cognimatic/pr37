@@ -96,7 +96,7 @@ class QueueMonitorBlock extends BlockBase {
 
     // check if we are open or closed and either show queue times or 'office closed' message
     if (!$this->callCenterIsOpen()) {
-      $callcenter_content = "<section class='alert alert-warning'><h2>Closed</h2>Our Contact Centre is currently closed, but you can still use the 'Report it' and 'Request it' sections of our website.</section>" ;
+      $callcenter_content = "<section class='alert alert-warning'><h2>Closed</h2>Our Contact Centre is currently closed, but you can find other ways to contact us in our website.</section>" ;
     }
     else {
 
