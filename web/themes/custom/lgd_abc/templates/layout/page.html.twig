@@ -45,6 +45,8 @@
 * - page.sidebar_second
 * - page.footer_first
 * - page.footer_second
+* - page.footer_third
+* - page.sub_footer
 * - page.disabled
 * @see template_preprocess_page()
 * @see html.html.twig
@@ -272,3 +274,11 @@
   {% endif %}
 {% endblock %}
 {# End Footer Regions #}
+
+{% block sub_footer %}
+    {% if has_sub_footer %}
+        <div class="sub_footer">
+            {{ page.sub_footer }}
+        </div>
+    {%  endif %}
+{% endblock %}
