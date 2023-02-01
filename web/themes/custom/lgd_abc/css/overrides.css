@@ -71,3 +71,14 @@ blockquote {
     color: white;
 }
 
+.search-stats{
+    display: flex;
+    justify-content: center;
+}
+ul.search-stats-results{
+    list-style: none;
+}
+ul.search-stats-results li{
+    display: inline-block;
+    padding: 0 0 0 1rem;
+}

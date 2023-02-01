@@ -1,0 +1,18 @@
+{#
+/**
+ * @ingroup themeable
+ */
+#}
+<div class="search-stats">
+<div class="search-stats-label">Popular searches </div>
+<ul class="search-stats-results">
+  {% for keyword, num in stats %}
+    <li>
+      <a href="{{ path }}?{{ param_name }}={{ keyword }}">
+        {# {{ keyword }} ({{ num }}) #}
+        {{ keyword }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+</div>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5a2094059ed240331a36af33a1e9a96",
+    "content-hash": "ec7c65960fbbe0a1532b2591700fdc37",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -14003,6 +14003,34 @@
             "time": "2022-01-31T15:13:52+00:00"
         },
         {
+            "name": "localgovdrupal/localgov_moderngov",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/localgovdrupal/localgov_moderngov.git",
+                "reference": "7479c0484ab98ed91173937b26aa65072240c4e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_moderngov/zipball/7479c0484ab98ed91173937b26aa65072240c4e6",
+                "reference": "7479c0484ab98ed91173937b26aa65072240c4e6",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "drupal-module",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Drupal module for ModernGov template page generation.",
+            "homepage": "https://github.com/localgovdrupal/localgov_moderngov",
+            "support": {
+                "issues": "https://github.com/localgovdrupal/localgov_moderngov/issues",
+                "source": "https://github.com/localgovdrupal/localgov_moderngov/tree/1.x"
+            },
+            "time": "2022-03-01T10:34:39+00:00"
+        },
+        {
             "name": "localgovdrupal/localgov_multilingual",
             "version": "1.x-dev",
             "source": {
@@ -27133,6 +27161,7 @@
         "drupal/shs": 5,
         "drupal/site_audit": 5,
         "drupal/twitter_block": 15,
+        "localgovdrupal/localgov_moderngov": 20,
         "localgovdrupal/localgov_multilingual": 20,
         "localgovdrupal/localgov_os_places_geocoder_provider": 20,
         "drupal/bugherd": 10,

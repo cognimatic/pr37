@@ -2479,6 +2479,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'localgovdrupal/localgov_moderngov' => array(
+            'pretty_version' => '1.x-dev',
+            'version' => '1.9999999.9999999.9999999-dev',
+            'reference' => '7479c0484ab98ed91173937b26aa65072240c4e6',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/localgov_moderngov',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'localgovdrupal/localgov_multilingual' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
