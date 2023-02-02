@@ -1,3 +1,0 @@
-services:
-  media_migration_tools.migration_plugin_alterer:
-    class: Drupal\media_migration_tools\MigrationPluginAlterer

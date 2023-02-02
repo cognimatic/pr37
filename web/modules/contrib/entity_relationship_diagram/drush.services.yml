@@ -1,6 +1,0 @@
-services:
-  entity_relationship_diagram.commands:
-    class: Drupal\entity_relationship_diagram\Commands\DrushCommands
-    arguments: ['@entity_relationship_diagram.diagram']
-    tags:
-      - { name: drush.command }

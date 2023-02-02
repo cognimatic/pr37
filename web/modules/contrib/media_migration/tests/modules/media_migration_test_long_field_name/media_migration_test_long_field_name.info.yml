@@ -1,8 +1,0 @@
-name: Media Migration Long Field Name
-type: module
-package: Testing
-
-# Information added by Drupal.org packaging script on 2022-06-30
-version: '8.x-1.0-alpha14+9-dev'
-project: 'media_migration'
-datestamp: 1656579554
