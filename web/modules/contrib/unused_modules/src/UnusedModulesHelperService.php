@@ -174,6 +174,11 @@ class UnusedModulesHelperService {
    *   - error (default FALSE).
    */
   private static function addInfoFileInformation(&$modules = []) {
+    // Prepare a composer package list with the install path.
+    $packages = array_combine(\Composer\InstalledVersions::getInstalledPackages(), \Composer\InstalledVersions::getInstalledPackages());
+    $packages = array_map(function ($package) {
+      return realpath(\Composer\InstalledVersions::getInstallPath($package));
+    }, $packages);
 
     // The Drupal packaging script adds project information to the .info file.
     foreach ($modules as $module) {
@@ -193,6 +198,34 @@ class UnusedModulesHelperService {
             // Remove surrounding single-quotes.
             $project = str_replace("'", "", $project);
             $module->projectName = $project;
+          }
+        }
+
+        if (!$module->projectName) {
+          $pathname = dirname($module->getPathname());
+          // If module's path contains the word custom, assign it to custom project.
+          if (strpos(dirname($pathname), 'custom') !== FALSE) {
+            $module->projectName = 'custom';
+          }
+          elseif (class_exists('\Composer\InstalledVersions')) {
+            // Check if it is installed with composer.
+            // Example: modules/contrib/paragraphs
+            $packageName = array_search(\Drupal::root() . '/' . $pathname, $packages);
+            // Check again if it is a submodule of a drupal module.
+            // By convention all submodules are places in the modules/* folder
+            // of the package.
+            // Example: modules/contrib/paragraphs/modules/paragraphs_demo
+            if (!$packageName) {
+              $pathname = dirname($pathname, 2);
+              $packageName = array_search(\Drupal::root() . '/' . $pathname, $packages);
+            }
+            // Remove "drupal/" prefix for Drupal modules, because that breaks
+            // the table output in the report.
+            if (!str_starts_with($packageName, 'drupal/')) {
+              $error_message = "Could not parse Composer information for module '" . $module->getName() . "'";
+              throw new UnusedModulesException($error_message);
+            }
+            $module->projectName = str_replace('drupal/', '', $packageName);
           }
         }
 

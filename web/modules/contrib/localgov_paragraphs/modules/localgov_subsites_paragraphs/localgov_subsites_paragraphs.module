@@ -118,7 +118,9 @@ function localgov_subsites_paragraphs_preprocess_paragraph(&$variables) {
   if ($paragraph->hasField('localgov_heading_level') && $paragraph->hasField('localgov_title') && !$paragraph->get('localgov_title')->isEmpty()) {
     $heading_text = $paragraph->get('localgov_title')->value;
     $heading_level = $paragraph->get('localgov_heading_level')->value;
-    $variables['heading'] = _localgov_subsites_paragraphs_create_heading($heading_text, $heading_level);
+    if (is_string($heading_level)) {
+      $variables['heading'] = _localgov_paragraphs_views_create_heading($heading_text, $heading_level);
+    }
   }
 
   if ($paragraph->bundle() === 'localgov_box_link') {

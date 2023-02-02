@@ -4629,18 +4629,18 @@
         },
         {
             "name": "drupal/config_delete",
-            "version": "1.17.0",
-            "version_normalized": "1.17.0.0",
+            "version": "1.18.0",
+            "version_normalized": "1.18.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/config_delete.git",
-                "reference": "8.x-1.17"
+                "reference": "8.x-1.18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/config_delete-8.x-1.17.zip",
-                "reference": "8.x-1.17",
-                "shasum": "3213000ffee27fb2595d419457e5a0e8182a1308"
+                "url": "https://ftp.drupal.org/files/projects/config_delete-8.x-1.18.zip",
+                "reference": "8.x-1.18",
+                "shasum": "d791ce345fd3700b36abdb9347611af1978f4ef0"
             },
             "require": {
                 "drupal/core": "^8 || ^9"
@@ -4648,8 +4648,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.17",
-                    "datestamp": "1585809608",
+                    "version": "8.x-1.18",
+                    "datestamp": "1675152194",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5290,17 +5290,17 @@
         },
         {
             "name": "drupal/core",
-            "version": "9.5.2",
-            "version_normalized": "9.5.2.0",
+            "version": "9.5.3",
+            "version_normalized": "9.5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "2ce2d9dbc3d248d7fd6bf9c9a50cce7e8dc799a6"
+                "reference": "67e34a5e8f48cafdd5c26e778a9570860e2d44a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/2ce2d9dbc3d248d7fd6bf9c9a50cce7e8dc799a6",
-                "reference": "2ce2d9dbc3d248d7fd6bf9c9a50cce7e8dc799a6",
+                "url": "https://api.github.com/repos/drupal/core/zipball/67e34a5e8f48cafdd5c26e778a9570860e2d44a5",
+                "reference": "67e34a5e8f48cafdd5c26e778a9570860e2d44a5",
                 "shasum": ""
             },
             "require": {
@@ -5380,7 +5380,7 @@
                 "drupal/core-uuid": "self.version",
                 "drupal/core-version": "self.version"
             },
-            "time": "2023-01-18T12:48:20+00:00",
+            "time": "2023-02-01T19:47:31+00:00",
             "type": "drupal-core",
             "extra": {
                 "drupal-scaffold": {
@@ -5459,14 +5459,14 @@
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
             "support": {
-                "source": "https://github.com/drupal/core/tree/9.5.2"
+                "source": "https://github.com/drupal/core/tree/9.5.3"
             },
             "install-path": "../../web/core"
         },
         {
             "name": "drupal/core-composer-scaffold",
-            "version": "9.5.2",
-            "version_normalized": "9.5.2.0",
+            "version": "9.5.3",
+            "version_normalized": "9.5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-composer-scaffold.git",
@@ -5512,14 +5512,14 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-composer-scaffold/tree/9.5.2"
+                "source": "https://github.com/drupal/core-composer-scaffold/tree/9.5.3"
             },
             "install-path": "../drupal/core-composer-scaffold"
         },
         {
             "name": "drupal/core-dev",
-            "version": "9.5.2",
-            "version_normalized": "9.5.2.0",
+            "version": "9.5.3",
+            "version_normalized": "9.5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-dev.git",
@@ -5564,23 +5564,23 @@
             ],
             "description": "require-dev dependencies from drupal/drupal; use in addition to drupal/core-recommended to run tests from drupal/core.",
             "support": {
-                "source": "https://github.com/drupal/core-dev/tree/9.5.2"
+                "source": "https://github.com/drupal/core-dev/tree/9.5.3"
             },
             "install-path": null
         },
         {
             "name": "drupal/core-recommended",
-            "version": "9.5.2",
-            "version_normalized": "9.5.2.0",
+            "version": "9.5.3",
+            "version_normalized": "9.5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-recommended.git",
-                "reference": "eab84e96280017f11e0dfba7f9995facaa803d13"
+                "reference": "3dc8d9757c6c4a0457d32dd58a755532504ad959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/eab84e96280017f11e0dfba7f9995facaa803d13",
-                "reference": "eab84e96280017f11e0dfba7f9995facaa803d13",
+                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/3dc8d9757c6c4a0457d32dd58a755532504ad959",
+                "reference": "3dc8d9757c6c4a0457d32dd58a755532504ad959",
                 "shasum": ""
             },
             "require": {
@@ -5589,7 +5589,7 @@
                 "doctrine/annotations": "~1.13.3",
                 "doctrine/lexer": "~1.2.3",
                 "doctrine/reflection": "~1.2.3",
-                "drupal/core": "9.5.2",
+                "drupal/core": "9.5.3",
                 "egulias/email-validator": "~3.2.1",
                 "guzzlehttp/guzzle": "~6.5.8",
                 "guzzlehttp/promises": "~1.5.2",
@@ -5620,7 +5620,7 @@
                 "symfony/event-dispatcher-contracts": "~v1.1.13",
                 "symfony/http-client-contracts": "~v2.5.2",
                 "symfony/http-foundation": "~v4.4.49",
-                "symfony/http-kernel": "~v4.4.49",
+                "symfony/http-kernel": "~v4.4.50",
                 "symfony/mime": "~v5.4.13",
                 "symfony/polyfill-ctype": "~v1.27.0",
                 "symfony/polyfill-iconv": "~v1.27.0",
@@ -5636,7 +5636,7 @@
                 "symfony/translation": "~v4.4.47",
                 "symfony/translation-contracts": "~v2.5.2",
                 "symfony/validator": "~v4.4.48",
-                "symfony/var-dumper": "~v5.4.14",
+                "symfony/var-dumper": "~v5.4.19",
                 "symfony/yaml": "~v4.4.45",
                 "twig/twig": "~v2.15.4",
                 "typo3/phar-stream-wrapper": "~v3.1.7"
@@ -5644,7 +5644,7 @@
             "conflict": {
                 "webflo/drupal-core-strict": "*"
             },
-            "time": "2023-01-18T12:48:20+00:00",
+            "time": "2023-02-01T19:47:31+00:00",
             "type": "metapackage",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5652,7 +5652,7 @@
             ],
             "description": "Core and its dependencies with known-compatible minor versions. Require this project INSTEAD OF drupal/core.",
             "support": {
-                "source": "https://github.com/drupal/core-recommended/tree/9.5.2"
+                "source": "https://github.com/drupal/core-recommended/tree/9.5.3"
             },
             "install-path": null
         },
@@ -6612,18 +6612,18 @@
         },
         {
             "name": "drupal/eca",
-            "version": "1.1.0",
-            "version_normalized": "1.1.0.0",
+            "version": "1.1.1",
+            "version_normalized": "1.1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/eca.git",
-                "reference": "1.1.0"
+                "reference": "1.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/eca-1.1.0.zip",
-                "reference": "1.1.0",
-                "shasum": "75f05d08b6585344c6ffc6c509da8049ebf5aae7"
+                "url": "https://ftp.drupal.org/files/projects/eca-1.1.1.zip",
+                "reference": "1.1.1",
+                "shasum": "f3b1df5bc5084f652b48fedee3f35465786c0967"
             },
             "require": {
                 "dragonmantank/cron-expression": "^3.1",
@@ -6648,8 +6648,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.1.0",
-                    "datestamp": "1670843783",
+                    "version": "1.1.1",
+                    "datestamp": "1675258708",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -6690,8 +6690,8 @@
         },
         {
             "name": "drupal/eca_modeller_bpmn",
-            "version": "1.1.0",
-            "version_normalized": "1.1.0.0",
+            "version": "1.1.1",
+            "version_normalized": "1.1.1.0",
             "require": {
                 "drupal/core": "^9 || ^10",
                 "drupal/eca": "^1",
@@ -6700,8 +6700,8 @@
             "type": "metapackage",
             "extra": {
                 "drupal": {
-                    "version": "1.1.0",
-                    "datestamp": "1670843783",
+                    "version": "1.1.1",
+                    "datestamp": "1675258708",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -6735,8 +6735,8 @@
         },
         {
             "name": "drupal/eca_ui",
-            "version": "1.1.0",
-            "version_normalized": "1.1.0.0",
+            "version": "1.1.1",
+            "version_normalized": "1.1.1.0",
             "require": {
                 "drupal/core": "^9 || ^10",
                 "drupal/eca": "*"
@@ -6744,8 +6744,8 @@
             "type": "metapackage",
             "extra": {
                 "drupal": {
-                    "version": "1.1.0",
-                    "datestamp": "1670843783",
+                    "version": "1.1.1",
+                    "datestamp": "1675258708",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -9738,18 +9738,18 @@
         },
         {
             "name": "drupal/leaflet",
-            "version": "10.0.7",
-            "version_normalized": "10.0.7.0",
+            "version": "10.0.8",
+            "version_normalized": "10.0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/leaflet.git",
-                "reference": "10.0.7"
+                "reference": "10.0.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/leaflet-10.0.7.zip",
-                "reference": "10.0.7",
-                "shasum": "67e376435ec3f9b412e69f590bd3e96443fb8724"
+                "url": "https://ftp.drupal.org/files/projects/leaflet-10.0.8.zip",
+                "reference": "10.0.8",
+                "shasum": "0c0c7c9fc70aea62bdcc9e911c67bd070fff7430"
             },
             "require": {
                 "drupal/core": "^9 || ^10",
@@ -9758,8 +9758,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "10.0.7",
-                    "datestamp": "1674688154",
+                    "version": "10.0.8",
+                    "datestamp": "1675200187",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -13676,27 +13676,27 @@
         },
         {
             "name": "drupal/unused_modules",
-            "version": "1.3.0",
-            "version_normalized": "1.3.0.0",
+            "version": "1.4.0",
+            "version_normalized": "1.4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/unused_modules.git",
-                "reference": "8.x-1.3"
+                "reference": "8.x-1.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/unused_modules-8.x-1.3.zip",
-                "reference": "8.x-1.3",
-                "shasum": "297194d031aedf064b07c5aee59fde4ddb453086"
+                "url": "https://ftp.drupal.org/files/projects/unused_modules-8.x-1.4.zip",
+                "reference": "8.x-1.4",
+                "shasum": "4da5a1943be3cf2940823a98d5a38f3653aac863"
             },
             "require": {
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.3",
-                    "datestamp": "1631866635",
+                    "version": "8.x-1.4",
+                    "datestamp": "1675238653",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -15811,17 +15811,17 @@
         },
         {
             "name": "kint-php/kint",
-            "version": "5.0.2",
-            "version_normalized": "5.0.2.0",
+            "version": "5.0.3",
+            "version_normalized": "5.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kint-php/kint.git",
-                "reference": "b2effe979abe59caf090b89b607fb0256e467139"
+                "reference": "03169f1923966c815223adbb3eccf831a3423578"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kint-php/kint/zipball/b2effe979abe59caf090b89b607fb0256e467139",
-                "reference": "b2effe979abe59caf090b89b607fb0256e467139",
+                "url": "https://api.github.com/repos/kint-php/kint/zipball/03169f1923966c815223adbb3eccf831a3423578",
+                "reference": "03169f1923966c815223adbb3eccf831a3423578",
                 "shasum": ""
             },
             "require": {
@@ -15839,7 +15839,7 @@
                 "kint-php/kint-helpers": "Provides extra helper functions",
                 "kint-php/kint-twig": "Provides d() and s() functions in twig templates"
             },
-            "time": "2023-01-02T23:46:00+00:00",
+            "time": "2023-01-31T12:53:37+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -15873,7 +15873,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kint-php/kint/issues",
-                "source": "https://github.com/kint-php/kint/tree/5.0.2"
+                "source": "https://github.com/kint-php/kint/tree/5.0.3"
             },
             "install-path": "../kint-php/kint"
         },
@@ -17332,17 +17332,17 @@
         },
         {
             "name": "localgovdrupal/localgov_paragraphs",
-            "version": "2.2.5",
-            "version_normalized": "2.2.5.0",
+            "version": "2.2.6",
+            "version_normalized": "2.2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/localgovdrupal/localgov_paragraphs.git",
-                "reference": "59b36829793cfa43f8fadd1b9419d34b1c34f910"
+                "reference": "bdea516b5d74e493b65317a98ee81ae0b94dc94e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/localgovdrupal/localgov_paragraphs/zipball/59b36829793cfa43f8fadd1b9419d34b1c34f910",
-                "reference": "59b36829793cfa43f8fadd1b9419d34b1c34f910",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_paragraphs/zipball/bdea516b5d74e493b65317a98ee81ae0b94dc94e",
+                "reference": "bdea516b5d74e493b65317a98ee81ae0b94dc94e",
                 "shasum": ""
             },
             "require": {
@@ -17363,7 +17363,7 @@
                 "localgovdrupal/localgov_core": "^2.0",
                 "localgovdrupal/localgov_topics": "^1.0"
             },
-            "time": "2022-11-17T11:52:50+00:00",
+            "time": "2023-02-01T14:12:57+00:00",
             "type": "drupal-module",
             "extra": {
                 "enable-patching": true,
@@ -17392,7 +17392,7 @@
             "homepage": "https://github.com/localgovdrupal/localgov_paragraphs",
             "support": {
                 "issues": "https://github.com/localgovdrupal/localgov_paragraphs/issues",
-                "source": "https://github.com/localgovdrupal/localgov_paragraphs/tree/2.2.5"
+                "source": "https://github.com/localgovdrupal/localgov_paragraphs/tree/2.2.6"
             },
             "install-path": "../../web/modules/contrib/localgov_paragraphs"
         },
@@ -17909,17 +17909,17 @@
         },
         {
             "name": "mglaman/phpstan-drupal",
-            "version": "1.1.27",
-            "version_normalized": "1.1.27.0",
+            "version": "1.1.28",
+            "version_normalized": "1.1.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mglaman/phpstan-drupal.git",
-                "reference": "61daa574664fa138f42dc7e883de9a12a7703462"
+                "reference": "55c3f437e52d0e10e7ac59ffb20e338625b79594"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mglaman/phpstan-drupal/zipball/61daa574664fa138f42dc7e883de9a12a7703462",
-                "reference": "61daa574664fa138f42dc7e883de9a12a7703462",
+                "url": "https://api.github.com/repos/mglaman/phpstan-drupal/zipball/55c3f437e52d0e10e7ac59ffb20e338625b79594",
+                "reference": "55c3f437e52d0e10e7ac59ffb20e338625b79594",
                 "shasum": ""
             },
             "require": {
@@ -17947,7 +17947,7 @@
                 "phpstan/phpstan-deprecation-rules": "For catching deprecations, especially in Drupal core.",
                 "phpstan/phpstan-phpunit": "PHPUnit extensions and rules for PHPStan."
             },
-            "time": "2023-01-25T22:02:09+00:00",
+            "time": "2023-02-01T21:17:43+00:00",
             "type": "phpstan-extension",
             "extra": {
                 "branch-alias": {
@@ -17996,7 +17996,7 @@
             "description": "Drupal extension and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/mglaman/phpstan-drupal/issues",
-                "source": "https://github.com/mglaman/phpstan-drupal/tree/1.1.27"
+                "source": "https://github.com/mglaman/phpstan-drupal/tree/1.1.28"
             },
             "funding": [
                 {
@@ -22079,17 +22079,17 @@
         },
         {
             "name": "simplesamlphp/composer-module-installer",
-            "version": "v1.3.2",
-            "version_normalized": "1.3.2.0",
+            "version": "v1.3.3",
+            "version_normalized": "1.3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplesamlphp/composer-module-installer.git",
-                "reference": "24422673102843d42411098245e37b68c951d650"
+                "reference": "ad700e45b1813cd7bfb067bcf66c78c5b410125f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplesamlphp/composer-module-installer/zipball/24422673102843d42411098245e37b68c951d650",
-                "reference": "24422673102843d42411098245e37b68c951d650",
+                "url": "https://api.github.com/repos/simplesamlphp/composer-module-installer/zipball/ad700e45b1813cd7bfb067bcf66c78c5b410125f",
+                "reference": "ad700e45b1813cd7bfb067bcf66c78c5b410125f",
                 "shasum": ""
             },
             "require": {
@@ -22101,7 +22101,7 @@
                 "composer/composer": "^2.4",
                 "simplesamlphp/simplesamlphp-test-framework": "^1.2.1"
             },
-            "time": "2023-01-10T17:03:58+00:00",
+            "time": "2023-01-31T09:51:44+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "SimpleSAML\\Composer\\ModuleInstallerPlugin"
@@ -22119,7 +22119,7 @@
             "description": "A Composer plugin that allows installing SimpleSAMLphp modules through Composer.",
             "support": {
                 "issues": "https://github.com/simplesamlphp/composer-module-installer/issues",
-                "source": "https://github.com/simplesamlphp/composer-module-installer/tree/v1.3.2"
+                "source": "https://github.com/simplesamlphp/composer-module-installer/tree/v1.3.3"
             },
             "install-path": "../simplesamlphp/composer-module-installer"
         },
@@ -25673,17 +25673,17 @@
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v4.4.49",
-            "version_normalized": "4.4.49.0",
+            "version": "v4.4.50",
+            "version_normalized": "4.4.50.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "4e36db8103062c62b3882b1bd297b02de6b021c4"
+                "reference": "aa6df6c045f034aa13ac752fc234bb300b9488ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/4e36db8103062c62b3882b1bd297b02de6b021c4",
-                "reference": "4e36db8103062c62b3882b1bd297b02de6b021c4",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/aa6df6c045f034aa13ac752fc234bb300b9488ef",
+                "reference": "aa6df6c045f034aa13ac752fc234bb300b9488ef",
                 "shasum": ""
             },
             "require": {
@@ -25732,7 +25732,7 @@
                 "symfony/console": "",
                 "symfony/dependency-injection": ""
             },
-            "time": "2022-11-28T17:58:43+00:00",
+            "time": "2023-02-01T08:01:31+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -25760,7 +25760,7 @@
             "description": "Provides a structured process for converting a Request into a Response",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-kernel/tree/v4.4.49"
+                "source": "https://github.com/symfony/http-kernel/tree/v4.4.50"
             },
             "funding": [
                 {
