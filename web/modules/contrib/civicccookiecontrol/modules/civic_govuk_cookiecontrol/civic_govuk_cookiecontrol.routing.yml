@@ -1,0 +1,7 @@
+civic_govuk_cookiecontrol.admin_overview:
+  path: '/admin/config/system/cookiecontrol/govuk'
+  defaults:
+    _title: 'GovUK Cookie Control'
+    _form: \Drupal\civic_govuk_cookiecontrol\Form\CivicGovUkCookieControlSettings
+  requirements:
+    _permission: 'administer civiccookiecontrol'

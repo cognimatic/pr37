@@ -1,0 +1,6 @@
+{
+  "name": "civic/civiccookiecontrol",
+  "description": "Civic - Cookie Control",
+  "type": "drupal-module",
+  "minimum-stability": "dev"
+}

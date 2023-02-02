@@ -1,0 +1,14 @@
+name: 'Civic Cookie Control'
+description: 'Enables you to comply with UK and EU law on cookies'
+package: Civic
+core_version_requirement: ^8.8 || ^9
+libraries:
+  - civiccokiecontrol/civiccookiecontrol
+  - civiccokiecontrol/civiccookiecontrol.settings
+type: module
+configure: cookiecontrol.admin_overview
+
+# Information added by Drupal.org packaging script on 2021-06-22
+version: '4.4.9'
+project: 'civicccookiecontrol'
+datestamp: 1624349862

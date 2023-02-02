@@ -1,0 +1,10 @@
+{
+  "name": "civic/civic_govuk_cookiecontrol",
+  "description": "Civic GovUK Cookie Control",
+  "type": "drupal-module",
+  "require": {
+        "drupal/civiccookiecontrol": "^4.3@RC"
+  },
+  "minimum-stability": "dev"
+}
+

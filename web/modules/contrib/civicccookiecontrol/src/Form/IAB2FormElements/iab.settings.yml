@@ -1,0 +1,209 @@
+iabLanguage:
+  '#type': 'textfield'
+  '#title': 'IAB ISO Language Code'
+  '#description': 'Two letter ISO language code that should be used to display information about IAB purposes.'
+  '#default_value': 'iabLanguage'
+iabPublisherCC:
+  '#type': 'textfield'
+  '#title': 'IAB Country code'
+  '#description': 'The country code of the country that determines legislation of reference. Commonly, this corresponds to the country in which the publisher’s business entity is established.'
+  '#default_value': 'iabPublisherCC'
+iabPanelTitle:
+  '#type': 'textarea'
+  '#title': 'IAB Panel Title'
+  '#description': 'The title of the IAB Panel'
+  '#default_value': 'iabPanelTitle'
+iabPanelIntro1:
+  '#type': 'text_format'
+  '#format': 'full_html'
+  '#title': 'IAB Panel Intro 1 Text'
+  '#description': 'IAB Panel Intro 1 Text'
+  '#default_value': 'iabPanelIntro1'
+iabPanelIntro2:
+  '#type': 'text_format'
+  '#format': 'full_html'
+  '#title': 'IAB Panel Intro 2 Text'
+  '#description': 'IAB Panel Intro 2 Text'
+  '#default_value': 'iabPanelIntro2'
+iabPanelIntro3:
+  '#type': 'text_format'
+  '#format': 'full_html'
+  '#title': 'IAB Panel Intro 3 Text'
+  '#description': 'IAB Panel Intro 3 Text'
+  '#default_value': 'iabPanelIntro3'
+iabAboutIab:
+  '#type': 'text_format'
+  '#format': 'full_html'
+  '#title': 'About IAB'
+  '#description': 'About IAB text area.'
+  '#default_value': 'iabAboutIab'
+iabName:
+  '#type': 'textfield'
+  '#title': 'IAB Name'
+  '#default_value': 'iabName'
+iabLink:
+  '#type': 'url'
+  '#title': 'IAB Link'
+  '#description': 'Set the URL for IAB link.'
+  '#default_value': 'iabLink'
+iabPurposes:
+  '#type': 'textfield'
+  '#title': 'IAB Purposes'
+  '#description': 'Set the purposes text.'
+  '#default_value': 'iabPurposes'
+iabSpecialPurposes:
+  '#type': 'textfield'
+  '#title': 'IAB Special Purposes'
+  '#description': 'Set the special purposes text.'
+  '#default_value': 'iabSpecialPurposes'
+iabFeatures:
+  '#type': 'textfield'
+  '#title': 'IAB Features'
+  '#description': 'Set the features text.'
+  '#default_value': 'iabFeatures'
+iabSpecialFeatures:
+  '#type': 'textfield'
+  '#title': 'IAB Special Features'
+  '#description': 'Set the special features text.'
+  '#default_value': 'iabSpecialFeatures'
+iabDataUse:
+  '#type': 'textfield'
+  '#title': 'IAB Data use'
+  '#description': 'Set the data use text.'
+  '#default_value': 'iabDataUse'
+iabVendors:
+  '#type': 'textfield'
+  '#title': 'IAB Vendors'
+  '#description': 'Set the vendors text.'
+  '#default_value': 'iabVendors'
+iabPurposeLegitimateInterest:
+  '#type': 'textarea'
+  '#title': 'IAB Purpose Legitimate Interest'
+  '#description': 'Set the purpose legitimate interest text.'
+  '#default_value': 'iabPurposeLegitimateInterest'
+iabVendorLegitimateInterest:
+  '#type': 'textarea'
+  '#title': 'IAB Vendor Legitimate Interest'
+  '#description': 'Set the vendor legitimate interest text.'
+  '#default_value': 'iabVendorLegitimateInterest'
+iabObjectPurposeLegitimateInterest:
+  '#type': 'textarea'
+  '#title': 'IAB Object Purpose Legitimate Interest'
+  '#description': 'Set the object purpose legitimate interest text.'
+  '#default_value': 'iabObjectPurposeLegitimateInterest'
+iabObjectVendorLegitimateInterest:
+  '#type': 'textarea'
+  '#title': 'IAB Object Vendor Legitimate Interest'
+  '#description': 'Set the object vendor legitimate interest.'
+  '#default_value': 'iabObjectPurposeLegitimateInterest'
+iabRelyConsent:
+  '#type': 'textfield'
+  '#title': 'IAB Rely Consent'
+  '#description': 'Set the rely consent text.'
+  '#default_value': 'iabRelyConsent'
+iabRelyLegitimateInterest:
+  '#type': 'textfield'
+  '#title': 'IAB Rely Legitimate Interest'
+  '#description': 'Set the rely legitimate interest text.'
+  '#default_value': 'iabRelyLegitimateInterest'
+iabSavePreferences:
+  '#type': 'textfield'
+  '#title': 'IAB Save Preferences'
+  '#description': 'Set the save preferences text.'
+  '#default_value': 'iabSavePreferences'
+iabAcceptAll:
+  '#type': 'textfield'
+  '#title': 'IAB Accept All'
+  '#description': 'Set Accept All text.'
+  '#default_value': 'iabAcceptAll'
+iabRejectAll:
+  '#type': 'textfield'
+  '#title': 'IAB Reject All'
+  '#description': 'Set Reject All text.'
+  '#default_value': 'iabRejectAll'
+iabDropDowns:
+  '#type': 'radios'
+  '#title': "Hide Purposes, Special Purposes, Features and Special Features."
+  '#options':
+    'true': 'Yes'
+    'false': 'No'
+  '#default_value': 'iabDropDowns'
+  '#description': "If set to yes, Purposes, Special Purposes, Features and Special Features will be hidden by default so that the interface is more concise. The user will be able to see them after expanding the corresponding drop down."
+  'boolOptions': true
+iabFullLegalDescription:
+    '#type': 'radios'
+    '#title': "Display full legal description for each Purpose or Feature."
+    '#options':
+      'true': 'Yes'
+      'false': 'No'
+    '#default_value': 'iabFullLegalDescription'
+    '#description': "If set to Yes, the full legal description for each Purpose or Feature will be shown, otherwise it will be hidden and the user can see them after expanding the corresponding drop down."
+    'boolOptions': true
+iabLegalDescription:
+    '#type': 'textarea'
+    '#title': 'IAB Legal Description Text'
+    '#description': 'Set the legal description text.'
+    '#default_value': 'iabLegalDescription'
+    '#states':
+      'invisible':
+        ':input[name=iabFullLegalDescription]':
+          'value': 1
+iabSaveOnlyOnClose:
+    '#type': 'radios'
+    '#title': "Save IAB settings on Close."
+    '#options':
+      'true': 'Yes'
+      'false': 'No'
+    '#default_value': 'iabSaveOnlyOnClose'
+    '#description': "Cookie Control will wait until the user closes the widget before saving the consent, rather than doing so every time the user toggles a purpose on or off."
+    'boolOptions': true
+iabCookieMaxAge:
+  '#type': 'textfield'
+  '#title': 'Cookie Max Age'
+  '#description': 'Set IAB Cookie Max Age textfield.'
+  '#default_value': 'iabCookieMaxAge'
+iabUsesNonCookieAccessTrue:
+  '#type': 'textfield'
+  '#title': 'Uses Non Cookie Access True'
+  '#description': 'Set text for IAB Uses Non Cookie Access True field.'
+  '#default_value': 'iabUsesNonCookieAccessTrue'
+iabUsesNonCookieAccessFalse:
+  '#type': 'textfield'
+  '#title': 'Uses Non Cookie Access False'
+  '#description': 'Set text for IAB Uses Non Cookie Access False field.'
+  '#default_value': 'iabUsesNonCookieAccessFalse'
+iabStorageDisclosures:
+  '#type': 'textfield'
+  '#title': 'Storage Disclosures'
+  '#description': 'Set text for Storage Disclosures field.'
+  '#default_value': 'iabStorageDisclosures'
+iabDisclosureDetailsColumn:
+  '#type': 'textfield'
+  '#title': 'Disclosure Details Column'
+  '#description': 'Set text for Disclosure Details Column field.'
+  '#default_value': 'iabDisclosureDetailsColumn'
+iabDisclosurePurposesColumn:
+  '#type': 'textfield'
+  '#title': 'Disclosure Purposes Column'
+  '#description': 'Set text for Disclosure Purposes Column field.'
+  '#default_value': 'iabDisclosurePurposesColumn'
+iabSeconds:
+  '#type': 'textfield'
+  '#title': 'Seconds'
+  '#description': 'Set text for Seconds field.'
+  '#default_value': 'iabSeconds'
+iabMinutes:
+  '#type': 'textfield'
+  '#title': 'Minutes'
+  '#description': 'Set text for Minutes field.'
+  '#default_value': 'iabMinutes'
+iabHours:
+  '#type': 'textfield'
+  '#title': 'Hours'
+  '#description': 'Set text for Hours field.'
+  '#default_value': 'iabHours'
+iabDays:
+  '#type': 'textfield'
+  '#title': 'Days'
+  '#description': 'Set text for Days field.'
+  '#default_value': 'iabDays'

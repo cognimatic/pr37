@@ -1,0 +1,31 @@
+services:
+  civiccookiecontrol.CCCStepsManager:
+    class: \Drupal\civiccookiecontrol\Form\Steps\CCCStepsManager
+    arguments: ['@civiccookiecontrol.CCCLicenseInfo','@civiccookiecontrol.CCCSettings']
+  civiccookiecontrol.CCCLicenseInfo:
+    class: \Drupal\civiccookiecontrol\Form\Steps\CCCLicenseInfo
+    arguments: ['@country_manager', '@config.factory', '@file_system', '@tempstore.private']
+  civiccookiecontrol.CCCSettings:
+    class: \Drupal\civiccookiecontrol\Form\Steps\CCCSettings
+    arguments: ['@country_manager', '@config.factory', '@file_system', '@tempstore.private']
+  civiccookiecontrol.CCC8Config:
+    class: \Drupal\civiccookiecontrol\CCCConfig\CCC8Config
+    arguments: ['@config.factory', '@entity_type.manager', '@date.formatter', '@cache.data']
+  civiccookiecontrol.CCC9Config:
+    class: \Drupal\civiccookiecontrol\CCCConfig\CCC9Config
+    arguments: ['@config.factory', '@entity_type.manager', '@date.formatter', '@cache.data', '@language_manager']
+  civiccookiecontrol.IAB1Access:
+    class: \Drupal\civiccookiecontrol\Access\IAB1Access
+    arguments: ['@config.factory']
+    tags:
+      - { name: access_check, applies_to: _iab1_access_check }
+  civiccookiecontrol.IAB2Access:
+    class: \Drupal\civiccookiecontrol\Access\IAB2Access
+    arguments: ['@config.factory']
+    tags:
+      - { name: access_check, applies_to: _iab2_access_check }
+  civiccookiecontrol.IAB2EnabledAccess:
+    class: \Drupal\civiccookiecontrol\Access\IAB2EnabledAccess
+    arguments: ['@config.factory', '@civiccookiecontrol.IAB1Access']
+    tags:
+      - { name: access_check, applies_to: _iab2_enabled_access_check }

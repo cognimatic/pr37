@@ -82,6 +82,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         array (
             'cweagans\\Composer\\' => 18,
         ),
+        'Z' => 
+        array (
+            'ZipStream\\' => 10,
+        ),
         'W' => 
         array (
             'WhiteHat101\\Crypt\\' => 18,
@@ -145,6 +149,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Symfony\\Bridge\\PhpUnit\\' => 23,
             'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 49,
+            'Solarium\\' => 9,
             'SlevomatCodingStandard\\' => 23,
             'SimpleSAML\\modules\\yubikey\\' => 27,
             'SimpleSAML\\modules\\discopower\\' => 30,
@@ -193,6 +198,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
+            'Psr\\EventDispatcher\\' => 20,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
             'Prophecy\\PhpUnit\\' => 17,
@@ -206,6 +212,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         ),
         'M' => 
         array (
+            'MyCLabs\\Enum\\' => 13,
             'Mtownsend\\XmlToArray\\' => 21,
             'MathieuViossat\\Util\\' => 20,
             'Masterminds\\' => 12,
@@ -347,6 +354,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'cweagans\\Composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/cweagans/composer-patches/src',
+        ),
+        'ZipStream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
         ),
         'WhiteHat101\\Crypt\\' => 
         array (
@@ -556,6 +567,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         array (
             0 => __DIR__ . '/..' . '/stecman/symfony-console-completion/src',
         ),
+        'Solarium\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/solarium/solarium/src',
+        ),
         'SlevomatCodingStandard\\' => 
         array (
             0 => __DIR__ . '/..' . '/slevomat/coding-standard/SlevomatCodingStandard',
@@ -725,6 +740,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
+        'Psr\\EventDispatcher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
+        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
@@ -764,6 +783,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'MyCLabs\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
         ),
         'Mtownsend\\XmlToArray\\' => 
         array (
@@ -1838,7 +1861,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/type/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/type/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
-        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Stringable' => __DIR__ . '/..' . '/myclabs/php-enum/stubs/Stringable.php',
         'TheSeer\\Tokenizer\\Exception' => __DIR__ . '/..' . '/theseer/tokenizer/src/Exception.php',
         'TheSeer\\Tokenizer\\NamespaceUri' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUri.php',
         'TheSeer\\Tokenizer\\NamespaceUriException' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUriException.php',

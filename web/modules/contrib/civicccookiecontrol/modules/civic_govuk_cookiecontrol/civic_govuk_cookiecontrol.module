@@ -1,0 +1,115 @@
+<?php
+
+/**
+ * @file
+ * Main file for Civic GovUK Cookie Control.
+ *
+ * Module developed by Civic UK www.civicuk.com.
+ */
+
+use Drupal\civic_govuk_cookiecontrol\GovUKConfigNames;
+use Drupal\civiccookiecontrol\Access\CookieControlAccess;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\locale\SourceString;
+
+/**
+ * Implements hook_help().
+ */
+function civic_govuk_cookiecontrol_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.civic_govuk_cookiecontrol':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Integrates Civic Cookie Control module with DWP Design System for use with all public facing DWP services') . '</p>';
+      $output .= '<p>' . t('First configure cookie categories using Civic Cookie Control module') . '</p>';
+      $output .= '<p>' . t('Place the banner block into a region at Structure -> Block Layout.') . '</p>';
+      $output .= '<p>' . t('Place the details block into Content region at Structure -> Block Layout and assign it to the cookie policy page.') . '</p>';
+      return $output;
+  }
+
+}
+
+/**
+ * Implements hook_theme().
+ */
+function civic_govuk_cookiecontrol_theme() {
+  return [
+    'page__admin__config__system__cookiecontrol__govuk' => [
+      'render element' => 'form',
+      'template' => 'page--admin--config--system--cookiecontrol--govuk',
+    ],
+    'civic_govuk_cookiecontrol_banner' => [
+      'template' => 'block--civic-govuk-cookiecontrol-banner',
+      'variables' => [
+        'title_banner' => t('Can we use cookies in our services?'),
+        'description' => t('We’d like to use analytics cookies to collect information about how you use our services. We use this information to improve our service.'),
+        'policy_link' => t('Before deciding <a class="cookie-policy govuk-link" href="/cookies">read more about our cookies</a>.'),
+        'accept_label' => t('Yes, I’m OK with cookies'),
+        'reject_label' => t('No, do not use cookies'),
+        'accepted_cookies' => t('You have accepted cookies'),
+        'rejected_cookies' => t('You have accepted cookies'),
+        'change_cookie_settings_link' => t('You can <a class="cookie-policy govuk-link" href="/cookies">change your cookie settings</a> at any time.'),
+        'hide' => t('Hide'),
+        'fixed_top' => FALSE,
+      ],
+    ],
+    'civic_govuk_cookiecontrol_details' => [
+      'template' => 'block--civic-govuk-cookiecontrol-details',
+      'variables' => [
+        'title_details' => t('Can we use cookies in our services?'),
+        'description' => t('We’d like to use analytics cookies to collect information about how you use our services. We use this information to improve our service.'),
+        'categories' => [],
+        'optional_cookie_text' => t('Optional cookie settings'),
+        'saved_settings_text' => t('Your settings have been saved.'),
+        'save_and_continue' => t('Save and continue'),
+        'allow_cookies_question_prefix' => t('Can we use'),
+        'allow_cookies_question_suffix' => t('cookies to help us improve the service?'),
+        'yes_text' => t('Yes'),
+        'no_text' => t('No'),
+      ],
+    ],
+  ];
+
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function civic_govuk_cookiecontrol_preprocess_page__admin__config__system__cookiecontrol__govuk(&$variables) {
+  civiccookiecontrol_set_ccclogo($variables);
+  if (CookieControlAccess::checkApiKey()) {
+    $variables['ccc_gov_messages'] = t('Cookie Control will load following the <a class="cookie-policy govuk-link" href="https://design-system.dwp.gov.uk/patterns/consent-to-cookies"> GovUK DWP pattern </a> using
+    the corresponding preset styling and text configurations below. You can customize displayed text elements
+    and translations in the form below. You need to place the "GovUk CookieControl Banner" <a class="cookie-policy govuk-link" href="/admin/structure/block"> block </a> to the top of your
+    theme and assign the "GovUk CookieControl Details" <a class="cookie-policy govuk-link" href="/admin/structure/block"> block </a> in your Cookie Policy page. The Cookie Control should be
+    configured as usual (i.e. Set API key, define Cookie categories, set texts for cookie statements, define the cookie policy nid');
+  }
+  else {
+    $variables['ccc_gov_messages'] = t('Please provide a valid Cookie Control API key to proceed.');
+  }
+}
+
+/**
+ * Function to load strings from configuration object in locale storage.
+ *
+ * @throws \Drupal\locale\StringStorageException
+ */
+function civic_govuk_cookiecontrol_preload_source_strings() {
+  $config = \Drupal::configFactory()
+    ->getEditable(GovUKConfigNames::GOVUKSETTINGS);
+
+  $data = $config->getRawData();
+  $localeStorage = \Drupal::service('locale.storage');
+  foreach ($data as $configKey => $configString) {
+    if (strpos($configKey, 'govuk_cookiecontrol') !== FALSE) {
+      $localeString = $localeStorage->findString(['source' => $configString]);
+      if (is_null($localeString)) {
+        $localeString = new SourceString();
+        $localeString->setString($configString);
+        $localeString->setStorage($localeStorage);
+        $localeString->save();
+      }
+    }
+  }
+
+}

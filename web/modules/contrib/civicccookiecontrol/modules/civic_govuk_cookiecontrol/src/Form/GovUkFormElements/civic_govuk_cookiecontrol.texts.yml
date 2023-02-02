@@ -1,0 +1,55 @@
+govuk_cookiecontrol_accepted_cookies_text:
+  '#type': 'textfield'
+  '#title': 'Accepted cookies text'
+  '#description': 'The text displayed when user accepts cookies using the Gov Uk (DWP) banner.'
+  '#default_value': 'govuk_cookiecontrol_accepted_cookies_text'
+govuk_cookiecontrol_rejected_cookies_text:
+  '#type': 'textfield'
+  '#title': 'Rejected cookies text'
+  '#description': 'The text displayed when user rejects cookies using the Gov Uk (DWP) banner.'
+  '#default_value': 'govuk_cookiecontrol_rejected_cookies_text'
+govuk_cookiecontrol_change_cookie_settings_prefix:
+  '#type': 'textfield'
+  '#title': 'Change cookie settings prefix'
+  '#description': 'The prefix of cookie settings text.'
+  '#default_value': 'govuk_cookiecontrol_change_cookie_settings_prefix'
+govuk_cookiecontrol_change_cookie_settings_link_text:
+  '#type': 'textfield'
+  '#title': 'Change cookie settings link text'
+  '#description': 'The link text of cookie settings text.'
+  '#default_value': 'govuk_cookiecontrol_change_cookie_settings_link_text'
+govuk_cookiecontrol_change_cookie_settings_suffix:
+  '#type': 'textfield'
+  '#title': 'Change cookie settings suffix'
+  '#description': 'The suffix of cookie settings text.'
+  '#default_value': 'govuk_cookiecontrol_change_cookie_settings_suffix'
+govuk_cookiecontrol_hide_button_text:
+  '#type': 'textfield'
+  '#title': 'Hide Button Text'
+  '#description': 'The text of the "Hide" button in GovUK banner.'
+  '#default_value': 'govuk_cookiecontrol_hide_button_text'
+govuk_cookiecontrol_optional_cookie_text:
+  '#type': 'textfield'
+  '#title': 'Optional Cookie Text'
+  '#description': 'The text for optional cookie.'
+  '#default_value': 'govuk_cookiecontrol_optional_cookie_text'
+govuk_cookiecontrol_saved_settings_text:
+  '#type': 'textfield'
+  '#title': 'Saved Settings Text'
+  '#description': 'The text for saved settings.'
+  '#default_value': 'govuk_cookiecontrol_saved_settings_text'
+govuk_cookiecontrol_save_and_continue:
+  '#type': 'textfield'
+  '#title': 'Save and Continue Text'
+  '#description': 'The text for save and continue button.'
+  '#default_value': 'govuk_cookiecontrol_save_and_continue'
+govuk_cookiecontrol_allow_cookies_question_prefix:
+  '#type': 'textfield'
+  '#title': 'Allow cookies question prefix text'
+  '#description': 'The text allow cookies question prefix text.'
+  '#default_value': 'govuk_cookiecontrol_allow_cookies_question_prefix'
+govuk_cookiecontrol_allow_cookies_question_suffix:
+  '#type': 'textfield'
+  '#title': 'Allow cookies question suffix text'
+  '#description': 'The text allow cookies question suffix text.'
+  '#default_value': 'govuk_cookiecontrol_allow_cookies_question_suffix'

@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * @file
+ * Implements the module install/uninstall process.
+ *
+ * Module developed by Civic www.civicuk.com.
+ */
+
+use Drupal\civic_govuk_cookiecontrol\GovUKConfigNames;
+
+/**
+ * Implements hook_install().
+ *
+ * Set initial configuration values.
+ */
+function civic_govuk_cookiecontrol_install() {
+  $config = \Drupal::configFactory()
+    ->getEditable(GovUKConfigNames::COOKIECONTROL);
+
+  if (empty($config->get('civiccookiecontrol_privacynode'))) {
+    $config->set('civiccookiecontrol_privacynode', 1)->save();
+  }
+  if (empty($config->get('civiccookiecontrol_stmt_name'))) {
+    $config->set('civiccookiecontrol_stmt_name', 'read more about our cookies')->save();
+  }
+  if (empty($config->get('civiccookiecontrol_stmt_descr'))) {
+    $config->set('civiccookiecontrol_stmt_descr', 'Before deciding ')->save();
+  }
+
+  $config->set('civiccookiecontrol_on_text', 'Yes')->save();
+  $config->set('civiccookiecontrol_off_text', 'No')->save();
+  $config->set('civiccookiecontrol_initial_state', 'CLOSED')->save();
+  $config->save();
+
+  civic_govuk_cookiecontrol_preload_source_strings();
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Clear configuration values.
+ */
+function civic_govuk_cookiecontrol_uninstall() {
+  $govukConfig = \Drupal::configFactory()
+    ->getEditable(GovUKConfigNames::GOVUKSETTINGS);
+  $govukConfig->clear('govuk_cookiecontrol_accepted_cookies_text')->save();
+  $govukConfig->clear('govuk_cookiecontrol_rejected_cookies_text')->save();
+  $govukConfig->clear('govuk_cookiecontrol_change_cookie_settings_prefix')->save();
+  $govukConfig->clear('govuk_cookiecontrol_change_cookie_settings_link_text')->save();
+  $govukConfig->clear('govuk_cookiecontrol_change_cookie_settings_suffix')->save();
+  $govukConfig->clear('govuk_cookiecontrol_optional_cookie_text')->save();
+  $govukConfig->clear('govuk_cookiecontrol_saved_settings_text')->save();
+  $govukConfig->clear('govuk_cookiecontrol_save_and_continue')->save();
+  $govukConfig->clear('govuk_cookiecontrol_allow_cookies_question_prefix')->save();
+  $govukConfig->clear('govuk_cookiecontrol_allow_cookies_question_suffix')->save();
+  $govukConfig->save();
+
+  $cccConfig = \Drupal::configFactory()
+    ->getEditable(GovUKConfigNames::COOKIECONTROL);
+
+  $cccConfig->set('civiccookiecontrol_on_text', 'Yes')->save();
+  $cccConfig->set('civiccookiecontrol_off_text', 'No')->save();
+  $cccConfig->set('civiccookiecontrol_initial_state', 'OPEN')->save();
+  $cccConfig->set('civiccookiecontrol_drupal_admin', FALSE)->save();
+  $cccConfig->save();
+}

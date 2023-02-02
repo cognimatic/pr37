@@ -1,0 +1,5 @@
+civic_govuk_cookiecontrol.settings:
+  title: 'GovUK Cookie Control'
+  description: 'GovUK Cookie Control configuration'
+  route_name: 'civic_govuk_cookiecontrol.admin_overview'
+  parent: cookiecontrol.admin_overview

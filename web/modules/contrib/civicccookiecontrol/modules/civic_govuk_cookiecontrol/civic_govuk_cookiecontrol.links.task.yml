@@ -1,0 +1,5 @@
+civic_govuk_cookiecontrol.govuk.form:
+  route_name: civic_govuk_cookiecontrol.admin_overview
+  base_route: cookiecontrol.admin_overview
+  title: 'GOV UK Cookie Control Texts'
+  weight: 70

@@ -1,0 +1,17 @@
+civic_govuk_cookiecontrol.banner:
+  version: 1.0
+  css:
+    theme:
+      assets/css/style.css: {}
+
+  js:
+    assets/js/banner.js: {}
+
+civic_govuk_cookiecontrol.details:
+  version: 1.0
+
+  js:
+    assets/js/details.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

@@ -1,0 +1,41 @@
+<div>
+  <h2 class="govuk-heading-m">{{ title_details }}</h2>
+  <p class="govuk-body">{{ description }}</p>
+
+    <h2 class="govuk-heading-l">{{ optional_cookie_text | trans }}</h2>
+    {% for key,item in categories %}
+        <h3 class="govuk-heading-s">{{ item.cookieLabel }}</h3>
+        {{ item.cookieDescription | raw }}
+
+        <form class="form cookie-category-form" action="" method="post" novalidate="" data-index="{{ key }}">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">{{ allow_cookies_question_prefix | trans }} {{ item.cookieLabel }} {{ allow_cookies_question_suffix | trans }}</legend>
+
+              <div class="govuk-cookiecontrol-radios govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="{{ 'accept-' ~ key }}" name="{{ 'cookieChoice' ~ key }}" type="radio" value="accept">
+                  <label class="govuk-label govuk-radios__label" for="{{ 'accept-' ~ key }}">{{ yes_text }}</label>
+                </div>
+
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="{{ 'reject-' ~ key }}" name="{{ 'cookieChoice' ~ key }}" type="radio" value="reject">
+                  <label class="govuk-label govuk-radios__label" for="{{ 'reject-' ~ key }}">{{ no_text }}</label>
+                </div>
+              </div>
+            </fieldset>
+            <div class="govuk-cookiecontrol-confirmation govuk-panel govuk-panel--hidden govuk-panel--confirmation">
+              <div class="govuk-panel__body">
+                  {{ saved_settings_text | trans }}
+              </div>
+            </div>
+          </div>
+
+          <button class="govuk-button" data-module="govuk-button">
+            {{ save_and_continue | trans }}
+          </button>
+        </form>
+
+    {% endfor %}
+
+</div>

@@ -1,0 +1,41 @@
+civiccookiecontrol_ccpa_stmt_descr:
+  '#type': 'textarea'
+  '#title': 'CCPA Statement Description'
+  '#default_value': 'civiccookiecontrol_ccpa_stmt_descr'
+  '#description': 'The text description that introduces your ccpa privacy statement.'
+  'needsApiValidation': true
+  'cookieVersion': [9]
+civiccookiecontrol_ccpa_stmt_name:
+  '#type': 'textfield'
+  '#title': 'CCPA Statement Name'
+  '#default_value': 'civiccookiecontrol_ccpa_stmt_name'
+  '#description': "The text that you wish to call your terms by, for example 'CCPA Privacy Statement'."
+  '#placeholder': 'CCPA Privacy Statement'
+  'needsApiValidation': true
+  'cookieVersion': [9]
+civiccookiecontrol_ccpa_stmt_date:
+  '#type': 'date'
+  '#title': 'CCPA Statement Updated Date'
+  '#default_value': 'civiccookiecontrol_ccpa_stmt_date'
+  '#format': 'd/m/Y'
+  '#date_date_format': 'd/m/Y'
+  '#description': 'The date that your ccpa privacy statement was last issued.'
+  'needsApiValidation': true
+  'cookieVersion': [9]
+civiccookiecontrol_ccpa_privacynode:
+    '#type': 'number'
+    '#size': 5
+    '#maxlength': 7
+    '#min': 1
+    '#step': 1
+    '#title': 'CCPA Privacy Policy Link'
+    '#default_value': 'civiccookiecontrol_ccpa_privacynode'
+    '#description': "Specify a node ID which represents your site's CCPA privacy policy. This will be appended at the end of your introductory text."
+    '#required': false
+    'needsApiValidation': true
+    'cookieVersion': [9]
+civiccookiecontrol_ccpa_stmt_url:
+  '#type': 'hidden'
+  '#default_value': 'civiccookiecontrol_ccpa_stmt_url'
+  'needsApiValidation': true
+  'cookieVersion': [9]
