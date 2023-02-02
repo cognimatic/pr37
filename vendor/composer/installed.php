@@ -2452,6 +2452,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'localgovdrupal/localgov_forms' => array(
+            'pretty_version' => '1.0.0-beta1',
+            'version' => '1.0.0.0-beta1',
+            'reference' => 'c7848934dc3ccf05473cfd2ceca665509187d181',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/localgov_forms',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'localgovdrupal/localgov_geo' => array(
             'pretty_version' => '1.3.0',
             'version' => '1.3.0.0',

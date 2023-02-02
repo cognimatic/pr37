@@ -16939,6 +16939,44 @@
             "install-path": "../../web/modules/contrib/localgov_events"
         },
         {
+            "name": "localgovdrupal/localgov_forms",
+            "version": "1.0.0-beta1",
+            "version_normalized": "1.0.0.0-beta1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/localgovdrupal/localgov_forms.git",
+                "reference": "c7848934dc3ccf05473cfd2ceca665509187d181"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_forms/zipball/c7848934dc3ccf05473cfd2ceca665509187d181",
+                "reference": "c7848934dc3ccf05473cfd2ceca665509187d181",
+                "shasum": ""
+            },
+            "require": {
+                "drupal/geocoder": "^3.20",
+                "drupal/webform": "^6.0",
+                "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev"
+            },
+            "require-dev": {
+                "geocoder-php/nominatim-provider": "^5.2"
+            },
+            "time": "2022-12-19T14:08:02+00:00",
+            "type": "drupal-module",
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "LocalGov Drupal distribution: Webform additions.",
+            "homepage": "https://github.com/localgovdrupal/localgov_forms",
+            "support": {
+                "issues": "https://github.com/localgovdrupal/localgov_forms/issues",
+                "source": "https://github.com/localgovdrupal/localgov_forms/tree/1.0.0-beta1"
+            },
+            "install-path": "../../web/modules/contrib/localgov_forms"
+        },
+        {
             "name": "localgovdrupal/localgov_geo",
             "version": "1.3.0",
             "version_normalized": "1.3.0.0",

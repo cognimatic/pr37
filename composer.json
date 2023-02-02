@@ -97,6 +97,7 @@
         "drupal/webprofiler": "^9.0",
         "drupal/yoast_seo": "^1.7",
         "localgovdrupal/localgov": "^2.0",
+        "localgovdrupal/localgov_forms": "^1.0@beta",
         "localgovdrupal/localgov_moderngov": "1.x-dev",
         "localgovdrupal/localgov_multilingual": "1.x-dev",
         "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev"
