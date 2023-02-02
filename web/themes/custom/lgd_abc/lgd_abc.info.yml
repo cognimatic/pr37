@@ -8,6 +8,7 @@ logo: logo.png
 libraries:
   - lgd_abc/variables
   - lgd_abc/overrides
+  - lgd_abc/fonts
 
 regions:
   tabs: "Tabs"
