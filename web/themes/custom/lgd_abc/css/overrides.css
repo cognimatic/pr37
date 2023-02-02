@@ -83,6 +83,7 @@ ul.search-stats-results li{
     padding: 0 0 0 1rem;
 }
 
-#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block label[for='edit-s--2']{
+#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block label[for^='edit-s']
+{
     display: none;
 }
