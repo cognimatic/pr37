@@ -11498,6 +11498,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "Failed to start the session because headers have already been sent 3087929": "https://www.drupal.org/files/issues/2022-11-15/fix-php-error-on-redirect-3087929-8.patch"
                 }
             },
             "installation-source": "dist",
