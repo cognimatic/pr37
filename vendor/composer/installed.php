@@ -913,9 +913,9 @@
             'dev_requirement' => false,
         ),
         'drupal/devel_entity_updates' => array(
-            'pretty_version' => '3.0.1',
-            'version' => '3.0.1.0',
-            'reference' => '3.0.1',
+            'pretty_version' => '4.1.0',
+            'version' => '4.1.0.0',
+            'reference' => '4.1.0',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/devel_entity_updates',
             'aliases' => array(),
