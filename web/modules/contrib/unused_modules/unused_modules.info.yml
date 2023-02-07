@@ -5,7 +5,7 @@ package: Development
 core_version_requirement: ^8 || ^9 || ^10
 configure: unused_modules.overview.projects.disabled
 
-# Information added by Drupal.org packaging script on 2023-02-01
-version: '8.x-1.4'
+# Information added by Drupal.org packaging script on 2023-02-04
+version: '8.x-1.5'
 project: 'unused_modules'
-datestamp: 1675238656
+datestamp: 1675537992

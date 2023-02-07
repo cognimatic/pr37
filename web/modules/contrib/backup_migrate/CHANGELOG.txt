@@ -26,6 +26,20 @@ By DamienMcKenna: Updated CHANGELOG.txt for recent 5.0.x changes already present
   opendir(private://backup_migrate/scheduled): failed to open dir.
 #3262070 by WagnerMelo, Anybody, Grevil, hmendes, andregp, DamienMcKenna,
   bruno.bicudo: Show date & time when restore / backup was successful.
+
+
+Backup and Migrate 5.0.x-dev, 2023-xx-xx
+----------------------------------------
+#3338192 by tamerzg, DamienMcKenna: backup_migrate_update_5001 is never
+  executed due to CORE_MINIMUM_SCHEMA_VERSION.
+
+
+Backup and Migrate 5.0.3, 2022-12-18
+------------------------------------
+#3304922 by ressa, DamienMcKenna: Drupal 10: Fatal error, logger must be
+  compatible with Psr\Log\AbstractLogger.
+#3309272 by DamienMcKenna: Tests must define $modules as a protected variable.
+>>>>>>> 682924e (Issue #3338192 by tamerzg, DamienMcKenna: backup_migrate_update_5001 is never executed due to CORE_MINIMUM_SCHEMA_VERSION.)
 #3268401 by DamienMcKenna, Mok7tar, robcarr, crutch, solideogloria, donpwinston:
   filectime() and filesize() receiving NULL values.
 #3309301 by DamienMcKenna: Adjust site restore check to be less strict.

@@ -121,7 +121,7 @@ class UnusedModulesHelperService {
 
       // Fallback: determine common basepath by picking the shortest path of all
       // project modules.
-      if (!$module->projectPath) {
+      if (!$module->projectPath && !$module->parsingError) {
         $project_paths = [];
         foreach ($project as $module) {
           $project_paths[] = $module->getPath();
@@ -177,7 +177,7 @@ class UnusedModulesHelperService {
     // Prepare a composer package list with the install path.
     $packages = array_combine(\Composer\InstalledVersions::getInstalledPackages(), \Composer\InstalledVersions::getInstalledPackages());
     $packages = array_map(function ($package) {
-      return realpath(\Composer\InstalledVersions::getInstallPath($package));
+      return realpath(\Composer\InstalledVersions::getInstallPath($package) ?? '');
     }, $packages);
 
     // The Drupal packaging script adds project information to the .info file.

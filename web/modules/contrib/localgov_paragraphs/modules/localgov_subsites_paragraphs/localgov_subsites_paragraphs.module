@@ -119,7 +119,7 @@ function localgov_subsites_paragraphs_preprocess_paragraph(&$variables) {
     $heading_text = $paragraph->get('localgov_title')->value;
     $heading_level = $paragraph->get('localgov_heading_level')->value;
     if (is_string($heading_level)) {
-      $variables['heading'] = _localgov_paragraphs_views_create_heading($heading_text, $heading_level);
+      $variables['heading'] = _localgov_subsites_paragraphs_create_heading($heading_text, $heading_level);
     }
   }
 

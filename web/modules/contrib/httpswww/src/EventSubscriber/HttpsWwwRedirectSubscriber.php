@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class HttpsWwwRedirectSubscriber.
+ * The Class HttpsWwwRedirectSubscriber.
  *
  * @package Drupal\httpswww\EventSubscriber
  */
@@ -37,7 +37,7 @@ class HttpsWwwRedirectSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config.
-   * @param \Drupal\Core\Session\AccountInterface      $account
+   * @param \Drupal\Core\Session\AccountInterface $account
    *   The current user.
    */
   public function __construct(ConfigFactoryInterface $config_factory, AccountInterface $account) {
@@ -65,21 +65,28 @@ class HttpsWwwRedirectSubscriber implements EventSubscriberInterface {
 
     $host = $event->getRequest()->getHost();
     $scheme = $event->getRequest()->getScheme();
+    $curr_url = $event->getRequest()->getSchemeAndHttpHost();
 
     $conf_scheme = $this->config->get('scheme') ?: 'mixed';
-    $use_prefix = $this->config->get('prefix') == 'yes';
-
-    $curr_url = $event->getRequest()->getSchemeAndHttpHost();
+    $conf_prefix = $this->config->get('prefix') ?: 'mixed';
+    $use_prefix = $conf_prefix === 'yes';
 
     // Set scheme.
     $new_url = ($conf_scheme === 'mixed' ? $scheme : $conf_scheme) . '://';
 
     // Set/remove prefix and add host.
-    if ($use_prefix && substr($host, 0, 4) !== 'www.') {
-      $new_url .= 'www.' . $host;
-    }
-    elseif (!$use_prefix && substr($host, 0, 4) === 'www.') {
-      $new_url .= substr($host, 4);
+    if ($conf_prefix !== 'mixed') {
+      $domain_parts = explode('.', $host);
+      $prefix = reset($domain_parts);
+      $has_www = $prefix === 'www';
+      $excl_subs = $this->config->get('exclude_subdomains') ?: [];
+
+      if ($use_prefix && !$has_www && !in_array($prefix, $excl_subs)) {
+        $new_url .= 'www.' . $host;
+      }
+      elseif (!$use_prefix && $has_www) {
+        $new_url .= substr($host, 4);
+      }
     }
     else {
       $new_url .= $host;

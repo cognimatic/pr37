@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * This module enables basic httpswww functionality.
+ */
+
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
