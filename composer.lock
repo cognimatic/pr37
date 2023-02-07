@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ee1c524ca107ca6971c9bd239c3845d",
+    "content-hash": "3c47fe6e61ac36f5a59bd04acf34dc55",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -5567,17 +5567,17 @@
         },
         {
             "name": "drupal/entity_usage",
-            "version": "2.0.0-beta9",
+            "version": "2.0.0-beta10",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/entity_usage.git",
-                "reference": "8.x-2.0-beta9"
+                "reference": "8.x-2.0-beta10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/entity_usage-8.x-2.0-beta9.zip",
-                "reference": "8.x-2.0-beta9",
-                "shasum": "0f3d508808dc948a0c5a58868dc3b244190c7432"
+                "url": "https://ftp.drupal.org/files/projects/entity_usage-8.x-2.0-beta10.zip",
+                "reference": "8.x-2.0-beta10",
+                "shasum": "4f92b703ee9e8e75e74a11e6623de258fedd025c"
             },
             "require": {
                 "drupal/core": "^9.1 || ^10"
@@ -5597,8 +5597,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.0-beta9",
-                    "datestamp": "1675691249",
+                    "version": "8.x-2.0-beta10",
+                    "datestamp": "1675792917",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
@@ -9250,90 +9250,6 @@
             "homepage": "https://www.drupal.org/project/prod_check",
             "support": {
                 "source": "https://git.drupalcode.org/project/prod_check"
-            }
-        },
-        {
-            "name": "drupal/r4032login",
-            "version": "2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/r4032login.git",
-                "reference": "2.2.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/r4032login-2.2.0.zip",
-                "reference": "2.2.0",
-                "shasum": "fc0e611d005d1040d19a3448a21875de65afb591"
-            },
-            "require": {
-                "drupal/core": "^9.3 || ^10"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "2.2.0",
-                    "datestamp": "1649051152",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Bevan",
-                    "homepage": "https://www.drupal.org/user/49989"
-                },
-                {
-                    "name": "Grayle",
-                    "homepage": "https://www.drupal.org/user/3145497"
-                },
-                {
-                    "name": "Nixou",
-                    "homepage": "https://www.drupal.org/user/2304734"
-                },
-                {
-                    "name": "RobLoach",
-                    "homepage": "https://www.drupal.org/user/61114"
-                },
-                {
-                    "name": "Sk8erPeter",
-                    "homepage": "https://www.drupal.org/user/1441344"
-                },
-                {
-                    "name": "bdone",
-                    "homepage": "https://www.drupal.org/user/687670"
-                },
-                {
-                    "name": "deekayen",
-                    "homepage": "https://www.drupal.org/user/972"
-                },
-                {
-                    "name": "lotyrin",
-                    "homepage": "https://www.drupal.org/user/216580"
-                },
-                {
-                    "name": "ms2011",
-                    "homepage": "https://www.drupal.org/user/108440"
-                },
-                {
-                    "name": "pwolanin",
-                    "homepage": "https://www.drupal.org/user/49851"
-                },
-                {
-                    "name": "shrop",
-                    "homepage": "https://www.drupal.org/user/14767"
-                }
-            ],
-            "description": "Redirect anonymous users from 403 Access Denied pages to the /user/login page.",
-            "homepage": "https://www.drupal.org/project/r4032login",
-            "support": {
-                "source": "https://git.drupalcode.org/project/r4032login"
             }
         },
         {
@@ -24631,16 +24547,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.15",
+            "version": "1.9.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "642f5d78e4bfb9d9bebed898740ca82b53264d9b"
+                "reference": "922e2689bb180575d0f57de0443c431a5a698e8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/642f5d78e4bfb9d9bebed898740ca82b53264d9b",
-                "reference": "642f5d78e4bfb9d9bebed898740ca82b53264d9b",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/922e2689bb180575d0f57de0443c431a5a698e8f",
+                "reference": "922e2689bb180575d0f57de0443c431a5a698e8f",
                 "shasum": ""
             },
             "require": {
@@ -24670,7 +24586,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.15"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.16"
             },
             "funding": [
                 {
@@ -24686,7 +24602,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-07T07:49:27+00:00"
+            "time": "2023-02-07T10:42:21+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",

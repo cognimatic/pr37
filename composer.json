@@ -66,7 +66,6 @@
         "drupal/module_filter": "^3.2",
         "drupal/paragraphs_table": "^1.9",
         "drupal/prod_check": "^1.0@alpha",
-        "drupal/r4032login": "^2.2",
         "drupal/rabbit_hole": "^1.0@beta",
         "drupal/rabbit_hole_href": "^2.0",
         "drupal/responsive_favicons": "^1.7",
