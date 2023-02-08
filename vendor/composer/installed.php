@@ -1859,15 +1859,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'drupal/site_verify' => array(
-            'pretty_version' => '2.0.0-alpha1',
-            'version' => '2.0.0.0-alpha1',
-            'reference' => '2.0.0-alpha1',
-            'type' => 'drupal-module',
-            'install_path' => __DIR__ . '/../../web/modules/contrib/site_verify',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'drupal/smart_sql_idmap' => array(
             'pretty_version' => '1.1.1',
             'version' => '1.1.1.0',

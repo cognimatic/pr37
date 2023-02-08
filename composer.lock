@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5ab19703bd604d821a9a512ae696f1e",
+    "content-hash": "0ff03d2285271b41e338f09ec84fcc9e",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -10633,78 +10633,6 @@
             "homepage": "https://www.drupal.org/project/site_audit",
             "support": {
                 "source": "https://git.drupalcode.org/project/site_audit"
-            }
-        },
-        {
-            "name": "drupal/site_verify",
-            "version": "2.0.0-alpha1",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/site_verify.git",
-                "reference": "2.0.0-alpha1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/site_verify-2.0.0-alpha1.zip",
-                "reference": "2.0.0-alpha1",
-                "shasum": "8f08efc412d760e9728b4ab850610a2be42616dd"
-            },
-            "require": {
-                "drupal/core": "^8.7.7 || ^9"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "2.0.0-alpha1",
-                    "datestamp": "1654779206",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Alpha releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Dave Reid",
-                    "homepage": "https://www.drupal.org/user/53892"
-                },
-                {
-                    "name": "Jim.M",
-                    "homepage": "https://www.drupal.org/user/41136"
-                },
-                {
-                    "name": "University of Colorado Boulder",
-                    "homepage": "https://www.drupal.org/user/3299791"
-                },
-                {
-                    "name": "Webbeh",
-                    "homepage": "https://www.drupal.org/user/1160608"
-                },
-                {
-                    "name": "afinnarn",
-                    "homepage": "https://www.drupal.org/user/1701902"
-                },
-                {
-                    "name": "jacobbell84",
-                    "homepage": "https://www.drupal.org/user/3408772"
-                },
-                {
-                    "name": "joachim",
-                    "homepage": "https://www.drupal.org/user/107701"
-                },
-                {
-                    "name": "kreynen",
-                    "homepage": "https://www.drupal.org/user/48877"
-                }
-            ],
-            "description": "Verifies ownership of a site for use with search engines.",
-            "homepage": "https://www.drupal.org/project/site_verify",
-            "support": {
-                "source": "https://git.drupalcode.org/project/site_verify"
             }
         },
         {
@@ -26776,7 +26704,6 @@
         "drupal/search_api_stats": 15,
         "drupal/shs": 5,
         "drupal/site_audit": 5,
-        "drupal/site_verify": 15,
         "drupal/twitter_block": 15,
         "localgovdrupal/localgov_forms": 10,
         "localgovdrupal/localgov_moderngov": 20,

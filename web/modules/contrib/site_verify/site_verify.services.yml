@@ -1,3 +1,0 @@
-services:
-  site_verify_service:
-    class: Drupal\site_verify\Service\SiteVerifyService
