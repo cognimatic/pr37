@@ -1,11 +1,7 @@
+@import "styles-override.css";
+
 .field--name-localgov-subsites-content > * {
   margin-bottom: var(--spacing-largest);
-}
-
-.localgov-alert-banner {
-  margin: var(--spacing-large);
-  border: var(--border-large);
-  border-color: var(--color-black);
 }
 
 .banner--primary .banner__content {
@@ -51,9 +47,17 @@ blockquote {
 
 /* Temporary overrides - Kula - please remove as required rewrite/refactor below */
 
+.lgd-footer {
+  background-color: var(--color-green);
+}
+
+.lgd-footer__pre-footer {
+  background-color: transparent;
+}
+
 .lgd-footer__post-footer{
     color: var(--color-pre-footer-text);
-    background-color: var(--color-section-pre-footer-bg);
+    background-color: transparent;
 }
 
 .lgd-footer__post-footer .callout{
@@ -64,7 +68,7 @@ blockquote {
     font-size: 1rem;
 }
 
-.lgd-footer__post-footer h2, 
+.lgd-footer__post-footer h2,
 .lgd-footer__post-footer h3,
 .lgd-footer__post-footer .callout,
 .lgd-footer__post-footer a{

@@ -40,21 +40,21 @@ body {
     We should not refer to these directly in our CSS however. Instead,
     we use the names at our "Colours Applied" section.
   */
-  
-  --color-green: #015621;
+
+  --color-green: #023C19;
   --color-red: #961722;
   --color-orange: #ed7522;
   --color-yellow: #FEF093;
-  --color-blue: #22548E;
-  
+  --color-blue: #22549E;
+
   --color-accent: #152453;
-  --color-accent-alt: #FCDF1B;
+  --color-accent-alt: #FEF093;
   --color-light-bg: #D6EAF8;
-  --font-primary: roboto, "Open Sans", oxygen, ubuntu, cantarell, "Helvetica Neue", sans-serif;
-  --font-secondary: 'Mulish', var(--font-primary);
+  --font-primary: 'Roboto', sans-serif;
+  --font-secondary: 'Roboto', sans-serif;
   --sidebar-exposed-form-bg-color: var(--color-grey-lightest);
-  
-  
+
+
 
   /*
     Colours Applied
@@ -67,8 +67,8 @@ body {
   --color-minor: var(--color-yellow);
   --color-link: var(--color-accent);
   --color-focus: var(--color-yellow);
-  
-  
+
+
   --breadcrumbs-divider: ">";
   --breadcrumbs-background-color: var(--color-accent-alt);
   --breadcrumbs-link-color: #333333;
@@ -76,5 +76,7 @@ body {
   --alert-banner-color: var(--color-accent);
   --alert-banner-bg-color-minor: var(--color-light-bg);
   --color-section-pre-footer-bg: var(--color-accent);
+
+  --color-section-header-bg: var(--color-blue);
 
 }
