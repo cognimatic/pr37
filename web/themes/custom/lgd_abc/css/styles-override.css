@@ -1,0 +1,28 @@
+.lgd-header ul.menu {
+  list-style-type: none;
+  display: flex;
+}
+
+.lgd-header .menu-item {
+  margin-left: 2rem;
+  border: 1px solid transparent;
+  transition: border-color 0.3s;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+}
+
+.lgd-header .menu-item:hover {
+  border-color: white;
+}
+
+.lgd-header a {
+  text-decoration: none;
+}
+
+.lgd-header a:focus {
+  outline: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-box-decoration-break: unset;
+}
