@@ -1,0 +1,6 @@
+name: Multi Text
+type: module
+description: Delimiter-based widget for multivalue text fields
+core_version_requirement: ^9 || ^10
+package: Custom
+
