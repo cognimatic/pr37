@@ -68,7 +68,7 @@ body {
   --color-link: var(--color-accent);
   --color-focus: var(--color-yellow);
 
-
+  --header-logo-width: 83px;
   --breadcrumbs-divider: ">";
   --breadcrumbs-background-color: var(--color-accent-alt);
   --breadcrumbs-link-color: #333333;
@@ -78,5 +78,8 @@ body {
   --color-section-pre-footer-bg: var(--color-accent);
 
   --color-section-header-bg: var(--color-blue);
+  --secondary-menu-bg-color-second: transparent;
+  --secondary-menu-link-color: white;
+  --secondary-menu-link-color-focus: white;
 
 }

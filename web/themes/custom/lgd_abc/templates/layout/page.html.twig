@@ -87,7 +87,7 @@
 {% endif %}#}
 
 {% block header %}
-  {% include '@localgov_base/layout/header.html.twig' with {'page': page} %}
+  {% include '@lgd_abc/layout/header.html.twig' with {'page': page} %}
 {% endblock %}
 
 {% if has_banner %}
@@ -116,7 +116,7 @@
             {{ page.search_bar }}
         </div>
     {% endif %}
-    
+
   {% if has_content_top %}
     {{ page.content_top }}
   {% endif %}
@@ -165,9 +165,9 @@
 
     {% else %}
     {# When we have no sidebars #}
-    {# 
+    {#
       If there are no sidebars, the content region take up 100% of the space, but:
-      1.  If we are on a node page, we do not constrain the content (this will be handled 
+      1.  If we are on a node page, we do not constrain the content (this will be handled
           by the node templates, so some parts of the template (hero, etc) can be the full
           width of the screen).
       2.  If we are not on a node page, we'll contain the content, so views pages, taxonomy

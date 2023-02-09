@@ -1,18 +1,81 @@
-.lgd-header ul.menu {
+button:hover {
+  text-decoration: none !important;
+}
+
+.lgd-header {
+  padding: 0 !important;
+}
+
+.lgd-header--primary {
+  padding: 0.8rem 0;
+  border-bottom: 4px solid #25337A;
+}
+
+.lgd-header__nav--secondary {
+  padding: 2rem 0;
+  border-bottom: 4px solid #25337A;
+}
+
+.lgd-header .lgd-header__nav--primary {
+  margin: 0;
+}
+
+.lgd-header .lgd-header__nav--secondary {
+  margin: 0;
+  background-color: var(--color-blue);
+  position: absolute;
+  z-index: 999;
+}
+
+.lgd-header .lgd-header__nav--primary ul.menu {
   list-style-type: none;
   display: flex;
+  margin: 0;
+  padding: 0;
 }
 
-.lgd-header .menu-item {
+.lgd-header .lgd-header__nav--secondary ul.menu {
+  list-style-type: none;
+  padding: 0;
+}
+
+.lgd-header .lgd-header__nav--secondary ul.menu li.menu-item::before {
+  content: "\203A";
+  color: white;
+  font-size: 22px;
+  line-height: 1;
+  margin-right: 4px;
+}
+
+.lgd-header .lgd-region__inner--secondary-menu {
+  padding: 0;
+}
+
+.lgd-header .lgd-header__toggles {
+  margin-right: 0;
+}
+
+.lgd-header .lgd-header__nav--primary .menu-item,
+.lgd-header .lgd-header__toggles .lgd-header__toggle,
+.lgd-header .lgd-header__toggles .lgd-header__toggle:focus{
   margin-left: 2rem;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   transition: border-color 0.3s;
-  padding: 0.3rem 0.7rem;
+  padding: 0.2rem 0.7rem;
   cursor: pointer;
+  text-decoration: none;
+  background-color: transparent;
+  font-size: 19px;
+  font-weight: 500;
 }
 
-.lgd-header .menu-item:hover {
+.lgd-header .menu-item:hover,
+.lgd-header .menu-item:focus,
+.lgd-header .lgd-header__toggles .lgd-header__toggle:hover,
+.lgd-header .lgd-header__toggles .lgd-header__toggle.lgd-header__toggle--active {
   border-color: white;
+  background-color: transparent;
+  text-decoration: none;
 }
 
 .lgd-header a {
@@ -24,5 +87,27 @@
   background-color: transparent;
   -webkit-box-shadow: none;
   box-shadow: none;
+
   -webkit-box-decoration-break: unset;
+}
+
+.region-secondary-menu {
+  margin-top: 0;
+}
+
+.lgd-header h2.secondary-menu-heading {
+  color: white;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.lgd-header .lgd-header__nav--secondary .menu-item {
+  font-size: 19px;
+  font-weight: 300;
+}
+
+.lgd-header .lgd-header__nav--secondary .menu-item a:hover {
+  text-decoration: underline;
 }
