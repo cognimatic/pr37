@@ -82,9 +82,9 @@
   Taking this approach also means we can have consistent styling for the
   tabs region on all localgov_drupal websites. Yay!
 #}
-{#{% if has_tabs %}
+{% if has_tabs %}
   {{ page.tabs }}
-{% endif %}#}
+{% endif %}
 
 {% block header %}
   {% include '@lgd_abc/layout/header.html.twig' with {'page': page} %}
@@ -92,12 +92,6 @@
 
 {% if has_banner %}
   {{ page.banner }}
-{% endif %}
-{#
-  Moved tabs to be closer to content - more a Drupal convention
-#}
-{% if has_tabs %}
-  {{ page.tabs }}
 {% endif %}
 
 {% if has_breadcrumb %}
