@@ -161,3 +161,83 @@ button:hover {
 #detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block .js-form-type-search-api-autocomplete {
   width: 100%;
 }
+
+.did-this-help {
+  margin: 0;
+  padding:18px 40px;
+  background-color: #9ED39D;
+}
+
+.did-this-help form {
+  display: flex;
+  align-items: center;
+}
+
+.did-this-help .question {
+  margin-bottom: 0;
+  margin-right: 2rem;
+  padding: 7px 0;
+}
+
+.did-this-help .form-submit {
+  padding: 5px 20px;
+  background-color: transparent;
+  border: 1px solid var(--color-text);
+  color: var(--color-text);
+}
+
+.did-this-help .form-submit:hover {
+  background-color: var(--color-text);
+  color: white;
+  text-decoration: none;
+}
+
+.lgd-footer .lgd-footer__pre-footer .border-bottom {
+  border-bottom: 1px solid white;
+  padding-bottom: 1rem;
+}
+
+.lgd-footer ul.social-media {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.lgd-footer ul.social-media li,
+.lgd-footer ul.social-media li a{
+  display: flex;
+}
+
+.lgd-footer ul.social-media li {
+  margin-right: 2.5rem;
+}
+
+.lgd-footer ul.social-media svg {
+  width: 40px;
+  height: auto;
+}
+
+.lgd-footer .lgd-footer__pre-footer .box-link {
+  border: none;
+  display: flex;
+  justify-content: end;
+}
+
+.lgd-footer .lgd-footer__pre-footer h2.box-link__title {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background: #FFFFFF;
+  box-shadow: inset 0px -2px 0px #888888;
+}
+
+.lgd-footer .lgd-footer__pre-footer a.box-link__link {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  color: #1752AB;
+  padding: 12px 20px;
+}

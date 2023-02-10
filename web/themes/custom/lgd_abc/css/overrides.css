@@ -37,13 +37,20 @@ blockquote {
 }
 
 
-
-
-
 /* Temporary overrides - Kula - please remove as required rewrite/refactor below */
+
+.lgd-row {
+  margin-right: calc(-1 * var(--grid-column-spacing) / 2);
+  margin-left: calc(-1 * var(--grid-column-spacing) / 2);
+}
+
+.lgd-row--spaced {
+  justify-content: space-between;
+}
 
 .lgd-footer {
   background-color: var(--color-green);
+  margin-top: 0;
 }
 
 .lgd-footer__pre-footer {
