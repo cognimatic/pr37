@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'localgovdrupal/localgov-project',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => 'acb986c790dde949f399702ec17e60d1bfbd7179',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => NULL,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -1409,15 +1409,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'drupal/media_directories' => array(
-            'pretty_version' => '2.0.2',
-            'version' => '2.0.2.0',
-            'reference' => '2.0.2',
-            'type' => 'drupal-module',
-            'install_path' => __DIR__ . '/../../web/modules/contrib/media_directories',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'drupal/media_library_edit' => array(
             'pretty_version' => '3.0.2',
             'version' => '3.0.2.0',
@@ -2298,9 +2289,9 @@
             'dev_requirement' => false,
         ),
         'localgovdrupal/localgov-project' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'acb986c790dde949f399702ec17e60d1bfbd7179',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => NULL,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
