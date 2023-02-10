@@ -10,13 +10,19 @@ parameters:
     cache: false
   cors.config:
     enabled: true
-	allowedHeaders: ['*']
-    allowedMethods: []
-    allowedOrigins: ['*']
+    # Specify allowed headers, like 'x-allowed-header'.
+    allowedHeaders: [ 'content-type', 'authorization' ]
+    # Specify allowed request methods, specify ['*'] to allow all possible ones.
+    allowedMethods: [ 'GET', 'POST' ]
+    # Configure requests allowed from specific origins.
+    allowedOrigins: [ '*' ]
+    # Sets the Access-Control-Expose-Headers header.
     exposedHeaders: false
+    # Sets the Access-Control-Max-Age header.
     maxAge: false
-    supportsCredentials: true
-  
+    # Sets the Access-Control-Allow-Credentials header.
+    supportsCredentials: false
+
 services:
   cache.backend.null:
     class: Drupal\Core\Cache\NullBackendFactory
