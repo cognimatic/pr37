@@ -295,3 +295,25 @@ a.abplace2b-logo::before {
   margin-top: 3rem;
   margin-bottom: 1rem;
 }
+
+.lgd-footer__post-footer .callout {
+  background-color: #00551F;
+  border: none;
+  box-shadow: none;
+  margin: 1rem 0;
+  font-size: 19px;
+  text-align: left;
+  font-weight: 300;
+}
+
+.lgd-footer__post-footer .callout h3 {
+  margin-bottom: 0.5rem;
+}
+
+.lgd-footer__post-footer .callout p {
+  margin-bottom: 0.8rem;
+}
+
+.lgd-footer__post-footer .callout a {
+  font-weight: 400;
+}
