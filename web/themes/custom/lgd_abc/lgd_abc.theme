@@ -4,3 +4,12 @@
  * @file
  * Theme functions for the LocalGov Drupal Argyll & Bute Council theme.
  */
+function lgd_abc_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'views_exposed_form') {
+    if ($form['#id'] == 'views-exposed-form-localgov-sitewide-search-sitewide-search-page') {
+      // Change submit button test to Font Awesome icon
+      $form['actions']['submit']['#value'] = html_entity_decode('&#xf002;');
+      $form['actions']['submit']['#attributes']['class'][] = 'search-button';
+    }
+  }
+}
