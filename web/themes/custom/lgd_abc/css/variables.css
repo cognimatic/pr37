@@ -82,4 +82,8 @@ body {
   --secondary-menu-link-color: white;
   --secondary-menu-link-color-focus: white;
 
+  --banner-content-width: 1200px;
+  --banner-content-bg-color: transparent;
+  --banner-title-size: 60px;
+
 }

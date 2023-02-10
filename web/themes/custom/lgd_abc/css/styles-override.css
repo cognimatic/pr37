@@ -111,3 +111,53 @@ button:hover {
 .lgd-header .lgd-header__nav--secondary .menu-item a:hover {
   text-decoration: underline;
 }
+
+.banner--primary .banner__image::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.44) 53.12%);
+}
+
+.banner--primary .banner__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.banner--primary .banner__content .field--name-localgov-title {
+  font-weight: 700;
+}
+
+.banner--primary .banner__content .field--name-localgov-subsites-banner-text {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+#detailed-search-box {
+  position: relative;
+  margin-top: -100px;
+}
+
+#detailed-search-box .lgd-container {
+  max-width: 800px;
+}
+
+#detailed-search-box .lgd-container .lgd-region__inner--search-bar {
+  background-color: white;
+  border-top: 4px solid #93BFE7;
+  padding: 38px 48px;
+}
+
+#detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block {
+  display: flex;
+}
+
+#detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block .js-form-type-search-api-autocomplete {
+  width: 100%;
+}
