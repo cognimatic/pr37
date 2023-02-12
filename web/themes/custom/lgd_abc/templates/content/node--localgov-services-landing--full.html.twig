@@ -62,6 +62,12 @@
         {# End Services List #}
         
         {# Page additional components #}
+        {% if node.localgov_subsites_content.value %}
+            <section class="service-landing-components-layout">
+                {{ content.localgov_subsites_content }}
+            </section>
+        {%  endif %}
+        
         {% if node.localgov_page_components.value %}
             <section class="service-landing-components">
                 {{ content.localgov_page_components }}
