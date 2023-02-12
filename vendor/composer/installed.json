@@ -9903,6 +9903,59 @@
             "install-path": "../../web/modules/contrib/media_link_enhancements"
         },
         {
+            "name": "drupal/media_pdf_thumbnail",
+            "version": "5.4.0",
+            "version_normalized": "5.4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/media_pdf_thumbnail.git",
+                "reference": "8.x-5.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/media_pdf_thumbnail-8.x-5.4.zip",
+                "reference": "8.x-5.4",
+                "shasum": "2d55037e8935e8d93620b09ea29d3044f017e8e7"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10",
+                "ext-imagick": "*",
+                "spatie/pdf-to-image": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-5.4",
+                    "datestamp": "1671820471",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "sgostanyan",
+                    "homepage": "https://www.drupal.org/user/3569364"
+                }
+            ],
+            "description": "Media PDF Thumbnail",
+            "homepage": "https://www.drupal.org/project/media_pdf_thumbnail",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/media_pdf_thumbnail",
+                "issues": "http://drupal.org/project/issues/media_pdf_thumbnail"
+            },
+            "install-path": "../../web/modules/contrib/media_pdf_thumbnail"
+        },
+        {
             "name": "drupal/memcache",
             "version": "2.5.0",
             "version_normalized": "2.5.0.0",
@@ -23829,6 +23882,69 @@
                 "source": "https://github.com/solariumphp/solarium/tree/6.2.8"
             },
             "install-path": "../solarium/solarium"
+        },
+        {
+            "name": "spatie/pdf-to-image",
+            "version": "2.2.0",
+            "version_normalized": "2.2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/pdf-to-image.git",
+                "reference": "9b8d5bae5b77f6023e87b2401028e52b7addbd48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/pdf-to-image/zipball/9b8d5bae5b77f6023e87b2401028e52b7addbd48",
+                "reference": "9b8d5bae5b77f6023e87b2401028e52b7addbd48",
+                "shasum": ""
+            },
+            "require": {
+                "ext-imagick": "*",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.21"
+            },
+            "time": "2022-03-08T07:52:26+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\PdfToImage\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Convert a pdf to an image",
+            "homepage": "https://github.com/spatie/pdf-to-image",
+            "keywords": [
+                "convert",
+                "image",
+                "pdf",
+                "pdf-to-image",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/pdf-to-image/issues",
+                "source": "https://github.com/spatie/pdf-to-image/tree/2.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "install-path": "../spatie/pdf-to-image"
         },
         {
             "name": "squizlabs/php_codesniffer",

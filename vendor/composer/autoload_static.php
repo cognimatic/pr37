@@ -148,6 +148,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Symfony\\Bridge\\PhpUnit\\' => 23,
             'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 49,
+            'Spatie\\PdfToImage\\' => 18,
             'Solarium\\' => 9,
             'SlevomatCodingStandard\\' => 23,
             'SimpleSAML\\modules\\yubikey\\' => 27,
@@ -563,6 +564,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 
         array (
             0 => __DIR__ . '/..' . '/stecman/symfony-console-completion/src',
+        ),
+        'Spatie\\PdfToImage\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/pdf-to-image/src',
         ),
         'Solarium\\' => 
         array (
