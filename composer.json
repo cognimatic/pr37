@@ -16,6 +16,7 @@
         "defuse/php-encryption": "^2.3",
         "drupal/autocomplete_deluxe": "^2.0",
         "drupal/backup_migrate": "5.1.x-dev@dev",
+        "drupal/better_exposed_filters": "^6.0",
         "drupal/block_class": "^2.0",
         "drupal/block_field": "^1.0@RC",
         "drupal/civicccookiecontrol": "^4.4",
