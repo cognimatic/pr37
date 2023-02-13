@@ -5247,6 +5247,7 @@
                 },
                 "patches_applied": {
                     "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2022-10-20/3099026-42.patch",
+                    "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch",
                     "Fix tests running with paratest. See https://www.drupal.org/project/drupal/issues/3192365": "https://www.drupal.org/files/issues/2021-01-12/3192365-3.patch",
                     "Users can't reference unpublished content even when they have access to it. See https://www.drupal.org/project/drupal/issues/2845144": "https://www.drupal.org/files/issues/2022-06-17/2845144-67.patch"
                 }
@@ -13223,57 +13224,6 @@
                 "issues": "https://www.drupal.org/project/issues/smtp"
             },
             "install-path": "../../web/modules/contrib/smtp"
-        },
-        {
-            "name": "drupal/style_options",
-            "version": "1.0.0-alpha1",
-            "version_normalized": "1.0.0.0-alpha1",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/style_options.git",
-                "reference": "1.0.0-alpha1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/style_options-1.0.0-alpha1.zip",
-                "reference": "1.0.0-alpha1",
-                "shasum": "2b61b90f4aa29b13db3fd0a000a1361c0b24d08d"
-            },
-            "require": {
-                "drupal/core": "^8.7.7 || ^9"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "1.0.0-alpha1",
-                    "datestamp": "1633108251",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Alpha releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "installation-source": "dist",
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "justin2pin",
-                    "homepage": "https://www.drupal.org/user/278450"
-                },
-                {
-                    "name": "pixelwhip",
-                    "homepage": "https://www.drupal.org/user/275292"
-                }
-            ],
-            "description": "Provide an API to reuse style options throughout the Drupal ecosystem.",
-            "homepage": "https://www.drupal.org/project/style_options",
-            "support": {
-                "source": "https://git.drupalcode.org/project/style_options"
-            },
-            "install-path": "../../web/modules/contrib/style_options"
         },
         {
             "name": "drupal/svg_image",

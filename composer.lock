@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d1376040a3f08aab818a7a9105921de",
+    "content-hash": "5f0ade308491e16f380f328c19bd35fe",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -11319,54 +11319,6 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/smtp",
                 "issues": "https://www.drupal.org/project/issues/smtp"
-            }
-        },
-        {
-            "name": "drupal/style_options",
-            "version": "1.0.0-alpha1",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/style_options.git",
-                "reference": "1.0.0-alpha1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/style_options-1.0.0-alpha1.zip",
-                "reference": "1.0.0-alpha1",
-                "shasum": "2b61b90f4aa29b13db3fd0a000a1361c0b24d08d"
-            },
-            "require": {
-                "drupal/core": "^8.7.7 || ^9"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "1.0.0-alpha1",
-                    "datestamp": "1633108251",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Alpha releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "justin2pin",
-                    "homepage": "https://www.drupal.org/user/278450"
-                },
-                {
-                    "name": "pixelwhip",
-                    "homepage": "https://www.drupal.org/user/275292"
-                }
-            ],
-            "description": "Provide an API to reuse style options throughout the Drupal ecosystem.",
-            "homepage": "https://www.drupal.org/project/style_options",
-            "support": {
-                "source": "https://git.drupalcode.org/project/style_options"
             }
         },
         {
@@ -27528,10 +27480,10 @@
         "drupal/rabbit_hole": 10,
         "drupal/scheduled_transitions": 10,
         "drupal/scheduler": 5,
+        "drupal/scheduler_content_moderation_integration": 10,
         "drupal/search_api_stats": 15,
         "drupal/shs": 5,
         "drupal/site_audit": 5,
-        "drupal/style_options": 15,
         "drupal/twitter_block": 15,
         "drupal/views_tree": 5,
         "localgovdrupal/localgov_forms": 10,

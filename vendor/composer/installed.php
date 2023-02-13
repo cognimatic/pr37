@@ -1949,15 +1949,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'drupal/style_options' => array(
-            'pretty_version' => '1.0.0-alpha1',
-            'version' => '1.0.0.0-alpha1',
-            'reference' => '1.0.0-alpha1',
-            'type' => 'drupal-module',
-            'install_path' => __DIR__ . '/../../web/modules/contrib/style_options',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'drupal/svg_image' => array(
             'pretty_version' => '1.16.0',
             'version' => '1.16.0.0',
