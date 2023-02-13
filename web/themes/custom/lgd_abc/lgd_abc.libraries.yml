@@ -16,4 +16,4 @@ fonts:
   css:
     theme:
       # Need to import webfont because OS Roboto does not always contain bold. FML
-      '//fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap': { type: external, minified: true }
+      '//fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,500;8..144,600;8..144,700&display=swap': { type: external, minified: true }

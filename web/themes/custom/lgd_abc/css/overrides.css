@@ -39,20 +39,30 @@ blockquote {
 
 /* Temporary overrides - Kula - please remove as required rewrite/refactor below */
 
-.search-button.form-submit{
-    font-family: FontAwesome;
-    color: #fff;
-    display: inline;
-    font-size: 18px;
-}
-
-.lgd-row {
+.lgd-row,
+.layout--twocol {
   margin-right: calc(-1 * var(--grid-column-spacing) / 2);
   margin-left: calc(-1 * var(--grid-column-spacing) / 2);
 }
 
 .lgd-row--spaced {
   justify-content: space-between;
+}
+
+.layout--twocol > .layout__region {
+  padding-left: calc(var(--grid-column-spacing) / 2);
+  padding-right: calc(var(--grid-column-spacing) / 2);
+}
+
+.views-view-grid .views-row{
+  margin-right: calc(-1 * var(--grid-column-spacing));
+  margin-left: calc(-1 * var(--grid-column-spacing));
+  width: auto;
+}
+
+.views-view-grid .views-row .views-col {
+  padding-left: calc(var(--grid-column-spacing));
+  padding-right: calc(var(--grid-column-spacing));
 }
 
 .lgd-footer {
@@ -76,10 +86,6 @@ blockquote {
     color: white;
 }
 
-.search-stats{
-    display: flex;
-    justify-content: center;
-}
 ul.search-stats-results{
     list-style: none;
 }
@@ -91,4 +97,16 @@ ul.search-stats-results li{
 #views-exposed-form-localgov-sitewide-search-sitewide-search-page-block label[for^='edit-s']
 {
     display: none;
+}
+
+.status-normal{
+  color: #ABC87F;
+}
+
+.status-severe{
+  color: #B53D2F;
+}
+
+.status-issues{
+  color: #F6C645;
 }

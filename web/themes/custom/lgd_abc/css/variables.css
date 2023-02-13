@@ -55,8 +55,6 @@ body {
   --sidebar-exposed-form-bg-color: var(--color-grey-lightest);
   --color-text: #333333;
 
-
-
   /*
     Colours Applied
     In this section, we "apply" our colours.
@@ -66,8 +64,10 @@ body {
   --color-danger: var(--color-red);
   --color-warning: var(--color-orange);
   --color-minor: var(--color-yellow);
-  --color-link: var(--color-accent);
+  --color-link: #1752ab;
   --color-focus: var(--color-yellow);
+
+  --font-size: 19px;
 
   --header-logo-width: 83px;
   --breadcrumbs-divider: ">";
@@ -86,5 +86,7 @@ body {
   --banner-content-width: 1200px;
   --banner-content-bg-color: transparent;
   --banner-title-size: 60px;
+
+  --call-out-box-link-padding: 11px 25px 12px
 
 }
