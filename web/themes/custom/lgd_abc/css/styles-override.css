@@ -176,6 +176,7 @@ input[type="submit"].search-button.form-submit:hover {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  width: 100%;
 }
 
 .banner--primary .banner__content .field--name-localgov-title {
