@@ -1,0 +1,28 @@
+two_column_first_wide:
+  label: 'Two columns first wide'
+  category: 'Columns: 2'
+  theme_hook: twocol-first-wide
+  template: layouts/layout--twocol-first-wide
+  library: lgd_abc/wide-narrow-library
+  icon_map:
+    - [rectangle_horizontal, rectangle_horizontal, square_two]
+  default_region: first
+  regions:
+    first:
+      label: First column
+    second:
+      label: Second column
+two_column:
+  label: 'Two columns second wide'
+  category: 'Columns: 2'
+  template: layouts/layout--twocol-second-wide
+  theme_hook: twocol-second-wide
+  library: lgd_abc/wide-narrow-library
+  icon_map: 
+    - [square_one, rectangle_horizontal, rectangle_horizontal]
+  default_region: first
+  regions:
+    first:
+      label: First column
+    second:
+      label: Second column
