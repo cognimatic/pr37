@@ -38,6 +38,10 @@ blockquote {
 
 /* Temporary overrides - Kula - please remove as required rewrite/refactor below */
 
+h1 {
+  font-size: 44px;
+}
+
 .lgd-row,
 .layout--twocol {
   margin-right: calc(-1 * var(--grid-column-spacing) / 2);
@@ -172,6 +176,33 @@ input[type="submit"].search-button.form-submit:hover {
   border-bottom: 4px solid #25337A;
 }
 
+.lgd-header__inner {
+  flex-wrap: nowrap;
+}
+
+.lgd-header .lgd-region--search {
+  width: 280px;
+  margin-left: 2rem;
+}
+
+.lgd-header .lgd-region--search form {
+  border: 2px solid #07295A;
+  background-color: white;
+}
+
+.lgd-header .lgd-region--search form input {
+  padding: 12px;
+}
+
+.lgd-header .lgd-region--search form input:focus-visible {
+  outline: none;
+}
+
+.lgd-header .lgd-region--search form input.search-button {
+  padding: 12px;
+  margin: 0;
+}
+
 .lgd-header__nav--secondary {
   padding: 2rem 0;
   border-bottom: 4px solid #25337A;
@@ -276,6 +307,14 @@ input[type="submit"].search-button.form-submit:hover {
 
 .lgd-header .lgd-header__nav--secondary .menu-item a:hover {
   text-decoration: underline;
+}
+
+a.breadcrumbs__link {
+  text-underline-offset: 10%;
+}
+
+.lgd-page-title-block__subheader {
+  font-size: 24px;
 }
 
 .block-localgov-alert-banner {
@@ -442,7 +481,8 @@ button.localgov-alert-banner__close:hover {
   display: flex;
 }
 
-a.call-out-box__link {
+a.call-out-box__link,
+a.service-status__read-more {
   font-size: 18px;
   line-height: 1;
   text-underline-offset: unset;
@@ -450,9 +490,11 @@ a.call-out-box__link {
   color: white;
   background-color: #1752AB;
   box-shadow: inset 0 -2px 0 #07295A;
+  padding: var(--call-out-box-link-padding);
 }
 
-a.call-out-box__link:hover {
+a.call-out-box__link:hover,
+a.service-status__read-more:hover {
   background-color: #07295A;
 }
 
@@ -831,4 +873,119 @@ ul.service-highlight__list li {
 
 .layout--twocol-wide .wide ul li a{
   text-decoration: none;
+}
+
+.service-cta-block__link--cta-action {
+  background-color: var(--color-blue);
+}
+
+.block-abc-bins-bin-dates-lookup {
+  border: 3px solid #1752AB;;
+  padding: 36px 42px;
+  border-radius: 0;
+  margin-bottom: 2em;
+}
+
+.block-abc-bins-bin-dates-lookup .input-group-prepend {
+  display: none;
+}
+
+.block-abc-bins-bin-dates-lookup form {
+  border: 2px solid #07295A;
+  display: inline-block;
+}
+
+.block-abc-bins-bin-dates-lookup form .form-group {
+  display: inline-block;
+}
+
+.block-abc-bins-bin-dates-lookup form input {
+  border: none;
+  outline: none;
+}
+
+.block-abc-bins-bin-dates-lookup form input:focus-visible {
+  outline: none;
+  display: inline-block;
+}
+
+.block-abc-bins-bin-dates-lookup form button {
+  border: none;
+  outline: none;
+  background-color: var(--color-blue);
+}
+
+.block-abc-bins-bin-dates-lookup form button:hover {
+  color: white;
+  background-color: #07295A;
+}
+
+.service-landing-page__service {
+  border: none;
+}
+
+.lgd-teaser-list .service-landing-page__service {
+  border: none;
+}
+
+.service-landing-page__service .service_icon {
+  margin-right: 1rem;
+  padding-top: 0.7rem;
+}
+
+.service-landing-page__service-item h2 {
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.service-landing-page__service-item h2 a {
+  text-decoration: none;
+}
+
+.service-landing-page__updates .service-statuses {
+  border: 2px solid #961722;
+  background-color: transparent;
+  padding: 0;
+}
+
+.service-landing-page__updates .service-statuses .service-statuses__header {
+  background: #FFE2E2;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 14px 20px;
+}
+
+.service-landing-page__updates .service-statuses .service-statuses__header h2 {
+  font-size: 22px;
+  line-height: 1;
+  color: #961722;
+}
+
+.service-landing-page__updates .service-statuses .service-statuses__header a {
+  font-size: 16px;
+  line-height: 1;
+  color: #961722;
+}
+
+.service-landing-page__updates .service-statuses .service-statuses__header .service_status_icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 0.5rem;
+}
+
+.service-statuses-list {
+  padding: 20px;
+}
+
+.service-statuses-list__item {
+  background-color: #F3F3F3;
+  padding: 30px 20px;
+}
+
+a.service-statuses__link--bottom {
+  color: var(--color-blue);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  margin-left: 20px;
 }

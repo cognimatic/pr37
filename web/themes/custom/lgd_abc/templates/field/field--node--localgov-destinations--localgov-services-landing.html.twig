@@ -1,0 +1,111 @@
+{#
+/**
+ * @file
+ * Theme override for a field.
+ *
+ * To override output, copy the "field.html.twig" from the templates directory
+ * to your theme's directory and customize it, just like customizing other
+ * Drupal templates such as page.html.twig or node.html.twig.
+ *
+ * Instead of overriding the theming for all fields, you can also just override
+ * theming for a subset of fields using
+ * @link themeable Theme hook suggestions. @endlink For example,
+ * here are some theme hook suggestions that can be used for a field_foo field
+ * on an article node type:
+ * - field--node--field-foo--article.html.twig
+ * - field--node--field-foo.html.twig
+ * - field--node--article.html.twig
+ * - field--field-foo.html.twig
+ * - field--text-with-summary.html.twig
+ * - field.html.twig
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the containing element.
+ * - label_hidden: Whether to show the field label or not.
+ * - title_attributes: HTML attributes for the title.
+ * - label: The label for the field.
+ * - multiple: TRUE if a field can contain multiple items.
+ * - items: List of all the field items. Each item contains:
+ *   - attributes: List of HTML attributes for each item.
+ *   - content: The field item's content.
+ * - entity_type: The entity type to which the field belongs.
+ * - field_name: The name of the field.
+ * - field_type: The type of the field.
+ * - label_display: The display settings for the label.
+ *
+ *
+ * @see template_preprocess_field()
+ */
+#}
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+    label_display == 'inline' ? 'clearfix',
+  ]
+%}
+
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+
+{% set service_icon = 'chevron-right' %}
+
+{% if label_hidden %}
+  {% if multiple %}
+    <div{{ attributes.addClass(classes, 'field__items', 'lgd-row') }}>
+      {% for item in items %}
+        <div{{item.attributes.addClass('service-landing-page__service','field__item','lgd-row__one-third')}}>
+          <div class="service_icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8839 0.366117C10.3957 -0.122039 9.60427 -0.122039 9.11612 0.366117C8.62796 0.854272 8.62796 1.64573 9.11612 2.13388L15.7322 8.75H1.25C0.559644 8.75 0 9.30964 0 10C0 10.6904 0.559644 11.25 1.25 11.25H15.7322L9.11612 17.8661C8.62796 18.3543 8.62796 19.1457 9.11612 19.6339C9.60427 20.122 10.3957 20.122 10.8839 19.6339L19.6339 10.8839C20.122 10.3957 20.122 9.60427 19.6339 9.11612L10.8839 0.366117Z" fill="#D1D1D1"/>
+            </svg>
+          </div>
+          <div class="service-landing-page__service-item">
+            {{ item.content }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    {% for item in items %}
+      <div{{ attributes.addClass(classes, 'service-landing-page__service', 'field__item') }}>
+        <div class="service_icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8839 0.366117C10.3957 -0.122039 9.60427 -0.122039 9.11612 0.366117C8.62796 0.854272 8.62796 1.64573 9.11612 2.13388L15.7322 8.75H1.25C0.559644 8.75 0 9.30964 0 10C0 10.6904 0.559644 11.25 1.25 11.25H15.7322L9.11612 17.8661C8.62796 18.3543 8.62796 19.1457 9.11612 19.6339C9.60427 20.122 10.3957 20.122 10.8839 19.6339L19.6339 10.8839C20.122 10.3957 20.122 9.60427 19.6339 9.11612L10.8839 0.366117Z" fill="#D1D1D1"/>
+          </svg>
+        </div>
+        <div class="service-landing-page__service-item">
+          {{ item.content }}
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% else %}
+  <div{{ attributes.addClass(classes) }}>
+    <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
+    {% if multiple %}
+      <div class="field__items">
+    {% endif %}
+    {% for item in items %}
+      <div{{ item.attributes.addClass('service-landing-page__service', 'field__item') }}>
+        <div class="service_icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8839 0.366117C10.3957 -0.122039 9.60427 -0.122039 9.11612 0.366117C8.62796 0.854272 8.62796 1.64573 9.11612 2.13388L15.7322 8.75H1.25C0.559644 8.75 0 9.30964 0 10C0 10.6904 0.559644 11.25 1.25 11.25H15.7322L9.11612 17.8661C8.62796 18.3543 8.62796 19.1457 9.11612 19.6339C9.60427 20.122 10.3957 20.122 10.8839 19.6339L19.6339 10.8839C20.122 10.3957 20.122 9.60427 19.6339 9.11612L10.8839 0.366117Z" fill="#D1D1D1"/>
+          </svg>
+        </div>
+        <div class="service-landing-page__service-item">
+          {{ item.content }}
+        </div>
+      </div>
+    {% endfor %}
+    {% if multiple %}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

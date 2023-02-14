@@ -71,9 +71,13 @@ body {
   --font-size: 19px;
 
   --header-logo-width: 83px;
+  --breadcrumbs-font-size: 16px;
   --breadcrumbs-divider: ">";
-  --breadcrumbs-background-color: var(--color-accent-alt);
+  --breadcrumbs-background-color: #F0F4FF;
   --breadcrumbs-link-color: #333333;
+  --breadcrumbs-padding-vertical: 8px;
+  --breadcrumbs-spacing-bottom: 50px;
+  --breadcrumbs-border: none;
   --alert-banner-bg-color: white;
   --alert-banner-color: #333333;
   --alert-banner-bg-color-minor: #F6F6F6;
