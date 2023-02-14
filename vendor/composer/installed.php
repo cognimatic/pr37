@@ -107,9 +107,9 @@
             'dev_requirement' => true,
         ),
         'composer/composer' => array(
-            'pretty_version' => '2.2.19',
-            'version' => '2.2.19.0',
-            'reference' => '30ff21a9af9a10845436abaeeb0bb7276e996d24',
+            'pretty_version' => '2.2.20',
+            'version' => '2.2.20.0',
+            'reference' => 'b4850827d87688465fc3b775c71b2836187538ac',
             'type' => 'library',
             'install_path' => __DIR__ . '/./composer',
             'aliases' => array(),
@@ -1264,9 +1264,9 @@
             'dev_requirement' => false,
         ),
         'drupal/httpswww' => array(
-            'pretty_version' => '2.1.0',
-            'version' => '2.1.0.0',
-            'reference' => '2.1.0',
+            'pretty_version' => '2.1.1',
+            'version' => '2.1.1.0',
+            'reference' => '2.1.1',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/httpswww',
             'aliases' => array(),
@@ -2388,9 +2388,9 @@
             'dev_requirement' => false,
         ),
         'localgovdrupal/localgov_base' => array(
-            'pretty_version' => '1.3.0',
-            'version' => '1.3.0.0',
-            'reference' => '86ea3b99e4dedb1b10bd8d83362c053067bd86b5',
+            'pretty_version' => '1.3.1',
+            'version' => '1.3.1.0',
+            'reference' => '573f3b9a08208ef10b6f3e296dcd27919d89705e',
             'type' => 'drupal-theme',
             'install_path' => __DIR__ . '/../../web/themes/contrib/localgov_base',
             'aliases' => array(),
@@ -2415,9 +2415,9 @@
             'dev_requirement' => false,
         ),
         'localgovdrupal/localgov_directories' => array(
-            'pretty_version' => '2.4.0',
-            'version' => '2.4.0.0',
-            'reference' => '70dd1cac225dba5e91cfab5159da64a9f21e8d64',
+            'pretty_version' => '2.4.1',
+            'version' => '2.4.1.0',
+            'reference' => '0a33e62fa1100cb2807fe3f9741a790ef1566020',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/localgov_directories',
             'aliases' => array(),
@@ -2550,9 +2550,9 @@
             'dev_requirement' => false,
         ),
         'localgovdrupal/localgov_services' => array(
-            'pretty_version' => '2.0.15',
-            'version' => '2.0.15.0',
-            'reference' => '693f3d481c0b2a8986f89f774620f18858417a8f',
+            'pretty_version' => '2.0.16',
+            'version' => '2.0.16.0',
+            'reference' => 'c1f686cb0e577a52f151e5df26c683d68bbad9a9',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/localgov_services',
             'aliases' => array(),
@@ -2649,9 +2649,9 @@
             'dev_requirement' => true,
         ),
         'mglaman/phpstan-drupal' => array(
-            'pretty_version' => '1.1.28',
-            'version' => '1.1.28.0',
-            'reference' => '55c3f437e52d0e10e7ac59ffb20e338625b79594',
+            'pretty_version' => '1.1.29',
+            'version' => '1.1.29.0',
+            'reference' => 'e6f6191c53b159013fcbd186d7f85511f3f96ff8',
             'type' => 'phpstan-extension',
             'install_path' => __DIR__ . '/../mglaman/phpstan-drupal',
             'aliases' => array(),
@@ -2784,19 +2784,21 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'php-http/client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'php-http/discovery' => array(
-            'pretty_version' => '1.14.3',
-            'version' => '1.14.3.0',
-            'reference' => '31d8ee46d0215108df16a8527c7438e96a4d7735',
-            'type' => 'library',
+            'pretty_version' => '1.15.2',
+            'version' => '1.15.2.0',
+            'reference' => '5cc428320191ac1d0b6520034c2dc0698628ced5',
+            'type' => 'composer-plugin',
             'install_path' => __DIR__ . '/../php-http/discovery',
             'aliases' => array(),
             'dev_requirement' => false,
@@ -2925,9 +2927,9 @@
             'dev_requirement' => true,
         ),
         'phpstan/phpstan' => array(
-            'pretty_version' => '1.9.16',
-            'version' => '1.9.16.0',
-            'reference' => '922e2689bb180575d0f57de0443c431a5a698e8f',
+            'pretty_version' => '1.9.17',
+            'version' => '1.9.17.0',
+            'reference' => '204e459e7822f2c586463029f5ecec31bb45a1f2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpstan/phpstan',
             'aliases' => array(),
@@ -3073,6 +3075,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-factory' => array(
@@ -3088,6 +3091,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-message' => array(
@@ -3103,6 +3107,7 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/log' => array(
