@@ -156,6 +156,97 @@ input[type="submit"].search-button.form-submit:hover {
   text-decoration: underline;
 }
 
+.block-localgov-alert-banner {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  width: 100%;
+  max-width: 1180px;
+  padding-right: var(--spacing-padding-horizontal);
+  padding-left: var(--spacing-padding-horizontal);
+}
+
+.localgov-alert-banner {
+  padding: 30px;
+  margin: 10px 0;
+  border: 5px solid #333333;
+  box-sizing: border-box;
+}
+
+.localgov-alert-banner p {
+  margin-bottom: 0.5rem;
+}
+
+.localgov-alert-banner__actions {
+  align-items: flex-start;
+}
+
+button.localgov-alert-banner__close {
+  color: var(--color-blue);
+  background-color: white;
+  border-color: var(--color-blue);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 4px;
+  padding: 10px 20px;
+}
+
+button.localgov-alert-banner__close:hover {
+  color: white;
+  background-color: var(--color-blue);
+  border-color: var(--color-blue);
+}
+
+.localgov-alert-banner-full {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.8);
+}
+
+.localgov-alert-banner-full h1,
+.localgov-alert-banner-full h2,
+.localgov-alert-banner-full h3,
+.localgov-alert-banner-full p,
+.localgov-alert-banner-full a {
+  color: #333333;
+}
+
+.localgov-alert-banner-full h1 {
+  font-size: 32px;
+  min-height: 48px;
+}
+
+.localgov-alert-banner-full button.localgov-alert-banner__close {
+  position: absolute;
+  right: 0;
+  margin-right: 30px;
+}
+
+.localgov-alert-banner.localgov-alert-banner--notable-person {
+  color: white;
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.localgov-alert-banner.localgov-alert-banner--major {
+  color: #AC1B27;
+  background-color: white;
+  border-color: #AC1B27;
+}
+
+.localgov-alert-banner--minor .localgov-alert-banner__close {
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+
+.localgov-alert-banner.localgov-alert-banner--announcement {
+  background-color: var(--color-yellow);
+}
+
 .banner--primary {
   border-bottom: 4px solid #93BFE7;
 }
@@ -562,10 +653,19 @@ ul.service-highlight__list li {
   margin-bottom: 2rem;
 }
 
-.viewsreference--view-title {
+.field--type-text-long h2 {
   font-size: 32px;
   font-weight: 600;
   margin-bottom: 1rem;
+}
+
+.field--type-text-long h2 a {
+  text-decoration: none;
+  color: #222222;
+}
+
+.field--type-text-long h2 a:hover {
+  background: none;
 }
 
 .views-field a,
