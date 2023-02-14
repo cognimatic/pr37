@@ -13,8 +13,9 @@ CONTENTS OF THIS FILE
 INTRODUCTION
 ------------
 
-This module lets you easily set your preferred URL with or without the "www"
-prefix, and optionally forcing an HTTPS redirect. No code changes required.
+This module offers a straightforward method for configuring your desired URL
+with or without the "www" prefix, including the option to enforce an HTTPS
+redirect. You won't need to make any modifications to the Drupal codebase.
 
  * For a full description of the module, visit the project page:
    https://www.drupal.org/project/httpswww
@@ -51,6 +52,11 @@ Note that if you check the "Enabled redirects" checkbox and don't have the
 "Bypass HTTPS and WWW Redirects" permission and if you are on a different URL
 than what you have selected, you will be logged out when saving.
 
+By selecting the option to "Add WWW prefix," an option to exclude specific
+subdomains will become available to you. Suppose you have subdomains like
+"forum" and "mail". In that case, it's unlikely that you would want to add the
+WWW prefix to them. To address this, simply enter "forum, mail" into the
+"Exclude Subdomains" field.
 
 Configure the user permissions under "Administration » People » Permissions":
 
