@@ -38,8 +38,15 @@
  * @ingroup themeable
  */
 #}
+
+{% if paragraph.localgov_caption.value %}
+  {% set has_caption = true %}
+{% endif %}
+
 {%
   set classes = [
+    'lgd-image',
+    has_caption ? 'lgd-image--has-caption',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     'paragraph--id--' ~ paragraph.id.value,
@@ -48,23 +55,19 @@
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/image-with-caption') }}
+{% endif %}
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-      
+    {% if paragraph.localgov_image.value %}
+      <div class="lgd-image__image">
+        {{ content.localgov_image }}
+      </div>
+    {% endif %}
     {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
+      {{ content|without('localgov_image') }}
     {% endblock %}
   </div>
 {% endblock paragraph %}
-

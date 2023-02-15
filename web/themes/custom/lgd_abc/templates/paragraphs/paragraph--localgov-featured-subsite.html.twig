@@ -40,31 +40,36 @@
 #}
 {%
   set classes = [
+    'featured-subsite',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
-    'paragraph--id--' ~ paragraph.id.value,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    'paragraph--id--' ~ paragraph.id.value,
     not paragraph.isPublished() ? 'paragraph--unpublished'
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/featured-subsite') }}
+{% endif %}
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-      
+    
+    {% if paragraph.localgov_featured_subsite_image.value %}
+      <div class="featured-subsite__image">
+        {{ content.localgov_featured_subsite_image }}
+      </div>
+    {% endif %}
+
+    {% if paragraph.localgov_featured_subsite_link.value %}
+      <h2 class="featured-subsite__title">
+        {{ content.localgov_featured_subsite_link }}
+      </h2>
+    {% endif %}
+
     {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
+      {{ content|without('localgov_featured_subsite_image', 'localgov_featured_subsite_link') }}
     {% endblock %}
   </div>
 {% endblock paragraph %}
-

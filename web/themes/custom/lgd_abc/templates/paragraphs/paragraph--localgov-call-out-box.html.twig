@@ -32,39 +32,43 @@
  *   current user is a logged-in member.
  * - is_admin: Flag for admin user status. Will be true when the current user
  *   is an administrator.
+ * - heading: Title (heading element).
+ * - colour_theme: Value of the colour theme field.
  *
  * @see template_preprocess_paragraph()
  *
  * @ingroup themeable
  */
 #}
+
 {%
   set classes = [
+    'call-out-box',
+    background_url ? 'call-out-box--has-image' : 'call-out-box--no-image',
+    colour_theme ? 'call-out-box--' ~ colour_theme|clean_class,
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
-    'paragraph--id--' ~ paragraph.id.value,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    'paragraph--id--' ~ paragraph.id.value,
     not paragraph.isPublished() ? 'paragraph--unpublished'
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/callout-box') }}
+{% endif %}
 
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-      
-    {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
-    {% endblock %}
+<div{{ attributes.addClass(classes) }}
+  {% if background_url is defined and background_url %}style="background-image: url('{{ background_url }}')"{% endif %}>
+  <div class="call-out-box__content">
+    {{ heading }}
+    {{ content|without('localgov_button', 'localgov_background_image', 'localgov_colour_theme', 'localgov_header_text', 'localgov_heading_level', 'localgov_opens_in_a_new_window') }}
+    <a href="{{ button_url }}" class="call-out-box__link"
+      {% if open_in_new_window %} target="_blank" {% endif %}>
+      <span>{{ paragraph.localgov_button.getValue[0].title }}</span>
+      {% if open_in_new_window %}
+        <span class="visually-hidden"> {{ '(opens in a new window)'|t }}</span>
+      {% endif %}
+    </a>
   </div>
-{% endblock paragraph %}
-
+</div>

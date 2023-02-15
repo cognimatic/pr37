@@ -38,33 +38,40 @@
  * @ingroup themeable
  */
 #}
+
 {%
   set classes = [
+    'banner',
+    'banner--primary', 
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
-    'paragraph--id--' ~ paragraph.id.value,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    'paragraph--id--' ~ paragraph.id.value,
     not paragraph.isPublished() ? 'paragraph--unpublished'
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/banner') }}
+{% endif %}
 
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-      
-    {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
-    {% endblock %}
-  </div>
-{% endblock paragraph %}
+{% if paragraph.localgov_url.value %}
+  {% set banner_url = paragraph.localgov_url.value %}
+{% endif %}
 
+<div{{ attributes.addClass(classes) }}>
+  {% if paragraph.localgov_image.value %}
+    <div class="banner__image">
+      {{ content.localgov_image }}
+    </div>
+  {% endif %}
+  {% if banner_url %}
+    <a class="banner__link" href="{{ banner_url }}">
+  {% endif %}
+    <div class="banner__content">
+      {{ content|without('localgov_image', 'localgov_url') }}
+    </div>
+  {% if banner_url %}
+    </a>
+  {% endif %}
+</div>

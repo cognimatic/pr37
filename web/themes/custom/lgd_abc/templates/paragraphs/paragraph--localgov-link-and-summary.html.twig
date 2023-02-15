@@ -38,33 +38,43 @@
  * @ingroup themeable
  */
 #}
+
 {%
   set classes = [
+    'link-block',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
-    'paragraph--id--' ~ paragraph.id.value,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    'paragraph--id--' ~ paragraph.id.value,
     not paragraph.isPublished() ? 'paragraph--unpublished'
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/link-and-summary') }}
+{% endif %}
 
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-      
-    {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
-    {% endblock %}
+{% set title_icon = 'chevron-right' %}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {% if paragraph.localgov_link.value %}
+    <div class="link-block__title-wrapper">
+      {% include "@localgov_base/includes/icons/icon.html.twig" with {
+          icon_name: title_icon,
+          icon_classes: 'link-block__title-icon',
+        }
+      %}
+      <h2 class="link-block__title">
+        <a href="{{ content.localgov_link.0['#url'] }}">
+          {{ content.localgov_link.0['#title'] }}
+        </a>
+      </h2>
+    </div>
+  {% endif %}
+
+  <div class="link-block__content">
+    {{ content|without('localgov_link') }}
   </div>
-{% endblock paragraph %}
 
+</div>

@@ -38,8 +38,14 @@
  * @ingroup themeable
  */
 #}
+
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/quote') }}
+{% endif %}
+
 {%
   set classes = [
+    "pull-out-quote",
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     'paragraph--id--' ~ paragraph.id.value,
@@ -48,23 +54,14 @@
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
-
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-      
-    {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
-    {% endblock %}
-  </div>
-{% endblock paragraph %}
-
+<figure{{ attributes.addClass(classes) }}>
+  <blockquote class="pull-out-quote__content">
+    {{ content|without('localgov_author') }}
+  </blockquote>
+  
+  {% if paragraph.localgov_author.value %}
+    <figcaption class="pull-out-quote__author">
+      - {{ paragraph.localgov_author.value }}
+    </figcaption>
+  {% endif %}
+</figure>

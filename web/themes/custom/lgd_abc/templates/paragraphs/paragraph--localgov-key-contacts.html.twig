@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation to display a paragraph.
+ * Default theme implementation to display a Key contacts paragraph.
  *
  * Available variables:
  * - paragraph: Full paragraph entity.
@@ -40,31 +40,29 @@
 #}
 {%
   set classes = [
+    'key-contacts',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     'paragraph--id--' ~ paragraph.id.value,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
-    not paragraph.isPublished() ? 'paragraph--unpublished'
+    not paragraph.isPublished() ? 'paragraph--unpublished',
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/key-contacts') }}
+{% endif %}
 
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-      
-    {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
-    {% endblock %}
-  </div>
-{% endblock paragraph %}
-
+<div{{ attributes.addClass(classes) }}>
+  {% if heading %}
+    <div class="key-contacts__heading">
+      {{ heading }}
+    </div>
+  {% endif %}
+  
+  {% if content %}
+    <div class="key-contacts__content">
+      {{ content.localgov_paragraphs }}
+    </div>
+  {% endif %}
+</div>

@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation to display a paragraph.
+ * Default theme implementation to display a Newsroom teaser paragraph.
  *
  * Available variables:
  * - paragraph: Full paragraph entity.
@@ -38,33 +38,37 @@
  * @ingroup themeable
  */
 #}
-{%
-  set classes = [
-    'paragraph',
-    'paragraph--type--' ~ paragraph.bundle|clean_class,
+
+{% set classes = [
+    'newsroom-teaser',
     'paragraph--id--' ~ paragraph.id.value,
-    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
-    not paragraph.isPublished() ? 'paragraph--unpublished'
-  ]
+    paragraph.localgov_newsroom_teaser_image.value ? 'newsroom-teaser--has-image' : 'newsroom-teaser--no-image',
+  ] 
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/newsroom-teaser') }}
+{% endif %}
 
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-      
-    {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
-    {% endblock %}
-  </div>
-{% endblock paragraph %}
+<article{{ attributes.addClass(classes)}}>
+  {% if paragraph.localgov_newsroom_teaser_image.value %}
+    <div class="newsroom-teaser__image">
+      {{ content.localgov_newsroom_teaser_image }}
+    </div>
+  {% endif %}
 
+  {% if paragraph.localgov_newsroom_teaser_title.value %}
+    <h3 class="newsroom-teaser__title">
+      <a href="{{ link }}">
+        {{ content.localgov_newsroom_teaser_title }}
+      </a>
+    </h3>
+  {% endif %}
+
+  {% if paragraph.localgov_newsroom_teaser_summary.value %}
+    <div class="newsroom-teaser__summary">
+      {{ content.localgov_newsroom_teaser_summary }}
+    </div>
+  {% endif %}
+
+</article>

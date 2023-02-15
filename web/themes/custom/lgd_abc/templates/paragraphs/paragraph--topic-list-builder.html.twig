@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation to display a paragraph.
+ * Topic list builder paragraph type.
  *
  * Available variables:
  * - paragraph: Full paragraph entity.
@@ -38,8 +38,16 @@
  * @ingroup themeable
  */
 #}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/topic-list-builder') }}
+{% endif %}
+
+{% set more_icon = 'chevron-right' %}
+
 {%
   set classes = [
+    'lgd-topic-list-builder',
+    'lgd-teaser-list',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     'paragraph--id--' ~ paragraph.id.value,
@@ -48,23 +56,25 @@
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if header %}
+  <h2>{{ header }}</h2>
+{% endif %}
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-      
     {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
+      {{ content|without('topic_list_header') }}
     {% endblock %}
+    {% if show_more %}
+    <div class="lgd-topic-list-builder__show-more">
+      {% include "@localgov_base/includes/icons/icon.html.twig" with {
+        icon_name: more_icon,
+        icon_wrapper_element: 'span',
+        } 
+      %}
+      <a class="lgd-topic-list-builder__show-more-link" href="{{ show_more_path }}">{{ 'More'|t }}</a>
+    </div>
+    {% endif %}
   </div>
 {% endblock paragraph %}
 

@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation to display a paragraph.
+ * Default theme implementation to display a IA block paragraph.
  *
  * Available variables:
  * - paragraph: Full paragraph entity.
@@ -38,8 +38,11 @@
  * @ingroup themeable
  */
 #}
-{%
+
+{% 
   set classes = [
+    'ia-block',
+    promoted ? 'ia-block--promoted',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     'paragraph--id--' ~ paragraph.id.value,
@@ -48,23 +51,27 @@
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/ia-block') }}
+{% endif %}
 
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-      
-    {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
-    {% endblock %}
-  </div>
-{% endblock paragraph %}
+<div{{ attributes.addClass(classes)}}>
+  {# Check if we have a title so we don't print an empty H2 #}
+  {% if paragraph.localgov_ia_block_title.value %}
+    <h2 class="ia-block__title">
+      {# Don't print a anchor tag unless the title is linked #}
+    {% if field_link %}
+      <a class="ia-block__title-link" href="{{ field_link }}">{{ paragraph.localgov_ia_block_title.value }}</a>
+    {% else %}
+      {{ content.localgov_ia_block_title }}
+    {% endif %}
+    </h2>
+  {% endif %}
 
+  {# 
+    Render the list of links 
+    - this variable is created in localgov_homepage_paragraphs.module 
+  #}
+  {{ list }}
+  
+</div>

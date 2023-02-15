@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation to display a paragraph.
+ * Default theme implementation to display a Documents paragraph.
  *
  * Available variables:
  * - paragraph: Full paragraph entity.
@@ -32,39 +32,49 @@
  *   current user is a logged-in member.
  * - is_admin: Flag for admin user status. Will be true when the current user
  *   is an administrator.
+ * - documents: array of document data:
+ *   - name (render array for document field)
+ *   - size (document's file size)
  *
  * @see template_preprocess_paragraph()
  *
  * @ingroup themeable
  */
 #}
+
 {%
   set classes = [
+    'lgd-documents',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
-    'paragraph--id--' ~ paragraph.id.value,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
-    not paragraph.isPublished() ? 'paragraph--unpublished'
+    'paragraph--id--' ~ paragraph.id.value,
+    not paragraph.isPublished() ? 'paragraph--unpublished',
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
-
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-      
     {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
+      {% if documents %}
+        <table>
+          <thead>
+            <tr>
+              <th>{{ 'Attachment'|t }}</th>
+              <th>{{ 'Size'|t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for document in documents %}
+              <tr>
+                <td>{{ document.name }}
+                </td>
+                <td>{{ document.size }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
     {% endblock %}
   </div>
 {% endblock paragraph %}
-

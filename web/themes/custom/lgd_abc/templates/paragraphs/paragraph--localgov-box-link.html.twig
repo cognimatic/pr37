@@ -38,33 +38,66 @@
  * @ingroup themeable
  */
 #}
-{%
+
+{# 
+  We are setting a variable here for the parent entity. We can then use that to
+  check what heading level is set in the parent
+  Using this, we can then set our heading to be one level below the parent's heading.
+#}
+
+{% set parent = paragraph._referringItem.parent.parent.entity %}
+{% set parent_heading_level = parent.localgov_heading_level.value %}
+
+{% if parent_heading_level %}
+  {% if parent_heading_level == 'h2' %}
+    {% set heading_level = 'h3' %}
+    {% elseif parent_heading_level == 'h3' %}
+      {% set heading_level = 'h4' %}
+      {% elseif parent_heading_level == 'h4' %}
+        {% set heading_level = 'h5' %}
+      {% elseif parent_heading_level == 'h5' %}
+        {% set heading_level = 'h6' %}
+        {% else %}
+  {% endif %}
+  {% else %}
+    {# If parent_heading_level is not set, default to H2 #}
+    {% set heading_level = 'h2' %}
+{% endif %}
+
+{% 
   set classes = [
+    'box-link',
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
-    'paragraph--id--' ~ paragraph.id.value,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
-    not paragraph.isPublished() ? 'paragraph--unpublished'
-  ]
+    'paragraph--id--' ~ paragraph.id.value,
+    not paragraph.isPublished() ? 'paragraph--unpublished',
+  ] 
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/box-links') }}
+{% endif %}
 
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-      
-    {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
-    {% endblock %}
-  </div>
-{% endblock paragraph %}
+<article{{ attributes.addClass(classes) }}>
+  
+  {% if paragraph.localgov_image.value %}
+    <div class="box-link__image">
+      {{ content.localgov_image }}
+    </div>
+  {% endif %}
 
+  <{{ heading_level }} class="box-link__title">
+    <a class="box-link__link" href="{{ localgov_link.url }}"
+      {% if localgov_link.open_in_new_window %} 
+      target="_blank" rel="external noopener noreferrer">
+      <span class="visually-hidden">{{ '(opens in a new window)'|t }}</span>
+      {% else %}
+        >
+      {% endif %}
+        {{ localgov_link.title }}
+    </a>
+  </{{heading_level }}>
+
+  {{ content|without('localgov_link', 'localgov_image') }}
+</article>

@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Default theme implementation to display a paragraph.
+ * Default theme implementation to display a Box links listing paragraph.
  *
  * Available variables:
  * - paragraph: Full paragraph entity.
@@ -38,33 +38,32 @@
  * @ingroup themeable
  */
 #}
+
+{% set theme = paragraph.get('localgov_box_listing_theme').value %}
+
 {%
   set classes = [
+    'box-links-listing',
+    theme ? 'box-links-listing--' ~ theme|clean_class,
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
-    'paragraph--id--' ~ paragraph.id.value,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
-    not paragraph.isPublished() ? 'paragraph--unpublished'
+    'paragraph--id--' ~ paragraph.id.value,
+    not paragraph.isPublished() ? 'paragraph--unpublished',
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/box-links') }}
+{% endif %}
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
-      
     {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
+      {{ heading }}
+      <ul class="box-links-listing__list lgd-row">
+        {{ content.localgov_paragraphs }}
       </ul>
     {% endblock %}
   </div>
 {% endblock paragraph %}
-

@@ -38,8 +38,38 @@
  * @ingroup themeable
  */
 #}
+
+{% if not localgov_base_remove_css %}
+  {{ attach_library('localgov_base/page-sections') }}
+{% endif %}
+
+{% if paragraph.localgov_width_of_section.value %}
+  {% set width = paragraph.localgov_width_of_section.value %}
+{% endif %}
+
+{% if paragraph.localgov_bg_colour_of_section.value %}
+  {% set bg_colour = paragraph.localgov_bg_colour_of_section.value %}
+{% endif %}
+
+{% if paragraph.localgov_padding_top_section.value %}
+  {% set padding_top = paragraph.localgov_padding_top_section.value %}
+{% endif %}
+
+{% if paragraph.localgov_padding_bottom_section.value %}
+  {% set padding_bottom = paragraph.localgov_padding_bottom_section.value %}
+{% endif %}
+
 {%
   set classes = [
+    'lgd-page-section',
+    width ? 'lgd-page-section--' ~ width : 'lgd-container padding-horizontal',
+    width == 'full-width' ? 'padding-horizontal',
+    width == 'contained-content' ? 'padding-horizontal',
+    width == 'contained-content' ? 'lgd-container',
+    bg_colour ? 'lgd-page-section--has-bg-colour' : 'lgd-page-section--no-bg-colour',
+    bg_colour ? 'lgd-page-section--bg-' ~ bg_colour,
+    padding_top ? 'lgd-page-section--padding-top-' ~ padding_top,
+    padding_bottom ? 'lgd-page-section--padding-bottom-' ~ padding_bottom,
     'paragraph',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     'paragraph--id--' ~ paragraph.id.value,
@@ -48,23 +78,19 @@
   ]
 %}
 
-{% set header = paragraph.get('localgov_heading_level').value %}
+<div{{ attributes.addClass(classes) }}>
 
-{% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-      
-    {% block content %}
-        
-        {% if header %}
-            <{{ header }}>{{ content.field_service }}</{{ header }}>
-        {%  else %}
-            <div class="heading">{{ content.field_service }}</div>
-        {% endif %}
-             
-        <ul class="service-highlight__list">
-        {{ content.localgov_link }}
-      </ul>
-    {% endblock %}
-  </div>
-{% endblock paragraph %}
+  {% if width == 'full-width-contained-content' %}
+    <div class="lgd-container padding-horizontal">
+    {% elseif width == 'contained-breakout' %}
+      <div class="lgd-container lgd-container--mega padding-horizontal">
+  {% endif %}
+
+    {{ content }}
+
+  {% if width == 'full-width-contained-content' or width == 'contained-breakout' %}
+    </div>
+  {% endif %}
+
+</div>
 
