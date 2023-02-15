@@ -6,6 +6,7 @@
 .layout--twocol-wide {
     display: flex;
     flex-wrap: wrap;
+    flex-direction:column;
 }
 
 .layout--twocol-wide > .layout__region {
@@ -16,6 +17,7 @@
 @media screen and (min-width: 40em) {
     .layout--twocol-wide {
         flex-wrap: nowrap;
+        flex-direction: row;
     }
 
     .layout--twocol-wide > .layout__region--first,
