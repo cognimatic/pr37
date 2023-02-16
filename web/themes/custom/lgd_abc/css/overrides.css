@@ -832,10 +832,24 @@ ul.service-highlight__list li {
   background: none;
 }
 
-.views-field a,
-.views-field a img {
+.paragraph--id--595 .paragraph--id--596 .views-field a,
+.paragraph--id--595 .paragraph--id--596 .views-field a img {
   width: 100%;
   height: auto;
+}
+
+.paragraph--id--595 .paragraph--id--596 .view-content {
+  margin-right: calc(-1 * var(--grid-column-spacing));
+  margin-left: calc(-1 * var(--grid-column-spacing));
+  width: auto;
+  display: flex;
+}
+
+.paragraph--id--595 .paragraph--id--596 .view-content > .views-row {
+  padding-left: calc(var(--grid-column-spacing));
+  padding-right: calc(var(--grid-column-spacing));
+  flex: 0 0 auto;
+  width: 33.3333%;
 }
 
 .views-field .field-content time {
