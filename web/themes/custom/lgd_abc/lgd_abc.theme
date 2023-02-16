@@ -4,6 +4,13 @@
  * @file
  * Theme functions for the LocalGov Drupal Argyll & Bute Council theme.
  */
+
+/**
+ * Implementation of hook_form_alter()
+ * @param type $form
+ * @param type $form_state
+ * @param type $form_id
+ */
 function lgd_abc_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'views_exposed_form') {
     if ($form['#id'] == 'views-exposed-form-localgov-sitewide-search-sitewide-search-page') {
@@ -11,5 +18,21 @@ function lgd_abc_form_alter(&$form, &$form_state, $form_id) {
       $form['actions']['submit']['#value'] = "";
       $form['actions']['submit']['#attributes']['class'][] = 'search-button';
     }
+  }
+}
+
+/**
+ * Override for hook_preprocess_localgov_page_header_block()
+ * @param array $variables
+ */
+function lgd_abc_preprocess_localgov_page_header_block(&$variables) {
+  // lede is an array set by default with 
+  //   #type => "html_tag"
+  //   #tag => "p"
+  //   #value => t(String) - summary for nodes; text + Term title for taxonomy
+  
+  // Set 'lede' value to empty if on a Taxonomy term page
+  if (\Drupal::routeMatch()->getRouteName() == 'entity.taxonomy_term.canonical') {
+    $variables['lede'] = [];
   }
 }
