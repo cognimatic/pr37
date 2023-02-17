@@ -94,14 +94,6 @@ h1 {
   padding-right: calc(var(--grid-column-spacing));
 }
 
-.layout--twocol-wide .wide {
-  width: 66.6666%;
-}
-
-.layout--twocol-wide .narrow {
-  width: 33.33333%;
-}
-
 .lgd-footer {
   background-color: var(--color-green);
   margin-top: 0;
