@@ -895,6 +895,7 @@ ul.service-highlight__list li {
   margin-left: calc(-1 * var(--grid-column-spacing));
   width: auto;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .paragraph--id--595 .paragraph--id--596 .view-content > .views-row {
