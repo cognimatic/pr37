@@ -106,6 +106,7 @@ body {
   --secondary-menu-bg-color-second: transparent;
   --secondary-menu-link-color: white;
   --secondary-menu-link-color-focus: white;
+  --secondary-menu-bg-color-first: transparent;
 
   --banner-content-width: 1200px;
   --banner-content-bg-color: transparent;
