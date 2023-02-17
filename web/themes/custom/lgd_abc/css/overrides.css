@@ -44,7 +44,7 @@ picture p img {
     font-weight:300;
 }
 
-/* 
+/*
  * Add default padding to left/right aligned DIVs - which is generally generated
  * by Drupal in LONG TEXT fields with embedded media
  */
@@ -1092,6 +1092,16 @@ a.service-statuses__link--bottom {
   .lgd-header .lgd-header__toggles .lgd-header__toggle:hover,
   .lgd-header .lgd-header__toggles .lgd-header__toggle.lgd-header__toggle--active {
     border-color: white;
+  }
+
+  .banner--primary .banner__content .field--name-localgov-title {
+    font-size: var(--banner-title-size);
+    line-height: 1.3;
+  }
+
+  .banner--primary .banner__content .field--name-localgov-subsites-banner-text {
+    font-size: 36px;
+    line-height: 1.4;
   }
 }
 
