@@ -1,0 +1,28 @@
+#LocalGov Base theme bases breakpoints on REM (@ 48 and 61rem). ABC site has 
+#large fonts, so makes the breakpoints too large with conventions on mobile 
+#screen sizes
+
+lgd_abc.mobile:
+  label: mobile
+  mediaQuery: ''
+  weight: 0
+  multipliers:
+    - 1x
+lgd_abc.narrow:
+  label: narrow
+  mediaQuery: 'all and (min-width: 768px) and (max-width: 1023px)'
+  weight: 1
+  multipliers:
+    - 1x
+lgd_abc.wide:
+  label: wide
+  mediaQuery: 'all and (min-width: 1024px) and (max-width: 1439px)'
+  weight: 2
+  multipliers:
+    - 1x
+lgd_abc.superwide:
+  label: superwide
+  mediaQuery: 'all and (min-width: 1440px)'
+  weight: 3
+  multipliers:
+    - 1x
