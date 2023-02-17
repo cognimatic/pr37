@@ -46,12 +46,9 @@ process:
   
   field_identifier: field_identifier/0/value
 
-  #field_address_line_1
-  #field_address_line_2
-  #field_address_line_3
-  #
-  #field_town
-  #field_user_postcode
+
+  field_user_postcode: field_user_postcode/0/value
+  
   field_civica_ref: field_civica_ref/0/value
 
   field_ucrn: field_ucrn/0/value

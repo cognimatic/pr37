@@ -25,6 +25,24 @@ blockquote {
   border-color: var(--color-accent);
 }
 
+/*Override Drupal behaviour of 'sometimes' embedding Media images inside a 
+PICTURE and P tag*/
+picture p, 
+picture p img {
+    margin: 0;
+}
+
+/* Implement inline field labels on all content fields */
+.field--label-inline{
+    display: flex;
+    flex-direction: row;
+}
+.field--label-inline .field__label{
+    margin-right: 1em;
+}
+.field__label {
+    font-weight:300;
+}
 .leaflet-map-pane .leaflet-popup-content img {
     min-width: 230px;
 }
@@ -34,9 +52,6 @@ blockquote {
     font-weight: normal;
     font-size: 1rem;
 }
-
-
-/* Temporary overrides - Kula - please remove as required rewrite/refactor below */
 
 h1 {
   font-size: 44px;
