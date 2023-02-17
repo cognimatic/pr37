@@ -43,6 +43,15 @@ picture p img {
 .field__label {
     font-weight:300;
 }
+
+/* 
+ * Add default padding to left/right aligned DIVs - which is generally generated
+ * by Drupal in LONG TEXT fields with embedded media
+ */
+.align-right{ margin-left: 1rem; }
+.align-left{ margin-right: 1rem; }
+
+
 .leaflet-map-pane .leaflet-popup-content img {
     min-width: 230px;
 }
