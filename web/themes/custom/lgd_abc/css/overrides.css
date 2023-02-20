@@ -1017,6 +1017,10 @@ ul.service-highlight__list li a {
   padding: 0;
 }
 
+.paragraph--id--627 .align-left {
+  width: 100%;
+}
+
 .service-cta-block__link--cta-action {
   background-color: var(--color-blue);
 }
@@ -1296,6 +1300,10 @@ a.service-statuses__link--bottom {
   .paragraph--id--595 .paragraph--id--596 .view-content > .views-row {
     width: calc(100% / 3);
     padding-bottom: 0;
+  }
+
+  .paragraph--id--627 .align-left {
+    width: auto;
   }
 }
 
