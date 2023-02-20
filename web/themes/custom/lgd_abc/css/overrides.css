@@ -55,6 +55,34 @@ picture p img {
     font-size: 1rem;
 }
 
+.messages {
+  margin: 0;
+  border: none;
+  background-image: none;
+  padding: 12px 0;
+}
+
+.messages.messages--status {
+  background-image: none;
+  background-color: #FEF093;
+  color: #333333;
+  border-top: 1px solid #DED17E;
+}
+
+.messages + .messages {
+  margin-top: 0;
+}
+
+.messages .status-cont {
+  display: flex;
+}
+
+.messages svg.check-icon {
+  margin-right: 0.5rem;
+  margin-top: 4px;
+  fill: #333;
+}
+
 h1 {
   font-size: 44px;
 }
@@ -520,7 +548,7 @@ button.localgov-alert-banner__close:hover {
   line-height: 1.8;
 }
 
-.path-frontpage #detailed-search-box {
+#detailed-search-box.search-on-banner {
   position: relative;
   margin-top: -70px;
   margin-bottom: 1.5rem;
@@ -541,8 +569,11 @@ button.localgov-alert-banner__close:hover {
 
 #detailed-search-box .lgd-container .lgd-region__inner--search-bar {
   background-color: white;
-  border-top: 4px solid #93BFE7;
   padding: 10px;
+}
+
+#detailed-search-box.search-on-banner .lgd-container .lgd-region__inner--search-bar {
+  border-top: 4px solid #93BFE7;
 }
 
 #detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block {
@@ -1239,7 +1270,7 @@ a.service-statuses__link--bottom {
     padding: var(--banner-content-padding);
   }
 
-  .path-frontpage #detailed-search-box {
+  #detailed-search-box.search-on-banner {
     margin-top: -100px;
     margin-bottom: 0;
   }
@@ -1391,6 +1422,10 @@ a.service-statuses__link--bottom {
 
   #block-accessibililty {
     display: block;
+  }
+
+  #block-contactinfoaddressphone {
+    border: none;
   }
 }
 
