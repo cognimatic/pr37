@@ -44,6 +44,12 @@ picture p img {
     font-weight:300;
 }
 
+/*
+* Add default padding to left/right aligned DIVs - which is generally generated
+* by Drupal in LONG TEXT fields with embedded media
+*/
+.align-right{ margin-left: 1rem; }
+.align-left{ margin-right: 1rem; }
 
 .leaflet-map-pane .leaflet-popup-content img {
     min-width: 230px;
@@ -237,6 +243,13 @@ input[type="submit"].search-button.form-submit:hover {
 .lgd-header .lgd-region--search {
   width: 280px;
   margin-left: 2rem;
+}
+
+.lgd-header .lgd-header__nav--mobile .lgd-region--search {
+  width: 100%;
+  margin-left: 0;
+  margin-top: 0;
+  margin-bottom: 2rem;
 }
 
 .lgd-header .lgd-region--search form {
@@ -1208,13 +1221,6 @@ a.service-statuses__link--bottom {
   .layout--twocol > .layout__region--first, .layout--twocol > .layout__region--second {
     flex: 0 1 100%;
   }
-
-  /*
- * Add default padding to left/right aligned DIVs - which is generally generated
- * by Drupal in LONG TEXT fields with embedded media
- */
-  .align-right{ margin-left: 1rem; }
-  .align-left{ margin-right: 1rem; }
 
   a.call-out-box__link,
   a.service-status__read-more {
