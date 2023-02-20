@@ -1149,11 +1149,11 @@ a.service-statuses__link--bottom {
   margin-left: 20px;
 }
 
-#block-accessibililty--2 {
+#block-accessibililty {
   display: none;
 }
 
-#block-contactinfoaddressphone--2 {
+#block-contactinfoaddressphone {
   margin-bottom: 2rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid white;
@@ -1389,7 +1389,7 @@ a.service-statuses__link--bottom {
     width: 54%;
   }
 
-  #block-accessibililty--2 {
+  #block-accessibililty {
     display: block;
   }
 }
