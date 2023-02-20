@@ -1,0 +1,8 @@
+name: Generic Thumbnail Formatter
+description: Creates a generic thumbnail to be used for Documents
+package: ABC
+core_version_requirement: ^9 || ^10
+type: module
+dependencies:
+ - field
+ - media
