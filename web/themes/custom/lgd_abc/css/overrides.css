@@ -44,13 +44,6 @@ picture p img {
     font-weight:300;
 }
 
-/*
- * Add default padding to left/right aligned DIVs - which is generally generated
- * by Drupal in LONG TEXT fields with embedded media
- */
-.align-right{ margin-left: 1rem; }
-.align-left{ margin-right: 1rem; }
-
 
 .leaflet-map-pane .leaflet-popup-content img {
     min-width: 230px;
@@ -598,14 +591,9 @@ a.service-status__read-more:hover {
 }
 
 .did-this-help {
-  margin: 0;
   padding:18px 40px;
-  background-color: #9ED39D;
-}
-
-.did-this-help form {
-  display: flex;
-  align-items: center;
+  background: #FAFAFA;
+  border-left: 4px solid #9ED39D;
 }
 
 .did-this-help .question {
@@ -619,6 +607,7 @@ a.service-status__read-more:hover {
   background-color: transparent;
   border: 1px solid var(--color-text);
   color: var(--color-text);
+  margin: 4px 24px 4px 0;
 }
 
 .did-this-help .form-submit:hover {
@@ -940,7 +929,8 @@ ul.service-highlight__list li a {
 
 .paragraph--id--594 .call-out-box--no-image .call-out-box__content a {
   margin-left: 20px;
-  display: inline-block;
+  margin-right: 20px;
+  display: block;
   margin-bottom: 2rem;
 }
 
@@ -978,6 +968,11 @@ ul.service-highlight__list li a {
   padding-right: calc(var(--grid-column-spacing));
   flex: 0 0 auto;
   width: 100%;
+  padding-bottom: 1rem;
+}
+
+.paragraph--id--595 .paragraph--id--596 .view-content > .views-row:last-child {
+  padding-bottom: 0;
 }
 
 .views-field .field-content time {
@@ -1000,9 +995,10 @@ ul.service-highlight__list li a {
 }
 
 .layout--twocol-wide .wide img {
-  width: 300px;
+  width: 100%;
   height: auto;
-  margin-right: 1rem;
+  margin-right: 0;
+  margin-bottom: 1rem;
 }
 
 .layout--twocol-wide .wide ul {
@@ -1015,6 +1011,10 @@ ul.service-highlight__list li a {
 
 .layout--twocol-wide .wide ul li a{
   text-decoration: none;
+}
+
+.paragraph--id--627 ul {
+  padding: 0;
 }
 
 .service-cta-block__link--cta-action {
@@ -1137,6 +1137,13 @@ a.service-statuses__link--bottom {
     flex: 0 1 100%;
   }
 
+  /*
+ * Add default padding to left/right aligned DIVs - which is generally generated
+ * by Drupal in LONG TEXT fields with embedded media
+ */
+  .align-right{ margin-left: 1rem; }
+  .align-left{ margin-right: 1rem; }
+
   a.call-out-box__link,
   a.service-status__read-more {
     display: inline;
@@ -1146,6 +1153,26 @@ a.service-statuses__link--bottom {
     columns: 2;
     -webkit-columns: 2;
     -moz-columns: 2;
+  }
+
+  .paragraph--id--594 .call-out-box--no-image .call-out-box__content a {
+    margin-right: auto;
+    display: inline-block;
+  }
+
+  .layout--twocol-wide .wide img {
+    width: 300px;
+  }
+
+  .did-this-help {
+    margin: 0;
+    padding:18px 40px;
+    background-color: #9ED39D;
+  }
+
+  .did-this-help form {
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -1268,12 +1295,18 @@ a.service-statuses__link--bottom {
 
   .paragraph--id--595 .paragraph--id--596 .view-content > .views-row {
     width: calc(100% / 3);
+    padding-bottom: 0;
   }
 }
 
 @media screen and (min-width: 992px) {
   .layout--twocol > .layout__region--first, .layout--twocol > .layout__region--second {
     flex: 0 1 50%;
+  }
+
+  .views-view-grid .views-row .views-col,
+  .layout--twocol-wide > .layout__region {
+    width: auto;
   }
 
   .lgd-header .menu-item:hover,
