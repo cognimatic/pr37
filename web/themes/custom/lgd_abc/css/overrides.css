@@ -69,6 +69,13 @@ picture p img {
   border-top: 1px solid #DED17E;
 }
 
+.messages.messages--error {
+  background-image: none;
+  background-color: #FFE2E2;
+  color: #a51b00;
+  border-top: 1px solid #c2acac;
+}
+
 .messages + .messages {
   margin-top: 0;
 }
@@ -77,10 +84,17 @@ picture p img {
   display: flex;
 }
 
-.messages svg.check-icon {
+.messages svg {
   margin-right: 0.5rem;
   margin-top: 4px;
+}
+
+.messages svg.check-icon {
   fill: #333;
+}
+
+.messages svg.error-icon {
+  fill: #a51b00;
 }
 
 h1 {
