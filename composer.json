@@ -92,6 +92,7 @@
         "drupal/site_audit": "^3.0@RC",
         "drupal/smart_sql_idmap": "^1.1",
         "drupal/smtp": "^1.0",
+        "drupal/styleguide": "^2.1",
         "drupal/svg_image": "^1.16",
         "drupal/taxonomy_manager": "^2.0",
         "drupal/twitter_block": "^3.0@alpha",
@@ -172,6 +173,9 @@
         "patches": {
             "drupal/autocomplete_deluxe": {
                 "Multiple reference terms fails 3053986": "https://www.drupal.org/files/issues/2021-05-25/3053986-6.patch"
+            },
+            "drupal/civicccookiecontrol": {
+                "No options in Text formats select box 3319073": "https://www.drupal.org/files/issues/2023-02-20/civicccoookiecontrol-fix-text-formats-3319073.patch"
             },
             "drupal/cludo_search": {
               "Cludo search autocomplete not working on block 3050293": "https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch"

@@ -306,9 +306,6 @@ their consent.</div>";
             ));
         }
 
-        if (array_key_exists('#format', $element) && $element['#format'] == 'full_html') {
-          $element['#allowed_formats'] = [$element['#format']];
-        }
         unset($element['cookieVersion']);
         unset($element['boolOptions']);
         unset($element['needsApiValidation']);

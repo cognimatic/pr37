@@ -161,7 +161,6 @@ class AltLanguageForm extends EntityForm {
       $form['ccc']['container']['altLanguageIntro'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('Intro in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIntro,
         '#description' => $this->t("Intro in Alternative Language"),
@@ -207,7 +206,6 @@ class AltLanguageForm extends EntityForm {
       $form['ccc']['container']['altLanguageNecessaryDescription'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('Necessary Description in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageNecessaryDescription,
         '#description' => $this->t("Necessary Description in Alternative Language"),
@@ -226,7 +224,6 @@ class AltLanguageForm extends EntityForm {
       $form['ccc']['container']['altLanguageThirdPartyDescription'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('Third Party Description in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageThirdPartyDescription,
         '#description' => $this->t("Third Party Description in Alternative Language"),
@@ -263,7 +260,6 @@ class AltLanguageForm extends EntityForm {
       $form['ccc']['container']['altLanguageNotifyDescription'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('Notify Description Text in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageNotifyDescription,
         '#description' => $this->t("Notify Description Text in Alternative Language"),
@@ -319,7 +315,6 @@ class AltLanguageForm extends EntityForm {
         $form['ccc']['container'][$cookieCat->getCookieName()]['altLanguageOptionalCookiesDescription_' . $cookieCat->id()] = [
           '#type' => 'text_format',
           '#format' => 'full_html',
-          '#allowed_formats' => ['full_html'],
           '#title' =>
           ucfirst($cookieCat->getCookieName()) . " " .
           $this->t('Optional Cookies Description in Alternative Language'),
@@ -524,7 +519,6 @@ class AltLanguageForm extends EntityForm {
       $form['iabTexts']['altLanguageIabDescriptionText'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('IAB Description in Alternative Language'),
         '#description' => $this->t('Set the description text for IAB in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIabDescriptionText,
@@ -545,7 +539,6 @@ class AltLanguageForm extends EntityForm {
       $form['iabTexts']['altLanguageIabPanelIntroText'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('IAB Panel Introduction Text in Alternative Language'),
         '#description' => $this->t('Set the introductory text for the IAB panel in Alternative Language.'),
         '#default_value' => $altLanguage->altLanguageIabPanelIntroText,
@@ -553,7 +546,6 @@ class AltLanguageForm extends EntityForm {
       $form['iabTexts']['altLanguageIabAboutIabText'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('About IAB Text in Alternative Language'),
         '#description' => $this->t('Set the about AIB text in Alternative Language.'),
         '#default_value' => $altLanguage->altLanguageIabAboutIabText,
@@ -640,7 +632,6 @@ class AltLanguageForm extends EntityForm {
       $form['iab2Texts']['altLanguageIabPanelIntro1'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('IAB Panel Intro 1 Text in Alternative Language'),
         '#description' => $this->t('IAB Panel Intro 1 Text in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIabPanelIntro1,
@@ -649,7 +640,6 @@ class AltLanguageForm extends EntityForm {
       $form['iab2Texts']['altLanguageIabPanelIntro2'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('IAB Panel Intro 2 Text in Alternative Language'),
         '#description' => $this->t('IAB Panel Intro 2 Text in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIabPanelIntro2,
@@ -658,7 +648,6 @@ class AltLanguageForm extends EntityForm {
       $form['iab2Texts']['altLanguageIabPanelIntro3'] = [
         '#type' => 'text_format',
         '#format' => 'full_html',
-        '#allowed_formats' => ['full_html'],
         '#title' => $this->t('IAB Panel Intro 3 Text in Alternative Language'),
         '#description' => $this->t('IAB Panel Intro 3 Text in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIabPanelIntro3,

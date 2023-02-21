@@ -102,7 +102,6 @@ class CookieCategoryForm extends EntityForm {
       '#description' => $this->t("The full description assigned to the category and displayed by the module."),
       '#required' => TRUE,
       '#format' => 'full_html',
-      '#allowed_formats' => ['full_html'],
     ];
 
     $form['cookies'] = [
