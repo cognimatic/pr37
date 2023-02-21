@@ -209,6 +209,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'PHPStan\\PhpDocParser\\' => 21,
             'PHPStan\\' => 8,
             'PHPMailer\\PHPMailer\\' => 20,
+            'PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 57,
         ),
         'M' => 
         array (
@@ -295,7 +296,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Dflydev\\DotAccessData\\' => 22,
             'Defuse\\Crypto\\' => 14,
             'DeepCopy\\' => 9,
-            'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
         ),
         'C' => 
         array (
@@ -786,6 +786,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
+        ),
         'MyCLabs\\Enum\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
@@ -1025,10 +1029,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
-        ),
-        'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
         ),
         'Consolidation\\SiteProcess\\' => 
         array (
