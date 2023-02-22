@@ -51,14 +51,6 @@ picture p img {
 .align-right{ margin-left: 1rem; }
 .align-left{ margin-right: 1rem; }
 
-/* 
- * Float for Document icon - Kula feel free for different implementation. Rob
- */
-.document-icon.field--name-thumbnail{
-    float:left;
-    padding-right: 1em;
-}
-
 .leaflet-map-pane .leaflet-popup-content img {
     min-width: 230px;
 }
