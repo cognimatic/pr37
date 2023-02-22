@@ -9,6 +9,7 @@ libraries:
   - lgd_abc/variables
   - lgd_abc/overrides
   - lgd_abc/fonts
+  - lgd_abc/cookie-control-scripts
 
 regions:
   tabs: "Tabs"

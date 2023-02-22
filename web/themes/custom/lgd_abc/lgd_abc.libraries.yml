@@ -23,3 +23,9 @@ wide-narrow-library:
   css:
     theme:
       layouts/twocol-wide-narrow.css: {}
+      
+cookie-control-scripts:
+  version: 1.x
+  dependencies:
+    - civic_govuk_cookiecontrol/civic_govuk_cookiecontrol.details
+    - civic_govuk_cookiecontrol/civic_govuk_cookiecontrol.banner
