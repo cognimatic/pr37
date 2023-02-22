@@ -43,7 +43,7 @@
         "drupal/feeds": "^3.0@beta",
         "drupal/feeds_tamper": "^2.0@beta",
         "drupal/filefield_sources": "^1.0@alpha",
-        "drupal/fpa": "^3.0",
+        "drupal/fpa": "^4.0",
         "drupal/honeypot": "^2.1",
         "drupal/httpswww": "^2.0",
         "drupal/iframe": "^2.21",

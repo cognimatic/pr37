@@ -9,5 +9,5 @@ fpa.permissions:
     - core/jquery
     - core/drupal
     - core/drupalSettings
-    - core/jquery.cookie
+    - core/js-cookie
     - core/drupal.user.permissions

@@ -1183,9 +1183,9 @@
             'dev_requirement' => false,
         ),
         'drupal/fpa' => array(
-            'pretty_version' => '3.0.3',
-            'version' => '3.0.3.0',
-            'reference' => '3.0.3',
+            'pretty_version' => '4.0.0',
+            'version' => '4.0.0.0',
+            'reference' => '4.0.0',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/fpa',
             'aliases' => array(),

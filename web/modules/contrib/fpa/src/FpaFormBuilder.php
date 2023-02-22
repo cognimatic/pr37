@@ -53,8 +53,7 @@ class FpaFormBuilder {
   public static function checkMemoryLimit() {
     $permissions_memory_required = static::getRequiredMemory('b');
     $memory_limit = ini_get('memory_limit');
-    // @todo Remove/upgrade deprecated Bytes::toInt().
-    return ((!$memory_limit) || ($memory_limit == -1) || (Bytes::toInt($memory_limit) >= Bytes::toInt($permissions_memory_required)));
+    return ((!$memory_limit) || ($memory_limit == -1) || (Bytes::toNumber($memory_limit) >= Bytes::toNumber($permissions_memory_required)));
   }
 
   /**

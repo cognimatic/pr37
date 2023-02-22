@@ -4,7 +4,7 @@
  */
 
 // Wrapper normalizes 'jQuery' to '$'.
-;(function fpa_scope($, Drupal, window, document) {
+;(function fpa_scope($, Drupal, window, document, cookies) {
   "use strict";
   
   var Fpa = function (context, settings) {
@@ -257,9 +257,9 @@
   Fpa.prototype.filter = function () {
     
     var perm = this.dom.filter.val();
-    
-    $.cookie('fpa_filter', perm, {path: '/'});
-    $.cookie('fpa_module_match', this.module_match, {path: '/'});
+
+    cookies.set('fpa_filter', perm, {path: '/'});
+    cookies.set('fpa_module_match', this.module_match, {path: '/'});
           
     this.save_filters();
     
@@ -335,8 +335,8 @@
     
     var values = this.dom.role_select.val() || [];
     var role_style_code = [];
-    
-    $.cookie('fpa_roles', JSON.stringify(values), {path: '/'});
+
+    cookies.set('fpa_roles', JSON.stringify(values), {path: '/'});
     
     // Only filter if "All Roles" is not selected.
     if ($.inArray('*', values) === -1) {
@@ -678,4 +678,4 @@
   Drupal.behaviors.permissions.attach = function() {};
 
   // Drupal.behaviors.formUpdated.attach = $.noop;
-})(jQuery, Drupal, window, document);
+})(jQuery, Drupal, window, document, window.Cookies);
