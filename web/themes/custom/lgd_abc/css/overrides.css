@@ -273,6 +273,7 @@ input[type="submit"].search-button.form-submit:hover {
 .lgd-header .lgd-region--search form input.search-button {
   padding: 12px;
   margin: 0;
+  display: block;
 }
 
 .lgd-header__nav--secondary {
