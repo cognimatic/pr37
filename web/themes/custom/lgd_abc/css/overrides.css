@@ -206,8 +206,75 @@ a:hover {
   background-color: #dbefff;
 }
 
-button:hover {
+button:hover, button:focus {
   text-decoration: none !important;
+}
+
+.btn {
+  border: none;
+  padding: 11px 20px 12px;
+  border-radius: 0px;
+  transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary {
+  color: white;
+  background-color: #1752AB;
+  box-shadow: inset 0 -2px 0 #07295A;
+}
+
+.btn-primary:hover {
+  color: white;
+  background-color: #063985;
+}
+
+.btn-primary:disabled {
+  background-color: #1752AB;
+  opacity: 0.5;
+  box-shadow: inset 0 -2px 0 #07295A;
+}
+
+.btn-secondary {
+  color: #333;
+  background-color: #EAEAEA;
+  box-shadow: inset 0 -2px 0 #888888;
+}
+
+.btn-secondary:hover {
+  color: #333;
+  background-color: #D1D1D1;
+}
+
+.btn-secondary:disabled {
+  background-color: #EAEAEA;
+  opacity: 0.5;
+  box-shadow: inset 0 -2px 0 #888888;
+}
+
+.btn-tertiary {
+  color: #333;
+  background-color: #FFFFFF;
+  box-shadow: inset 0 -2px 0 #888888;
+}
+
+.btn-tertiary:hover {
+  color: #333;
+  background-color: #F5F5F5;
+  box-shadow: inset 0 -2px 0 #333333;
+}
+
+.btn-tertiary:disabled {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 -2px 0 #CCCCCC;
+  color: #D1D1D1;
+}
+
+.btn-primary:focus,
+.btn-secondary:focus,
+.btn-tertiary:focus {
+  color: #333;
+  background-color: #FCDF1B;
+  box-shadow: inset 0 -2px 0 #333333;
 }
 
 input[type="submit"].search-button.form-submit {
@@ -260,6 +327,10 @@ input[type="submit"].search-button.form-submit:hover {
 .lgd-header .lgd-region--search form {
   border: 2px solid #07295A;
   background-color: white;
+}
+
+.lgd-header .lgd-region--search form:focus-within {
+  box-shadow: 0 0 0 4px #FCDF1B;
 }
 
 .lgd-header .lgd-region--search form input {
@@ -612,7 +683,11 @@ button.localgov-alert-banner__close:hover {
 
 #detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block {
   display: flex;
-  outline: 2px solid #07295A;
+  border: 2px solid #07295A;
+}
+
+#detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block:focus-within {
+  box-shadow: 0 0 0 4px #FCDF1B;
 }
 
 #detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block .js-form-type-search-api-autocomplete {
@@ -1119,6 +1194,10 @@ ul.service-highlight__list li a {
   display: inline-block;
 }
 
+.block-abc-bins-bin-dates-lookup form:focus-within {
+  box-shadow: 0 0 0 2px #FFC40C;
+}
+
 .block-abc-bins-bin-dates-lookup form .form-group {
   display: inline-block;
 }
@@ -1142,6 +1221,12 @@ ul.service-highlight__list li a {
 .block-abc-bins-bin-dates-lookup form button:hover {
   color: white;
   background-color: #07295A;
+}
+
+.block-abc-bins-bin-dates-lookup form button:focus {
+  color: #333;
+  background-color: #FCDF1B;
+  box-shadow: inset 0 -2px 0 #333333;
 }
 
 .service-landing-page__service {
@@ -1222,6 +1307,28 @@ a.service-statuses__link--bottom {
   margin-bottom: 2rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid white;
+}
+
+.cookie-banner, .cookie-banner-noscript {
+  background: #eaeaea;
+  padding: 40px 0;
+}
+
+.cookie-banner .govuk-width-container {
+  max-width: var(--width-container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: var(--spacing-padding-horizontal);
+  padding-left: var(--spacing-padding-horizontal);
+}
+
+.cookie-banner .btn {
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.govuk-heading-m {
+  font-size: 32px;
 }
 
 @media screen and (min-width: 40em) {

@@ -231,7 +231,7 @@ METHOD:PUBLISH\r";
       $bin_content .= "</select></div>";
     }
 
-    $bin_content .= '<button class="btn btn-primary" type="submit" value="submit">Search for my bin collection details</button></form>';
+    $bin_content .= '<button class="btn-submit" type="submit" value="submit">Search for my bin collection details</button></form>';
 
     return $bin_content;
   }

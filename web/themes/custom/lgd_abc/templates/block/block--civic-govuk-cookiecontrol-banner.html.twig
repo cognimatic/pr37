@@ -1,0 +1,78 @@
+<div class="{{ fixed_top ? 'cookie-banner fixed-top' : 'cookie-banner' }}" role="region" aria-label="cookie banner">
+  <div class="cookie-banner--main govuk-width-container govuk-body">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 id="cookie-banner-heading" class="govuk-heading-m">{{ title_banner }}</h2>
+      <p class="govuk-body">{{ description }}</p>
+      <p class="govuk-body">
+        {{ policy_link | raw }}
+      </p>
+
+      <button value="accept" name="cookieChoice" class="cookie-banner-button--accept btn btn-primary govuk-\!-margin-bottom-4 govuk-\!-margin-right-4" data-module="govuk-button">
+        {{ accept_label }}
+      </button>
+
+      <button value="reject" name="cookieChoice" class="cookie-banner-button--reject btn btn-primary govuk-\!-margin-bottom-4" data-module="govuk-button">
+        {{ reject_label }}
+      </button>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="cookie-banner--accept govuk-width-container govuk-body hidden" tabindex="-1">
+    <p class="govuk-!-margin-top-1 govuk-!-margin-bottom-3">
+        {{ accepted_cookies | trans }} {{ change_cookie_settings_link | trans }}
+    </p>
+
+    <button value="hide-accept" name="confirmationHide" class="cookie-banner-accept--hide btn btn-primary govuk-link govuk-!-margin-top-1  govuk-!-margin-bottom-3" data-module="govuk-button">
+      {{ hide | trans }}
+    </button>
+
+  </div>
+
+  <div class="cookie-banner--reject govuk-width-container govuk-body hidden" tabindex="-1">
+    <p class="govuk-\!-margin-top-1 govuk-\!-margin-bottom-3">
+      {{ rejected_cookies | trans }}
+      {{ change_cookie_settings_link | trans }}
+    </p>
+
+    <button value="hide-reject" name="confirmationHide" class="cookie-banner-reject--hide btn btn-primary govuk-link govuk-!-margin-top-1  govuk-!-margin-bottom-3" data-module="govuk-button">
+      {{ hide | trans }}
+    </button>
+
+  </div>
+
+</div>
+
+<noscript>
+<style type="text/css">
+.cookie-banner {
+  display: none;
+}
+</style>
+
+<div class="cookie-banner-noscript govuk-!-padding-top-4 govuk-!-padding-bottom-2" role="region" aria-label="cookie banner">
+  <div class="cookie-banner--main govuk-width-container govuk-body">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 id='cookie-banner-heading' class="govuk-heading-m">{{ title_banner }}</h2>
+        <p class="govuk-body">{{ description }}</p>
+        <p class="govuk-body">
+          {{ policy_link | raw }}
+        </p>
+        <form method="post" action="/set-cookie-message" novalidate>
+          <button value="accept" name="cookieChoice" class="cookie-banner-button--accept btn btn-primary govuk-!-margin-bottom-4 govuk-!-margin-right-4" data-module="govuk-button">
+            {{ accept_label }}
+          </button>
+
+          <button value="reject" name="cookieChoice" class="cookie-banner-button--reject btn btn-primary govuk-!-margin-bottom-4" data-module="govuk-button">
+            {{ reject_label }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</noscript>
