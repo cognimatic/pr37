@@ -116,7 +116,7 @@
         "drupal/core-dev": "^9.1",
         "drupal/devel": "^4.1",
         "drupal/devel_entity_updates": "^4.1",
-        "drupal/entity_clone": "^1.0@beta",
+        "drupal/entity_clone": "^2.0@beta",
         "drupal/migrate_plus": "^6.0",
         "drupal/migrate_tools": "^6.0",
         "drupal/shield": "^1.4",
@@ -189,9 +189,6 @@
             },
             "drupal/search_api_stats": {
                 "Empty search returns error 3325990": "https://www.drupal.org/files/issues/2022-12-08/search_api_stats-empty-search-returns-error-3325990-2.patch"
-            },
-            "drupal/search404": {
-              "Failed to start the session because headers have already been sent 3087929": "https://www.drupal.org/files/issues/2022-11-15/fix-php-error-on-redirect-3087929-8.patch"  
             },
             "drupal/shs": {
                     "Error saving null empty value 3241169": "https://www.drupal.org/files/issues/2022-02-28/shs-Error_saving_null_empty_value_after_2.0.0-rc1_update-3241169-36.patch"
