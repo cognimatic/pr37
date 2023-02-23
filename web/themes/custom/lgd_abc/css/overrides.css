@@ -1619,3 +1619,22 @@ a.service-statuses__link--bottom {
   color: #000;
   background-color: #fff;
 }
+/* Homepage CTA white lettering */
+.paragraph--id--603 .layout__region--content {
+  background-color: black;
+  padding: 0;
+}
+/* News teaser dates */
+.newsroom-summary .views-field .field-content time{
+  color: black;
+}
+/* Subsite/homepage white banner lettering */
+.paragraph--type--localgov-banner-primary{
+  background-color: black;
+}
+/* Cookie banner */
+.cookie-policy.govuk-link, 
+.cookie-policy.govuk-link:visited {
+  color: #1752AB;
+  font-weight: 400;
+}
