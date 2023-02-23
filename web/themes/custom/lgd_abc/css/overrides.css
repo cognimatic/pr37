@@ -181,6 +181,9 @@ ul.search-stats-results li{
 .cludo-search-block-search-form .cludo-search-form{
     display:flex;
 }
+.cludo-search-block-search-form .form-item-search-keys{
+    margin-bottom: 0;
+}
 
 .status-normal{
   color: #ABC87F;
