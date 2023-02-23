@@ -12,11 +12,20 @@
  * @param type $form_id
  */
 function lgd_abc_form_alter(&$form, &$form_state, $form_id) {
+  // Search API Form
   if ($form_id == 'views_exposed_form') {
     if ($form['#id'] == 'views-exposed-form-localgov-sitewide-search-sitewide-search-page') {
       // Change submit button test to Font Awesome icon
       $form['actions']['submit']['#value'] = "";
       $form['actions']['submit']['#attributes']['class'][] = 'search-button';
+    }
+  }
+  // Cludo form
+  if ($form_id == 'cludo_search_block_search_form') {
+    if ($form['#id'] == 'cludo-search-block-search-form') {
+      //Remove text from Search button and add class. DOESN'T WORK!!
+      $form['submit']['#value'] = ""; 
+      $form['submit']['#attributes']['class'][] = 'search-button';
     }
   }
 }
