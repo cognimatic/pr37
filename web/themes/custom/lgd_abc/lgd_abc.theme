@@ -22,11 +22,9 @@ function lgd_abc_form_alter(&$form, &$form_state, $form_id) {
   }
   // Cludo form
   if ($form_id == 'cludo_search_block_search_form') {
-    if ($form['#id'] == 'cludo-search-block-search-form') {
-      //Remove text from Search button and add class. DOESN'T WORK!!
-      $form['submit']['#value'] = ""; 
-      $form['submit']['#attributes']['class'][] = 'search-button';
-    }
+    //Remove text from Search button and add class
+    $form['submit']['#value'] = "";
+    $form['submit']['#attributes']['class'][] = 'search-button';
   }
 }
 
