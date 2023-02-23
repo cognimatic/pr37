@@ -15,15 +15,17 @@ function lgd_abc_form_alter(&$form, &$form_state, $form_id) {
   // Search API Form
   if ($form_id == 'views_exposed_form') {
     if ($form['#id'] == 'views-exposed-form-localgov-sitewide-search-sitewide-search-page') {
-      // Change submit button test to Font Awesome icon
-      $form['actions']['submit']['#value'] = "";
+      // Change submit button text to space for a11y
+      $form['actions']['submit']['#value'] = " ";
+      $form['actions']['submit']['#name'] = 'Search';
       $form['actions']['submit']['#attributes']['class'][] = 'search-button';
     }
   }
   // Cludo form
   if ($form_id == 'cludo_search_block_search_form') {
     //Remove text from Search button and add class
-    $form['submit']['#value'] = "";
+    $form['submit']['#value'] = " ";
+    $form['submit']['#name'] = 'Search';
     $form['submit']['#attributes']['class'][] = 'search-button';
   }
 }

@@ -1613,3 +1613,9 @@ a.service-statuses__link--bottom {
 @media screen and (min-width: 1440px) {
 
 }
+
+/* Problems with WAVE WCAG Contrast testing */
+.visually-hidden {
+  color: #000;
+  background-color: #fff;
+}
