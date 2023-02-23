@@ -1,3 +1,8 @@
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .field--name-localgov-subsites-content > * {
   margin-bottom: var(--spacing-largest);
 }
