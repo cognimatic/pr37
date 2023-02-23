@@ -1217,6 +1217,10 @@ a.service-statuses__link--bottom {
   border-bottom: 1px solid white;
 }
 
+.localgov-alert-banner__content {
+  width: 80%;
+}
+
 @media screen and (min-width: 40em) {
   .layout--twocol > .layout__region--first, .layout--twocol > .layout__region--second {
     flex: 0 1 100%;
@@ -1280,6 +1284,10 @@ a.service-statuses__link--bottom {
   .lgd-header h2.secondary-menu-heading {
     line-height: 1.5;
     margin-bottom: 1rem;
+  }
+
+  .lgd-header .lgd-header__nav--secondary ul.menu {
+    columns: 2;
   }
 
   .lgd-footer {
@@ -1416,6 +1424,10 @@ a.service-statuses__link--bottom {
   .lgd-header .lgd-header__toggles .lgd-header__toggle:hover,
   .lgd-header .lgd-header__toggles .lgd-header__toggle.lgd-header__toggle--active {
     border-color: white;
+  }
+
+  .lgd-header .lgd-header__nav--secondary ul.menu {
+    columns: 3;
   }
 
   .branding__item--logo {
