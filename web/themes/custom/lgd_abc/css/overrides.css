@@ -482,6 +482,7 @@ button.localgov-alert-banner__close {
   line-height: 1;
   border-radius: 4px;
   padding: 10px 20px;
+  margin-left: 30px;
 }
 
 button.localgov-alert-banner__close:hover {
@@ -1217,10 +1218,6 @@ a.service-statuses__link--bottom {
   border-bottom: 1px solid white;
 }
 
-.localgov-alert-banner__content {
-  width: 80%;
-}
-
 @media screen and (min-width: 40em) {
   .layout--twocol > .layout__region--first, .layout--twocol > .layout__region--second {
     flex: 0 1 100%;
@@ -1458,6 +1455,10 @@ a.service-statuses__link--bottom {
 
   #block-contactinfoaddressphone {
     border: none;
+  }
+
+  button.localgov-alert-banner__close {
+    margin-left: 50px;
   }
 }
 
