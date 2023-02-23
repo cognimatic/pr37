@@ -177,6 +177,11 @@ ul.search-stats-results li{
     display: none;
 }
 
+/* Alternative (Cludo) Search form */
+.cludo-search-block-search-form .cludo-search-form{
+    display:flex;
+}
+
 .status-normal{
   color: #ABC87F;
 }
