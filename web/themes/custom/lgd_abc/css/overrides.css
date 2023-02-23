@@ -1319,7 +1319,7 @@ a.service-statuses__link--bottom {
 
 .cookie-banner, .cookie-banner-noscript {
   background: #eaeaea;
-  padding: 40px 0;
+  padding: 40px 0 !important;
 }
 
 .cookie-banner .govuk-width-container {
@@ -1330,9 +1330,30 @@ a.service-statuses__link--bottom {
   padding-left: var(--spacing-padding-horizontal);
 }
 
-.cookie-banner .btn {
-  margin-right: 1rem;
+.cookie-banner button.govuk-button {
+  font-family: 'Roboto Flex', sans-serif;
+  font-size: 18px;
+  line-height: 1;
+  width: auto;
   margin-top: 1rem;
+  margin-bottom: 0;
+  margin-right: 1rem;
+  padding: 12px 20px;
+  border: none;
+  color: #ffffff;
+  background-color: var(--color-blue);
+  box-shadow: inset 0 -2px 0 #07295A;
+}
+
+.cookie-banner button.govuk-button:hover {
+  background-color: #07295A;
+}
+
+.cookie-banner button.govuk-button:focus,
+.govuk-button:focus:not(:active):not(:hover){
+  background-color: #FCDF1B;
+  color: #333;
+  box-shadow: inset 0 -2px 0 #333333;
 }
 
 .govuk-heading-m {
