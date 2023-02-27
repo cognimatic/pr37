@@ -103,6 +103,7 @@ body {
   --alert-banner-inner-padding-vertical: 0;
   --alert-banner-inner-padding-horizontal: 0;
   --color-section-pre-footer-bg: var(--color-accent);
+  --header-search-button-color: var(--color-text);
 
   --color-section-header-bg: var(--color-blue);
   --secondary-menu-bg-color-second: transparent;
