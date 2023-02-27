@@ -203,7 +203,7 @@ a {
 
 a:focus {
   outline: none;
-  background-color: transparent;
+  color: #333;
   -webkit-box-shadow: none;
   box-shadow: none;
   -webkit-box-decoration-break: unset;
