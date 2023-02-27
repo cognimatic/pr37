@@ -207,6 +207,7 @@ a:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
   -webkit-box-decoration-break: unset;
+  text-decoration: underline;
 }
 
 a:hover {
@@ -737,7 +738,13 @@ a.service-status__read-more {
 
 a.call-out-box__link:hover,
 a.service-status__read-more:hover {
-  background-color: #07295A;
+  background-color: #063985;
+}
+
+a.call-out-box__link:focus,
+a.service-status__read-more:focus {
+  background-color: var(--color-yellow);
+  color: #333;
 }
 
 .did-this-help {
@@ -993,6 +1000,12 @@ ul.service-highlight__list li a {
 
 .call-out-box--has-image a.call-out-box__link:hover {
   background-color: #ececec;
+}
+
+.call-out-box--has-image a.call-out-box__link:focus {
+  background-color: var(--color-yellow);
+  color: #333333;
+  box-shadow: inset 0 -2px 0 #333;
 }
 
 .block-service-status-lights {
@@ -1516,10 +1529,16 @@ a.service-statuses__link--bottom {
     padding: 22px 20px 25px;
   }
 
-  .service-cta-block__link:hover,
-  .service-cta-block__link:focus{
+  .service-cta-block__link:hover{
     color: white;
-    background-color: #07295A;
+    background-color: #063985;
+    box-shadow: none;
+  }
+
+  .service-cta-block__link:focus{
+    color: #333;
+    background-color: var(--color-yellow);
+    box-shadow: inset 0 -4px 0 #07295A;
   }
 
   .service-cta-block__list-item {
