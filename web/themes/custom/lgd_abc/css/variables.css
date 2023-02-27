@@ -68,6 +68,7 @@ body {
   --color-minor: var(--color-yellow);
   --color-link: #1752ab;
   --color-focus: var(--color-yellow);
+  --color-link-hover: #063985;
 
   --font-size: 19px;
 

@@ -212,6 +212,7 @@ a:focus {
 a:hover {
   text-decoration-thickness: max(2px, 0.1rem, 0.1em);
   background-color: #dbefff;
+  color: var(--color-link-hover);
 }
 
 button:hover, button:focus {
@@ -1531,6 +1532,10 @@ a.service-statuses__link--bottom {
 
   ul.service-highlight__list li a {
     text-decoration: underline;
+  }
+
+  ul.service-highlight__list li a:hover {
+    text-decoration-thickness: max(2px, 0.1rem, 0.1em);
   }
 
   .paragraph--type--service-highlight-list {
