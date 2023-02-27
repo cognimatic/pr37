@@ -50,7 +50,7 @@ picture p img {
 }
 
 dialog::backdrop {
-  background-color: rgba(1, 8, 35, 0.85);
+  background-color: rgba(255, 255, 255, 0.85);
 }
 
 /*
@@ -578,10 +578,15 @@ a.breadcrumbs__link {
   margin: 10px 0;
   border: 5px solid #333333;
   box-sizing: border-box;
+  color: #333;
 }
 
 .localgov-alert-banner p {
   margin-bottom: 0.5rem;
+}
+
+.localgov-alert-banner.localgov-alert-banner--announcement a {
+  color: #333;
 }
 
 .localgov-alert-banner__actions {
