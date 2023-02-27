@@ -1434,6 +1434,10 @@ a.service-statuses__link--bottom {
 }
 
 @media screen and (min-width: 768px) {
+  .lgd-header {
+    padding: 5px 0;
+  }
+
   #lgd_header_menu {
     display: flex;
     position: initial;
@@ -1452,6 +1456,8 @@ a.service-statuses__link--bottom {
     width: 280px;
     margin-left: 2rem;
     order: 2;
+    margin-top: var(--spacing);
+    margin-bottom: var(--spacing);
   }
 
   #lgd_header_menu .lgd-header__nav--secondary {
@@ -1460,7 +1466,7 @@ a.service-statuses__link--bottom {
     left: 0;
     top: 0;
     background-color: var(--color-blue);
-    margin-top: 95px;
+    margin-top: 97px;
     border-bottom: 4px solid #063985;
   }
 
