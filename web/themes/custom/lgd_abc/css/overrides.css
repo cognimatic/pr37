@@ -49,6 +49,10 @@ picture p img {
     font-weight:300;
 }
 
+dialog::backdrop {
+  background-color: rgba(1, 8, 35, 0.85);
+}
+
 /*
 * Add default padding to left/right aligned DIVs - which is generally generated
 * by Drupal in LONG TEXT fields with embedded media
@@ -198,7 +202,7 @@ ul.search-stats-results li{
 }
 
 a {
-  text-underline-offset: 25%;
+  text-underline-offset: 20%;
 }
 
 a:focus {
@@ -307,6 +311,15 @@ input[type="submit"].search-button.form-submit:hover {
 
 .js input.form-autocomplete {
   background-image: none;
+}
+
+.field--label-hidden {
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 .lgd-header {
