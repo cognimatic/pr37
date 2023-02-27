@@ -651,14 +651,14 @@ button.localgov-alert-banner__close:hover {
 }
 
 .banner--primary .banner__content .field--name-localgov-title {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 32px;
   line-height: 1.2;
 }
 
 .banner--primary .banner__content .field--name-localgov-subsites-banner-text {
   font-size: 19px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.8;
 }
 
