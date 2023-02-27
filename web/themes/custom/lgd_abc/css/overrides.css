@@ -186,6 +186,10 @@ ul.search-stats-results li{
   overflow: hidden;
 }
 
+.lgd-region--search label {
+  color: black !important;
+}
+
 .visually-hidden {
   display: block;
   width: 0;
