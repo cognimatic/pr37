@@ -75,9 +75,9 @@ picture p img {
 
 .messages.messages--status {
   background-image: none;
-  background-color: #FEF093;
+  background-color: #c8efcf;
   color: #333333;
-  border-top: 1px solid #DED17E;
+  border-top: 1px solid #99e469;
 }
 
 .messages.messages--error {
