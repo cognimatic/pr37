@@ -116,6 +116,10 @@ h1 {
   font-size: 44px;
 }
 
+.lgd-container {
+  width: 100%;
+}
+
 .lgd-row,
 .layout--twocol {
   margin-right: calc(-1 * var(--grid-column-spacing) / 2);
@@ -223,6 +227,12 @@ a {
   text-underline-offset: 20%;
 }
 
+a:hover {
+  text-decoration-thickness: max(0.13rem);
+  background-color: #dbefff;
+  color: var(--color-link-hover);
+}
+
 a:focus {
   outline: none;
   color: #333;
@@ -230,12 +240,7 @@ a:focus {
   box-shadow: none;
   -webkit-box-decoration-break: unset;
   text-decoration: underline;
-}
-
-a:hover {
-  text-decoration-thickness: max(2px, 0.1rem, 0.1em);
-  background-color: #dbefff;
-  color: var(--color-link-hover);
+  text-decoration-thickness: max(0.13rem);
 }
 
 button:hover, button:focus {
@@ -343,8 +348,11 @@ input[type="submit"].search-button.form-submit:hover {
 }
 
 .lgd-header {
-  padding: 10px 0;
+  padding: 0;
   border-bottom: 4px solid #063985;
+  height: 80px;
+  display: flex;
+  align-items: center;
 }
 
 .lgd-header--primary {
@@ -449,11 +457,15 @@ ul.menu {
 }
 
 .lgd-header a:hover,
-.lgd-footer a:hover {
+.lgd-footer a:hover,
+.lgd-header a:focus,
+.lgd-footer a:focus{
+  color: white;
   background-color: transparent;
 }
 
 .lgd-header a:focus {
+  color: white;
   outline: none;
   background-color: transparent;
   -webkit-box-shadow: none;
@@ -558,6 +570,10 @@ ul.menu {
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: auto;
+}
+
+#lgd_header_menu .region-primary-menu ul.menu li.menu-item a:hover {
+  color: white;
 }
 
 a.breadcrumbs__link {
@@ -979,6 +995,16 @@ a.abplace2b-logo::before {
 
 .paragraph--type--service-highlight-list h2 a{
   color: #333333;
+}
+
+.paragraph--type--service-highlight-list h2 a:hover{
+  color: #063985;
+  text-decoration-thickness: max(0.15rem);
+}
+
+.paragraph--type--service-highlight-list h2 a:focus{
+  color: #333;
+  text-decoration-thickness: max(0.15rem);
 }
 
 .paragraph--id--602 {
@@ -1526,7 +1552,7 @@ a.service-statuses__link--bottom {
 
 @media screen and (min-width: 768px) {
   .lgd-header {
-    padding: 5px 0;
+    height: 96px;
   }
 
   #lgd_header_menu {
@@ -1663,8 +1689,9 @@ a.service-statuses__link--bottom {
     text-decoration: underline;
   }
 
-  ul.service-highlight__list li a:hover {
-    text-decoration-thickness: max(2px, 0.1rem, 0.1em);
+  ul.service-highlight__list li a:hover,
+  ul.service-highlight__list li a:focus{
+    text-decoration-thickness: max(0.13rem);
   }
 
   .paragraph--type--service-highlight-list {
