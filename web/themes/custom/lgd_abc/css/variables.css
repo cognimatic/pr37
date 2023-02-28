@@ -84,7 +84,7 @@ body {
   --alert-banner-color: #333333;
   --alert-banner-bg-color-minor: #F6F6F6;
   --alert-banner-bg-color-major: white;
-  --alert-banner-title-color-major: var(--color-secondary-red);
+  --alert-banner-title-color-major: white;
   --alert-banner-title-color-minor: #333333;
   --alert-banner-bg-color-notable-person: #333333;
   --alert-banner-focus-color: var(--color-black);

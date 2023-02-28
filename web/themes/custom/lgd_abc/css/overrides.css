@@ -584,50 +584,95 @@ a.breadcrumbs__link {
   font-size: 24px;
 }
 
-.block-localgov-alert-banner {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 99;
-  width: 100%;
-  max-width: 1180px;
-  padding-right: var(--spacing-padding-horizontal);
-  padding-left: var(--spacing-padding-horizontal);
-}
-
 .localgov-alert-banner {
-  padding: 30px;
-  margin: 10px 0;
-  border: 5px solid #333333;
+  padding: 20px 15px;
   box-sizing: border-box;
   color: #333;
+}
+
+.localgov-alert-banner.localgov-alert-banner--announcement {
+  background-color: var(--color-yellow);
+}
+
+.localgov-alert-banner.localgov-alert-banner--notable-person {
+  color: white;
+  background-color: #333333;
+}
+
+.localgov-alert-banner.localgov-alert-banner--major {
+  color: white;
+  background-color: #AC1B27;
+}
+
+.localgov-alert-banner h2 {
+  font-size: 22px;
+  margin-bottom: 1rem;
 }
 
 .localgov-alert-banner p {
   margin-bottom: 0.5rem;
 }
 
-.localgov-alert-banner.localgov-alert-banner--announcement a {
+.localgov-alert-banner a {
   color: #333;
+}
+
+.localgov-alert-banner.localgov-alert-banner--notable-person a,
+.localgov-alert-banner.localgov-alert-banner--major a,
+.localgov-alert-banner.localgov-alert-banner--notable-person p,
+.localgov-alert-banner.localgov-alert-banner--major p{
+  color: white;
 }
 
 .localgov-alert-banner__actions {
   align-items: flex-start;
 }
 
-button.localgov-alert-banner__close {
-  color: var(--color-blue);
-  background-color: white;
-  border-color: var(--color-blue);
+.localgov-alert-banner button.localgov-alert-banner__close {
+  color: #333;
+  background-color: transparent;
+  border: none;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1;
-  border-radius: 4px;
-  padding: 10px 20px;
-  margin-left: 30px;
+  margin-left: 50px;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
-button.localgov-alert-banner__close:hover {
+.localgov-alert-banner button.localgov-alert-banner__close::before {
+  content: "\00D7";
+  font-size: 26px;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.localgov-alert-banner.localgov-alert-banner--notable-person button.localgov-alert-banner__close,
+.localgov-alert-banner.localgov-alert-banner--major button.localgov-alert-banner__close{
+  color: white;
+}
+
+.localgov-alert-banner.localgov-alert-banner-full button.localgov-alert-banner__close,
+.localgov-alert-banner.localgov-alert-banner-full.localgov-alert-banner--notable-person button.localgov-alert-banner__close,
+.localgov-alert-banner.localgov-alert-banner-full.localgov-alert-banner--major button.localgov-alert-banner__close{
+  color: var(--color-blue);
+  background-color: white;
+  border: 2px solid var(--color-blue);
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 10px 20px;
+}
+
+dialog.localgov-alert-banner.localgov-alert-banner-full.localgov-alert-banner--notable-person::backdrop {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.localgov-alert-banner.localgov-alert-banner-full button.localgov-alert-banner__close::before {
+  content: none;
+}
+
+.localgov-alert-banner.localgov-alert-banner-full button.localgov-alert-banner__close:hover {
   color: white;
   background-color: var(--color-blue);
   border-color: var(--color-blue);
@@ -639,6 +684,7 @@ button.localgov-alert-banner__close:hover {
   transform: translate(-50%, -50%);
   margin: 0;
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.8);
+  border-width: 5px;
 }
 
 .localgov-alert-banner-full h1,
@@ -654,31 +700,31 @@ button.localgov-alert-banner__close:hover {
   min-height: 48px;
 }
 
+.localgov-alert-banner.localgov-alert-banner-full.localgov-alert-banner--major {
+  color: #AC1B27;
+  background-color: white;
+  border-color: #AC1B27;
+}
+
+.localgov-alert-banner.localgov-alert-banner-full.localgov-alert-banner--notable-person {
+  border-color: #333;
+}
+
+.localgov-alert-banner.localgov-alert-banner-full.localgov-alert-banner--major h1,
+.localgov-alert-banner.localgov-alert-banner-full.localgov-alert-banner--major a,
+.localgov-alert-banner.localgov-alert-banner-full.localgov-alert-banner--major p{
+  color: #AC1B27;
+}
+
 .localgov-alert-banner-full button.localgov-alert-banner__close {
   position: absolute;
   right: 0;
   margin-right: 30px;
 }
 
-.localgov-alert-banner.localgov-alert-banner--notable-person {
-  color: white;
-  background-color: #333333;
-  border-color: #333333;
-}
-
-.localgov-alert-banner.localgov-alert-banner--major {
-  color: #AC1B27;
-  background-color: white;
-  border-color: #AC1B27;
-}
-
 .localgov-alert-banner--minor .localgov-alert-banner__close {
   border-color: var(--color-blue);
   color: var(--color-blue);
-}
-
-.localgov-alert-banner.localgov-alert-banner--announcement {
-  background-color: var(--color-yellow);
 }
 
 .banner--primary {
