@@ -524,7 +524,7 @@ ul.menu {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 99;
   margin-top: 80px;
   overflow: hidden;
   border-bottom: 4px solid #063985;
