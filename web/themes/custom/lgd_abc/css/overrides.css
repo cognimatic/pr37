@@ -194,6 +194,10 @@ ul.search-stats-results li{
   color: black !important;
 }
 
+.lgd-header .lgd-region--search form input.search-button{
+  color: #fff !important;
+}
+
 .visually-hidden {
   display: block;
   width: 0;
