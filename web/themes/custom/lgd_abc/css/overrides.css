@@ -353,6 +353,7 @@ input[type="submit"].search-button.form-submit:hover {
   height: 80px;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .lgd-header--primary {
@@ -431,8 +432,7 @@ ul.menu {
 }
 
 .lgd-header .lgd-header__nav--primary .menu-item,
-.lgd-header .lgd-header__toggles .lgd-header__toggle,
-.lgd-header .lgd-header__toggles .lgd-header__toggle:focus{
+.lgd-header .lgd-header__toggles .lgd-header__toggle {
   margin-left: 0;
   border: none;
   transition: border-color 0.3s;
@@ -585,7 +585,7 @@ a.breadcrumbs__link {
 }
 
 .localgov-alert-banner {
-  padding: 20px 15px;
+  padding: 14px 15px;
   box-sizing: border-box;
   color: #333;
 }
@@ -606,11 +606,15 @@ a.breadcrumbs__link {
 
 .localgov-alert-banner h2 {
   font-size: 22px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .localgov-alert-banner p {
   margin-bottom: 0.5rem;
+}
+
+.localgov-alert-banner p:last-child {
+  margin-bottom: 0;
 }
 
 .localgov-alert-banner a {
@@ -1651,12 +1655,53 @@ a.service-statuses__link--bottom {
   }
 
   .lgd-header .lgd-header__nav--primary .menu-item,
-  .lgd-header .lgd-header__toggles .lgd-header__toggle,
-  .lgd-header .lgd-header__toggles .lgd-header__toggle:focus{
+  .lgd-header .lgd-header__toggles .lgd-header__toggle{
     margin-left: 2rem;
+    background-color: transparent;
+  }
+
+  .lgd-header .lgd-header__nav--primary .menu-item{
     border: 2px solid transparent;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, background-color 0.3s;
     padding: 0.2rem 0.7rem;
+  }
+
+  .lgd-header .lgd-header__toggles .lgd-header__toggle{
+    padding: 0.1rem 0.7rem;
+    border-bottom: 2px solid transparent;
+  }
+
+  .lgd-header .menu-item:hover,
+  .lgd-header .lgd-header__toggles .lgd-header__toggle:hover {
+    border-color: white;
+  }
+
+  .lgd-header .menu-item:hover {
+    background-color: #063985;
+  }
+
+  .lgd-header .menu-item.menu-item--active-trail {
+    border-color: white;
+  }
+
+  .lgd-header .lgd-header__nav--primary .menu-item:focus-within,
+  .lgd-header .lgd-header__toggles .lgd-header__toggle:focus,
+  .lgd-header .lgd-header__toggles .lgd-header__toggle.lgd-header__toggle--active {
+    color: #333;
+    background-color: #FCDF1B;
+    box-shadow: 0 2px 0 #222222;
+  }
+
+  .lgd-header .lgd-header__nav--primary .menu-item:focus-within:hover,
+  .lgd-header .lgd-header__nav--primary .menu-item.menu-item--active-trail:focus-within,
+  .lgd-header .lgd-header__toggles .lgd-header__toggle:focus:hover,
+  .lgd-header .lgd-header__toggles .lgd-header__toggle.lgd-header__toggle--active:hover {
+    border-color: transparent;
+  }
+
+  .lgd-header .lgd-header__nav--primary .menu-item:focus-within a,
+  #lgd_header_menu .region-primary-menu ul.menu li.menu-item a:focus {
+    color: #333;
   }
 
   .lgd-header h2.secondary-menu-heading {
@@ -1675,6 +1720,32 @@ a.service-statuses__link--bottom {
 
   .lgd-header__toggle--active .lgd-header__toggle-icon::after {
     transform: rotate(270deg) translateY(-5px);
+  }
+
+  .lgd-header .lgd-header__nav--secondary ul.menu li.menu-item::before {
+    margin-right: 2px;
+  }
+
+  #lgd_header_menu ul.menu--localgov_services_menu li.menu-item a {
+    padding: 0.2rem 0.4rem;
+  }
+
+  #lgd_header_menu ul.menu--localgov_services_menu li.menu-item:hover {
+    background-color: transparent;
+  }
+
+  #lgd_header_menu ul.menu--localgov_services_menu li.menu-item a:hover {
+    border-bottom: 2px solid white;
+  }
+
+  #lgd_header_menu ul.menu--localgov_services_menu li.menu-item a:focus {
+    color: #333;
+    background-color: #FCDF1B;
+    box-shadow: 0 2px 0 #222222;
+  }
+
+  #lgd_header_menu ul.menu--localgov_services_menu li.menu-item a:focus:hover {
+    border-bottom: none;
   }
 
   .lgd-footer {
@@ -1815,13 +1886,6 @@ a.service-statuses__link--bottom {
   .views-view-grid .views-row .views-col,
   .layout--twocol-wide > .layout__region {
     width: auto;
-  }
-
-  .lgd-header .menu-item:hover,
-  .lgd-header .menu-item:focus,
-  .lgd-header .lgd-header__toggles .lgd-header__toggle:hover,
-  .lgd-header .lgd-header__toggles .lgd-header__toggle.lgd-header__toggle--active {
-    border-color: white;
   }
 
   .lgd-header .lgd-header__nav--secondary ul.menu {
