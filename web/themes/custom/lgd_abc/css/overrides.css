@@ -1659,6 +1659,34 @@ a.service-statuses__link--bottom {
   width: 100%;
 }
 
+[id^="block-accessibililty"] .callout.text-convert .wrapper {
+  display: flex;
+}
+
+[id^="block-accessibililty"] .callout.text-convert .wrapper button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 80px;
+  border-radius: 40px;
+  height: 80px;
+  margin-right: 1rem;
+  background-color: #fff;
+  border: none;
+  color: #00551f;
+  font-size: 35px;
+  transition: all 0.2s;
+}
+
+[id^="block-accessibililty"] .callout.text-convert .wrapper button:hover {
+  background-color: #9ED39D;
+  font-size: 40px;
+}
+
+[id^="block-accessibililty"] .callout.text-convert .wrapper p {
+  line-height: 1.4;
+}
+
 @media screen and (min-width: 40em) {
   .layout--twocol > .layout__region--first, .layout--twocol > .layout__region--second {
     flex: 0 1 100%;
