@@ -532,7 +532,7 @@
   $(window).on('dialog:aftercreate', (event, dialog, $dialog) => {
     if ($dialog[0].id.indexOf('lpb-dialog-') === 0) {
       clearInterval(lpDialogInterval);
-      lpDialogInterval = setInterval(repositionDialog.bind(null, lpDialogInterval), 500);
+      // lpDialogInterval = setInterval(repositionDialog.bind(null, lpDialogInterval), 500);
     }
   });
 })(jQuery, Drupal, Drupal.debounce, dragula, once);

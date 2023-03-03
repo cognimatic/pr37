@@ -360,7 +360,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   $(window).on('dialog:aftercreate', function (event, dialog, $dialog) {
     if ($dialog[0].id.indexOf('lpb-dialog-') === 0) {
       clearInterval(lpDialogInterval);
-      lpDialogInterval = setInterval(repositionDialog.bind(null, lpDialogInterval), 500);
     }
   });
 })(jQuery, Drupal, Drupal.debounce, dragula, once);
