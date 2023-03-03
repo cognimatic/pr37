@@ -83,6 +83,7 @@
         "drupal/search_api_spellcheck": "^4.0",
         "drupal/search_api_stats": "^1.0@alpha",
         "drupal/seckit": "^2.0",
+        "drupal/security_review": "^2.0",
         "drupal/seo_checklist": "^5.1",
         "drupal/shs": "^2.0@RC",
         "drupal/simple_styleguide": "^1.8",
@@ -183,6 +184,9 @@
             "drupal/core": {
               "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2022-10-20/3099026-42.patch",
               "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch"
+            },
+            "drupal/layout_paragraphs": {
+                "Overlay Widget Jump Stutter 3276258": "https://www.drupal.org/files/issues/2022-10-14/3276258-9.patch"
             },
             "drupal/migrate_drupal_d8": {
                     "Fix bundle logic to select fields correctly 3134305": "https://www.drupal.org/files/issues/2021-07-16/3134305-fix-bundle-logic-5.patch"

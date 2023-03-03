@@ -1850,6 +1850,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/security_review' => array(
+            'pretty_version' => '2.0.1',
+            'version' => '2.0.1.0',
+            'reference' => '2.0.1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/security_review',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/seo_checklist' => array(
             'pretty_version' => '5.1.0',
             'version' => '5.1.0.0',
