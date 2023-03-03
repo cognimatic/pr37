@@ -12582,6 +12582,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "Base table or view not found 3345844": "https://git.drupalcode.org/project/security_review/-/merge_requests/37.diff"
                 }
             },
             "installation-source": "dist",
