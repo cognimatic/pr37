@@ -120,6 +120,7 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
     /** @var \Drupal\auditfiles\Reference\FileEntityReference[] $references */
     $references = iterator_to_array($this->filesManagedNotUsed->getReferences());
     $form_state->setTemporaryValue(static::TEMPORARY_ALL_REFERENCES, $references);
+    $rows=[];
 
     foreach ($references as $reference) {
       $file = $reference->getFile() ?? throw new \LogicException('The file_managed row exists so this should be loadable.');
@@ -139,61 +140,67 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
 
     $pages = [];
     $currentPage = NULL;
-    if (count($rows) > 0) {
+    if (is_countable($rows) && isset($rows)){
+    } else {
+      $rows_count = 0;
+    }
+    if ($rows_count > 0) {
       $itemsPerPage = $this->auditFilesConfig->getReportOptionsItemsPerPage();
       if ($itemsPerPage > 0) {
-        $currentPage = $this->pagerManager->createPager(count($rows), $itemsPerPage)->getCurrentPage();
+        $currentPage = $this->pagerManager->createPager($rows_count, $itemsPerPage)->getCurrentPage();
         $pages = array_chunk($rows, $itemsPerPage, TRUE);
       }
     }
 
-    // Setup the record count and related messages.
-    $maximumRecords = $this->auditFilesConfig->getReportOptionsMaximumRecords();
-    $form['help']['#markup'] = (count($rows) > 0) ? $this->formatPlural(
-      count($rows),
-      'Found 1 file in the file_managed table that is not in the file_usage table.',
-      (($maximumRecords !== 0) ? 'Found at least @count files in the file_managed table not in the file_usage table.' : 'Found @count files in the file_managed table not in the file_usage table.'),
-    ) : $this->t('Found no files in the file_managed table not in the file_usage table.');
+      // Setup the record count and related messages.
+      $maximumRecords = $this->auditFilesConfig->getReportOptionsMaximumRecords();
+      $form['help']['#markup'] = ($rows_count > 0) ? $this->formatPlural(
+              $rows_count,
+              'Found 1 file in the file_managed table that is not in the file_usage table.',
+              (($maximumRecords !== 0) ? 'Found at least @count files in the file_managed table not in the file_usage table.' : 'Found @count files in the file_managed table not in the file_usage table.'),
+          ) : $this->t('Found no files in the file_managed table not in the file_usage table.');
 
-    // Create the form table.
-    $form['files'] = [
-      '#type' => 'tableselect',
-      '#header' => [
-        'fid' => [
-          'data' => $this->t('File ID'),
+      // Create the form table.
+      if (isset($rows)) {
+      $form['files'] = [
+        '#type' => 'tableselect',
+        '#header' => [
+          'fid' => [
+            'data' => $this->t('File ID'),
+          ],
+          'uid' => [
+            'data' => $this->t('User ID'),
+          ],
+          'filename' => [
+            'data' => $this->t('Name'),
+          ],
+          'uri' => [
+            'data' => $this->t('URI'),
+          ],
+          'path' => [
+            'data' => $this->t('Path'),
+          ],
+          'filemime' => [
+            'data' => $this->t('MIME'),
+          ],
+          'filesize' => [
+            'data' => $this->t('Size'),
+          ],
+          'datetime' => [
+            'data' => $this->t('When added'),
+          ],
+          'status' => [
+            'data' => $this->t('Status'),
+          ],
         ],
-        'uid' => [
-          'data' => $this->t('User ID'),
-        ],
-        'filename' => [
-          'data' => $this->t('Name'),
-        ],
-        'uri' => [
-          'data' => $this->t('URI'),
-        ],
-        'path' => [
-          'data' => $this->t('Path'),
-        ],
-        'filemime' => [
-          'data' => $this->t('MIME'),
-        ],
-        'filesize' => [
-          'data' => $this->t('Size'),
-        ],
-        'datetime' => [
-          'data' => $this->t('When added'),
-        ],
-        'status' => [
-          'data' => $this->t('Status'),
-        ],
-      ],
-      '#empty' => $this->t('No items found.'),
-      '#options' => $pages[$currentPage] ?? $rows,
-    ];
-
-    if (0 === count($rows)) {
-      return $form;
+        '#empty' => $this->t('No items found.'),
+        '#options' => $pages[$currentPage] ?? $rows,
+      ];
     }
+
+    if (0 === $rows_count) {
+        return $form;
+      }
 
     $form['actions'] = ['#type' => 'actions'];
     $form['actions']['submit'] = [
