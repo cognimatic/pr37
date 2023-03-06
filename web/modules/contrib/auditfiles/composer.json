@@ -1,0 +1,9 @@
+{
+    "name": "drupal/auditfiles",
+    "description": "Allows for comparing and correcting files and file references in the files directory, in the database, and in content.",
+    "type": "drupal-module",
+    "require": {
+        "php": ">=8.0",
+        "drupal/core": "^9.4"
+    }
+}

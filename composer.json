@@ -14,6 +14,7 @@
         "composer/installers": "^1.10",
         "cweagans/composer-patches": "^1.6",
         "defuse/php-encryption": "^2.3",
+        "drupal/auditfiles": "^4.0@beta",
         "drupal/autocomplete_deluxe": "^2.0",
         "drupal/backup_migrate": "5.1.x-dev@dev",
         "drupal/better_exposed_filters": "^6.0",
