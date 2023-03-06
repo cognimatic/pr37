@@ -19,6 +19,7 @@ function lgd_abc_form_alter(&$form, &$form_state, $form_id) {
       $form['actions']['submit']['#value'] = " ";
       $form['actions']['submit']['#name'] = 'Search';
       $form['actions']['submit']['#attributes']['class'][] = 'search-button';
+      $form['actions']['submit']['#attributes']['aria-label'] = 'submit search';
     }
   }
   // Cludo form
