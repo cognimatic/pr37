@@ -120,7 +120,7 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
     /** @var \Drupal\auditfiles\Reference\FileEntityReference[] $references */
     $references = iterator_to_array($this->filesManagedNotUsed->getReferences());
     $form_state->setTemporaryValue(static::TEMPORARY_ALL_REFERENCES, $references);
-    $rows=[];
+    $rows = [];
 
     foreach ($references as $reference) {
       $file = $reference->getFile() ?? throw new \LogicException('The file_managed row exists so this should be loadable.');
@@ -140,8 +140,10 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
 
     $pages = [];
     $currentPage = NULL;
-    if (is_countable($rows) && isset($rows)){
-    } else {
+    if (is_countable($rows) && isset($rows)) {
+      $rows_count = count($rows);
+    }
+    else {
       $rows_count = 0;
     }
     if ($rows_count > 0) {
@@ -152,16 +154,16 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
       }
     }
 
-      // Setup the record count and related messages.
-      $maximumRecords = $this->auditFilesConfig->getReportOptionsMaximumRecords();
-      $form['help']['#markup'] = ($rows_count > 0) ? $this->formatPlural(
-              $rows_count,
-              'Found 1 file in the file_managed table that is not in the file_usage table.',
-              (($maximumRecords !== 0) ? 'Found at least @count files in the file_managed table not in the file_usage table.' : 'Found @count files in the file_managed table not in the file_usage table.'),
-          ) : $this->t('Found no files in the file_managed table not in the file_usage table.');
+    // Setup the record count and related messages.
+    $maximumRecords = $this->auditFilesConfig->getReportOptionsMaximumRecords();
+    $form['help']['#markup'] = ($rows_count > 0) ? $this->formatPlural(
+            $rows_count,
+            'Found 1 file in the file_managed table that is not in the file_usage table.',
+            (($maximumRecords !== 0) ? 'Found at least @count files in the file_managed table not in the file_usage table.' : 'Found @count files in the file_managed table not in the file_usage table.'),
+        ) : $this->t('Found no files in the file_managed table not in the file_usage table.');
 
-      // Create the form table.
-      if (isset($rows)) {
+    // Create the form table.
+    if (isset($rows)) {
       $form['files'] = [
         '#type' => 'tableselect',
         '#header' => [
@@ -199,8 +201,8 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
     }
 
     if (0 === $rows_count) {
-        return $form;
-      }
+      return $form;
+    }
 
     $form['actions'] = ['#type' => 'actions'];
     $form['actions']['submit'] = [
