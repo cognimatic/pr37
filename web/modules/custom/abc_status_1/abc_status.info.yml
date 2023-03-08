@@ -1,4 +1,4 @@
-name: Service Status traffic lights
+name: DELETE ME Wierd Duplicate of Status
 type: module
 description: Summary of status of key Services based on traffic lights
 core_version_requirement: ^9 || ^10
