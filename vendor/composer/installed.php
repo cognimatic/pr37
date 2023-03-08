@@ -2514,9 +2514,9 @@
             'dev_requirement' => false,
         ),
         'localgovdrupal/localgov_news' => array(
-            'pretty_version' => '2.2.3',
-            'version' => '2.2.3.0',
-            'reference' => '88eade2de8e6e87bc4e639b9e6750ed7e3daf452',
+            'pretty_version' => '2.2.4',
+            'version' => '2.2.4.0',
+            'reference' => '517cd1061f9c55f86f60da97b159729fa3d65501',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/localgov_news',
             'aliases' => array(),
