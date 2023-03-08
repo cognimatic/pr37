@@ -66,7 +66,10 @@ class ServiceStatus extends BlockBase {
    
     $list .= "</ul>";
     
-    $list .= "<p><a href='/service-status' title='More detail about status updates across Argyll and Bute'>Detailed status updates</a></p>";
+    $list .= "<div class='status-detail btn'>"
+        . "<a href='/service-status' class='call-out-box__link' "
+        . "'title='More detail about status updates across Argyll and Bute'>"
+        .  "Detailed status updates</a></div>";
     $list .= "</div>";
     return [
       '#type' => 'markup',
