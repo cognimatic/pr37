@@ -922,7 +922,7 @@ function claro_preprocess_field_multiple_value_form(&$variables) {
     // Add an additional CSS class to the field label table cell. The table
     // header cell should always exist unless removed by contrib.
     // @see template_preprocess_field_multiple_value_form().
-    if (isset($variables['table']['#header'][0]['data']['#attributes']) && $variables['table']['#header'][0]['data']['#attributes'] instanceof Attribute) {
+    if (isset($variables['table']['#header'][0]['data']['#attributes']) && $variables['table']['#header'][0]['data']['#attributes']) {
       $variables['table']['#header'][0]['data']['#attributes']->removeClass('label');
       $variables['table']['#header'][0]['data']['#attributes']->addClass('form-item__label', 'form-item__label--multiple-value-form');
     }

@@ -60,6 +60,8 @@ tr .form-item,
   line-height: 1.125rem;
 }
 
+/* Multiple selectors used to ensure styling even if modules override markup. */
+
 .form-item__label--multiple-value-form,
 .field-multiple-table .field-label h4.label {
   display: inline-block;

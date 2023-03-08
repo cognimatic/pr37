@@ -41,13 +41,13 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
    * Constructs a new AuditFilesManagedNotUsedForm.
    */
   final public function __construct(
-    protected AuditFilesConfigInterface $auditFilesConfig,
-    protected AuditFilesManagedNotUsed $filesManagedNotUsed,
-    protected PagerManagerInterface $pagerManager,
-    protected DateFormatterInterface $dateFormatter,
-    protected FileSystemInterface $fileSystem,
-    protected FileUrlGeneratorInterface $fileUrlGenerator,
-  ) {
+      protected AuditFilesConfigInterface $auditFilesConfig,
+      protected AuditFilesManagedNotUsed $filesManagedNotUsed,
+      protected PagerManagerInterface $pagerManager,
+      protected DateFormatterInterface $dateFormatter,
+      protected FileSystemInterface $fileSystem,
+      protected FileUrlGeneratorInterface $fileUrlGenerator,
+  ) {  
   }
 
   /**
@@ -55,12 +55,12 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
    */
   public static function create(ContainerInterface $container): static {
     return new static(
-      $container->get('auditfiles.config'),
-      $container->get('auditfiles.auditor.managed_not_used'),
-      $container->get('pager.manager'),
-      $container->get('date.formatter'),
-      $container->get('file_system'),
-      $container->get('file_url_generator'),
+        $container->get('auditfiles.config'),
+        $container->get('auditfiles.auditor.managed_not_used'),
+        $container->get('pager.manager'),
+        $container->get('date.formatter'),
+        $container->get('file_system'),
+        $container->get('file_url_generator'),
     );
   }
 
@@ -234,17 +234,17 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
   public function submitDeleteRecord(array &$form, FormStateInterface $form_state): void {
     $selected = $form_state->getValue('files');
     $references = array_filter(
-      $form_state->getTemporaryValue(static::TEMPORARY_ALL_REFERENCES),
-      static function (FileEntityReference $reference) use ($selected): bool {
-        return array_key_exists($reference->getId(), $selected);
-      },
+        $form_state->getTemporaryValue(static::TEMPORARY_ALL_REFERENCES),
+        static function (FileEntityReference $reference) use ($selected): bool {
+          return array_key_exists($reference->getId(), $selected);
+        },
     );
     $form_state
-      ->setStorage([
-        'references' => $references,
-        'confirm' => TRUE,
-      ])
-      ->setRebuild();
+        ->setStorage([
+          'references' => $references,
+          'confirm' => TRUE,
+        ])
+        ->setRebuild();
   }
 
   /**
@@ -290,15 +290,15 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
     $references = $storage['references'];
 
     $batchDefinition = (new BatchBuilder())
-      ->setTitle(\t('Deleting files from the file_managed table'))
-      ->setErrorMessage(\t('One or more errors were encountered processing the files.'))
-      ->setFinishCallback([AuditFilesDeleteFileEntityBatchProcess::class, 'finishBatch'])
-      ->setProgressMessage(\t('Completed @current of @total operations.'));
+        ->setTitle(\t('Deleting files from the file_managed table'))
+        ->setErrorMessage(\t('One or more errors were encountered processing the files.'))
+        ->setFinishCallback([AuditFilesDeleteFileEntityBatchProcess::class, 'finishBatch'])
+        ->setProgressMessage(\t('Completed @current of @total operations.'));
     foreach ($references as $reference) {
       assert($reference instanceof FileEntityReference);
       $batchDefinition->addOperation(
-        [AuditFilesDeleteFileEntityBatchProcess::class, 'create'],
-        [$reference],
+          [AuditFilesDeleteFileEntityBatchProcess::class, 'create'],
+          [$reference],
       );
     }
 

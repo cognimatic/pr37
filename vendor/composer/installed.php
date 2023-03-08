@@ -454,6 +454,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/auditfiles' => array(
+            'pretty_version' => '4.0.0-beta1',
+            'version' => '4.0.0.0-beta1',
+            'reference' => '4.0.0-beta1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/auditfiles',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/autocomplete_deluxe' => array(
             'pretty_version' => '2.0.3',
             'version' => '2.0.3.0',
