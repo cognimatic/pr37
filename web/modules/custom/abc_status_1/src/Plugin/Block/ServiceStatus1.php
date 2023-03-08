@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\abc_status\Plugin\Block;
+namespace Drupal\abc_status_1\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Link;
@@ -10,12 +10,12 @@ use Drupal\Core\Url;
  * Provides a block to render a summery of key service statuses
  *
  * @Block(
- *   id = "service_status_lights",
+ *   id = "service_status_1_lights",
  *   admin_label = @Translation("Service Status traffic lights"),
  *   category = @Translation("Service Status"),
  * )
  */
-class ServiceStatus extends BlockBase {
+class ServiceStatus1 extends BlockBase {
 
   /**
    * {@inheritdoc}
