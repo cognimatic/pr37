@@ -1,4 +1,0 @@
-<?php
-function abc_status_preprocess_page(&$variables) {
-  $variables['#attached']['library'][] = 'abc_status/global-styling';
-}
