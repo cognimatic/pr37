@@ -14623,16 +14623,16 @@
         },
         {
             "name": "localgovdrupal/localgov_news",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/localgovdrupal/localgov_news.git",
-                "reference": "88eade2de8e6e87bc4e639b9e6750ed7e3daf452"
+                "reference": "517cd1061f9c55f86f60da97b159729fa3d65501"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/localgovdrupal/localgov_news/zipball/88eade2de8e6e87bc4e639b9e6750ed7e3daf452",
-                "reference": "88eade2de8e6e87bc4e639b9e6750ed7e3daf452",
+                "url": "https://api.github.com/repos/localgovdrupal/localgov_news/zipball/517cd1061f9c55f86f60da97b159729fa3d65501",
+                "reference": "517cd1061f9c55f86f60da97b159729fa3d65501",
                 "shasum": ""
             },
             "require": {
@@ -14660,9 +14660,9 @@
             "homepage": "https://github.com/localgovdrupal/localgov_news",
             "support": {
                 "issues": "https://github.com/localgovdrupal/localgov_news/issues",
-                "source": "https://github.com/localgovdrupal/localgov_news/tree/2.2.3"
+                "source": "https://github.com/localgovdrupal/localgov_news/tree/2.2.4"
             },
-            "time": "2022-09-09T13:52:05+00:00"
+            "time": "2023-02-27T14:35:37+00:00"
         },
         {
             "name": "localgovdrupal/localgov_openreferral",
