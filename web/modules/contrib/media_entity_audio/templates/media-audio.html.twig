@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Default theme implementation for an audio.
+ *
+ * Available variables:
+ * - sources: list of audio sources
+ * - attributes: HTML attributes to be applied to the list.
+ *
+ * @see template_preprocess_media_audio()
+ *
+ * @ingroup themeable
+ */
+#}
+<audio {{ attributes }}>
+  {%- for source in sources -%}
+    {%- if source.type -%}
+      <source src="{{ source.url }}" type="{{ source.type }}">
+    {%- else -%}
+      <source src="{{ source.url }}">
+    {%- endif -%}
+  {%- endfor -%}
+</audio>

@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * @file
+ * Install, uninstall and update hooks for Media entity audio module.
+ */
+
+/**
+ * Update media audio types to use core audio source plugin and audiofield.
+ */
+function media_entity_audio_update_8301() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('media.type.') as $media_type_id) {
+    $config = $config_factory->getEditable($media_type_id);
+    $source_id = $config->get('source');
+
+    if ($source_id === 'audio') {
+
+      $source_field_name = $config->get('source_configuration.source_field');
+      $source_field_storage_config = \Drupal::config('field.storage.media.' . $source_field_name);
+      $type_id = $config->get('id');
+
+      if ($source_field_storage_config->get('type') === 'link') {
+        $config->set('source', 'audio_stream');
+      }
+      else {
+        $config->set('source', 'audio_file');
+
+        $dependencies = $config->get('dependencies');
+        if (is_array($dependencies) && !empty($dependencies['module'])) {
+          $dependencies['module'] = array_diff($dependencies['module'], ['media_entity_audio']);
+          if (empty($dependencies['module'])) {
+            unset($dependencies['module']);
+          }
+          $config->set('dependencies', $dependencies);
+        }
+      }
+      $config->save();
+
+      foreach ($config_factory->listAll("core.entity_view_display.media.{$type_id}.") as $view_display_name) {
+        $view_display_config = $config_factory->getEditable($view_display_name);
+        $content = $view_display_config->get('content');
+        if ($content[$source_field_name]['type'] === 'audio_player_html5') {
+          $content[$source_field_name]['type'] = 'file_audio';
+          $content[$source_field_name]['settings'] = [
+            'controls' => TRUE,
+            'autoplay' => FALSE,
+            'loop' => FALSE,
+            'multiple_file_display_type' => 'tags',
+          ];
+          $view_display_config->set('content', $content);
+
+          $dependencies = $view_display_config->get('dependencies');
+          if (is_array($dependencies) && !empty($dependencies['module'])) {
+            $dependencies['module'] = array_diff($dependencies['module'], ['media_entity_audio']);
+            if (empty($dependencies['module'])) {
+              unset($dependencies['module']);
+            }
+            $view_display_config->set('dependencies', $dependencies);
+          }
+
+          $view_display_config->save();
+        }
+      }
+    }
+  }
+}

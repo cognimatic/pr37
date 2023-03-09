@@ -1463,6 +1463,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/media_entity_audio' => array(
+            'pretty_version' => '3.0.0',
+            'version' => '3.0.0.0',
+            'reference' => '8.x-3.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/media_entity_audio',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/media_library_edit' => array(
             'pretty_version' => '3.0.2',
             'version' => '3.0.2.0',

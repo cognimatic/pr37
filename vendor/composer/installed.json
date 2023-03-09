@@ -10079,6 +10079,73 @@
             "install-path": "../../web/modules/contrib/mailsystem"
         },
         {
+            "name": "drupal/media_entity_audio",
+            "version": "3.0.0",
+            "version_normalized": "3.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/media_entity_audio.git",
+                "reference": "8.x-3.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/media_entity_audio-8.x-3.0.zip",
+                "reference": "8.x-3.0",
+                "shasum": "5791e62de08f820ef94bf96737027162657ea5c0"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-3.0",
+                    "datestamp": "1586900032",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Berdir",
+                    "homepage": "https://www.drupal.org/user/214652"
+                },
+                {
+                    "name": "Drupal Media Team",
+                    "homepage": "https://www.drupal.org/user/3260690"
+                },
+                {
+                    "name": "Drupal media CI",
+                    "homepage": "https://www.drupal.org/user/3057985"
+                },
+                {
+                    "name": "Primsi",
+                    "homepage": "https://www.drupal.org/user/282629"
+                },
+                {
+                    "name": "rubela_shome",
+                    "homepage": "https://www.drupal.org/user/3266902"
+                },
+                {
+                    "name": "slashrsm",
+                    "homepage": "https://www.drupal.org/user/744628"
+                }
+            ],
+            "description": "Media entity for audio streams stored as links.",
+            "homepage": "https://www.drupal.org/project/media_entity_audio",
+            "support": {
+                "source": "https://git.drupalcode.org/project/media_entity_audio"
+            },
+            "install-path": "../../web/modules/contrib/media_entity_audio"
+        },
+        {
             "name": "drupal/media_library_edit",
             "version": "3.0.2",
             "version_normalized": "3.0.2.0",

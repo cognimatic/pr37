@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @file
+ * Media entity for audio files.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function media_entity_audio_theme() {
+  return [
+    'media_audio' => [
+      'variables' => [
+        'sources' => [],
+        'controls' => FALSE,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Template preprocess function for media_audio template.
+ */
+function template_preprocess_media_audio(&$vars) {
+  $guesser = \Drupal::service('file.mime_type.guesser');
+  $vars['sources'] = array_map(function ($source) use ($guesser) {
+    return [
+      'url' => $source,
+      'type' => _media_entity_audio_map_mime($guesser->guess($source)),
+    ];
+  }, $vars['sources']);
+
+  if ($vars['controls']) {
+    $vars['attributes']['controls'] = 'controls';
+  }
+}
+
+/**
+ * Maps mimetype to the value expected by the <audio> tag.
+ *
+ * If an unsupported mime is detected NULL will be returned instead.
+ *
+ * @return string|null
+ *   Mimetype expected by <audio> tag or NULL if not supported.
+ */
+function _media_entity_audio_map_mime($mime) {
+  if ($mime == 'audio/x-wav') {
+    return 'audio/wav';
+  }
+  elseif (in_array($mime, ['audio/mpeg', 'audio/ogg'])) {
+    return $mime;
+  }
+
+  return NULL;
+}

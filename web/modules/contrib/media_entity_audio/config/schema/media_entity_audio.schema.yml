@@ -1,0 +1,11 @@
+media.source.audio_stream:
+  type: media.source.field_aware
+  label: '"Audio" media source configuration'
+
+field.formatter.settings.audio_stream_html5:
+  type: mapping
+  label: 'HTML5 audio stream player formatter settings'
+  mapping:
+    controls:
+      type: boolean
+      label: 'Whether to show controls on the audio element'
