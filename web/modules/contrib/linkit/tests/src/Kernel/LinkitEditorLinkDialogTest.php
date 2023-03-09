@@ -38,16 +38,21 @@ class LinkitEditorLinkDialogTest extends LinkitKernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['editor', 'ckeditor', 'entity_test'];
+  protected static $modules = ['editor', 'entity_test'];
 
   /**
    * Sets up the test.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
+    if (!in_array('ckeditor', $this->container->get('extension.list.module')->reset()->getList(), TRUE)) {
+      $this->markTestSkipped('CKEditor 4 module not available to install, skipping test.');
+    }
+    $this->enableModules(['ckeditor']);
+
+
     $this->installEntitySchema('entity_test');
-    $this->installSchema('system', ['key_value_expire']);
 
     // Create a profile.
     $this->linkitProfile = $this->createProfile();
@@ -75,14 +80,11 @@ class LinkitEditorLinkDialogTest extends LinkitKernelTestBase {
       'format' => 'filtered_html',
       'editor' => 'ckeditor',
     ]);
-    $this->editor->setSettings([
-      'plugins' => [
-        'drupallink' => [
-          'linkit_enabled' => TRUE,
-          'linkit_profile' => $this->linkitProfile->id(),
-        ],
-      ],
-    ]);
+    $this->editor->save();
+    $settings = $this->editor->getSettings();
+    $settings['plugins']['drupallink']['linkit_enabled'] = TRUE;
+    $settings['plugins']['drupallink']['linkit_profile'] = $this->linkitProfile->id();
+    $this->editor->setSettings($settings);
     $this->editor->save();
   }
 

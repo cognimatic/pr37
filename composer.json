@@ -194,6 +194,9 @@
             "drupal/layout_paragraphs": {
                 "Overlay Widget Jump Stutter 3276258": "https://www.drupal.org/files/issues/2022-10-14/3276258-9.patch"
             },
+            "drupal/linkit": {
+                "Linkit for Link field 2712951": "https://www.drupal.org/files/issues/2023-03-07/2712951_329.6.x.diff"
+            },
             "drupal/migrate_drupal_d8": {
                     "Fix bundle logic to select fields correctly 3134305": "https://www.drupal.org/files/issues/2021-07-16/3134305-fix-bundle-logic-5.patch"
             },

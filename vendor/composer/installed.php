@@ -1437,9 +1437,9 @@
             'dev_requirement' => false,
         ),
         'drupal/linkit' => array(
-            'pretty_version' => '6.0.0-beta3',
-            'version' => '6.0.0.0-beta3',
-            'reference' => '6.0.0-beta3',
+            'pretty_version' => '6.0.0-beta4',
+            'version' => '6.0.0.0-beta4',
+            'reference' => '6.0.0-beta4',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/linkit',
             'aliases' => array(),
