@@ -1,0 +1,7 @@
+view hidden user fields:
+  title: 'View hidden user fields'
+  description: 'View hidden fields on user profile page'
+
+edit hidden user fields:
+  title: 'Edit hidden user fields'
+  description: 'Edit hidden fields on user profile page'
