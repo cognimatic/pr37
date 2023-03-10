@@ -187,7 +187,7 @@
               "Cludo search autocomplete not working on block 3050293": "https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch"
             },
             "drupal/core": {
-              "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2023-02-24/3099026-51.patch",
+              "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2023-03-08/3099026-60-9.5.x.patch",
               "Deprecated function: pathinfo() on template_preprocess_image_style 3306131": "https://git.drupalcode.org/project/drupal/-/merge_requests/2680.diff",
               "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch"
             },
