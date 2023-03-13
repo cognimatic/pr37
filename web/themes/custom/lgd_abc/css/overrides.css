@@ -150,7 +150,7 @@ h1 {
 }
 
 .lgd-footer {
-  background-color: var(--color-dark-blue);
+  background-color: var(--color-green);
   margin-top: 0;
   width: 100%;
   overflow: hidden;
@@ -1455,14 +1455,16 @@ a.service-statuses__link--bottom {
   margin-left: 20px;
 }
 
-#block-accessibililty {
-  display: none;
-}
-
-#block-contactinfoaddressphone {
+[id^="block-contactinfoaddressphone"]{
   margin-bottom: 2rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid white;
+}
+
+[id^="block-accessibililty"] {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid white;
 }
 
 .cookie-banner, .cookie-banner-noscript {
@@ -2057,6 +2059,12 @@ ul.lgd-row.service-cta-block__list {
   .lgd-footer .lgd-footer__pre-footer .box-link {
     justify-content: end;
   }
+
+  [id^="block-accessibililty"] {
+    margin-top: 0;
+    padding-top: 0;
+    border: none;
+  }
 }
 
 @media screen and (min-width: 992px) {
@@ -2095,11 +2103,7 @@ ul.lgd-row.service-cta-block__list {
     width: 54%;
   }
 
-  #block-accessibililty {
-    display: block;
-  }
-
-  #block-contactinfoaddressphone {
+  [id^="block-contactinfoaddressphone"] {
     border: none;
   }
 
