@@ -100,6 +100,7 @@
         "drupal/taxonomy_manager": "^2.0",
         "drupal/twitter_block": "^3.0@alpha",
         "drupal/type_tray": "^1.1",
+        "drupal/views_bulk_edit": "^2.8",
         "drupal/views_bulk_operations": "^4.1",
         "drupal/views_data_export": "^1.1",
         "drupal/views_tree": "^2.0@RC",
@@ -175,13 +176,13 @@
         },
         "patches": {
             "drupal/auditfiles": {
-                "NULL Count Error if no 'Managed Not Used' Files 3346307": "https://git.drupalcode.org/project/auditfiles/-/merge_requests/20.diff"
+              "NULL Count Error if no 'Managed Not Used' Files 3346307": "https://git.drupalcode.org/project/auditfiles/-/merge_requests/20.diff"
             },
             "drupal/autocomplete_deluxe": {
-                "Multiple reference terms fails 3053986": "https://www.drupal.org/files/issues/2021-05-25/3053986-6.patch"
+              "Multiple reference terms fails 3053986": "https://www.drupal.org/files/issues/2021-05-25/3053986-6.patch"
             },
             "drupal/civicccookiecontrol": {
-                "No options in Text formats select box 3319073": "https://www.drupal.org/files/issues/2023-02-20/civicccoookiecontrol-fix-text-formats-3319073.patch"
+              "No options in Text formats select box 3319073": "https://www.drupal.org/files/issues/2023-02-20/civicccoookiecontrol-fix-text-formats-3319073.patch"
             },
             "drupal/cludo_search": {
               "Cludo search autocomplete not working on block 3050293": "https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch"
@@ -191,14 +192,11 @@
               "Deprecated function: pathinfo() on template_preprocess_image_style 3306131": "https://git.drupalcode.org/project/drupal/-/merge_requests/2680.diff",
               "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch"
             },
-            "drupal/layout_paragraphs": {
-                "Overlay Widget Jump Stutter 3276258": "https://www.drupal.org/files/issues/2022-10-14/3276258-9.patch"
-            },
             "drupal/linkit": {
-                "Linkit for Link field 2712951": "https://www.drupal.org/files/issues/2023-03-07/2712951_329.6.x.diff"
+              "Linkit for Link field 2712951": "https://www.drupal.org/files/issues/2023-03-07/2712951_329.6.x.diff"
             },
             "drupal/migrate_drupal_d8": {
-                    "Fix bundle logic to select fields correctly 3134305": "https://www.drupal.org/files/issues/2021-07-16/3134305-fix-bundle-logic-5.patch"
+                "Fix bundle logic to select fields correctly 3134305": "https://www.drupal.org/files/issues/2021-07-16/3134305-fix-bundle-logic-5.patch"
             },
             "drupal/search_api_stats": {
                 "Empty search returns error 3325990": "https://www.drupal.org/files/issues/2022-12-08/search_api_stats-empty-search-returns-error-3325990-2.patch"
@@ -207,7 +205,7 @@
                 "Base table or view not found 3345844": "https://git.drupalcode.org/project/security_review/-/merge_requests/37.diff"
             },
             "drupal/shs": {
-                    "Error saving null empty value 3241169": "https://www.drupal.org/files/issues/2022-02-28/shs-Error_saving_null_empty_value_after_2.0.0-rc1_update-3241169-36.patch"
+                "Error saving null empty value 3241169": "https://www.drupal.org/files/issues/2022-02-28/shs-Error_saving_null_empty_value_after_2.0.0-rc1_update-3241169-36.patch"
             },
             "drupal/userswitch": {
                 "Add an entity operation 3087885": "https://www.drupal.org/files/issues/2022-01-30/add-an-entity-operation-in-addition-to-user-list-3087885-29.patch"

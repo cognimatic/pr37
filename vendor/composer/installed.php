@@ -2075,6 +2075,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'drupal/views_bulk_edit' => array(
+            'pretty_version' => '2.8.0',
+            'version' => '2.8.0.0',
+            'reference' => '8.x-2.8',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/views_bulk_edit',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/views_bulk_operations' => array(
             'pretty_version' => '4.2.3',
             'version' => '4.2.3.0',
