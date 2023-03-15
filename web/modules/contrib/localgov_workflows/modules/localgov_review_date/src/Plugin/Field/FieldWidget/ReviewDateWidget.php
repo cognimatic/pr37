@@ -11,6 +11,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\localgov_review_date\Entity\ReviewDate;
 use Drupal\localgov_review_date\Form\ReviewDateSettingsForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Language\LanguageInterface;
 
 /**
  * Plugin implementation of the 'review_date' widget.
@@ -62,7 +63,7 @@ class ReviewDateWidget extends WidgetBase implements ContainerFactoryPluginInter
 
     // Get current review status object.
     $entity = $items->getEntity();
-    $langcode = $form_state->get('langcode');
+    $langcode = $form_state->get('langcode') ?? LanguageInterface::LANGCODE_NOT_SPECIFIED;
     $review_date = ReviewDate::getActiveReviewDate($entity, $langcode);
 
     // Calculate next review date.
