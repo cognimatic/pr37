@@ -1790,11 +1790,14 @@ ul.lgd-row.service-cta-block__list {
   padding: 0px 20px 14px 0;
 }
 
+<<<<<<< HEAD
 .page-node-type-councillor .field--name-field-telephone table#paragraph-telephone tr td .field--type-telephone,
 .page-node-type-councillor .field--name-field-telephone table#paragraph-telephone tr td .field--type-email {
   margin-bottom: 0;
 }
 
+=======
+>>>>>>> devel
 @media screen and (min-width: 40em) {
   .layout--twocol > .layout__region--first, .layout--twocol > .layout__region--second {
     flex: 0 1 100%;
