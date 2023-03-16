@@ -116,6 +116,10 @@ h1 {
   font-size: 44px;
 }
 
+.lgd-region--content {
+  padding-bottom: 40px;
+}
+
 .lgd-container {
   width: 100%;
 }
@@ -1757,6 +1761,33 @@ ul.lgd-row.service-cta-block__list {
 
 .lgd-topic-list-builder__service .lgd-topic-list-builder__service-icon {
   padding-top: 10px;
+}
+
+.localgov-directories-venue legend {
+  padding: 0;
+}
+
+.page-node-type-councillor .field--type-email,
+.page-node-type-councillor .field--type-telephone {
+  margin-bottom: 14px;
+}
+
+.page-node-type-councillor .field--name-field-telephone table#paragraph-telephone {
+  width: auto;
+  border: none;
+  margin-bottom: 0;
+}
+
+.page-node-type-councillor .field--name-field-telephone table#paragraph-telephone thead {
+  display: none;
+}
+
+.page-node-type-councillor .field--name-field-telephone table#paragraph-telephone tr {
+  border: none;
+}
+
+.page-node-type-councillor .field--name-field-telephone table#paragraph-telephone tr td {
+  padding: 0px 20px 14px 0;
 }
 
 @media screen and (min-width: 40em) {
