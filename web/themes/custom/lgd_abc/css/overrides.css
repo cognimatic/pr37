@@ -1,6 +1,8 @@
 html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .field--name-localgov-subsites-content > * {
@@ -113,7 +115,34 @@ dialog::backdrop {
 }
 
 h1 {
-  font-size: 44px;
+  font-size: 34px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 26px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+h5,
+h6{
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 700;
 }
 
 .lgd-region--content {
@@ -2138,6 +2167,30 @@ ul.lgd-row.service-cta-block__list {
 }
 
 @media screen and (min-width: 992px) {
+  body {
+    font-size: 19px;
+    line-height: 1.5;
+  }
+  h1 {
+    font-size: 44px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 22px;
+  }
+
+  h4 {
+    font-size: 19px;
+  }
+
+  h5,
+  h6{
+    font-size: 16px;
+  }
   .lgd-header .lgd-region--header {
     margin-right: 0.5rem;
   }
