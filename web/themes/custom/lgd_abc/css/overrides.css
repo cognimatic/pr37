@@ -1,6 +1,8 @@
 html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .field--name-localgov-subsites-content > * {
@@ -2165,6 +2167,10 @@ ul.lgd-row.service-cta-block__list {
 }
 
 @media screen and (min-width: 992px) {
+  body {
+    font-size: 19px;
+    line-height: 1.5;
+  }
   h1 {
     font-size: 44px;
   }
