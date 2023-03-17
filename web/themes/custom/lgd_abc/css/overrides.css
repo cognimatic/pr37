@@ -1767,9 +1767,13 @@ ul.lgd-row.service-cta-block__list {
   padding: 0;
 }
 
+.page-node-type-councillor fieldset {
+  padding: 5px 15px 0;
+}
+
 .page-node-type-councillor .field--type-email,
 .page-node-type-councillor .field--type-telephone {
-  margin-bottom: 14px;
+  margin-bottom: 5px;
 }
 
 .page-node-type-councillor .field--name-field-telephone table#paragraph-telephone {
@@ -1787,12 +1791,7 @@ ul.lgd-row.service-cta-block__list {
 }
 
 .page-node-type-councillor .field--name-field-telephone table#paragraph-telephone tr td {
-  padding: 0px 20px 14px 0;
-}
-
-.page-node-type-councillor .field--name-field-telephone table#paragraph-telephone tr td .field--type-telephone,
-.page-node-type-councillor .field--name-field-telephone table#paragraph-telephone tr td .field--type-email {
-  margin-bottom: 0;
+  padding: 0px 20px 0 0;
 }
 
 @media screen and (min-width: 40em) {
