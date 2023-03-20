@@ -1059,7 +1059,11 @@ a.abplace2b-logo::before {
   font-size: 20px;
   font-weight: 600;
   box-shadow: inset 0 -4px 0 var(--color-secondary-blue);
-  padding: 16px 18px 18px;
+  padding: 0 18px;
+  line-height: 1.2;
+  min-height: 90px;
+  text-align: center;
+  justify-content: center;
   color: white;
   background-color: var(--color-blue);
 }
@@ -2062,7 +2066,7 @@ ul.lgd-row.service-cta-block__list {
 
   .service-cta-block__link {
     font-size: 22px;
-    padding: 22px 20px 25px;
+    padding: 0 20px;
   }
 
   .service-cta-block__list-item {
