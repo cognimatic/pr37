@@ -193,7 +193,8 @@
             "drupal/core": {
               "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2023-03-08/3099026-60-9.5.x.patch",
               "Deprecated function: pathinfo() on template_preprocess_image_style 3306131": "https://git.drupalcode.org/project/drupal/-/merge_requests/2680.diff",
-              "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch"
+              "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch",
+              "CKEditor 5 isn't respecting field widgets row settings 3241295": "https://www.drupal.org/files/issues/2023-02-02/3241295-d9.5-101.patch"
             },
             "drupal/linkit": {
               "Linkit for Link field 2712951": "https://www.drupal.org/files/issues/2023-03-07/2712951_329.6.x.diff"

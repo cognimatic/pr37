@@ -1,0 +1,8 @@
+name: ABC Podcasts
+type: module
+description: Custom exposed filter for podcasts view
+core_version_requirement: ^9 || ^10
+package: ABC
+dependencies:
+  - localgov_directories:localgov_directories
+

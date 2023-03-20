@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * Contains abc_podcasts.module.
+ */
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Alters the artist options on artwork pages.
+ */
+function abc_podcasts_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // If not the view we are looking, exit
+  if ($form['#id'] != 'views-exposed-form-podcasts-page-1') {
+    return FALSE;
+  }
+
+  // Query facets
+  //$storage = Drupal::getContainer()->get('entity_type.manager')->getStorage('localgov_directories_facets_type');
+
+  $db = \Drupal::database();
+  $query = $db->query("SELECT id, title FROM {localgov_directories_facets_field_data} WHERE bundle = 'podcast_category' ORDER BY title");
+  $facets = $query->fetchAll();
+
+  // If there are no facets, exit
+  if (!$facets) {
+    return FALSE;
+  }
+
+  // Start building the options for our select list
+  $options = [];
+
+  foreach ($facets as $facet) {
+    $options[$facet->id] = $facet->title;
+  }
+  $field = 'localgov_directory_facets_select_target_id';
+  $form[$field]['#type'] = 'select';
+  $form[$field]['#multiple'] = FALSE;
+  
+  // Specify the empty option for our select list
+  $form[$field]['#empty_option'] = t('Podcast category');
+  
+  $options = [NULL => t('- Any -')] + $options;
+  
+  // Add the $options from above to our select list
+  $form[$field]['#options'] = $options;
+  
+  
+  unset($form[$field]['#size']);
+}
