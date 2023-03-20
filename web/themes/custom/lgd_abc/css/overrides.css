@@ -1062,6 +1062,7 @@ a.abplace2b-logo::before {
   padding: 0 18px;
   line-height: 1.2;
   min-height: 90px;
+  overflow: hidden;
   color: white;
   background-color: var(--color-blue);
 }
