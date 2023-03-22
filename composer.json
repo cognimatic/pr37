@@ -111,7 +111,8 @@
         "localgovdrupal/localgov_forms": "^1.0@beta",
         "localgovdrupal/localgov_moderngov": "1.x-dev",
         "localgovdrupal/localgov_multilingual": "1.x-dev",
-        "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev"
+        "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev",
+        "localgovdrupal/localgov_publications": "1.x-dev"
     },
     "require-dev": {
         "brianium/paratest": "^6.0",
