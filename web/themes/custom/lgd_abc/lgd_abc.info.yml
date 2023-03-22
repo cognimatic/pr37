@@ -10,6 +10,7 @@ libraries:
   - lgd_abc/overrides
   - lgd_abc/fonts
   - lgd_abc/cookie-control-scripts
+  - lgd_abc/subsites
 
 regions:
   tabs: "Tabs"

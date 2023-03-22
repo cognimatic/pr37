@@ -29,3 +29,8 @@ cookie-control-scripts:
   dependencies:
     - civic_govuk_cookiecontrol/civic_govuk_cookiecontrol.details
     - civic_govuk_cookiecontrol/civic_govuk_cookiecontrol.banner
+
+subsites:
+  css:
+    theme:
+      css/subsites.css: {}
