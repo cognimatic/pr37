@@ -1,0 +1,34 @@
+.subsite--green{
+    --color-accent: var(--color-green);
+}
+.subsite--purple{
+    --color-accent: #990099;
+}
+.subsite--black{
+    --color-accent: #040404;
+}
+.subsite--orange{
+    --color-accent: var(--color-orange);
+}
+.subsite--gold{
+    --color-accent: var(--color-accent-alt);
+    --header-link-color: #040404;
+    --secondary-menu-link-color: #040404;
+    --header-services-button-color: #040404;
+}
+.subsite--gold .lgd-header h2.secondary-menu-heading{
+    color: #040404;
+}
+
+.subsite .lgd-header,
+.subsite .lgd-header #lgd_header_menu,
+.subsite #lgd_header_menu .lgd-header__nav--secondary{
+    background-color: var(--color-accent);
+}
+
+
+
+
+
+
+

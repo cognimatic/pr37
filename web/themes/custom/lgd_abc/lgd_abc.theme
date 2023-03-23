@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\node\NodeInterface;
+
 /**
  * @file
  * Theme functions for the LocalGov Drupal Argyll & Bute Council theme.
@@ -44,5 +46,35 @@ function lgd_abc_preprocess_localgov_page_header_block(&$variables) {
   // Set 'lede' value to empty if on a Taxonomy term page
   if (\Drupal::routeMatch()->getRouteName() == 'entity.taxonomy_term.canonical') {
     $variables['lede'] = [];
+  }
+}
+
+/**
+ * Implements hook_preprocess_html
+ * 
+ * @param type $variables
+ * @return type
+ */
+function lgd_abc_preprocess_html(&$variables) {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (!$node instanceof NodeInterface) {
+    return;
+  }
+  $nodetype = $node->getType();
+  $subtheme = NULL;
+  if ($nodetype == 'localgov_subsites_overview') {
+     $subtheme = $node->get('localgov_subsites_theme')->getValue()[0]['value'];
+  }
+  if ($nodetype == 'localgov_subsites_page') {
+    $parent_id = $node->get('localgov_subsites_parent')->getValue()[0]['target_id'];
+    if(isset($parent_id)){
+      $parent = \Drupal\node\Entity\Node::load($parent_id);
+      $subtheme = $parent->get('localgov_subsites_theme')->getValue()[0]['value'];
+    }
+  }
+  
+  if(isset($subtheme)){
+    $variables['attributes']['class'][] = "subsite--" . $subtheme;
+    $variables['attributes']['class'][] = "subsite";
   }
 }

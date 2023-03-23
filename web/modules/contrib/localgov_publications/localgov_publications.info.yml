@@ -1,0 +1,12 @@
+name: LocalGov Publications
+type: module
+description: Provides additional functionality for the site.
+package: LocalGov Drupal
+core_version_requirement: ^9 || ^10
+
+dependencies:
+  - auto_heading_ids:auto_heading_ids
+  - drupal:book
+  - drupal:views
+  - footnotes:footnotes
+  - localgov_paragraphs:localgov_paragraphs

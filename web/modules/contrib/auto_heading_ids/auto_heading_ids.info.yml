@@ -1,0 +1,11 @@
+name: Auto heading ids
+type: module
+description: This module provides a filter to automatically apply identifiers to headings in content.
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: Custom
+
+# Information added by Drupal.org packaging script on 2022-02-10
+version: '2.0.0-beta1'
+project: 'auto_heading_ids'
+datestamp: 1644454727
