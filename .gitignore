@@ -30,11 +30,20 @@ error_log
 /.ddev
 /.idea
 /.netbeans
+/nbproject
 /assets
 /patches
 /images
 /backups
 /to-migrate
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.vsix
 
 # Ignore DB dumps
 *.sql
