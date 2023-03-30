@@ -73,7 +73,8 @@ class BinDatesLookupBlock extends BlockBase implements ContainerFactoryPluginInt
         $calendarName = $currentCalendar[0]->calendarname;
 
         // Write .ics file to filesystem (whilst building a block?! - this would be better as a background job or menu callback)
-        $this->writeIcal($route, $calendarName);
+        // Following line removed at request of ABC
+        //$this->writeIcal($route, $calendarName);
 
         // May be multiple collections on the same day for different waste types.
         $nextCollectionDate = $bindata[0]->collectiondate;
