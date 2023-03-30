@@ -2,83 +2,80 @@
 
 {# No data was available #}
 {% if mode == "fallback" %}
-<div class='alert alert-danger'><strong>We are very sorry but we cannot find your collection details right now.  Please call us on 01546 605514 to discuss with an advisor.</strong></div>
+    <div class='alert alert-danger'><strong>We are very sorry but we cannot find your collection details right now.  Please call us on 01546 605514 to discuss with an advisor.</strong></div>
 {% endif %}
 
 
 {# If UPRN data unavailable, fall back to generic route info. #}
 {% if mode == "postcode" %}
-<div class='alert alert-success'>Download your bin collection calendars for 2019 and 2020 from the links below. <br/><sub>(route: {{ route }})</sub> </div>
-<div class='well'>
-  <div class='row'>
-    <div class='col-md-2 align-middle'>
-      <img src='/sites/default/files/Unknown/if_calendar_285670.png' alt='download calendar (pdf)' class='img-fluid' />
+    <div class='alert alert-success'>Download your bin collection calendars for 2023 from the links below. <br/><sub>(route: {{ route }})</sub> </div>
+    <div class='well'>
+        <div class='row'>
+            <div class='col-md-2 align-middle'>
+                <img src='/sites/default/files/2023-03/if_calendar_285670.png' alt='download calendar (pdf)' class='img-fluid' />
+            </div>
+            <div class='col-md-10'>
+                <h3><a href="/sites/default/files/binroutes/2023/{{ calendarname }}.pdf">Download 2023 Calendar <sub>(PDF)</sub></a></h3>
+            </div>
+        </div>;
     </div>
-    <div class='col-md-10'>
-      <h3><a href="/sites/default/files/binroutes/2020/{{ calendarname }}.pdf">Download 2020 Calendar <sub>(PDF)</sub></a></h3>
-    </div>
-  </div>;
-</div>
 {% endif %}
 
 
 {# Full UPRN data loaded #}
 {% if mode == "uprn" %}
-  {% if nextCollections|length > 1 %}
-  <div class='well'>
-    <h2>Your next collections are on {{ nextday.collectiondate|date('l d F') }} for:</h2>
-    <ul>
-      {% for collection in nextCollections %}
-        <li class="{{ collection.wastetype }}">{{ collection.wastetype }} waste</li>
-      {% endfor %}
-    </ul>(route: {{ route }})
-  </div>
-  {% else %}
-  <div class="well {{ nextCollections.0.wastetype}}">
-    <h2>Your next collection is for {{ nextCollections.0.wastetype }} waste on {{ nextCollections.0.collectiondate|date('l d F') }}</h2>
-    (route: {{ route }})
-  </div>
-  {% endif %}
-
-  <table class='table table-bordered'>
-    <tr>
-      <th>Bin type</th>
-      <th>Collection date</th>
-    </tr>
-    {% for day in bindays %}
-      <tr class="{{ day.wastetype }}">
-        <td>{{ day.wastetype }}</td>
-        <td>{{ day.collectiondate|date('l d F') }}</td>
-      </tr>
-    {% endfor %}
-  </table>
-
-  <div class='well'>
-    {% if calendarname %}
-      <div class='row'>
-        <div class='col-md-2 align-middle'>
-          <img src='/sites/default/files/Unknown/if_calendar_285670.png' alt='download calendar (pdf)' class='img-fluid' />
+    {% if nextCollections|length > 1 %}
+        <div class='well'>
+            <h2>Your next collections are on {{ nextday.collectiondate|date('l d F') }} for:</h2>
+            <ul>
+                {% for collection in nextCollections %}
+                    <li class="{{ collection.wastetype }}">{{ collection.wastetype }} waste</li>
+                    {% endfor %}
+            </ul>(route: {{ route }})
         </div>
-        <div class='col-md-10'>
-          <h3><a href="/sites/default/files/binroutes/2020/{{ calendarname }}.pdf">Download 2020 Calendar <sub>(PDF)</sub></a></h3>
+    {% else %}
+        <div class="well {{ nextCollections.0.wastetype}}">
+            <h2>Your next collection is for {{ nextCollections.0.wastetype }} waste on {{ nextCollections.0.collectiondate|date('l d F') }}</h2>
+            (route: {{ route }})
         </div>
-      </div>
     {% endif %}
 
-    <div class='row'>
-      <div class='col-md-2'></div>
-      <div class='col-md-10'>
-        <strong><span class='beta'>*beta*</span><a href="/sites/default/files/binroutes/2020/{{ calendarname }}.ics" onclick="ga('send', 'event', 'Ical', 'Click', 'iCalendar download ');"> Add your 2020 bin collection dates to the calendar on your PC or mobile device <sub>(icalendar)</sub></a></strong>
-      </div>
-    </div>
+    <table class='table table-bordered'>
+        <tr>
+            <th>Bin type</th>
+            <th>Collection date</th>
+        </tr>
+        {% for day in bindays %}
+            <tr class="{{ day.wastetype }}">
+                <td>{{ day.wastetype }}</td>
+                <td>{{ day.collectiondate|date('l d F') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 
-  </div>
-  <div class='alert alert-success'>
-    <div class='row'>
-      <div class='col-md-2'><img src='/sites/default/files/new_star.png' alt='new!' /></div>
-      <div class='col-md-10'>
-        <div>You can now find out your next bin collection date through our new 24/7 Bin Collection Hotline. Call on <strong>01546 605514.</strong></div>
-      </div>
+    <div class='well'>
+        {% if calendarname %}
+            <div class='row'>
+                <div class='col-md-2 align-middle'>
+                    <img src='/sites/default/files/2023-03/if_calendar_285670.png' alt='download calendar (pdf)' class='img-fluid' />
+                </div>
+                <div class='col-md-10'>
+                    <h3><a href="https://www.argyll-bute.gov.uk/sites/default/files/binroutes/2023/{{ calendarname }}.pdf">Download 2023 Calendar <sub>(PDF)</sub></a></h3>
+                </div>
+            </div>
+        {% endif %}
+
+{#
+        <div class='row'>
+            <div class='col-md-2'></div>
+            <div class='col-md-10'>
+                <strong><span class='beta'>*beta*</span><a href="/sites/default/files/binroutes/2020/{{ calendarname }}.ics" onclick="ga('send', 'event', 'Ical', 'Click', 'iCalendar download ');"> Add your 2020 bin collection dates to the calendar on your PC or mobile device <sub>(icalendar)</sub></a></strong>
+            </div>
+        </div>
+
+#}
     </div>
-  </div>
+    <div class='alert alert-success'>
+        <div>You can also find out your next bin collection date through our new 24/7 Bin Collection Hotline. Call on <strong>01546 605514.</strong></div>
+    </div>
 {% endif %}
