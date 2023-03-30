@@ -1844,7 +1844,7 @@ ul.lgd-row.service-cta-block__list {
   color: #333333;
 }
 
-@media  screen and (width > 640px) {
+@media  screen and (min-width: 640px) {
   .view-all-services .view-content {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
