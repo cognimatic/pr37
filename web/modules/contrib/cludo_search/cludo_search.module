@@ -21,6 +21,7 @@ define('CLUDO_SEARCH_DEFAULT_DISABLE_AUTOCOMPLETE', FALSE);
 define('CLUDO_SEARCH_DEFAULT_HIDE_RESULTS_COUNT', FALSE);
 define('CLUDO_SEARCH_DEFAULT_HIDE_DID_YOU_MEAN', FALSE);
 define('CLUDO_SEARCH_DEFAULT_HIDE_SEARCH_FILTERS', FALSE);
+define('CLUDO_SEARCH_DEFAULT_DISABLE_PROMPT', FALSE);
 
 /**
  * Minimize redundant trips to the db when looking for module settings.
@@ -103,6 +104,7 @@ function _cludo_search_get_field_keys() {
     'hide_results_count',
     'hide_did_you_mean',
     'hide_search_filters',
+    'disable_prompt',
   ];
 }
 
@@ -181,4 +183,16 @@ function template_preprocess_cludo_search_result(&$vars) {
   if ((int) $vars['level'] > 1) {
     $vars['classes_array'][] = 'cludo-search-level' . $vars['level'];
   }
+}
+/**
+ * Adds disable_prompt field to cludo_search.settings
+ */
+function cludo_search_update_9101(){
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('cludo_search.settings');
+  if (empty($config->get('disable_prompt'))) {
+    $config->set('disable_prompt', 0);
+    $config->save(TRUE);
+  }
+ 
 }

@@ -117,6 +117,13 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t('Hides the search filters.'),
       '#default_value' => $settings['hide_search_filters'],
     ];
+    
+    $form['additional_customisations']['disable_prompt'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Disable the prompt'),
+      '#description' => $this->t('This will disable the text prompt that is above the search input box'),
+      '#default_value' => $settings['disable_prompt'],
+    ];
 
     return parent::buildForm($form, $form_state);
   }

@@ -31,8 +31,11 @@ class CludoSearchBlockForm extends FormBase {
     $form['#attached']['drupalSettings']['cludo_search']['cludo_searchJS'] = $settings;
     $form['#attached']['library'][] = 'cludo_search/cludo-customer';
 
+    $prompt = '';
     // Build form.
-    $prompt = $this->t('Enter the terms you wish to search for.');
+    if(!$settings['disable_prompt']){
+      $prompt = $this->t('Enter the terms you wish to search for.');
+    }
     $query = '';
 
     // Basic search.

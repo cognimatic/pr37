@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d0622e31deadb0b5ebada463923fcad",
+    "content-hash": "9c4c1879acf035e9b4b37666237feccb",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -28122,6 +28122,7 @@
         "localgovdrupal/localgov_moderngov": 20,
         "localgovdrupal/localgov_multilingual": 20,
         "localgovdrupal/localgov_os_places_geocoder_provider": 20,
+        "localgovdrupal/localgov_publications": 20,
         "drupal/bugherd": 10,
         "drupal/entity_clone": 10,
         "drupal/upgrade_status": 15

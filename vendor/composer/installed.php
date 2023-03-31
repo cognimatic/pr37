@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'localgovdrupal/localgov-project',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'aa8318a5ba27bcb2d6c5fe54a6c4694bda90a89a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -2451,9 +2451,9 @@
             'dev_requirement' => false,
         ),
         'localgovdrupal/localgov-project' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'aa8318a5ba27bcb2d6c5fe54a6c4694bda90a89a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

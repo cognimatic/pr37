@@ -5,3 +5,7 @@ Cludo search autocomplete not working on block 3050293
 Source: https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch
 
 
+Hide Prompt Above Input Box 3351519
+Source: https://www.drupal.org/files/issues/2023-03-31/cludo_search_disable_prompt.patch
+
+
