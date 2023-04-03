@@ -213,7 +213,7 @@ ul.search-stats-results li{
     padding: 0 0 0 1rem;
 }
 
-#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block label[for^='edit-s']
+[id^="cludo-search-block-search-form"] label[for^='edit-s']
 {
   display: block;
   width: 0;
@@ -243,6 +243,7 @@ ul.search-stats-results li{
 /* Alternative (Cludo) Search form */
 .cludo-search-block-search-form .cludo-search-form{
     display:flex;
+    width: 100%;
 }
 .cludo-search-block-search-form .form-item-search-keys{
     margin-bottom: 0;
@@ -360,7 +361,7 @@ input[type="submit"].search-button.form-submit {
   padding: unset;
   margin: unset;
   height: 100%;
-  width: 54px;
+  width: 60px;
   transition: background-color 0.15s;
 }
 
@@ -428,7 +429,7 @@ input[type="submit"].search-button.form-submit:hover {
 }
 
 .lgd-header .lgd-region--search form input.search-button {
-  padding: 12px;
+  padding: 12px 20px;
   margin: 0;
   display: block;
 }
@@ -838,26 +839,26 @@ dialog.localgov-alert-banner.localgov-alert-banner-full.localgov-alert-banner--n
   border-top: 4px solid #93BFE7;
 }
 
-#detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block {
+#detailed-search-box .lgd-container .lgd-region__inner--search-bar form[id^="cludo-search-block-search-form"] {
   display: flex;
   border: 2px solid #07295A;
 }
 
-#detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block:focus-within {
+#detailed-search-box .lgd-container .lgd-region__inner--search-bar form[id^="cludo-search-block-search-form"]:focus-within {
   box-shadow: 0 0 0 4px #FCDF1B;
 }
 
-#detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block .js-form-type-search-api-autocomplete {
+#detailed-search-box .lgd-container .lgd-region__inner--search-bar form[id^="cludo-search-block-search-form"] .form-item-search-keys {
   width: 100%;
   margin-bottom: 0;
 }
 
-#detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block .js-form-type-search-api-autocomplete input {
+#detailed-search-box .lgd-container .lgd-region__inner--search-bar form[id^="cludo-search-block-search-form"] .form-item-search-keys input {
   border: none;
   background-color: #f5f5f5;
 }
 
-#detailed-search-box .lgd-container .lgd-region__inner--search-bar form#views-exposed-form-localgov-sitewide-search-sitewide-search-page-block .js-form-type-search-api-autocomplete input:focus-visible {
+#detailed-search-box .lgd-container .lgd-region__inner--search-bar form[id^="cludo-search-block-search-form"] .form-item-search-keys input:focus-visible {
   outline: none;
 }
 
