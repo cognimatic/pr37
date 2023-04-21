@@ -5,6 +5,9 @@ core_version_requirement: ^9 || ^10
 base theme: "localgov_base"
 logo: logo.png
 
+ckeditor5-stylesheets:
+  - css/base-ckeditor5.css
+
 libraries:
   - lgd_abc/variables
   - lgd_abc/overrides
