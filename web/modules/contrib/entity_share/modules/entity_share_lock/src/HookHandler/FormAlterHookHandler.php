@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\entity_share_lock\HookHandler;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\ContentEntityFormInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -21,7 +21,15 @@ class FormAlterHookHandler implements ContainerInjectionInterface {
   /**
    * The machine name of the locked policy.
    */
-  const LOCKED_POLICY = 'locked';
+  public const LOCKED_POLICY = 'locked';
+
+  /**
+   * The operations that are locked.
+   */
+  public const LOCKED_OPERATIONS = [
+    'edit',
+    'layout_builder',
+  ];
 
   /**
    * The messenger service.
@@ -79,25 +87,30 @@ class FormAlterHookHandler implements ContainerInjectionInterface {
   public function formAlter(array &$form, FormStateInterface $form_state, $form_id) {
     $build_info = $form_state->getBuildInfo();
 
-    // Check if acting on an entity form.
-    if (!isset($build_info['callback_object']) || !($build_info['callback_object'] instanceof EntityFormInterface)) {
-      return;
-    }
-
-    // Check that it is an edit form.
-    if (!preg_match('/_edit_form$/', $form_id)) {
+    // Check if acting on a content entity form.
+    if (!isset($build_info['callback_object']) || !($build_info['callback_object'] instanceof ContentEntityFormInterface)) {
       return;
     }
 
     $entity_form = $build_info['callback_object'];
-    $entity = $entity_form->getEntity();
-    $entity_type = $entity->getEntityType();
-    $entity_type_id = $entity_type->id();
+    $operation = $entity_form->getOperation();
 
-    // Check if it is a content entity.
-    if ($entity_type->getGroup() != 'content') {
+    // Check the operation.
+    if ($operation != 'default' && !in_array($operation, $this::LOCKED_OPERATIONS)) {
       return;
     }
+
+    $entity = $entity_form->getEntity();
+
+    // Some content entity types (like Menu link content or Taxonomy term) do
+    // not have a dedicated edit operation.
+    // So check if the entity is new to determine if on an edit form.
+    if ($operation == 'default' && $entity->isNew()) {
+      return;
+    }
+
+    $entity_type = $entity->getEntityType();
+    $entity_type_id = $entity_type->id();
 
     // Do not act on user.
     if ($entity_type_id == 'user') {
@@ -119,7 +132,7 @@ class FormAlterHookHandler implements ContainerInjectionInterface {
       return;
     }
 
-    if ($import_status->getPolicy() == self::LOCKED_POLICY) {
+    if ($import_status->getPolicy() == $this::LOCKED_POLICY) {
       $form['#disabled'] = TRUE;
       $this->messenger->addWarning($this->t('The entity had been locked from edition because of an import policy.'));
     }

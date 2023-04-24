@@ -17,6 +17,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\entity_share\EntityShareUtility;
 use Drupal\entity_share_client\Entity\RemoteInterface;
+use Drupal\entity_share_client\Exception\ResourceTypeNotFoundException;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface;
 
 /**
@@ -145,6 +146,7 @@ class FormHelper implements FormHelperInterface {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \InvalidArgumentException
+   * @throws \Drupal\entity_share_client\Exception\ResourceTypeNotFoundException
    */
   protected function addOptionFromJson(array &$options, array $data, RemoteInterface $remote, $channel_id, $level = 0) {
     $parsed_type = explode('--', $data['type']);
@@ -158,6 +160,10 @@ class FormHelper implements FormHelperInterface {
       $entity_type_id,
       $bundle_id
     );
+
+    if ($resource_type == NULL) {
+      throw new ResourceTypeNotFoundException("Trying to import an entity type '{$entity_type_id}' of bundle '{$bundle_id}' which does not exist on the website.");
+    }
 
     $status_info = $this->stateInformation->getStatusInfo($data);
 

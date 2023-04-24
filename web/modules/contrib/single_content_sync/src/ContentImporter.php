@@ -2,6 +2,7 @@
 
 namespace Drupal\single_content_sync;
 
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -13,8 +14,14 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TranslatableInterface;
 use Drupal\file\FileInterface;
+use Drupal\layout_builder\InlineBlockUsageInterface;
 use Drupal\layout_builder\Plugin\Block\InlineBlock;
+use Drupal\layout_builder\Section;
+use Drupal\layout_builder\SectionComponent;
 
+/**
+ * Creates a helper service to import content.
+ */
 class ContentImporter implements ContentImporterInterface {
 
   use StringTranslationTrait;
@@ -24,42 +31,49 @@ class ContentImporter implements ContentImporterInterface {
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * The entity repository.
    *
    * @var \Drupal\Core\Entity\EntityRepositoryInterface
    */
-  protected $entityRepository;
+  protected EntityRepositoryInterface $entityRepository;
 
   /**
    * The module handler.
    *
    * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface $moduleHandler;
 
   /**
    * The file system.
    *
    * @var \Drupal\Core\File\FileSystemInterface
    */
-  protected $fileSystem;
+  protected FileSystemInterface $fileSystem;
 
   /**
    * The content sync helper.
    *
    * @var \Drupal\single_content_sync\ContentSyncHelperInterface
    */
-  protected $contentSyncHelper;
+  protected ContentSyncHelperInterface $contentSyncHelper;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected TimeInterface $time;
 
   /**
    * The inline block usage service.
    *
-   * @var \Drupal\layout_builder\InlineBlockUsageInterface
+   * @var \Drupal\layout_builder\InlineBlockUsageInterface|null
    */
-  protected $blockUsage;
+  protected ?InlineBlockUsageInterface $inlineBlockUsage;
 
   /**
    * ContentExporter constructor.
@@ -74,26 +88,19 @@ class ContentImporter implements ContentImporterInterface {
    *   The file system.
    * @param \Drupal\single_content_sync\ContentSyncHelperInterface $content_sync_helper
    *   The content sync helper.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service.
+   * @param \Drupal\layout_builder\InlineBlockUsageInterface|null $inline_block_usage
+   *   The inline block usage service. This is optional dependency.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityRepositoryInterface $entity_repository, ModuleHandlerInterface $module_handler, FileSystemInterface $file_system, ContentSyncHelperInterface $content_sync_helper) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityRepositoryInterface $entity_repository, ModuleHandlerInterface $module_handler, FileSystemInterface $file_system, ContentSyncHelperInterface $content_sync_helper, TimeInterface $time, InlineBlockUsageInterface $inline_block_usage = NULL) {
     $this->entityTypeManager = $entity_type_manager;
     $this->entityRepository = $entity_repository;
     $this->moduleHandler = $module_handler;
     $this->fileSystem = $file_system;
     $this->contentSyncHelper = $content_sync_helper;
-  }
-
-  /**
-   * Get inline block usage from the service.
-   *
-   * @return \Drupal\layout_builder\InlineBlockUsageInterface
-   *   The layout builder service.
-   */
-  private function blockUsage() {
-    if (!$this->blockUsage) {
-      $this->blockUsage = \Drupal::getContainer()->get('inline_block.usage');
-    }
-    return $this->blockUsage;
+    $this->time = $time;
+    $this->inlineBlockUsage = $inline_block_usage;
   }
 
   /**
@@ -125,7 +132,7 @@ class ContentImporter implements ContentImporterInterface {
 
           if ($entity instanceof RevisionLogInterface) {
             $entity->setNewRevision();
-            $entity->setRevisionCreationTime(\Drupal::time()->getCurrentTime());
+            $entity->setRevisionCreationTime($this->time->getCurrentTime());
 
             if (isset($content['base_fields']['revision_uid'])) {
               $entity->setRevisionUserId($content['base_fields']['revision_uid']);
@@ -186,12 +193,12 @@ class ContentImporter implements ContentImporterInterface {
    * use the same id and enforce update instead of insert.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
-   *   The entity object.
+   *   The entity to create or update.
    *
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function createOrUpdate(EntityInterface &$entity) {
+  protected function createOrUpdate(EntityInterface &$entity): void {
     $definition = $this->entityTypeManager->getDefinition($entity->getEntityTypeId());
     $existing_entity = $this->entityRepository->loadEntityByUuid($entity->getEntityTypeId(), $entity->uuid());
 
@@ -206,7 +213,7 @@ class ContentImporter implements ContentImporterInterface {
   /**
    * {@inheritdoc}
    */
-  public function importCustomValues(FieldableEntityInterface $entity, array $fields) {
+  public function importCustomValues(FieldableEntityInterface $entity, array $fields): void {
     foreach ($fields as $field_name => $field_value) {
       $this->setFieldValue($entity, $field_name, $field_value);
     }
@@ -215,8 +222,14 @@ class ContentImporter implements ContentImporterInterface {
   /**
    * {@inheritdoc}
    */
-  public function importBaseValues(FieldableEntityInterface $entity, array $fields) {
+  public function importBaseValues(FieldableEntityInterface $entity, array $fields): void {
     $values = $this->mapBaseFieldsValues($entity->getEntityTypeId(), $fields);
+
+    // It's possible to export a single translation of the entity. In this case,
+    // we need to load the translation of the entity to import the values.
+    if (isset($values['langcode']) && $entity instanceof TranslatableInterface && $entity->hasTranslation($values['langcode'])) {
+      $entity = $entity->getTranslation($values['langcode']);
+    }
 
     foreach ($values as $field_name => $value) {
       $entity->set($field_name, $value);
@@ -226,7 +239,7 @@ class ContentImporter implements ContentImporterInterface {
   /**
    * {@inheritdoc}
    */
-  public function setFieldValue(FieldableEntityInterface $entity, $field_name, $field_value) {
+  public function setFieldValue(FieldableEntityInterface $entity, string $field_name, $field_value): void {
     if (!$entity->hasField($field_name)) {
       return;
     }
@@ -256,11 +269,24 @@ class ContentImporter implements ContentImporterInterface {
       case 'list_integer':
       case 'list_string':
       case 'text':
-      case 'text_long':
-      case 'text_with_summary':
       case 'string':
       case 'string_long':
       case 'yearonly':
+        $entity->set($field_name, $field_value);
+        break;
+
+      case 'text_long':
+      case 'text_with_summary':
+        if (is_array($field_value)) {
+          foreach ($field_value as $item) {
+            $embed_entities = $item['embed_entities'] ?? [];
+
+            foreach ($embed_entities as $embed_entity) {
+              $this->doImport($embed_entity);
+            }
+          }
+        }
+
         $entity->set($field_name, $field_value);
         break;
 
@@ -401,8 +427,8 @@ class ContentImporter implements ContentImporterInterface {
           /** @var \Drupal\block_content\BlockContentInterface $new_block */
           $new_block = $this->doImport($block);
 
-          if (!$this->blockUsage()->getUsage($new_block->id())) {
-            $this->blockUsage()->addUsage($new_block->id(), $entity);
+          if (!$this->inlineBlockUsage->getUsage($new_block->id())) {
+            $this->inlineBlockUsage->addUsage($new_block->id(), $entity);
           }
 
           $old_revision_id = $block['base_fields']['block_revision_id'];
@@ -413,7 +439,9 @@ class ContentImporter implements ContentImporterInterface {
         $base64_sections = base64_decode($field_value['sections'] ?? $field_value);
         /** @var \Drupal\layout_builder\Section[] $sections */
         $sections = array_map(function (string $section) {
-          return unserialize($section);
+          return unserialize($section, [
+            'allowed_classes' => [Section::class, SectionComponent::class],
+          ]);
         }, explode('|', $base64_sections));
 
         foreach ($sections as $section) {
@@ -529,28 +557,27 @@ class ContentImporter implements ContentImporterInterface {
   /**
    * {@inheritdoc}
    */
-  public function mapBaseFieldsValues($entity_type_id, array $values) {
-    $map_values = [];
-
+  public function mapBaseFieldsValues(string $entity_type_id, array $values): array {
     switch ($entity_type_id) {
       case 'node':
-        $node = [
+        $entity = [
           'title' => $values['title'],
           'langcode' => $values['langcode'],
           'created' => $values['created'],
           'status' => $values['status'],
         ];
+
         // We check if node url alias is filled in.
         if (isset($values['url'])) {
-          $node['path'] = [
+          $entity['path'] = [
             'alias' => $values['url'],
             'pathauto' => empty($values['url']),
           ];
         }
-        return $node;
+        break;
 
       case 'user':
-        return [
+        $entity = [
           'mail' => $values['mail'],
           'init' => $values['init'],
           'name' => $values['name'],
@@ -558,39 +585,52 @@ class ContentImporter implements ContentImporterInterface {
           'status' => $values['status'],
           'timezone' => $values['timezone'],
         ];
+        break;
 
       case 'block_content':
-        return [
+        $entity = [
           'langcode' => $values['langcode'],
           'info' => $values['info'],
           'reusable' => $values['reusable'],
         ];
+        break;
 
       case 'media':
-        return [
+        $entity = [
           'langcode' => $values['langcode'],
           'name' => $values['name'],
           'status' => $values['status'],
           'created' => $values['created'],
         ];
+        break;
 
       case 'taxonomy_term':
-        return [
+        $entity = [
           'name' => $values['name'],
           'weight' => $values['weight'],
           'langcode' => $values['langcode'],
           'description' => $values['description'],
         ];
+        break;
 
       case 'paragraph':
-        return [
+        $entity = [
           'langcode' => $values['langcode'],
           'created' => $values['created'],
           'status' => $values['status'],
         ];
+        break;
+
+      default:
+        return [];
     }
 
-    return $map_values;
+    // Set moderation state if it is supported for multiple entities.
+    if (isset($values['moderation_state'])) {
+      $entity['moderation_state'] = $values['moderation_state'];
+    }
+
+    return $entity;
   }
 
   /**

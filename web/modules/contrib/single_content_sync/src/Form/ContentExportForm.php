@@ -3,6 +3,7 @@
 namespace Drupal\single_content_sync\Form;
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
@@ -10,7 +11,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\file\FileInterface;
-use Drupal\node\Plugin\views\filter\Access;
 use Drupal\single_content_sync\ContentExporterInterface;
 use Drupal\single_content_sync\ContentFileGeneratorInterface;
 use Drupal\single_content_sync\ContentSyncHelperInterface;
@@ -28,28 +28,28 @@ class ContentExportForm extends FormBase {
    *
    * @var \Drupal\single_content_sync\ContentExporterInterface
    */
-  protected $contentExporter;
+  protected ContentExporterInterface $contentExporter;
 
   /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * The content file generator.
    *
    * @var \Drupal\single_content_sync\ContentFileGeneratorInterface
    */
-  protected $fileGenerator;
+  protected ContentFileGeneratorInterface $fileGenerator;
 
   /**
    * The content sync helper.
    *
    * @var \Drupal\single_content_sync\ContentSyncHelperInterface
    */
-  protected $contentSyncHelper;
+  protected ContentSyncHelperInterface $contentSyncHelper;
 
   /**
    * ContentExportForm constructor.
@@ -95,37 +95,37 @@ class ContentExportForm extends FormBase {
    * @param array $form
    *   The form array.
    */
-  protected function handleAutoFileDownload(array &$form) {
+  protected function handleAutoFileDownload(array &$form): void {
     // Don't check for file downloads if this is a submit request.
-    if ($this->getRequest()->getMethod() !== 'POST') {
-      if ($filename = $this->getRequest()->query->get('file')) {
-        $files = $this->entityTypeManager->getStorage('file')
-          ->loadByProperties(['filename' => $filename]);
-        /** @var \Drupal\file\FileInterface $file */
-        $file = array_pop($files);
-        if (file_exists($file->getFileUri())) {
-          $download_url = Url::fromRoute('single_content_sync.file_download', [], [
-            'query' => ['file' => $filename],
-            'absolute' => TRUE,
-          ])->toString();
-
-          $form['#attached']['html_head'][] = [
-            [
-              '#tag' => 'meta',
-              '#attributes' => [
-                'http-equiv' => 'refresh',
-                'content' => '0; url=' . $download_url,
-              ],
-            ],
-            'single_content_sync_export_download',
-          ];
-          return;
-        }
-
-        // If the file does not exist, something went wrong.
-        $this->messenger()->addError($this->t('The export file could not be found, please try again.'));
-      }
+    if ($this->getRequest()->getMethod() === 'POST' || !$this->getRequest()->query->has('file')) {
+      return;
     }
+
+    $uri = $this->getRequest()->query->get('file');
+
+    // If the file does not exist, something went wrong.
+    if (!file_exists($uri)) {
+      $this->messenger()->addError($this->t('The export file could not be found, please try again.'));
+      return;
+    }
+
+    [$file_scheme, $file_target] = explode('://', $uri, 2);
+
+    $download_url = Url::fromRoute('single_content_sync.file_download', ['scheme' => $file_scheme], [
+      'query' => ['file' => $file_target],
+      'absolute' => TRUE,
+    ])->toString();
+
+    $form['#attached']['html_head'][] = [
+      [
+        '#tag' => 'meta',
+        '#attributes' => [
+          'http-equiv' => 'refresh',
+          'content' => '0; url=' . $download_url,
+        ],
+      ],
+      'single_content_sync_export_download',
+    ];
   }
 
   /**
@@ -193,8 +193,16 @@ class ContentExportForm extends FormBase {
 
   /**
    * Ajax callback to refresh output field.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array
+   *   The refreshed form element.
    */
-  public function refreshContent(array &$form, FormStateInterface $form_state) {
+  public function refreshContent(array &$form, FormStateInterface $form_state): array {
     // Clean up warning messages when refreshing field.
     $this->messenger()->deleteByType('warning');
 
@@ -210,32 +218,31 @@ class ContentExportForm extends FormBase {
     $parameters = $this->getRouteMatch()->getParameters();
     $entity = $this->contentSyncHelper->getDefaultLanguageEntity($parameters);
 
-    switch ($button['#name']) {
-      case 'download_file':
-        $file = $this->fileGenerator->generateYamlFile($entity, $extract_translations);
-        break;
+    // Generate a YML file without assets.
+    if ($button['#name'] === 'download_file') {
+      $file = $this->fileGenerator->generateYamlFile($entity, $extract_translations);
+    }
 
-      case 'download_zip':
-        $file = $this->fileGenerator->generateZipFile($entity, $extract_translations);
-        break;
+    // Generate a zip file with assets.
+    if ($button['#name'] === 'download_zip') {
+      $file = $this->fileGenerator->generateZipFile($entity, $extract_translations);
     }
 
     // Display message to download a file immediately.
     if (isset($file) && $file instanceof FileInterface) {
-      $file_name = $file->getFileName();
+      [$file_scheme, $file_target] = explode('://', $file->getFileUri(), 2);
 
-      $url = Url::fromRoute('single_content_sync.file_download', [], [
-        'query' => ['file' => $file_name],
-        'absolute' => TRUE,
-      ]);
-      $message = $this->t('Your download should begin now. If it does not start, download the file @link.', [
-        '@link' => Link::fromTextAndUrl($this->t('here'), $url)->toString(),
-      ]);
-      $this->messenger()->addStatus($message);
+      $this->messenger()->addStatus($this->t('Your download should begin now. If it does not start, download the file @link.', [
+        '@link' => Link::createFromRoute($this->t('here'), 'single_content_sync.file_download', ['scheme' => $file_scheme], [
+          'query' => [
+            'file' => $file_target,
+          ],
+        ])->toString(),
+      ]));
 
       $form_state->setRedirect($this->getRouteMatch()->getRouteName(), $this->getRouteMatch()->getRawParameters()->all(), [
         'query' => [
-          'file' => $file_name,
+          'file' => $file->getFileUri(),
         ],
       ]);
     }
@@ -243,8 +250,11 @@ class ContentExportForm extends FormBase {
 
   /**
    * Check if user has access to the export form.
+   *
+   * @return \Drupal\Core\Access\AccessResultInterface
+   *   The access result.
    */
-  public function access() {
+  public function access(): AccessResultInterface {
     $parameters = $this->getRouteMatch()->getParameters();
     $entity = $parameters->getIterator()->current();
 

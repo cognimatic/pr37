@@ -169,7 +169,7 @@ class EntityReference extends ImportProcessorPluginBase implements PluginFormInt
 
             // Allow to alter the field value with an event.
             $event = new RelationshipFieldValueEvent($field, $field_value);
-            $this->eventDispatcher->dispatch(RelationshipFieldValueEvent::EVENT_NAME, $event);
+            $this->eventDispatcher->dispatch($event, RelationshipFieldValueEvent::EVENT_NAME);
             $field_values[] = $event->getFieldValue();
           }
         }

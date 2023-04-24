@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Drupal\Tests\entity_share_client\Functional;
 
 use Drupal\consumers\Entity\Consumer;
-use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Drupal\entity_share_client\Entity\RemoteInterface;
 use Drupal\entity_share_server\Entity\ChannelInterface;
@@ -19,8 +18,7 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 /**
  * Functional test class for import with "OAuth" authorization.
  *
- * @group entity_share
- * @group entity_share_client
+ * @group no_drupalci
  */
 class AuthenticationOAuthTest extends AuthenticationTestBase {
 
@@ -29,7 +27,7 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'serialization',
     'simple_oauth',
   ];
@@ -77,6 +75,16 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
   protected $clientRolePlain;
 
   /**
+   * Store if some initial setup had been done.
+   *
+   * This is for setup that should be done once but can't be placed in the
+   * setup method because of some parent class calls.
+   *
+   * @var bool
+   */
+  protected $initialSetupDone = FALSE;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -117,8 +125,15 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
    * {@inheritdoc}
    */
   protected function createAuthenticationPlugin(UserInterface $user, RemoteInterface $remote) {
-    // Create all needed OAuth-related entities on the "server" side.
-    $this->serverOauthSetup();
+    if (!$this->initialSetupDone) {
+      // This is placed here because by inheritance this method is triggered by
+      // parent::setup(), so not possible to place it in this class setup().
+      $this->settingsSetup();
+
+      // Create all needed OAuth-related entities on the "server" side.
+      $this->serverOauthSetup();
+      $this->initialSetupDone = TRUE;
+    }
 
     $plugin = $this->authPluginManager->createInstance('oauth');
     $configuration = $plugin->getConfiguration();
@@ -128,25 +143,11 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
       $this->keyValueStore->delete($configuration['uuid'] . '-' . $plugin->getPluginId());
     }
 
-    // Override Guzzle HTTP client options.
-    // This is mandatory because otherwise in testing environment there would
-    // be a redirection from POST /oauth/token to GET /oauth/token.
-    // @see GuzzleHttp\RedirectMiddleware::modifyRequest().
-    $request_options = [
-      RequestOptions::HTTP_ERRORS => FALSE,
-      RequestOptions::ALLOW_REDIRECTS => [
-        'strict' => TRUE,
-      ],
-    ];
-    $site_settings = Settings::getAll();
-    $site_settings['http_client_config'] = $request_options;
-    new Settings($site_settings);
-
     // Obtain the access token from server.
     $credentials = [
       'username' => $user->getAccountName(),
       'password' => $user->passRaw,
-      'client_id' => $this->clients[$user->id()]->uuid(),
+      'client_id' => $this->clients[$user->id()]->getClientId(),
       'client_secret' => $this->clientSecret,
       'authorization_path' => '/oauth/authorize',
       'token_path' => '/oauth/token',
@@ -157,11 +158,8 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
       $access_token = $plugin->initializeToken($remote, $credentials);
     }
     catch (\Exception $e) {
-      // Do nothing.
+      $this->fail('The access token had not been generated.');
     }
-    // Since this is an important part of OAuth functionality,
-    // assert that it is successful.
-    $this->assertNotEmpty($access_token, 'The access token is not empty.');
 
     // Remove the username and password.
     unset($credentials['username']);
@@ -317,22 +315,13 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
     $credentials = $this->keyService->getCredentials($plugin);
     $credentials['username'] = $account->getAccountName();
     $credentials['password'] = $account->passRaw;
-    $request_options = [
-      RequestOptions::HTTP_ERRORS => FALSE,
-      RequestOptions::ALLOW_REDIRECTS => [
-        'strict' => TRUE,
-      ],
-    ];
     $access_token = '';
     try {
-      $access_token = $plugin->initializeToken($this->remote, $credentials, $request_options);
+      $access_token = $plugin->initializeToken($this->remote, $credentials);
     }
     catch (\Exception $e) {
-      // Do nothing.
+      $this->fail('The access token had not been generated.');
     }
-    // Since this is an important part of OAuth functionality,
-    // assert that it is successful.
-    $this->assertNotEmpty($access_token, 'The new access token is not empty.');
     // Save the obtained key.
     $this->keyValueStore->set($configuration['uuid'] . '-' . $plugin->getPluginId(), $access_token);
 
@@ -346,6 +335,32 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
     // Save the "Remote" config entity.
     $this->remote->mergePluginConfig($plugin);
     $this->remote->save();
+  }
+
+  /**
+   * Helper function: set settings PHP overrides.
+   */
+  private function settingsSetup() {
+    // Override Guzzle HTTP client options.
+    // This is mandatory because otherwise in testing environment there would
+    // be a redirection from POST /oauth/token to GET /oauth/token.
+    // @see GuzzleHttp\RedirectMiddleware::modifyRequest().
+    $settings = [];
+    $settings['settings']['http_client_config'][RequestOptions::HTTP_ERRORS] = (object) [
+      'value' => FALSE,
+      'required' => TRUE,
+    ];
+    $settings['settings']['http_client_config'][RequestOptions::ALLOW_REDIRECTS] = (object) [
+      'value' => [
+        'strict' => TRUE,
+      ],
+      'required' => TRUE,
+    ];
+    $settings['settings']['http_client_config'][RequestOptions::VERIFY] = (object) [
+      'value' => FALSE,
+      'required' => TRUE,
+    ];
+    $this->writeSettings($settings);
   }
 
   /**
@@ -400,6 +415,7 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
       'owner_id' => '',
       'user_id' => $account->id(),
       'label' => $this->getRandomGenerator()->name(),
+      'client_id' => 'entity_share_' . $account->id(),
       'secret' => $this->clientSecret,
       'confidential' => FALSE,
       'third_party' => TRUE,
@@ -420,7 +436,7 @@ class AuthenticationOAuthTest extends AuthenticationTestBase {
   protected function createKey(UserInterface $account) {
     $this->createTestKey('key_oauth_' . $account->id(), 'entity_share_oauth', 'config');
     $credentials = [
-      'client_id' => $this->clients[$account->id()]->uuid(),
+      'client_id' => $this->clients[$account->id()]->getClientId(),
       'client_secret' => $this->clientSecret,
       'authorization_path' => '/oauth/authorize',
       'token_path' => '/oauth/token',

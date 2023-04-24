@@ -136,40 +136,67 @@ class EntityImportStatusListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
+    $import_status_language = $entity->language();
+    $imported_entity_type_id = $entity->entity_type_id->value;
+    $imported_entity_bundle = $entity->entity_bundle->value;
+    $imported_entity_id = $entity->entity_id->value;
+    $imported_entity_uuid = $entity->entity_uuid->value;
+    $remote_id = $entity->remote_website->value;
+    $channel_id = $entity->channel_id->value;
+
     $row = [];
     $row['id'] = $entity->id();
+
+    // Basic keys of imported entity.
+    $row['entity_uuid'] = $imported_entity_uuid;
+    $row['entity_id'] = $imported_entity_id;
+    $row['langcode'] = $import_status_language->getName();
+
     // Load the imported entity.
     $imported_entity_storage = $this->entityTypeManager
-      ->getStorage($entity->entity_type_id->value);
-    $imported_entity = $imported_entity_storage->load($entity->entity_id->value);
-    // Basic keys of imported entity.
-    $row['entity_uuid'] = $entity->entity_uuid->value;
-    $row['entity_id'] = $entity->entity_id->value;
-    $row['langcode'] = $this->languageManager->getLanguage($entity->langcode->value)->getName();
-    // Label and link to entity should respect the language.
-    /** @var \Drupal\Core\Entity\ContentEntityInterface $imported_entity_translation */
-    $imported_entity_translation = $imported_entity->getTranslation($entity->langcode->value);
-    try {
-      $row['entity_label'] = $imported_entity_translation->toLink($imported_entity_translation->label());
+      ->getStorage($imported_entity_type_id);
+    $imported_entity = $imported_entity_storage->load($imported_entity_id);
+    if ($imported_entity != NULL) {
+      // Label and link to entity should respect the language.
+      if (!$import_status_language->isLocked()) {
+        $imported_entity = $imported_entity->getTranslation($import_status_language->getId());
+      }
+      try {
+        $row['entity_label'] = $imported_entity->toLink($imported_entity->label());
+      }
+      catch (UndefinedLinkTemplateException $exception) {
+        $row['entity_label'] = $imported_entity->label();
+      }
     }
-    catch (UndefinedLinkTemplateException $exception) {
-      $row['entity_label'] = $imported_entity_translation->label();
+    else {
+      $row['entity_label'] = $this->t('Missing entity');
     }
+
     // Label of entity type.
     $row['entity_type_id'] = $imported_entity_storage->getEntityType()->getLabel();
+
     // Imported entity's bundle.
-    $bundle_info = $this->entityTypeBundleInfo->getBundleInfo($entity->entity_type_id->value);
-    $row['entity_bundle'] = $bundle_info[$entity->entity_bundle->value]['label'] ?? $entity->entity_bundle->value;
+    $bundle_info = $this->entityTypeBundleInfo->getBundleInfo($imported_entity_type_id);
+    $row['entity_bundle'] = $bundle_info[$imported_entity_bundle]['label'] ?? $imported_entity_bundle;
+
     // Remote website.
     $remote = $this->entityTypeManager
       ->getStorage('remote')
-      ->load($entity->remote_website->value);
-    $row['remote_website'] = $remote->label();
+      ->load($remote_id);
+    if ($remote != NULL) {
+      $row['remote_website'] = $remote->label();
+    }
+    else {
+      $row['remote_website'] = $remote_id;
+    }
+
     // Machine name of the import channel.
-    $row['channel_id'] = $entity->channel_id->value;
+    $row['channel_id'] = $channel_id;
+
     // Last import time.
     $row['last_import'] = $this->dateFormatter->format($entity->getLastImport(), 'custom', self::IMPORT_DATE_FORMAT);
-    // Label of the import policy (or raw value if illegal).
+
+    // Label of the import policy (or raw value if not found).
     $policy = $entity->getPolicy();
     $available_policies = $this->policiesManager->getDefinitions();
     if (isset($available_policies[$policy])) {

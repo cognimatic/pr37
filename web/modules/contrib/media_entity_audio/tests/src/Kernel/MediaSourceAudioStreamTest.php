@@ -20,7 +20,7 @@ class MediaSourceAudioStreamTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'media',
     'media_entity_audio',
     'user',
@@ -34,7 +34,7 @@ class MediaSourceAudioStreamTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installEntitySchema('media');
@@ -73,7 +73,7 @@ class MediaSourceAudioStreamTest extends KernelTestBase {
     $build = $view_builder->view($media);
 
     $html = \Drupal::service('renderer')->renderPlain($build);
-    $this->assertContains('<audio  controls="controls"><source src="http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p"></audio>', (string) $html);
+    $this->assertStringContainsString('<audio  controls="controls"><source src="http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p"></audio>', (string) $html);
   }
 
 }

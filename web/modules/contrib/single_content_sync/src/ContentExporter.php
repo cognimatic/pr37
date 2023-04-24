@@ -3,7 +3,10 @@
 namespace Drupal\single_content_sync;
 
 use Drupal\block_content\BlockContentInterface;
+use Drupal\block_content\Entity\BlockContent;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -20,6 +23,9 @@ use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\user\UserInterface;
 
+/**
+ * Define a service to export content.
+ */
 class ContentExporter implements ContentExporterInterface {
 
   use StringTranslationTrait;
@@ -29,63 +35,70 @@ class ContentExporter implements ContentExporterInterface {
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * The module handler.
    *
    * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
-  protected $moduleHandler;
+  protected ModuleHandlerInterface $moduleHandler;
 
   /**
    * Whether to extract translations.
    *
    * @var bool
    */
-  protected $extractTranslationsMode;
+  protected bool $extractTranslationsMode = FALSE;
 
   /**
    * The messenger.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
-  protected $messenger;
+  protected MessengerInterface $messenger;
 
   /**
    * The private temp store of the module.
    *
    * @var \Drupal\Core\TempStore\PrivateTempStore
    */
-  protected $privateTempStore;
+  protected PrivateTempStore $privateTempStore;
 
   /**
    * Local cache variable to store the reference info of entities.
    *
    * @var array
    */
-  private $entityReferenceCache = [];
+  private array $entityReferenceCache = [];
 
   /**
    * Local cache variable to store the exported output of entities.
    *
    * @var array
    */
-  private $entityOutputCache = [];
+  private array $entityOutputCache = [];
 
   /**
    * The language manager.
    *
    * @var \Drupal\Core\Language\LanguageManagerInterface
    */
-  protected $languageManager;
+  protected LanguageManagerInterface $languageManager;
 
   /**
    * The content sync helper.
    *
    * @var \Drupal\single_content_sync\ContentSyncHelperInterface
    */
-  protected $contentSyncHelper;
+  protected ContentSyncHelperInterface $contentSyncHelper;
+
+  /**
+   * The entity repository.
+   *
+   * @var \Drupal\Core\Entity\EntityRepositoryInterface
+   */
+  protected EntityRepositoryInterface $entityRepository;
 
   /**
    * ContentExporter constructor.
@@ -98,16 +111,21 @@ class ContentExporter implements ContentExporterInterface {
    *   The messenger.
    * @param \Drupal\Core\TempStore\PrivateTempStore $store
    *   The private temp store of the module.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The language manager.
    * @param \Drupal\single_content_sync\ContentSyncHelperInterface $content_sync_helper
    *   The configuration factory.
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   *   The entity repository.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ModuleHandlerInterface $module_handler, MessengerInterface $messenger, PrivateTempStore $store, LanguageManagerInterface $language_manager, ContentSyncHelperInterface $content_sync_helper) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, ModuleHandlerInterface $module_handler, MessengerInterface $messenger, PrivateTempStore $store, LanguageManagerInterface $language_manager, ContentSyncHelperInterface $content_sync_helper, EntityRepositoryInterface $entity_repository) {
     $this->entityTypeManager = $entity_type_manager;
     $this->moduleHandler = $module_handler;
     $this->messenger = $messenger;
     $this->privateTempStore = $store;
     $this->languageManager = $language_manager;
     $this->contentSyncHelper = $content_sync_helper;
+    $this->entityRepository = $entity_repository;
   }
 
   /**
@@ -121,7 +139,12 @@ class ContentExporter implements ContentExporterInterface {
    */
   protected function generateCacheKey(FieldableEntityInterface $entity): string {
     $hasTranslations = $this->extractTranslationsMode ? 'has_trans' : 'no_trans';
-    return implode('-', [$entity->getEntityTypeId(), $entity->uuid(), $hasTranslations]);
+
+    return implode('-', [
+      $entity->getEntityTypeId(),
+      $entity->uuid(),
+      $hasTranslations,
+    ]);
   }
 
   /**
@@ -212,11 +235,13 @@ class ContentExporter implements ContentExporterInterface {
     if ($this->extractTranslationsMode && $entity->isTranslatable()) {
       $translations = $entity->getTranslationLanguages();
 
-      // Exclude the default language from the translations.
-      unset($translations[$this->languageManager->getDefaultLanguage()->getId()]);
-
       if (count($translations)) {
         foreach ($translations as $language) {
+          // Skip the default loaded translation.
+          if ($entity->language()->getId() === $language->getId()) {
+            continue;
+          }
+
           $translated_entity = $entity->getTranslation($language->getId());
 
           $output['translations'][$language->getId()]['base_fields'] = $this->exportBaseValues($translated_entity);
@@ -249,6 +274,7 @@ class ContentExporter implements ContentExporterInterface {
    * {@inheritdoc}
    */
   public function exportBaseValues(FieldableEntityInterface $entity): array {
+    $base_fields = [];
     $entity_type = $entity->getEntityTypeId();
 
     switch ($entity_type) {
@@ -256,7 +282,7 @@ class ContentExporter implements ContentExporterInterface {
         if ($entity instanceof NodeInterface) {
           $owner = $entity->getOwner();
 
-          return [
+          $base_fields = [
             'title' => $entity->getTitle(),
             'status' => $entity->isPublished(),
             'langcode' => $entity->language()->getId(),
@@ -271,7 +297,7 @@ class ContentExporter implements ContentExporterInterface {
 
       case 'block_content':
         if ($entity instanceof BlockContentInterface) {
-          return [
+          $base_fields = [
             'info' => $entity->label(),
             'reusable' => $entity->isReusable(),
             'langcode' => $entity->language()->getId(),
@@ -283,7 +309,7 @@ class ContentExporter implements ContentExporterInterface {
 
       case 'media':
         if ($entity instanceof MediaInterface) {
-          return [
+          $base_fields = [
             'name' => $entity->getName(),
             'created' => $entity->getCreatedTime(),
             'status' => $entity->isPublished(),
@@ -294,7 +320,7 @@ class ContentExporter implements ContentExporterInterface {
 
       case 'user':
         if ($entity instanceof UserInterface) {
-          return [
+          $base_fields = [
             'mail' => $entity->getEmail(),
             'init' => $entity->getInitialEmail(),
             'name' => $entity->getAccountName(),
@@ -307,28 +333,38 @@ class ContentExporter implements ContentExporterInterface {
 
       case 'taxonomy_term':
         if ($entity instanceof TermInterface) {
-          return [
+          $base_fields = [
             'name' => $entity->getName(),
             'weight' => $entity->getWeight(),
             'langcode' => $entity->language()->getId(),
             'description' => $entity->getDescription(),
             'parent' => $entity->get('parent')->target_id
-              ? $this->doExportToArray($entity->get('parent')->entity)
-              : 0,
+            ? $this->doExportToArray($entity->get('parent')->entity)
+            : 0,
           ];
         }
         break;
 
       case 'paragraph':
-        return [
+        $base_fields = [
           'status' => $entity->isPublished(),
           'langcode' => $entity->language()->getId(),
           'created' => $entity->getCreatedTime(),
         ];
+        break;
+
+      default:
+        // This entity type is not supported out of the box. Return an empty
+        // array to check later if there is a custom implementation.
+        return [];
     }
 
-    // No base fields found for the entity.
-    return [];
+    // Support moderation state for multiple entity types.
+    if ($entity->hasField('moderation_state') && !$entity->get('moderation_state')->isEmpty()) {
+      $base_fields['moderation_state'] = $entity->get('moderation_state')->value;
+    }
+
+    return $base_fields;
   }
 
   /**
@@ -373,12 +409,40 @@ class ContentExporter implements ContentExporterInterface {
       case 'list_integer':
       case 'list_string':
       case 'text':
-      case 'text_long':
-      case 'text_with_summary':
       case 'string':
       case 'string_long':
       case 'yearonly':
         $value = $field->getValue();
+        break;
+
+      case 'text_long':
+      case 'text_with_summary':
+        $value = $field->getValue();
+
+        foreach ($value as &$item) {
+          $text = $item['value'];
+
+          if (stristr($text, '<drupal-media') === FALSE) {
+            continue;
+          }
+
+          $dom = Html::load($text);
+          $xpath = new \DOMXPath($dom);
+          $embed_entities = [];
+
+          foreach ($xpath->query('//drupal-media[@data-entity-type="media" and normalize-space(@data-entity-uuid)!=""]') as $node) {
+            /** @var \DOMElement $node */
+            $uuid = $node->getAttribute('data-entity-uuid');
+            $media = $this->entityRepository->loadEntityByUuid('media', $uuid);
+            assert($media === NULL || $media instanceof MediaInterface);
+
+            if ($media) {
+              $embed_entities[] = $this->doExportToArray($media);
+            }
+          }
+
+          $item['embed_entities'] = $embed_entities;
+        }
         break;
 
       case 'entity_reference':
@@ -484,7 +548,9 @@ class ContentExporter implements ContentExporterInterface {
 
       case 'metatag':
         $field_value = $field->getValue();
-        $value = !empty($field_value[0]['value']) ? unserialize($field_value[0]['value']) : [];
+        $value = !empty($field_value[0]['value'])
+        ? unserialize($field_value[0]['value'], ['allowed_classes' => FALSE])
+        : [];
         break;
 
       case 'layout_section':
@@ -500,8 +566,18 @@ class ContentExporter implements ContentExporterInterface {
           foreach ($components as $component) {
             if ($component->getPlugin() instanceof InlineBlock) {
               $configuration = $component->toArray()['configuration'];
-              if (isset($configuration['block_revision_id'])) {
+              $block = NULL;
+
+              if (isset($configuration['block_serialized'])) {
+                $block = unserialize($configuration['block_serialized'], [
+                  'allowed_classes' => [BlockContent::class],
+                ]);
+              }
+              elseif (isset($configuration['block_revision_id'])) {
                 $block = $block_storage->loadRevision($configuration['block_revision_id']);
+              }
+
+              if ($block) {
                 $block_list[] = $this->doExportToArray($block);
               }
             }

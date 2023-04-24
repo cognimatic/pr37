@@ -2,11 +2,13 @@
 
 namespace Drupal\linkit\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\file\FileInterface;
 use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use Drupal\linkit\Utility\LinkitHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -54,7 +56,9 @@ class LinkitWidget extends LinkWidget {
   }
 
   /**
-   * @param $plugin_id
+   * Constructs a new Linkit field widget.
+   *
+   * @param string $plugin_id
    *   The plugin_id for the formatter.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
@@ -83,9 +87,9 @@ class LinkitWidget extends LinkWidget {
    */
   public static function defaultSettings() {
     return [
-        'linkit_profile' => 'default',
-        'linkit_auto_link_text' => FALSE,
-      ] + parent::defaultSettings();
+      'linkit_profile' => 'default',
+      'linkit_auto_link_text' => FALSE,
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -147,8 +151,20 @@ class LinkitWidget extends LinkWidget {
 
     // Try to fetch entity information from the URI.
     $default_allowed = !$item->isEmpty() && ($this->currentUser->hasPermission('link to any page') || $item->getUrl()->access());
-    $entity = $default_allowed && $uri ? LinkitHelper::getEntityFromUri($uri) : NULL;
-
+    if (!empty($item->options['data-entity-type']) && !empty($item->options['data-entity-uuid'])) {
+      $entity = \Drupal::service('entity.repository')->loadEntityByUuid($item->options['data-entity-type'], $item->options['data-entity-uuid']);
+    }
+    else {
+      $entity = $default_allowed && $uri ? LinkitHelper::getEntityFromUri($uri) : NULL;
+    }
+    // Display entity URL consistently across all entity types.
+    if ($entity instanceof FileInterface) {
+      // File entities are anomalies, so we handle them differently.
+      $element['uri']['#default_value'] = $entity->getFilename();
+    }
+    elseif ($entity instanceof EntityInterface) {
+      $element['uri']['#default_value'] = $entity->toUrl()->toString();
+    }
     // Change the URI field to use the linkit profile.
     $element['uri']['#type'] = 'linkit';
     $element['uri']['#description'] = $this->t('Start typing to find content or paste a URL and click on the suggestion below.');
@@ -190,7 +206,7 @@ class LinkitWidget extends LinkWidget {
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as &$value) {
       $value['uri'] = LinkitHelper::uriFromUserInput($value['uri']);
-      $value += ['options' => []];
+      $value += ['options' => $value['attributes']];
     }
     return $values;
   }

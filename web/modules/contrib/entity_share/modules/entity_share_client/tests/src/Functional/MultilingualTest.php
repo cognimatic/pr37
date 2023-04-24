@@ -121,38 +121,61 @@ class MultilingualTest extends EntityShareClientFunctionalTestBase {
 
     // Test state information.
     // 1: No import: en and fr channels data should indicate a new entity.
-    $this->expectedState(StateInformationInterface::INFO_ID_NEW, StateInformationInterface::INFO_ID_NEW);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_NEW,
+      StateInformationInterface::INFO_ID_NEW
+    );
 
     // 2: Import entity in en: en should indicate synchronized and fr should
     // indicate a new translation.
     $this->pullChannel('node_es_test_en');
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_NEW_TRANSLATION);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_NEW_TRANSLATION
+    );
 
     // 3: Import entity in fr: en and fr should indicate synchronized.
     $this->pullChannel('node_es_test_fr');
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_SYNCHRONIZED);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_SYNCHRONIZED
+    );
 
     // 4: Rig 'changed' JSON data attribute of en translation (this emulates a
     // change on the client website): en should indicate changed and fr should
     // indicate synchronized.
-    $this->expectedState(StateInformationInterface::INFO_ID_CHANGED, StateInformationInterface::INFO_ID_SYNCHRONIZED, ['en' => ['fast_forward_changed_time']]);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_CHANGED,
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      ['en' => ['fast_forward_changed_time']]
+    );
 
     // 5: Import entity in en: en and fr should indicate synchronized.
     $this->pullChannel('node_es_test_en');
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_SYNCHRONIZED);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_SYNCHRONIZED
+    );
 
     // 6: Rig 'changed' JSON data attribute of fr translation (this emulates a
     // change on the client website): en should indicate synchronized and fr
     // should indicate changed.
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_CHANGED, ['fr' => ['fast_forward_changed_time']]);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_CHANGED,
+      ['fr' => ['fast_forward_changed_time']]
+    );
 
     // 7: Import entity in fr: en and fr should indicate synchronized.
     $this->pullChannel('node_es_test_fr');
     $this->importService->getRuntimeImportContext()->clearImportedEntities();
-    $this->expectedState(StateInformationInterface::INFO_ID_SYNCHRONIZED, StateInformationInterface::INFO_ID_SYNCHRONIZED);
+    $this->expectedState(
+      StateInformationInterface::INFO_ID_SYNCHRONIZED,
+      StateInformationInterface::INFO_ID_SYNCHRONIZED
+    );
   }
 
   /**

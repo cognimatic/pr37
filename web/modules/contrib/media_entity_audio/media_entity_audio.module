@@ -23,11 +23,12 @@ function media_entity_audio_theme() {
  * Template preprocess function for media_audio template.
  */
 function template_preprocess_media_audio(&$vars) {
+  /** @var \Symfony\Component\Mime\MimeTypeGuesserInterface $guesser */
   $guesser = \Drupal::service('file.mime_type.guesser');
   $vars['sources'] = array_map(function ($source) use ($guesser) {
     return [
       'url' => $source,
-      'type' => _media_entity_audio_map_mime($guesser->guess($source)),
+      'type' => _media_entity_audio_map_mime($guesser->guessMimeType($source)),
     ];
   }, $vars['sources']);
 

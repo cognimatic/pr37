@@ -20,14 +20,14 @@ class ContentImportForm extends FormBase {
    *
    * @var \Drupal\single_content_sync\ContentImporterInterface
    */
-  protected $contentImporter;
+  protected ContentImporterInterface $contentImporter;
 
   /**
    * The content sync helper.
    *
    * @var \Drupal\single_content_sync\ContentSyncHelperInterface
    */
-  protected $contentSyncHelper;
+  protected ContentSyncHelperInterface $contentSyncHelper;
 
   /**
    * ContentImportForm constructor.
@@ -67,7 +67,7 @@ class ContentImportForm extends FormBase {
 
     $form['upload_fid'] = [
       '#type' => 'managed_file',
-      '#upload_loction' => "{$default_scheme}://import/zip",
+      '#upload_location' => "{$default_scheme}://import/zip",
       '#upload_validators' => [
         'file_validate_extensions' => ['zip yml'],
       ],

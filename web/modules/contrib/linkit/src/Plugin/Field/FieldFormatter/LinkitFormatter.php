@@ -2,6 +2,7 @@
 
 namespace Drupal\linkit\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -61,7 +62,7 @@ class LinkitFormatter extends LinkFormatter {
   }
 
   /**
-   * Constructs a new LinkitFormatter.
+   * Constructs a new Linkit field formatter.
    *
    * @param string $plugin_id
    *   The plugin_id for the formatter.
@@ -79,6 +80,8 @@ class LinkitFormatter extends LinkFormatter {
    *   Third party settings.
    * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
    *   The path validator service.
+   * @param Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager service.
    * @param \Drupal\linkit\SubstitutionManagerInterface $substitution_manager
    *   The substitution manager.
    */
@@ -188,7 +191,15 @@ class LinkitFormatter extends LinkFormatter {
    *   The substitution URL, or NULL if not able to retrieve it from the item.
    */
   protected function getSubstitutedUrl(LinkItemInterface $item) {
-    if ($entity = LinkitHelper::getEntityFromUserInput($item->uri)) {
+    // First try to derive entity information from Linkit-specific attributes.
+    // This is more reliable and is required for File entities.
+    if (!empty($item->options['data-entity-type']) && !empty($item->options['data-entity-uuid'])) {
+      $entity = \Drupal::service('entity.repository')->loadEntityByUuid($item->options['data-entity-type'], $item->options['data-entity-uuid']);
+    }
+    else {
+      $entity = LinkitHelper::getEntityFromUserInput($item->uri);
+    }
+    if ($entity instanceof EntityInterface) {
       $linkit_profile = $this->linkitProfileStorage->load($this->getSettings()['linkit_profile']);
 
       if (!$linkit_profile instanceof ProfileInterface) {
@@ -200,7 +211,6 @@ class LinkitFormatter extends LinkFormatter {
       $substitution_type = $matcher ? $matcher->getConfiguration()['settings']['substitution_type'] : SubstitutionManagerInterface::DEFAULT_SUBSTITUTION;
       return $this->substitutionManager->createInstance($substitution_type)->getUrl($entity);
     }
-
     return NULL;
   }
 

@@ -71,9 +71,19 @@ class LinkInternalContentImporter extends EntityReference {
     $entity_type = $parsed_uri[1];
     $entity_uuid = $parsed_uri[3];
 
-    $referenced_entities_ids = $this->importUrl($runtime_import_context, $import_url);
-    if (!empty($referenced_entities_ids) && isset($referenced_entities_ids[$entity_uuid])) {
-      return 'entity:' . $entity_type . '/' . $referenced_entities_ids[$entity_uuid];
+    // In the case of links, if the linked entity is already
+    // present on the website, there is nothing to do as the
+    // UuidLinkEnhancer::doTransform() method will convert the URI format back
+    // to Drupal expected format.
+    if (
+      $this->currentRecursionDepth != $this->configuration['max_recursion_depth'] &&
+      !$runtime_import_context->isEntityMarkedForImport($entity_uuid)
+    ) {
+      $runtime_import_context->addEntityMarkedForImport($entity_uuid);
+      $referenced_entities_ids = $this->importUrl($runtime_import_context, $import_url);
+      if (!empty($referenced_entities_ids) && isset($referenced_entities_ids[$entity_uuid])) {
+        return 'entity:' . $entity_type . '/' . $referenced_entities_ids[$entity_uuid];
+      }
     }
     else {
       return $uri;

@@ -58,11 +58,11 @@ class AuthenticationBasicAuthTest extends AuthenticationTestBase {
    * {@inheritdoc}
    */
   protected function getAdministratorPermissions() {
-    return [
+    return \array_merge([
       // Administrative user will be actually pulling the content, so we need
       // them to allow to pull unpublished nodes, unlike the channel user.
       'bypass node access',
-    ] + parent::getAdministratorPermissions();
+    ], parent::getAdministratorPermissions());
   }
 
   /**

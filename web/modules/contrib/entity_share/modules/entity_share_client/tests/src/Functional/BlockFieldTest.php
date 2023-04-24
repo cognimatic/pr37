@@ -19,7 +19,7 @@ class BlockFieldTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'jsonapi_extras',
   ];
 

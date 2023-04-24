@@ -26,7 +26,7 @@ class ImportPolicyTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'serialization',
     'jsonapi',
     'entity_share_client',

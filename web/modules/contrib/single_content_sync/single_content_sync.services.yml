@@ -8,6 +8,7 @@ services:
       - '@single_content_sync.store'
       - '@language_manager'
       - '@single_content_sync.helper'
+      - '@entity.repository'
 
   single_content_sync.importer:
     class: Drupal\single_content_sync\ContentImporter
@@ -17,6 +18,8 @@ services:
       - '@module_handler'
       - '@file_system'
       - '@single_content_sync.helper'
+      - '@datetime.time'
+      - '@?inline_block.usage'
 
   single_content_sync.file_generator:
     class: Drupal\single_content_sync\ContentFileGenerator

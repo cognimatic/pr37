@@ -197,7 +197,7 @@ class EmbeddedEntityTest extends EntityShareClientFunctionalTestBase {
    * Bug in PHPMD, @see https://github.com/phpmd/phpmd/issues/714
    */
   protected function getEmbeddedTextValue() {
-    $image_src = file_url_transform_relative(file_create_url(static::$filesData['file_image']['uri']));
+    $image_src = $this->fileUrlGenerator->generateString(static::$filesData['file_image']['uri']);
 
     $value = <<<EOT
 <p>Test image</p>

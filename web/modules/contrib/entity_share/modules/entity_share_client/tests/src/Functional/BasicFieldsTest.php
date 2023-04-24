@@ -21,7 +21,7 @@ class BasicFieldsTest extends EntityShareClientFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'entity_share_entity_test',
     'jsonapi_extras',
   ];

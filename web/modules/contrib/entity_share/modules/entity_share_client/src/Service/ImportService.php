@@ -165,9 +165,9 @@ class ImportService implements ImportServiceInterface {
     $channel_count = $context->getRemoteChannelCount();
     // Check how much content is in the channel if the count has not been
     // provided before.
-    if (empty($channel_count)) {
+    if ($channel_count == NULL) {
       $url_uuid = $this->runtimeImportContext->getChannelUrlUuid();
-      $response = $this->remoteManager->jsonApiRequest($this->runtimeImportContext->getRemote(), 'GET', $url_uuid);
+      $response = $this->jsonApiRequest('GET', $url_uuid);
 
       if (is_null($response)) {
         $this->logger->error('An error occurred while requesting the UUID URL for the remote website @remote_id and channel @channel_id', $log_variables);
@@ -188,7 +188,7 @@ class ImportService implements ImportServiceInterface {
         return;
       }
 
-      $channel_count = $json['meta']['count'];
+      $channel_count = (int) $json['meta']['count'];
     }
 
     if ($channel_count == 0) {
@@ -465,6 +465,13 @@ class ImportService implements ImportServiceInterface {
     else {
       /** @var \Drupal\Core\Entity\ContentEntityInterface $existing_entity */
       $existing_entity = array_shift($existing_entities);
+
+      if ($existing_entity->language()->isLocked()) {
+        // The existing entity was in an untranslatable language like "und",
+        // so we convert it to the new language.
+        $existing_entity->set('langcode', $data_langcode);
+      }
+
       $has_translation = $existing_entity->hasTranslation($data_langcode);
       // Update the existing translation.
       if ($has_translation) {

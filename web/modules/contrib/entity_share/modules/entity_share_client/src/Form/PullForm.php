@@ -20,6 +20,7 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\entity_share\EntityShareUtility;
+use Drupal\entity_share_client\Exception\ResourceTypeNotFoundException;
 use Drupal\entity_share_client\ImportContext;
 use Drupal\entity_share_client\Service\FormHelperInterface;
 use Drupal\entity_share_client\Service\ImportServiceInterface;
@@ -202,6 +203,12 @@ class PullForm extends FormBase {
     $select_element = $this->buildSelectElement($form_state, 'import_config');
     if ($select_element) {
       $select_element['#title'] = $this->t('Import configuration');
+      $select_element['#ajax'] = [
+        'callback' => [get_class($this), 'buildAjaxChannelSelect'],
+        'effect' => 'fade',
+        'method' => 'replace',
+        'wrapper' => 'channel-wrapper',
+      ];
       $form['import_config'] = $select_element;
     }
     else {
@@ -475,6 +482,15 @@ class PullForm extends FormBase {
       $form['channel_wrapper']['channel'] = $select_element;
     }
 
+    if (empty($form['channel_wrapper']['channel']['#options'])) {
+      if ($this->currentUser()->hasPermission('administer_remote_entity')) {
+        $this->messenger()->addWarning($this->t('The selected website is returning no channels. Check that they are defined, and that this website has permission to access channels on the remote website.'));
+      }
+      else {
+        $this->messenger()->addWarning($this->t('The selected website is returning no channels.'));
+      }
+    }
+
     // Container for the AJAX.
     $form['channel_wrapper']['entities_wrapper'] = [
       '#type' => 'container',
@@ -503,7 +519,8 @@ class PullForm extends FormBase {
 
     if (
       empty($this->remoteWebsites[$selected_remote_id]) ||
-      empty($this->channelsInfos[$selected_channel])
+      empty($this->channelsInfos[$selected_channel]) ||
+      $selected_import_config == NULL
     ) {
       return;
     }
@@ -512,6 +529,13 @@ class PullForm extends FormBase {
     // selected import config, so we can "compute" the max size.
     /** @var \Drupal\entity_share_client\Entity\ImportConfigInterface $import_config */
     $import_config = $this->entityTypeManager->getStorage('import_config')->load($selected_import_config);
+    if ($import_config == NULL) {
+      $this->messenger()->addError($this->t('The selected import config @selected_import_config is not available.', [
+        '@selected_import_config' => $selected_import_config,
+      ]));
+      return;
+    }
+
     $this->maxSize = EntityShareUtility::getMaxSize($import_config, $selected_channel, $this->channelsInfos);
 
     // If Ajax was triggered set offset to default value: 0.
@@ -631,7 +655,7 @@ class PullForm extends FormBase {
 
     // Full pager.
     if (isset($json['meta']['count'])) {
-      $this->pagerManager->createPager($json['meta']['count'], $this->maxSize);
+      $this->pagerManager->createPager((int) $json['meta']['count'], $this->maxSize);
       $form['channel_wrapper']['entities_wrapper']['pager'] = [
         '#type' => 'pager',
         '#route_name' => 'entity_share_client.admin_content_pull_form',
@@ -652,7 +676,7 @@ class PullForm extends FormBase {
     }
     // Basic pager.
     else {
-      // Store the JSON:API links to use its in the pager submit handlers.
+      // Store the JSON:API links to use it in the pager submit handlers.
       $storage = $form_state->getStorage();
       $storage['links'] = $json['links'];
       $form_state->setStorage($storage);
@@ -699,10 +723,18 @@ class PullForm extends FormBase {
       'policy' => $this->t('Policy'),
     ];
 
+    $entities_options = [];
+    try {
+      $entities_options = $this->formHelper->buildEntitiesOptions($json['data'], $selected_remote, $selected_channel);
+    }
+    catch (ResourceTypeNotFoundException $exception) {
+      $this->displayError($exception->getMessage());
+    }
+
     $form['channel_wrapper']['entities_wrapper']['entities'] = [
       '#type' => 'tableselect',
       '#header' => $header,
-      '#options' => $this->formHelper->buildEntitiesOptions($json['data'], $selected_remote, $selected_channel),
+      '#options' => $entities_options,
       '#empty' => $this->t('No entities to be pulled have been found.'),
       '#attached' => [
         'library' => [
@@ -743,7 +775,7 @@ class PullForm extends FormBase {
       $form['channel_wrapper']['entities_wrapper']['actions_bottom']['import_channel'] = $import_channel_button;
       // Remember the remote channel count.
       $storage = $form_state->getStorage();
-      $storage['remote_channel_count'] = $json['meta']['count'];
+      $storage['remote_channel_count'] = (int) $json['meta']['count'];
       $form_state->setStorage($storage);
     }
 

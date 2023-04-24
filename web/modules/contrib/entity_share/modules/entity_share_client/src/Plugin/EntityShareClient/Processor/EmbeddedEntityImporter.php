@@ -67,7 +67,20 @@ class EmbeddedEntityImporter extends EntityReference {
     foreach ($matches[1] as $url) {
       // Check that the URL is valid.
       if (UrlHelper::isValid($url)) {
-        $this->importUrl($runtime_import_context, $url);
+        $parsed_url = explode('/', $url);
+        if (!empty($parsed_url)) {
+          $entity_uuid = array_pop($parsed_url);
+
+          // In the case of embedded entities, if the embedded entity is already
+          // present on the website, there is nothing to do.
+          if (
+            $this->currentRecursionDepth != $this->configuration['max_recursion_depth'] &&
+            !$runtime_import_context->isEntityMarkedForImport($entity_uuid)
+          ) {
+            $runtime_import_context->addEntityMarkedForImport($entity_uuid);
+            $this->importUrl($runtime_import_context, $url);
+          }
+        }
       }
     }
   }

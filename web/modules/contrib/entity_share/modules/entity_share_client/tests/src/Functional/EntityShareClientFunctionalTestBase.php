@@ -7,7 +7,9 @@ namespace Drupal\Tests\entity_share_client\Functional;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\RevisionableInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\Core\Url;
@@ -18,6 +20,7 @@ use Drupal\entity_share_client\Entity\RemoteInterface;
 use Drupal\entity_share_client\ImportContext;
 use Drupal\entity_share_server\Entity\ChannelInterface;
 use Drupal\entity_share_test\EntityFieldHelperTrait;
+use Drupal\file\FileInterface;
 use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\entity_share_server\Functional\EntityShareServerRequestTestTrait;
@@ -47,7 +50,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'basic_auth',
     'entity_share_client',
     'entity_share_client_remote_manager_test',
@@ -59,7 +62,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * The tested entity type.
@@ -204,6 +207,20 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
   protected $keyValueStore;
 
   /**
+   * The module extension list service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected ModuleExtensionList $moduleExtensionList;
+
+  /**
+   * The file URL generator service.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected FileUrlGeneratorInterface $fileUrlGenerator;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -228,6 +245,8 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
     $this->remoteManager = $this->container->get('entity_share_client.remote_manager');
     $this->authPluginManager = $this->container->get('plugin.manager.entity_share_client_authorization');
     $this->keyValueStore = $this->container->get('keyvalue')->get(ClientAuthorizationInterface::LOCAL_STORAGE_KEY_VALUE_COLLECTION);
+    $this->moduleExtensionList = $this->container->get('extension.list.module');
+    $this->fileUrlGenerator = $this->container->get('file_url_generator');
 
     $this->createRemote($this->channelUser);
     $this->createChannel($this->channelUser);
@@ -1038,7 +1057,7 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
           'checker_callback' => 'getValue',
         ],
         'status' => [
-          'value' => FILE_STATUS_PERMANENT,
+          'value' => FileInterface::STATUS_PERMANENT,
           'checker_callback' => 'getValue',
         ],
       ];
@@ -1081,9 +1100,24 @@ abstract class EntityShareClientFunctionalTestBase extends BrowserTestBase {
    *   The file data as in static::filesData.
    */
   protected function getMediaEntityReferenceTestFiles($file_uuid, array $file_data) {
-    $filepath = drupal_get_path('module', 'entity_share') . '/tests/fixtures/files/' . $file_data['filename'];
+    $filepath = $this->moduleExtensionList->getPath('entity_share') . '/tests/fixtures/files/' . $file_data['filename'];
     $this->fileSystem->copy($filepath, PublicStream::basePath());
     $this->filesSize[$file_uuid] = filesize($filepath);
+  }
+
+  /**
+   * Helper function: unsets remote manager's cached data.
+   *
+   * This is needed because our remote ID is not changing, and remote manager
+   * caches certain values based on the remote ID.
+   * Another solution would be to reinitialize $this->remoteManager and create
+   * new remote.
+   */
+  protected function resetRemoteCaches() {
+    $this->remoteManager->resetRemoteInfos();
+    $this->remoteManager->resetHttpClientsCache('json_api');
+    // Reset "remote" response mapping (ie. cached JSON:API responses).
+    $this->remoteManager->resetResponseMapping();
   }
 
 }

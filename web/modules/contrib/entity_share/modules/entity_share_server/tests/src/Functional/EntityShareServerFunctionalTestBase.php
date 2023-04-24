@@ -19,7 +19,7 @@ abstract class EntityShareServerFunctionalTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'entity_share_server',
     'entity_share_test',
     'basic_auth',
@@ -28,7 +28,7 @@ abstract class EntityShareServerFunctionalTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * A test user with administrative privileges.

@@ -7,11 +7,11 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\localgov_review_date\Entity\ReviewDate;
 use Drupal\localgov_review_date\Form\ReviewDateSettingsForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Language\LanguageInterface;
 
 /**
  * Plugin implementation of the 'review_date' widget.

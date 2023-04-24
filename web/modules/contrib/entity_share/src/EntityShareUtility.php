@@ -128,7 +128,7 @@ class EntityShareUtility {
       $channel_maxsize = $channel_infos[$channel_id]['channel_maxsize'];
     }
 
-    return min($import_maxsize, $channel_maxsize);
+    return (int) min($import_maxsize, $channel_maxsize);
   }
 
 }

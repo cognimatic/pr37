@@ -73,6 +73,9 @@ entity_share_client.plugin.import_processor_configuration.language_fallback:
 entity_share_client.plugin.import_processor_configuration.link_internal_content_importer:
   type: entity_share_client.plugin.import_processor_configuration.entity_reference
 
+entity_share_client.plugin.import_processor_configuration.path_alias_processor:
+  type: entity_share_client.plugin.import_processor_configuration
+
 entity_share_client.plugin.import_processor_configuration.physical_file:
   type: entity_share_client.plugin.import_processor_configuration
   mapping:
@@ -92,3 +95,6 @@ entity_share_client.plugin.import_processor_configuration.revision:
 
 entity_share_client.plugin.import_processor_configuration.skip_imported:
   type: entity_share_client.plugin.import_processor_configuration
+
+entity_share_client.plugin.import_processor_configuration.book_structure_importer:
+  type: entity_share_client.plugin.import_processor_configuration.entity_reference

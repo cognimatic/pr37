@@ -134,7 +134,7 @@ class PhysicalFile extends ImportProcessorPluginBase implements PluginFormInterf
       $processed_entity->setFilename($this->fileSystem->basename($file_destination));
 
       // Create the destination folder.
-      if ($this->fileSystem->prepareDirectory($directory_uri, FileSystemInterface::CREATE_DIRECTORY)) {
+      if ($this->fileSystem->prepareDirectory($directory_uri, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS)) {
         try {
           $response = $this->remoteManager->request($runtime_import_context->getRemote(), 'GET', $remote_file_url);
           $file_content = (string) $response->getBody();

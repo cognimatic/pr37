@@ -365,7 +365,7 @@ class IframeWidgetBase extends WidgetBase {
       '#placeholder' => '',
       '#default_value' => $settings['title'],
       '#size' => 80,
-      '#maxlength' => 1024,
+      '#maxlength' => 255,
       '#weight' => 2,
       // '#element_validate' => array('text'),
     ] + $required;
@@ -376,7 +376,7 @@ class IframeWidgetBase extends WidgetBase {
       '#placeholder' => 'https://',
       '#default_value' => $settings['url'] ?? '',
       '#size' => 80,
-      '#maxlength' => 1024,
+      '#maxlength' => 2048,
       '#weight' => 1,
       '#element_validate' => [[$this, 'validateUrl']],
     ] + $required;
@@ -406,6 +406,7 @@ class IframeWidgetBase extends WidgetBase {
         '#type' => 'textfield',
         '#title' => $this->t('Additional CSS Class'),
         // ''
+        '#maxlength' => 255,
         '#default_value' => $settings['class'],
         '#description' => $this->t('When output, this iframe will have this class attribute. Multiple classes should be separated by spaces.'),
         '#weight' => 5,

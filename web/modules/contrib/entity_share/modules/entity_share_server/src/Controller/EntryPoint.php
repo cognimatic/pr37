@@ -108,7 +108,7 @@ class EntryPoint extends ControllerBase {
 
     // Collect other channel definitions.
     $event = new ChannelListEvent($data);
-    $this->eventDispatcher->dispatch(ChannelListEvent::EVENT_NAME, $event);
+    $this->eventDispatcher->dispatch($event, ChannelListEvent::EVENT_NAME);
 
     return new JsonResponse([
       'data' => $event->getChannelList(),

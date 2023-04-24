@@ -1,37 +1,36 @@
-## CONTENTS OF THIS FILE
-
-* Introduction
-* Requirements
-* Recommended Modules
-* Installation
-* Configuration
-* Maintainers
-
-
-## INTRODUCTION
+# Iframe
 
 The Iframe module creates a custom field, which lets you add a complete iframe
 to your content types; including src-URL, setting width and height, optionally
 a title above, and optionally a target attribute.
 
-* For a full description of the module, visit this page:
-https://www.drupal.org/project/iframe
+For a full description of the module, visit the
+[project page](https://www.drupal.org/project/iframe).
 
-* To submit bug reports and feature suggestions, or to track changes:
-https://www.drupal.org/project/issues/iframe
+Submit bug reports and feature suggestions, or track changes in the
+[issue queue](https://www.drupal.org/project/issues/iframe).
 
 
-## REQUIREMENTS
+## Table of contents
+
+- Requirements
+- Recommended Modules
+- Installation
+- Configuration
+- Maintainers
+
+
+## Requirements
 
 This module requires no other modules outside of Drupal core.
 
 
-## RECOMMENDED MODULES
+## Recommended Modules
 
 Token - https://www.drupal.org/project/token
 
 
-## INSTALLATION
+## Installation
 
 Install the Iframe module as you would normally install a contributed Drupal
 module.
@@ -39,7 +38,7 @@ Visit: https://www.drupal.org/docs/8/extending-drupal-8/installing-modules
 for further information.
 
 
-## CONFIGURATION
+## Configuration
 
 1. Navigate to Administration > Structure > Content types
    > [Content to edit] > Manage fields.
@@ -47,7 +46,8 @@ for further information.
 3. There are three choices for Widget types: URL only, URL with height,
    and URL with width and height.
 
-Field Settings
+- Field Settings
+
 1. Navigate to Administration > Structure > Content types
    > [Content to edit] > Manage fields > Field to edit > Field Settings.
 2. The width and height of an iframe can be set.
@@ -76,4 +76,4 @@ Field Settings
 
 ## MAINTAINERS
 
-* neffets - https://www.drupal.org/u/neffets
+- neffets - [neffets](https://www.drupal.org/u/neffets)

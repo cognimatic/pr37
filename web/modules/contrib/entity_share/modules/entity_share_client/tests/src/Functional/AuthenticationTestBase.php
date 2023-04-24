@@ -23,7 +23,7 @@ abstract class AuthenticationTestBase extends EntityShareClientFunctionalTestBas
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'key',
   ];
 
@@ -120,21 +120,6 @@ abstract class AuthenticationTestBase extends EntityShareClientFunctionalTestBas
         ],
       ],
     ];
-  }
-
-  /**
-   * Helper function: unsets remote manager's cached data.
-   *
-   * This is needed because our remote ID is not changing, and remote manager
-   * caches certain values based on the remote ID.
-   * Another solution would be to reinitialize $this->remoteManager and create
-   * new remote.
-   */
-  protected function resetRemoteCaches() {
-    $this->remoteManager->resetRemoteInfos();
-    $this->remoteManager->resetHttpClientsCache('json_api');
-    // Reset "remote" response mapping (ie. cached JSON:API responses).
-    $this->remoteManager->resetResponseMapping();
   }
 
   /**

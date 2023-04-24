@@ -89,6 +89,10 @@ class LinkFieldTest extends WebDriverTestBase {
     $entityDisplayRepository->getViewDisplay('node', 'page', 'default')
       ->setComponent('field_test_link', [
         'type' => 'linkit',
+        'settings' => [
+          'rel' => 'nofollow',
+          'target' => '_blank',
+        ],
       ])
       ->save();
 
@@ -168,6 +172,9 @@ class LinkFieldTest extends WebDriverTestBase {
     // Check that we are viewing the node, and the formatter displays what we
     // expect.
     $assert_session->linkByHrefExists("/entity_test_mul/manage/{$entity->id()}");
+    $assert_session->elementAttributeContains('xpath', '//article/div/div/div[2]/a', 'href', "/entity_test_mul/manage/{$entity->id()}");
+    $assert_session->elementAttributeContains('xpath', '//article/div/div/div[2]/a', 'rel', "nofollow");
+    $assert_session->elementAttributeContains('xpath', '//article/div/div/div[2]/a', 'target', "_blank");
     $assert_session->linkExists('Foo');
 
     // Test internal entity targets with anchors.

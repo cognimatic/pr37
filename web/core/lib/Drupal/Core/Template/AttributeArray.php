@@ -73,22 +73,9 @@ class AttributeArray extends AttributeValueBase implements \ArrayAccess, \Iterat
    * Implements the magic __toString() method.
    */
   public function __toString() {
-    // Normalize value removing any invalid sub-array structures
-    $normalizedValue = [];
-    $bad = false;
-    foreach ($this->value as $k => $v) {
-      if (is_numeric($k) && is_string($v)) {
-        $normalizedValue[] = $v;
-      } else {
-        $bad = true;
-      }
-    }
-//    if ($bad) {
-//      ksm('Invalid attribute array value', $this->value);
-//    }
     // Filter out any empty values before printing.
-    $this->value = array_unique(array_filter($normalizedValue));
-    return Html::escape(implode(' ', $normalizedValue));
+    $this->value = array_unique(array_filter($this->value));
+    return Html::escape(implode(' ', $this->value));
   }
 
   /**
