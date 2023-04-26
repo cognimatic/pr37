@@ -1,0 +1,19 @@
+{
+  "name": "drupal/viewer",
+  "description": "Import files CSV, XLSX etc, preprocess its contents and display.",
+  "type": "drupal-module",
+  "homepage": "http://drupal.org/project/viewer",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "minnur",
+      "homepage": "https://www.minnur.com"
+    }
+  ],
+  "require": {
+    "league/flysystem-ftp": "^3.0",
+    "league/flysystem-sftp-v3": "^3.0",
+    "phpoffice/phpspreadsheet": "^1.24",
+    "minnur/array-query": "^1.0"
+  }
+}

@@ -1,0 +1,269 @@
+viewer.admin:
+  version: VERSION
+  css:
+    theme:
+      assets/admin.css: {}
+
+viewer.preview:
+  version: VERSION
+  css:
+    theme:
+      assets/preview.css: {}
+  js:
+    assets/preview.js: {}
+
+viewer.support:
+  version: VERSION
+  css:
+    theme:
+      assets/support.css: {}
+
+viewer.ckeditor5:
+  js:
+    assets/ckeditor5/Viewer.js: { preprocess: false, minified: true }
+  css:
+    theme:
+      assets/ckeditor5/ckeditor5.css: { }
+  dependencies:
+    - ckeditor5/ckeditor5
+    - editor/drupal.editor.dialog
+
+viewer.ckeditor5.admin:
+  css:
+    theme:
+      assets/ckeditor5/ckeditor5.admin.css: { }
+
+viewer:
+  version: VERSION
+  css:
+    theme:
+      assets/loader.css: {}
+  js:
+    assets/viewer.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+viewer.table:
+  version: VERSION
+  css:
+    theme:
+      assets/table/styles.css: {}
+  js:
+    assets/table/peity/jquery.peity.min.js: { minified: true }
+    assets/table/scripts.js: {}
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.footable:
+  version: VERSION
+  css:
+    theme:
+      assets/footable/footable.standalone.min.css: { minified: true }
+      assets/footable/styles.css: {}
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js: { type: external, minified: true }
+    assets/footable/footable.min.js: { minified: true }
+    assets/footable/scripts.js: {}
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.spreadsheet:
+  version: VERSION
+  css:
+    theme:
+      assets/spreadsheet/styles.css: {}
+  js:
+    assets/spreadsheet/scripts.js: {}
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.pdfjs:
+  version: VERSION
+  css:
+    theme:
+      assets/pdfjs/styles.css: {}
+  js:
+    assets/pdfjs/pdfobject.min.js: { minified: true }
+    assets/pdfjs/scripts.js: {}
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.datatables:
+  version: VERSION
+  css:
+    theme:
+      assets/datatables/jquery.dataTables.min.css: { minified: true }
+      assets/datatables/styles.css: {}
+  js:
+    assets/datatables/datatables.min.js: { minified: true }
+    assets/datatables/scripts.js: {}
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.tabs:
+  version: VERSION
+  css:
+    theme:
+      assets/tabs/styles.css: {}
+  js:
+    assets/tabs/scripts.js: {}
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.tabs_admin:
+  version: VERSION
+  js:
+    assets/tabs/admin.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+viewer.vertical_tabs:
+  version: VERSION
+  css:
+    theme:
+      assets/tabs/styles.css: {}
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.accordion:
+  version: VERSION
+  css:
+    theme:
+      assets/accordion/styles.css: {}
+  js:
+    assets/accordion/scripts.js: {}
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.chartjs:
+  version: VERSION
+  css:
+    theme:
+      assets/chartjs/styles.css: {}
+  js:
+    assets/chartjs/chart.min.js: { minified: true }
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.linebar:
+  version: VERSION
+  js:
+    assets/chartjs/linebar.js: {}
+  dependencies:
+    - viewer/viewer.chartjs
+
+viewer.piedoughnut:
+  version: VERSION
+  js:
+    assets/chartjs/piedoughnut.js: {}
+  dependencies:
+    - viewer/viewer.chartjs
+
+viewer.scatterbubble:
+  version: VERSION
+  js:
+    assets/chartjs/scatterbubble.js: {}
+  dependencies:
+    - viewer/viewer.chartjs
+
+viewer.mixed:
+  version: VERSION
+  js:
+    assets/chartjs/mixed.js: {}
+  dependencies:
+    - viewer/viewer.chartjs
+
+viewer.apexcharts:
+  version: VERSION
+  css:
+    theme:
+      assets/apexcharts/apexcharts.css: {}
+  js:
+    assets/apexcharts/apexcharts.min.js: { minified: true }
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal
+
+viewer.apexcharts_line:
+  version: VERSION
+  js:
+    assets/apexcharts/line.js: {}
+  dependencies:
+    - viewer/viewer.apexcharts
+
+viewer.apexcharts_bar:
+  version: VERSION
+  js:
+    assets/apexcharts/bar.js: {}
+  dependencies:
+    - viewer/viewer.apexcharts
+
+viewer.apexcharts_mixed:
+  version: VERSION
+  js:
+    assets/apexcharts/mixed.js: {}
+  dependencies:
+    - viewer/viewer.apexcharts
+
+viewer.apexcharts_scatterbubble:
+  version: VERSION
+  js:
+    assets/apexcharts/scatterbubble.js: {}
+  dependencies:
+    - viewer/viewer.apexcharts
+
+viewer.apexcharts_treemap:
+  version: VERSION
+  js:
+    assets/apexcharts/treemap.js: {}
+  dependencies:
+    - viewer/viewer.apexcharts
+
+viewer.apexcharts_piedoughnut:
+  version: VERSION
+  js:
+    assets/apexcharts/piedoughnut.js: {}
+  dependencies:
+    - viewer/viewer.apexcharts
+
+viewer.apexcharts_candlestick:
+  version: VERSION
+  js:
+    assets/apexcharts/candlestick.js: {}
+  dependencies:
+    - viewer/viewer.apexcharts
+
+viewer.fullcalendar:
+  version: VERSION
+  css:
+    theme:
+      assets/fullcalendar/main.min.css: { minified: true }
+      assets/fullcalendar/styles.css: {}
+  js:
+    assets/fullcalendar/main.min.js: { minified: true }
+    assets/fullcalendar/scripts.js: {}
+  dependencies:
+    - viewer/viewer
+    - core/jquery
+    - core/drupal

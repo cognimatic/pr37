@@ -1,0 +1,17 @@
+viewer.list:
+  title: 'Viewers'
+  route_name: entity.viewer.collection
+  description: 'Manage CSV, XLSX and other file viewers.'
+  parent: system.admin_structure
+
+viewer.viewer:
+  title: 'Viewers'
+  route_name: entity.viewer.collection
+  description: 'List of all Viewers'
+  parent: viewer.list
+
+viewer.sources:
+  title: 'Sources'
+  route_name: entity.viewer_source.collection
+  description: 'List of all Viewer Sources'
+  parent: viewer.list

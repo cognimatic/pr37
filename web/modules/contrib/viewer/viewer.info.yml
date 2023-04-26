@@ -1,0 +1,13 @@
+name: 'Viewer'
+description: 'Display CSV, XLSX and other files as tables, previews and charts via fields and content.'
+package: 'Viewers'
+type: module
+configure: entity.viewer.collection
+core_version_requirement: ^9 || ^10
+dependencies:
+  - drupal:rest
+
+# Information added by Drupal.org packaging script on 2023-04-25
+version: '1.0.1-beta1'
+project: 'viewer'
+datestamp: 1682405766

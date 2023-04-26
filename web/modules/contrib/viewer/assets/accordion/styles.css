@@ -1,0 +1,41 @@
+.viewer-accordion-wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.viewer-accordion-wrapper ul .inner {
+  padding-left: 1em;
+  overflow: hidden;
+  display: none;
+}
+
+.viewer-accordion-wrapper ul li {
+  margin: 0.5em 0;
+}
+
+.viewer-accordion-wrapper ul li a.toggle {
+  width: 100%;
+  display: block;
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+  border-radius: 0.15em;
+  background: rgb(211 212 217);
+  color: rgb(35 36 41);
+  text-decoration: none;
+  transition: background 0.3s ease;
+  font-weight: 700;
+}
+
+.viewer-accordion-wrapper ul li a.toggle.active {
+  background: rgb(142 143 145);
+}
+
+.viewer-accordion-wrapper ul li a.toggle span {
+  padding: 20px;
+}
+
+.viewer-accordion-wrapper ul li a.toggle:hover {
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+}

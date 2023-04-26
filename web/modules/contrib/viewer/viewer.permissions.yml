@@ -1,0 +1,42 @@
+administer viewer source:
+  title: 'Administer Viewer Source'
+  description: 'Allow to access the viewer source settings'
+  restrict access: true
+
+add viewer source:
+  title: 'Create new viewer source'
+
+delete viewer source:
+  title: 'Delete viewer source'
+
+edit viewer source:
+  title: 'Edit viewer source'
+
+view active viewer source:
+  title: 'View active viewer source'
+
+view inactive viewer source:
+  title: 'View inactive viewer source'
+
+bulk import viewer source:
+  title: 'Bulk import viewer source'
+
+administer viewer:
+  title: 'Administer Viewer'
+  description: 'Allow to access the viewer settings'
+  restrict access: true
+
+add viewer:
+  title: 'Create new viewer'
+
+delete viewer:
+  title: 'Delete viewer'
+
+edit viewer:
+  title: 'Edit viewer'
+
+view active viewer:
+  title: 'View active viewer'
+
+view inactive viewer:
+  title: 'View inactive viewer'

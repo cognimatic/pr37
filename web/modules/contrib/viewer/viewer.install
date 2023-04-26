@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Viewer module install file.
+ */
+
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function viewer_install() {
+  // Set initial role permissions.
+  $roles = [
+    'authenticated' => ['restful get viewer'],
+    'anonymous' => ['restful get viewer'],
+  ];
+  foreach ($roles as $role => $permissions) {
+    $role = Role::load($role);
+    foreach ($permissions as $permission) {
+      $role->grantPermission($permission);
+    }
+    $role->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function viewer_uninstall() {
+  // Remove role permissions.
+  $roles = [
+    'authenticated' => ['restful get viewer'],
+    'anonymous' => ['restful get viewer'],
+  ];
+  foreach ($roles as $role => $permissions) {
+    $role = Role::load($role);
+    foreach ($permissions as $permission) {
+      $role->revokePermission($permission);
+    }
+    $role->save();
+  }
+}

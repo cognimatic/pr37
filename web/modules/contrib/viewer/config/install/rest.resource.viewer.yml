@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - viewer
+    - serialization
+    - user
+id: viewer
+plugin_id: viewer
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - cookie

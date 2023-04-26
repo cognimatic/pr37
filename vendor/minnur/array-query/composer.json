@@ -1,0 +1,23 @@
+{
+    "name": "minnur/array-query",
+    "type": "library",
+    "description": "Array Query",
+    "keywords": ["array", "query", "php"],
+    "homepage": "https://github.com/minnur/array-query",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/minnur/array-query/issues"
+    },
+    "authors": [
+        {
+            "name": "Mauro Cassani",
+            "email": "assistenza@easy-grafica.com",
+            "homepage": "https://github.com/mauretto78"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ArrayQuery\\": "src/"
+        }
+    }
+}

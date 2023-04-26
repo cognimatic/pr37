@@ -1,0 +1,6 @@
+services:
+  viewer.commands:
+    class: \Drupal\viewer\Commands\ViewerCommands
+    arguments: ['@viewer.cron']
+    tags:
+      - { name: drush.command }

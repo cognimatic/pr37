@@ -1,0 +1,37 @@
+.viewer-table-load-more {
+  width: 100%;
+  text-align: center;
+}
+
+.viewer-table-load-more .arrow {
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  padding: 3px;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+
+.viewer-table-load-more .arrow-down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.viewer-load-more.styled {
+  border-radius: 0.15em;
+  background: rgb(211, 212, 217);
+  color: rgb(35, 36, 41);
+  text-decoration: none;
+  transition: background 0.3s ease 0s;
+  padding: 10px;
+  padding-right: 35px;
+  padding-left: 20px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.viewer-load-more.styled:hover {
+  background: rgb(142 143 145);
+}

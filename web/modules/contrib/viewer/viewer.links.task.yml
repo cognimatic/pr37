@@ -1,0 +1,14 @@
+entity.viewer.collection:
+  title: 'Viewers'
+  route_name: entity.viewer.collection
+  base_route: entity.viewer.collection
+
+entity.viewer_source.collection:
+  title: 'Sources'
+  route_name: entity.viewer_source.collection
+  base_route: entity.viewer.collection
+
+viewer.support:
+  title: 'Support'
+  route_name: viewer.support
+  base_route: entity.viewer.collection

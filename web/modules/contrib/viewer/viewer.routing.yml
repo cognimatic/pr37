@@ -1,0 +1,65 @@
+viewer.new_configuration:
+  path: '/admin/structure/viewers/configuration/{viewer}/{viewer_source_id}'
+  defaults:
+    _title: 'Configuration'
+    _form: '\Drupal\viewer\Form\Viewer\ConfigurationForm'
+  options:
+    parameters:
+      viewer:
+        type: viewer
+        converter: paramconverter.viewer
+  requirements:
+    _permission: 'add viewer'
+
+viewer.new_settings:
+  path: '/admin/structure/viewers/settings/{viewer}/{viewer_source_id}'
+  defaults:
+    _title: 'Settings'
+    _form: '\Drupal\viewer\Form\Viewer\SettingsForm'
+  options:
+    parameters:
+      viewer:
+        type: viewer
+        converter: paramconverter.viewer
+  requirements:
+    _permission: 'add viewer'
+
+viewer_source.new_source:
+  path: '/admin/structure/viewer-source/source/{viewer_type}/{viewer_source}'
+  defaults:
+    _title: 'Upload Source'
+    _form: '\Drupal\viewer\Form\Source\SourceForm'
+  options:
+    parameters:
+      viewer_type:
+        type: viewer_type
+        converter: paramconverter.viewer_type
+      viewer_source:
+        type: viewer_source
+        converter: paramconverter.viewer_source
+  requirements:
+    _permission: 'add viewer source'
+
+viewer.support:
+  path: '/admin/structure/viewer-support'
+  defaults:
+    _title: 'Support'
+    _controller: '\Drupal\viewer\Controller\SupportController::page'
+  requirements:
+    _permission: 'administer site configuration'
+
+viewer.ckeditor5_dialog:
+  path: '/viewer/dialog/{uuid}'
+  defaults:
+    _title: 'Insert Viewer'
+    _form: '\Drupal\viewer\Form\CKEditorDialogForm'
+    uuid: null
+  requirements:
+    _permission: 'use text format advanced'
+
+viewer.ckeditor5_preview:
+  path: '/viewer/preview/{editor}'
+  defaults:
+    _controller: '\Drupal\viewer\Controller\CKEditorPreview::preview'
+  requirements:
+    _custom_access: '\Drupal\viewer\Controller\CKEditorPreview::checkAccess'

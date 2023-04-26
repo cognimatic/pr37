@@ -1,0 +1,21 @@
+<div class="viewer-accordion-wrapper" data-viewer="{{ uuid }}">
+
+  {% if title %}<h3 class="viewer-hidden">{{ title }}</h3>{% endif %}
+  {% if subtitle %}<h4 class="viewer-hidden">{{ subtitle }}</h4>{% endif %}
+
+  {% if header_summary %}<div class="viewer-header-summary viewer-hidden">{{ header_summary }}</div>{% endif %}
+
+  <ul class="accordion-wrapper">
+    {% for item in accordion %}
+    <li>
+      <a class="toggle{% if item.is_default %} is-active{% endif %}" href="#"><span>{{ item.title }}</span></a>
+      <div class="inner">
+        {{ item.content|render }}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if footer_summary %}<div class="viewer-footer-summary viewer-hidden">{{ footer_summary }}</div>{% endif %}
+
+</div>

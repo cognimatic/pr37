@@ -1,0 +1,75 @@
+services:
+  plugin.manager.viewer_cell:
+    class: Drupal\viewer\Plugin\ViewerCellManager
+    parent: default_plugin_manager
+
+  plugin.manager.viewer_source:
+    class: Drupal\viewer\Plugin\ViewerSourceManager
+    parent: default_plugin_manager
+
+  plugin.manager.viewer_type:
+    class: Drupal\viewer\Plugin\ViewerTypeManager
+    parent: default_plugin_manager
+
+  plugin.manager.viewer:
+    class: Drupal\viewer\Plugin\ViewerManager
+    parent: default_plugin_manager
+
+  plugin.manager.viewer_processor:
+    class: Drupal\viewer\Plugin\ViewerProcessorManager
+    parent: default_plugin_manager
+
+  paramconverter.entity.viewer_source:
+    class: Drupal\viewer\ParamConverter\ViewerSourceConverter
+    arguments: ['@entity_type.manager', '@entity.repository']
+    tags:
+      - { name: paramconverter }
+
+  paramconverter.entity.viewer:
+    class: Drupal\viewer\ParamConverter\ViewerConverter
+    arguments: ['@entity_type.manager', '@entity.repository']
+    tags:
+      - { name: paramconverter }
+
+  paramconverter.viewer_source:
+    class: Drupal\viewer\ParamConverter\ViewerSourcePluginConverter
+    arguments: ['@plugin.manager.viewer_source']
+    tags:
+      - { name: paramconverter }
+
+  paramconverter.viewer_type:
+    class: Drupal\viewer\ParamConverter\ViewerTypePluginConverter
+    arguments: ['@plugin.manager.viewer_type']
+    tags:
+      - { name: paramconverter }
+
+  paramconverter.viewer:
+    class: Drupal\viewer\ParamConverter\ViewerPluginConverter
+    arguments: ['@plugin.manager.viewer']
+    tags:
+      - { name: paramconverter }
+
+  viewer.batch:
+    class: Drupal\viewer\Services\Batch
+    arguments: []
+
+  viewer.cron:
+    class: Drupal\viewer\Services\Cron
+    arguments: ['@entity_type.manager', '@queue']
+
+  viewer.notifications:
+    class: Drupal\viewer\Services\Notifications
+    arguments: ['@logger.factory', '@http_client', '@plugin.manager.mail']
+
+  event_subscriber.viewer_source:
+    class: Drupal\viewer\EventSubscriber\ViewerEventsSubscriber
+    arguments: ['@viewer.notifications']
+    tags:
+      - { name: 'event_subscriber' }
+
+  viewer.ftp_sftp:
+    class: Drupal\viewer\Services\FtpSftp
+
+  viewer.module:
+    class: Drupal\viewer\ViewerModule
+    arguments: ['@date.formatter', '@request_stack', '@module_handler', '@current_route_match', '@config.factory']

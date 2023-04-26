@@ -1,0 +1,20 @@
+<div class="viewer-pdfjs-wrapper viewer-wrapper" data-viewer="{{ uuid }}">
+
+  {% if title %}<h3 class="viewer-hidden">{{ title }}</h3>{% endif %}
+  {% if subtitle %}<h4 class="viewer-hidden">{{ subtitle }}</h4>{% endif %}
+
+  {% if header_summary %}<div class="viewer-header-summary viewer-hidden">{{ header_summary }}</div>{% endif %}
+
+  {% if last_import_position in ['header', 'both'] %}
+    <div class="last-import-header viewer-hidden">{{ last_import_output }}</div>
+  {% endif %}
+
+  <div class="pdfjs"></div>
+
+  {% if footer_summary %}<div class="viewer-footer-summary viewer-hidden">{{ footer_summary }}</div>{% endif %}
+
+  {% if last_import_position in ['footer', 'both'] %}
+    <div class="last-import-footer viewer-hidden">{{ last_import_output }}</div>
+  {% endif %}
+
+</div>

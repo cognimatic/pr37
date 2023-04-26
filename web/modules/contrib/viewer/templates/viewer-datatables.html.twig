@@ -1,0 +1,24 @@
+<div class="viewer-datatables-wrapper viewer-wrapper" data-viewer="{{ uuid }}">
+
+  {% if title %}<h3 class="viewer-hidden">{{ title }}</h3>{% endif %}
+  {% if subtitle %}<h4 class="viewer-hidden">{{ subtitle }}</h4>{% endif %}
+
+  {% if header_summary %}<div class="viewer-header-summary viewer-hidden">{{ header_summary }}</div>{% endif %}
+
+  {% if last_import_position in ['header', 'both'] %}
+    <div class="last-import-header viewer-hidden">{{ last_import_output }}</div>
+  {% endif %}
+
+  <table class="viewer-table"
+    data-paging="{{ settings.paging }}"
+    data-page-length="{{ settings.page_length }}"
+    data-ordering="{{ settings.ordering }}"
+    data-searching="{{ settings.searching }}"></table>
+
+  {% if footer_summary %}<div class="viewer-footer-summary viewer-hidden">{{ footer_summary }}</div>{% endif %}
+
+  {% if last_import_position in ['footer', 'both'] %}
+    <div class="last-import-footer viewer-hidden">{{ last_import_output }}</div>
+  {% endif %}
+
+</div>

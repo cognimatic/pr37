@@ -1,0 +1,35 @@
+entity.viewer_source.new:
+  route_name: entity.viewer_source.new
+  title: 'New Source'
+  appears_on:
+    - entity.viewer_source.collection
+  options:
+    attributes:
+      class:
+        - 'use-ajax'
+      data-dialog-type: 'modal'
+      data-dialog-options: '{"width":"600"}'
+
+entity.viewer_source.bulk_import:
+  route_name: entity.viewer_source.bulk_import
+  title: 'Import All'
+  appears_on:
+    - entity.viewer_source.collection
+  options:
+    attributes:
+      class:
+        - 'use-ajax'
+      data-dialog-type: 'modal'
+      data-dialog-options: '{"width":"600"}'
+
+entity.viewer.new:
+  route_name: entity.viewer.new
+  title: 'New Viewer'
+  appears_on:
+    - entity.viewer.collection
+  options:
+    attributes:
+      class:
+        - 'use-ajax'
+      data-dialog-type: 'modal'
+      data-dialog-options: '{"width":"600"}'

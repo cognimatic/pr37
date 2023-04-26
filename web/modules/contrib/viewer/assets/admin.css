@@ -1,0 +1,25 @@
+.ui-dialog-off-canvas #drupal-off-canvas {
+  padding: 0px;
+}
+
+#drupal-off-canvas-wrapper {
+  background: #ffffff;
+}
+
+#drupal-off-canvas-wrapper form {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.viewer-iframe-preview-form {
+  height: 100% !important;
+}
+
+.viewer-settings-form .vertical-tabs__menu,
+.viewer-configuration-form .vertical-tabs__menu {
+  width: 13.5em;
+}
+
+.vertical-tabs .vertical-tabs__panes {
+  margin-left: 13.5em;
+}

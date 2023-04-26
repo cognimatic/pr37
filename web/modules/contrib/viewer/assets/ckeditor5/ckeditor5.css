@@ -1,0 +1,48 @@
+.viewer-preview {
+  border: 1px #8dbff0 dashed;
+  padding: 1rem;
+  pointer-events: none;
+  position: relative;
+  background-color: aliceblue;
+  border-radius: 10px;
+}
+
+.viewer-preview .preview-viewer-tag {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 10px;
+  background-color: #26a769;
+  padding: 5px 10px 5px 10px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.viewer-preview-wrapper {
+  display: block;
+}
+
+.viewer-preview-wrapper .preview-viewer-item {
+  display: inline-block;
+  margin-right: 0px;
+  background-color: rgb(50 117 224);
+  padding: 3px 7px 3px 7px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.viewer-preview-wrapper .preview-viewer-na {
+  background-color: #e55a5a;
+  color: #fff;
+}
+
+.viewer-preview-wrapper .preview-viewer-item.preview-viewer-nobg {
+  background-color: transparent;
+  color: #000;
+}
+
+.viewer-preview-wrapper .preview-viewer-item span {
+  font-style: italic;
+}

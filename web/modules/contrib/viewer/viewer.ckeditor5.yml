@@ -1,0 +1,28 @@
+viewer_Viewer:
+  provider: viewer
+  ckeditor5:
+    plugins:
+      - Viewer.Viewer
+    config:
+      Viewer:
+        openDialog:
+          func:
+            name: Drupal.ckeditor5.openDialog
+            invoke: false
+        dialogSettings:
+          height: 75%
+          dialogClass: viewer-widget-modal
+          title: Viewer
+  drupal:
+    label: Viewer
+    elements:
+      - <viewer>
+      - <viewer data-viewer>
+    admin_library: viewer/viewer.ckeditor5.admin
+    class: Drupal\viewer\Plugin\CKEditor5Plugin\Viewer
+    library: viewer/viewer.ckeditor5
+    toolbar_items:
+      Viewer:
+        label: Viewer
+    conditions:
+      filter: viewer

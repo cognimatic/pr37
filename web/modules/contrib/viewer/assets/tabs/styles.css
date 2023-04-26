@@ -1,0 +1,24 @@
+.viewer-tabs-contents {
+  clear: both;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.viewer-tabs-contents p {
+  margin: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.viewer-tabs-contents .viewer-table {
+  width: 100%;
+}
+
+.viewer-vertical-tabs-form .vertical-tabs__menu {
+  width: 13.5em;
+}
+
+.viewer-vertical-tabs-form .vertical-tabs .vertical-tabs__panes {
+  margin-left: 13.5em;
+}

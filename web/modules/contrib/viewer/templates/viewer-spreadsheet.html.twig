@@ -1,0 +1,40 @@
+<div class="viewer-spreadsheet-wrapper viewer-wrapper" data-viewer="{{ uuid }}">
+
+  {% if title %}<h3 class="viewer-hidden">{{ title }}</h3>{% endif %}
+  {% if subtitle %}<h4 class="viewer-hidden">{{ subtitle }}</h4>{% endif %}
+
+  {% if header_summary %}<div class="viewer-header-summary viewer-hidden">{{ header_summary }}</div>{% endif %}
+
+  {% if last_import_position in ['header', 'both'] %}
+    <div class="last-import-header viewer-hidden">{{ last_import_output }}</div>
+  {% endif %}
+
+  {% if configuration.worksheet_labels|length > 1 %}
+    <nav role="navigation" class="tabs-wrapper is-horizontal position-container viewer-hidden">
+      <ul class="tabs tabs--primary clearfix">
+        {% for worksheet, label in configuration.worksheet_labels %}
+          {% if configuration.worksheet_overrides[worksheet].disabled == 0 %}
+          <li class="tabs__tab worksheets{% if loop.first %} is-active{% endif %}"><a class="tabs__link{% if loop.first %} is-active{% endif %}" href="#{{ random }}-{{ loop.index }}" rel="nofollow">{% if configuration.worksheet_overrides[worksheet].overridden_label %}{{ configuration.worksheet_overrides[worksheet].overridden_label }}{% else %}{{ label }}{% endif %}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+
+  <div class="viewer-tabs-contents worksheets viewer-hidden">
+    {% for key, worksheet in configuration.worksheets %}
+      {% if configuration.worksheet_overrides[key].disabled == 0 %}
+      <div id="{{ random }}-{{ loop.index }}" class="viewer-tabs-content" style="display:{% if loop.first %}block{% else %}none{% endif %};">
+        <table class="viewer-table" data-worksheet-id="{{ key }}"><thead></thead><tbody></tbody></table>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% if footer_summary %}<div class="viewer-footer-summary viewer-hidden">{{ footer_summary }}</div>{% endif %}
+
+  {% if last_import_position in ['footer', 'both'] %}
+    <div class="last-import-footer viewer-hidden">{{ last_import_output }}</div>
+  {% endif %}
+
+</div>

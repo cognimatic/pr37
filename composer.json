@@ -101,6 +101,7 @@
         "drupal/taxonomy_manager": "^2.0",
         "drupal/twitter_block": "^3.0@alpha",
         "drupal/type_tray": "^1.1",
+        "drupal/viewer": "^1.0@beta",
         "drupal/views_bulk_edit": "^2.8",
         "drupal/views_bulk_operations": "^4.1",
         "drupal/views_data_export": "^1.1",

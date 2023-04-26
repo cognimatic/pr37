@@ -1,0 +1,25 @@
+<div class="viewer-tabs-wrapper" data-viewer="{{ uuid }}">
+
+  {% if title %}<h3 class="viewer-hidden">{{ title }}</h3>{% endif %}
+  {% if subtitle %}<h4 class="viewer-hidden">{{ subtitle }}</h4>{% endif %}
+
+  {% if header_summary %}<div class="viewer-header-summary viewer-hidden">{{ header_summary }}</div>{% endif %}
+
+  <nav role="navigation" class="tabs-wrapper is-horizontal position-container">
+    <ul class="tabs tabs--primary clearfix">
+      {% for tab in tabs %}
+        <li class="tabs__tab tabs-viewer{% if tab.is_default %} is-active{% endif %}"><a class="tabs__link{% if tab.is_default %} is-active{% endif %}" href="#{{ random }}-{{ loop.index }}" rel="nofollow">{{ tab.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+  <div class="viewer-tabs-contents tabs-viewer">
+    {% for tab in tabs %}
+      <div id="{{ random }}-{{ loop.index }}" class="viewer-tabs-content tabs-viewer-content" style="display:{% if tab.is_default %} block{% else %}none{% endif %};">
+        {{ tab.content|render }}
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if footer_summary %}<div class="viewer-footer-summary viewer-hidden">{{ footer_summary }}</div>{% endif %}
+
+</div>
