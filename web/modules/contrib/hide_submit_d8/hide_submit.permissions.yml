@@ -1,0 +1,4 @@
+bypass hide submit:
+  title: 'Bypass hide submit'
+administer hide submit:
+  title: 'Administer hide submit configuration'

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "392c5402b573301b6729e2850bf63101",
+    "content-hash": "c018b10ac54f40bf4fad460b1d55c169",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -7366,6 +7366,49 @@
                     "url": "https://paypal.me/saschaeggi"
                 }
             ]
+        },
+        {
+            "name": "drupal/hide_submit_d8",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/hide_submit_d8.git",
+                "reference": "8.x-1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/hide_submit_d8-8.x-1.2.zip",
+                "reference": "8.x-1.2",
+                "shasum": "77c540bd540092daf1855599f7fb7994a2ea113a"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.2",
+                    "datestamp": "1662994078",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "nehajyoti",
+                    "homepage": "https://www.drupal.org/user/2804915"
+                }
+            ],
+            "homepage": "https://www.drupal.org/project/hide_submit_d8",
+            "support": {
+                "source": "https://git.drupalcode.org/project/hide_submit_d8"
+            }
         },
         {
             "name": "drupal/honeypot",

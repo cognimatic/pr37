@@ -3,7 +3,7 @@
         'name' => 'localgovdrupal/localgov-project',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'a4d3e93ea9389bc12955f50b35cbbd2168687270',
+        'reference' => '946c373b7fdaef3b907bac3b5e1930e205750fa8',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -1299,6 +1299,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/hide_submit_d8' => array(
+            'pretty_version' => '1.2.0',
+            'version' => '1.2.0.0',
+            'reference' => '8.x-1.2',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/hide_submit_d8',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/honeypot' => array(
             'pretty_version' => '2.1.2',
             'version' => '2.1.2.0',
@@ -2464,7 +2473,7 @@
         'localgovdrupal/localgov-project' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'a4d3e93ea9389bc12955f50b35cbbd2168687270',
+            'reference' => '946c373b7fdaef3b907bac3b5e1930e205750fa8',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

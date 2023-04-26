@@ -1,0 +1,111 @@
+<?php
+
+/**
+ * @file
+ * This module blocks users from accidentally submitting a form twice.
+ *
+ * The protection only comes from jQuery and is not server side, so this is only
+ * effective against accidentally clicking of the button by users with
+ * Javascript enabled (which is a very high percent of users).
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Adds the settings.
+ *
+ * @return bool
+ *   TRUE if hide_submit is active.
+ */
+function hide_submit_add_settings($config) {
+  // Return false if on views_ui page to prevent issues.
+  $path = Url::fromRoute("<current>")->toString();
+
+  $path_alias = \Drupal::service('path_alias.manager')->getAliasByPath($path);
+
+  if (strcmp($path_alias, $path) == 0) {
+    // No alias was found.
+    $path_alias = '';
+  }
+
+  $urls = [
+    'admin/structure/views',
+    'admin/structure/views/*',
+  ];
+  $patterns = implode("\n", $urls);
+
+  if (\Drupal::service('path.matcher')->matchPath($path, $patterns) || \Drupal::service('path.matcher')->matchPath($path_alias, $patterns)) {
+    return FALSE;
+  }
+  else {
+    return $config->get('hide_submit_status');
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function hide_submit_form_alter(&$form) {
+  $hide_submit_settings_config = \Drupal::config('hide_submit.settings');
+  if (\Drupal::currentUser()->hasPermission('bypass hide submit') || \Drupal::currentUser()->id() == 1) {
+    return;
+  }
+  $form_ids = $hide_submit_settings_config->get('hide_submit_form_ids');
+  $negate = $hide_submit_settings_config->get('hide_submit_negate');
+  $form_ids = array_map('trim', explode(PHP_EOL, $form_ids));
+
+  if ((empty($form_ids[0])) || (in_array($form['#id'], $form_ids) && $negate == 'enabled')) {
+    if (hide_submit_add_settings($hide_submit_settings_config)) {
+      // Attach library.
+      if ($hide_submit_settings_config->get('hide_submit_method') == 'indicator') {
+        $form['#attached']['library'][] = 'hide_submit/hide_submit.method_indicator';
+      }
+      else {
+        $form['#attached']['library'][] = 'hide_submit/hide_submit';
+      }
+      hide_submit_prepare_js_settings($form, $hide_submit_settings_config);
+    }
+  }
+
+}
+
+/**
+ * Helper Function to attach hide_submit.js.
+ */
+function hide_submit_prepare_js_settings(&$form, $config) {
+  $hide_submit_settings = drupal_static(__FUNCTION__, []);
+  if (empty($hide_submit_settings)) {
+    $hide_submit_settings = [
+      'hide_submit' => [
+        'hide_submit_status' => $config->get('hide_submit_status'),
+        'hide_submit_method' => $config->get('hide_submit_method'),
+        'hide_submit_css' => $config->get('hide_submit_css'),
+        'hide_submit_abtext' => $config->get('hide_submit_abtext'),
+        'hide_submit_atext' => $config->get('hide_submit_atext'),
+        'hide_submit_hide_css' => $config->get('hide_submit_hide_css'),
+        'hide_submit_hide_text' => $config->get('hide_submit_hide_text'),
+        'hide_submit_indicator_style' => $config->get('hide_submit_indicator_style'),
+        'hide_submit_spinner_color' => $config->get('hide_submit_spinner_color'),
+        'hide_submit_spinner_lines' => (int) $config->get('hide_submit_spinner_lines'),
+        'hide_submit_hide_fx' => $config->get('hide_submit_hide_fx'),
+        'hide_submit_reset_time' => (int) $config->get('hide_submit_reset_time'),
+        'hide_submit_html_elements' => $config->get('hide_submit_html_elements'),
+      ],
+    ];
+    // Allow other modules to modify settings.
+    \Drupal::moduleHandler()->alter('hide_submit', $hide_submit_settings);
+    // Add settings.
+    if ($hide_submit_settings['hide_submit']['hide_submit_status']) {
+      $form['#attached']['drupalSettings']['hide_submit'] = $hide_submit_settings['hide_submit'];
+    }
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function hide_submit_page_attachments(&$attachments) {
+  if (!empty(\Drupal::config('hide_submit.settings')->get('hide_submit_html_elements'))) {
+    hide_submit_form_alter($attachments);
+  }
+}
