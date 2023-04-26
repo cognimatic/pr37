@@ -3,7 +3,7 @@
         'name' => 'localgovdrupal/localgov-project',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '946c373b7fdaef3b907bac3b5e1930e205750fa8',
+        'reference' => 'e89f41dd8a3dc685753c08c16139c7801bbb4ab2',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -2473,7 +2473,7 @@
         'localgovdrupal/localgov-project' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '946c373b7fdaef3b907bac3b5e1930e205750fa8',
+            'reference' => 'e89f41dd8a3dc685753c08c16139c7801bbb4ab2',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -2893,21 +2893,21 @@
         'php-http/async-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'php-http/client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'php-http/discovery' => array(
-            'pretty_version' => '1.15.3',
-            'version' => '1.15.3.0',
-            'reference' => '3ccd28dd9fb34b52db946abea1b538568e34eae8',
+            'pretty_version' => '1.16.0',
+            'version' => '1.16.0.0',
+            'reference' => 'd35947fe3f833f8776ed06274173622d36895f49',
             'type' => 'composer-plugin',
             'install_path' => __DIR__ . '/../php-http/discovery',
             'aliases' => array(),
@@ -3028,9 +3028,9 @@
             'dev_requirement' => true,
         ),
         'phpstan/phpdoc-parser' => array(
-            'pretty_version' => '1.20.2',
-            'version' => '1.20.2.0',
-            'reference' => '90490bd8fd8530a272043c4950c180b6d0cf5f81',
+            'pretty_version' => '1.20.3',
+            'version' => '1.20.3.0',
+            'reference' => '6c04009f6cae6eda2f040745b6b846080ef069c2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpstan/phpdoc-parser',
             'aliases' => array(),
@@ -3184,8 +3184,8 @@
         'psr/http-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-factory' => array(

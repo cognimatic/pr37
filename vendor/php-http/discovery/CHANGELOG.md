@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.16.0 - 2023-04-26
+
+- [#225](https://github.com/php-http/discovery/pull/225) - Remove support for the abandoned Zend Diactoros which has been replaced with Laminas Diactoros; marked the zend library as conflict in composer.json to avoid confusion
+- [#227](https://github.com/php-http/discovery/pull/227) - Fix handling requests with nested files
+
 ## 1.15.3 - 2023-03-31
 
 - [#224](https://github.com/php-http/discovery/pull/224) - Fix regression with Magento classloader
@@ -31,7 +36,7 @@
 
 ## 1.14.1 - 2021-09-18
 
-- [#199](https://github.com/php-http/discovery/pull/199) - Fixes message factory discovery for `laminas-diactoros ^2.7` 
+- [#199](https://github.com/php-http/discovery/pull/199) - Fixes message factory discovery for `laminas-diactoros ^2.7`
 
 ## 1.14.0 - 2021-06-21
 
