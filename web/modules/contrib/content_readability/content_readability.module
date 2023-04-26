@@ -46,7 +46,16 @@ function content_readability_page_attachments(array &$attachments) {
   $adminTheme = \Drupal::config('system.theme')->get('admin');
 
   if ($theme == $adminTheme) {
-    $attachments['#attached']['library'][] = 'content_readability/textStatistics';
+    // Check which version of CKEditor is being used.
+    if (\Drupal::moduleHandler()->moduleExists('ckeditor5')) {
+      $attachments['#attached']['library'][] = 'content_readability/textStatistics';
+    }
+    elseif (\Drupal::moduleHandler()->moduleExists('ckeditor')) {
+      $attachments['#attached']['library'][] = 'content_readability/ckeditor4';
+    }
+    else {
+      \Drupal::logger('content_readability')->error('Please install CKEditor to use content readability.');
+    }
   }
 }
 
@@ -90,7 +99,7 @@ function content_readability_form_node_form_alter(&$form, FormStateInterface $fo
   $body = $body ? $body : '';
   $contentReadabilityHelp = \Drupal::config('content_readability.settings')->get('content_readability_help');
   $fleschKincaidGradeLevel = $textStatistics->fleschKincaidGradeLevel($body);
-  $contentReadabilityScore = get_content_readability_score($fleschKincaidGradeLevel, $profiles[0]['grade']);
+  $contentReadabilityScore = content_readability_get_content_readability_score($fleschKincaidGradeLevel, $profiles[0]['grade']);
 
   $renderable = [
     '#theme' => 'content_readability',
@@ -316,7 +325,7 @@ function content_readability_form_node_form_alter(&$form, FormStateInterface $fo
  * Loads the Target Threshold Grade Level.  Takes the absolute difference
  * from the actual grade level.  Returns the deviation grade level score.
  */
-function get_content_readability_score($level, $target) {
+function content_readability_get_content_readability_score($level, $target) {
   $diff = round($level - $target);
   $score = t("F");
 

@@ -23,6 +23,8 @@ class ContentReadabilityDeleteProfile extends ConfirmFormBase {
 
   /**
    * Profile Name.
+   *
+   * @var string
    */
   protected $profile;
 

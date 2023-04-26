@@ -5199,36 +5199,32 @@
         },
         {
             "name": "drupal/content_readability",
-            "version": "1.0.0-alpha14",
-            "version_normalized": "1.0.0.0-alpha14",
+            "version": "2.0.0",
+            "version_normalized": "2.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/content_readability.git",
-                "reference": "8.x-1.0-alpha14"
+                "reference": "2.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/content_readability-8.x-1.0-alpha14.zip",
-                "reference": "8.x-1.0-alpha14",
-                "shasum": "6441d7e0c81f14a3a2df68b36e6d6d6b95f8a96e"
+                "url": "https://ftp.drupal.org/files/projects/content_readability-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "70d8b91c301d0447a2e512ae149b701babd8b9d3"
             },
             "require": {
-                "davechild/textstatistics": "^1.0",
-                "drupal/ckeditor": "*",
-                "drupal/core": "^8 || ^9"
+                "davechild/textstatistics": "^1.0.3",
+                "drupal/core": "^9 || ^10"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.0-alpha14",
-                    "datestamp": "1647268190",
+                    "version": "2.0.0",
+                    "datestamp": "1682442648",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
                     }
-                },
-                "patches_applied": {
-                    "Dependency on CKEditor 4 3348192": "https://www.drupal.org/files/issues/2023-03-15/dependency-ckeditor4-3348192.patch"
                 }
             },
             "installation-source": "dist",

@@ -5,8 +5,65 @@
  * General install file for module updates.
  */
 
+use Drupal\Core\Url;
+
 /**
- * Add new config `content_readability_profiles` - General placeholder item.
+ * Implements hook_requirements().
+ */
+function content_readability_requirements($phase) {
+  $requirements = [];
+  // Report cron status.
+  if ($phase == 'runtime') {
+    // Load Bundles.
+    $allowed_bundles = \Drupal::config('content_readability.settings')->get('content_readability_visibility');
+    $bundles = array_values($allowed_bundles);
+
+    // Check we have an enabled bundled.
+    // If nothing is enabled all values will return 0
+    // That is a single unique value.
+    // Edge case for one content type site.
+    if ((count($bundles) > 1 && count(array_unique($bundles)) === 1) || (count($bundles) === 1 && $bundles[0] === 0)) {
+      $requirements['content_readability'] = [
+        'title' => t("Content Readability"),
+        'severity' => REQUIREMENT_ERROR,
+        'description' => t('Content Readability has no configured bundles. Check the configuration page for <a href=":url">configuration options</a>.', [
+          ':url' => Url::fromRoute('content_readability.admin.config')->toString(),
+        ]),
+      ];
+    }
+    // Determine what version of ckeditor we are using.
+    else {
+      if (\Drupal::moduleHandler()->moduleExists('ckeditor5')) {
+        $requirements['content_readability'] = [
+          'title' => t("Content Readability"),
+          'value' => t("CKEditor5 support is enabled."),
+          'severity' => REQUIREMENT_OK,
+        ];
+
+      }
+      elseif (\Drupal::moduleHandler()->moduleExists('ckeditor')) {
+        $requirements['content_readability'] = [
+          'title' => t("Content Readability"),
+          'value' => t("CKEditor4 support is enabled. CKEditor 4 is deprecated."),
+          'severity' => REQUIREMENT_WARNING,
+        ];
+      }
+      else {
+        $requirements['content_readability'] = [
+          'title' => t("Content Readability"),
+          'value' => t("CKEditor is not installed, please enable CKEditor."),
+          'severity' => REQUIREMENT_ERROR,
+        ];
+      }
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Add Profile Support.
+ *
+ * Add new config `content_readability_profiles` - General.
  * Remove old config `content_readability_threshold`.
  */
 function content_readability_update_8001() {

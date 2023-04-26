@@ -27,7 +27,7 @@
         "drupal/config_split": "^2.0@RC",
         "drupal/console": "~1.0",
         "drupal/content_moderation_notifications": "^3.4",
-        "drupal/content_readability": "^1.0@alpha",
+        "drupal/content_readability": "^2.0",
         "drupal/convert_bundles": "^1.0@alpha",
         "drupal/core-composer-scaffold": "^9.1",
         "drupal/core-recommended": "^9.1",
@@ -189,9 +189,6 @@
             "drupal/cludo_search": {
               "Cludo search autocomplete not working on block 3050293": "https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch",
               "Hide Prompt Above Input Box 3351519": "https://www.drupal.org/files/issues/2023-03-31/cludo_search_disable_prompt.patch"
-            },
-            "drupal/content_readability": {
-                "Dependency on CKEditor 4 3348192": "https://www.drupal.org/files/issues/2023-03-15/dependency-ckeditor4-3348192.patch"
             },
             "drupal/core": {
               "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2023-03-08/3099026-60-9.5.x.patch",

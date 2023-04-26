@@ -36,7 +36,6 @@ class ContentReadabilityAddProfile extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->configFactory->get('content_readability.settings');
 
     $form['label'] = [
       '#type' => 'textfield',
@@ -96,6 +95,22 @@ class ContentReadabilityAddProfile extends ConfigFormBase {
    */
   public function getEditableConfigNames() {
     return ['content_readability.settings'];
+  }
+
+  /**
+   * Determines if the machine name already exists.
+   *
+   * @param string $machineName
+   *   The machine name.
+   *
+   * @return bool
+   *   TRUE if the machine name exists, FALSE otherwise.
+   */
+  public function exists(string $machineName) {
+    $config = $this->configFactory->get('content_readability.settings')->get('content_readability_profiles');
+    $machineNames = array_column($config, 'machine_name');
+
+    return in_array($machineName, $machineNames);
   }
 
 }

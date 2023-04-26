@@ -65,7 +65,7 @@ class ContentReadabilityAjaxController extends ControllerBase {
 
     $textStatistics = new TextStatistics();
     $fleschKincaidGradeLevel = $textStatistics->fleschKincaidGradeLevel($body);
-    $contentReadabilityScore = get_content_readability_score($fleschKincaidGradeLevel, $grade);
+    $contentReadabilityScore = content_readability_get_content_readability_score($fleschKincaidGradeLevel, $grade);
     $averageSyllablesPerWord = round($textStatistics->averageSyllablesPerWord($body), 2);
     $averageWordsPerSentence = round($textStatistics->averageWordsPerSentence($body), 2);
     $colemanLiauIndex = $textStatistics->colemanLiauIndex($body);

@@ -71,7 +71,10 @@ class ContentReadabilityAdminSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Add Profile'),
       '#type' => 'link',
       '#url' => Url::fromRoute('content_readability.add_profile.config'),
-      '#attributes' => ['class' => 'button button-action button--primary button--small', 'style' => 'margin:0'],
+      '#attributes' => [
+        'class' => 'button button-action button--primary button--small',
+        'style' => 'margin:0',
+      ],
     ];
 
     $form['content_readability_profiles'] = [

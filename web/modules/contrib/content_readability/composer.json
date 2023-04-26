@@ -5,10 +5,10 @@
     "keywords": [
     ],
     "authors": [
-      {
-          "name": "PhiL",
-          "role": "Panda Enthusiast"
-      }
+        {
+            "name": "PhiL",
+            "role": "Panda Enthusiast"
+        }
     ],
     "homepage": "https://www.drupal.org/project/content_readability",
     "minimum-stability": "dev",
@@ -17,6 +17,6 @@
         "source": "http://cgit.drupalcode.org/content_readability"
     },
     "require": {
-        "davechild/textstatistics": "^1.0"
+        "davechild/textstatistics": "^1.0.3"
     }
 }

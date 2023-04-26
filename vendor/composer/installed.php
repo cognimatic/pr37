@@ -3,7 +3,7 @@
         'name' => 'localgovdrupal/localgov-project',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'e89f41dd8a3dc685753c08c16139c7801bbb4ab2',
+        'reference' => '8b451da95ad9c8f2bfae498fbb8dde3473b4ced5',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -664,9 +664,9 @@
             'dev_requirement' => false,
         ),
         'drupal/content_readability' => array(
-            'pretty_version' => '1.0.0-alpha14',
-            'version' => '1.0.0.0-alpha14',
-            'reference' => '8.x-1.0-alpha14',
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
+            'reference' => '2.0.0',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/content_readability',
             'aliases' => array(),
@@ -2473,7 +2473,7 @@
         'localgovdrupal/localgov-project' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'e89f41dd8a3dc685753c08c16139c7801bbb4ab2',
+            'reference' => '8b451da95ad9c8f2bfae498fbb8dde3473b4ced5',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -2893,15 +2893,15 @@
         'php-http/async-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
-                1 => '*',
+                0 => '*',
+                1 => '1.0',
             ),
         ),
         'php-http/client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
-                1 => '*',
+                0 => '*',
+                1 => '1.0',
             ),
         ),
         'php-http/discovery' => array(
@@ -3184,8 +3184,8 @@
         'psr/http-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
-                1 => '*',
+                0 => '*',
+                1 => '1.0',
             ),
         ),
         'psr/http-factory' => array(

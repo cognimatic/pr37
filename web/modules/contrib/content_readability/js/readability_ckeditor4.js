@@ -1,9 +1,9 @@
 /**
  * @file
- * Content Readability Processing
+ * Content Readability Processing for CKEditor 4.
  */
 
-(function ($, window, Drupal) {
+(function ($, window, Drupal, drupalSettings) {
 
   'use strict';
   /**
@@ -12,44 +12,39 @@
    * @type {{attach: Function}}
    */
   Drupal.behaviors.contentReadability = {
-    attach: function(context) {
+    attach: function(context, settings) {
 
-      // Drupal did not create an event that fires when CKEditor 5 is ready yet unfortunately,
-      // https://www.drupal.org/project/drupal/issues/3319358
-      $(document).ready(function() {
+      $('body', context).once('content_readability').each(function () {
+        if (typeof CKEDITOR !== "undefined") {
+          CKEDITOR.on('instanceReady', function (ev) {
+            var editor = ev.editor;
 
-        // Only Target the default body field for now.
-        // Possibly make fields configurable at a later date.
-        $('body', context).once('content_readability').each(function () {
-          // Get CKEditor 5 instance
-          // https://ckeditor.com/docs/ckeditor5/latest/support/faq.html#how-to-get-the-editor-instance-object-from-the-dom-element
-          const domEditableElement = document.querySelector('#edit-body-wrapper .ck-editor__editable');
-          const editorInstance = domEditableElement.ckeditorInstance;
-
-          // Now that we have an instance just double check that its state is ready.
-          if(editorInstance.state === "ready"){
             // fire when the editor instance changes.
-            editorInstance.model.document.on( 'change', () => {
-              updateScore(editorInstance);
+            editor.on('change', function () {
+              // Temp Fix to only apply to body fields..
+              // Ideally want to pass name to change, but this needs a larger
+              // rework, right now just need this to function.
+              if(editor.name  == "edit-body-0-value"){
+                updateScore();
+              }
+            });
+            $('select#edit-content-readability-profiles').on('change',function(){
+              // See note above
+              if(editor.name  == "edit-body-0-value"){
+                updateScore();
+              }
+
             });
 
-            $('select#edit-content-readability-profiles').on('change', function () {
-              // We need to update score calculation when target grade is adjusted.
-              updateScore(editorInstance);
-            });
-
-          }
-        });
+          });
+        }
       });
 
-      /**
-       * Process body date to update the readability score of the node.
-       * @param editorInstance
-       *  CKEditor5 Instance that contains the data we want to update.
-       */
-      function updateScore(editorInstance){
+      function updateScore(){
+
+
         // get the value of body field.
-        let body = editorInstance.getData();
+        let body = CKEDITOR.instances['edit-body-0-value'].getData()
         let grade = $('select#edit-content-readability-profiles').val();
 
         $.post('/content-readability/update-score', {data: body, grade: grade}, function(data){
@@ -78,4 +73,4 @@
       }
     }
   };
-})(jQuery, this, Drupal);
+})(jQuery, this, Drupal, drupalSettings);

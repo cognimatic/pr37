@@ -9,6 +9,21 @@ textStatistics:
     - core/jquery.once
     - core/jquery.form
     - core/drupal.ajax
+    - ckeditor5/drupal.ckeditor5
+  css:
+    theme:
+      css/styles.css: {}
+ckeditor4:
+  js:
+    js/readability_ckeditor4.js: {}
+  dependencies:
+    - core/ajax
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
+    - core/jquery.form
+    - core/drupal.ajax
   css:
     theme:
       css/styles.css: {}

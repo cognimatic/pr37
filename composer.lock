@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c018b10ac54f40bf4fad460b1d55c169",
+    "content-hash": "f961cffd688a5679dcd302b10fb93d66",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -4040,28 +4040,27 @@
         },
         {
             "name": "drupal/content_readability",
-            "version": "1.0.0-alpha14",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/content_readability.git",
-                "reference": "8.x-1.0-alpha14"
+                "reference": "2.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/content_readability-8.x-1.0-alpha14.zip",
-                "reference": "8.x-1.0-alpha14",
-                "shasum": "6441d7e0c81f14a3a2df68b36e6d6d6b95f8a96e"
+                "url": "https://ftp.drupal.org/files/projects/content_readability-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "70d8b91c301d0447a2e512ae149b701babd8b9d3"
             },
             "require": {
-                "davechild/textstatistics": "^1.0",
-                "drupal/ckeditor": "*",
-                "drupal/core": "^8 || ^9"
+                "davechild/textstatistics": "^1.0.3",
+                "drupal/core": "^9 || ^10"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.0-alpha14",
-                    "datestamp": "1647268190",
+                    "version": "2.0.0",
+                    "datestamp": "1682442648",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
@@ -28207,7 +28206,6 @@
         "drupal/block_field": 5,
         "drupal/cludo_search": 10,
         "drupal/config_split": 5,
-        "drupal/content_readability": 15,
         "drupal/convert_bundles": 15,
         "drupal/entity_share": 5,
         "drupal/feeds": 10,
