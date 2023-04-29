@@ -1949,7 +1949,6 @@ ul.lgd-row.service-cta-block__list {
 
   #lgd_header_menu .lgd-header__nav--secondary {
     position: absolute;
-    width: 100vw;
     left: 0;
     top: 0;
     background-color: var(--color-blue);
@@ -2029,6 +2028,10 @@ ul.lgd-row.service-cta-block__list {
 
   .lgd-header .lgd-header__nav--secondary ul.menu {
     columns: 2;
+  }
+
+  #lgd_header_menu ul.menu--localgov_services_menu li.menu-item {
+    height: 35px;
   }
 
   #lgd_header_menu ul.menu--localgov_services_menu li.menu-item a {
