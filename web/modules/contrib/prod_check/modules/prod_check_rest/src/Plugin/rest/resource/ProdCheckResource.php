@@ -7,7 +7,7 @@ use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 
 /**
- * Provides a resource for the prod check report
+ * Provides a resource for the prod check report.
  *
  * @RestResource(
  *   id = "prod_check",
@@ -22,7 +22,7 @@ class ProdCheckResource extends ResourceBase {
   /**
    * Responds to POST requests.
    *
-   * Returns a resource for the prod check report
+   * Returns a resource for the prod check report.
    *
    * @return \Drupal\rest\ResourceResponse
    *   The response containing the log entry.
@@ -34,7 +34,7 @@ class ProdCheckResource extends ResourceBase {
     // collect cache ability metadata for. So, run it in our own render
     // context.
     $context = new RenderContext();
-    $result = \Drupal::service('renderer')->executeInRenderContext($context, function() {
+    $result = \Drupal::service('renderer')->executeInRenderContext($context, function () {
       /** @var Rest $rest_processor */
       $rest_processor = \Drupal::service('plugin.manager.prod_check_processor')->createInstance('rest');
       return $rest_processor->requirements();

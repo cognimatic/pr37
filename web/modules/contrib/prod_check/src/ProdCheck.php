@@ -3,7 +3,7 @@
 namespace Drupal\prod_check;
 
 /**
- * Utility class for the prod check module
+ * Utility class for the prod check module.
  */
 class ProdCheck {
 

@@ -85,8 +85,8 @@ class CheckListBuilder extends ConfigEntityListBuilder {
    */
   public function buildHeader() {
     $header = [
-        'label' => t('Label'),
-      ] + parent::buildHeader();
+      'label' => t('Label'),
+    ] + parent::buildHeader();
     return $header;
   }
 
@@ -96,10 +96,10 @@ class CheckListBuilder extends ConfigEntityListBuilder {
   public function getDefaultOperations(EntityInterface $entity) {
     $operations = $entity->isConfigurable() ? parent::getDefaultOperations($entity) : [];
 
-    // Unset delete operation to prevent mistakes
+    // Unset delete operation to prevent mistakes.
     unset($operations['delete']);
 
-    // Rename edit operation
+    // Rename edit operation.
     if (isset($operations['edit'])) {
       $operations['edit']['title'] = t('Configure');
     }

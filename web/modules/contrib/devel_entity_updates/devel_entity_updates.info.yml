@@ -8,7 +8,7 @@ tags:
 dependencies:
  - devel
 
-# Information added by Drupal.org packaging script on 2022-12-23
-version: '4.1.0'
+# Information added by Drupal.org packaging script on 2023-04-28
+version: '4.1.1'
 project: 'devel_entity_updates'
-datestamp: 1671814427
+datestamp: 1682701897

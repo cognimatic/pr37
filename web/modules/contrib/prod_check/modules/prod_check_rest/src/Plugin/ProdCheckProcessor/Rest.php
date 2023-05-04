@@ -6,7 +6,7 @@ use Drupal\prod_check\Plugin\ProdCheckInterface;
 use Drupal\prod_check\Plugin\ProdCheckProcessor\Internal;
 
 /**
- * Release notes check
+ * Release notes check.
  *
  * @ProdCheckProcessor(
  *   id = "rest",
@@ -16,7 +16,7 @@ use Drupal\prod_check\Plugin\ProdCheckProcessor\Internal;
 class Rest extends Internal {
 
   /**
-   * Processes a single prod check plugin
+   * Processes a single prod check plugin.
    */
   public function process(ProdCheckInterface $check) {
     $check->setProcessor($this);

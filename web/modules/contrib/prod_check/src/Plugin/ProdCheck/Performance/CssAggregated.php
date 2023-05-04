@@ -5,7 +5,7 @@ namespace Drupal\prod_check\Plugin\ProdCheck\Performance;
 use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 
 /**
- * CSS aggregation check
+ * CSS aggregation check.
  *
  * @ProdCheck(
  *   id = "css_aggregated",
@@ -45,7 +45,7 @@ class CssAggregated extends ProdCheckBase {
         $this->title(),
         'system.performance_settings',
         'Your %link settings are disabled, they should be enabled on a production environment! This should not cause trouble if you steer clear of @import statements.'
-       ),
+      ),
     ];
   }
 

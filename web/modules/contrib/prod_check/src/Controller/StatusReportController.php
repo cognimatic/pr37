@@ -17,14 +17,14 @@ class StatusReportController extends ControllerBase implements ContainerInjectio
   /**
    * The prod check processor plugin manager.
    *
-   * @var \Drupal\prod_check\Plugin\ProdCheckProcessorPluginManager;
+   * @var \Drupal\prod_check\Plugin\ProdCheckProcessorPluginManager
    */
   protected $processManager;
 
   /**
    * The prod check category plugin manager.
    *
-   * @var \Drupal\prod_check\Plugin\ProdCheckCategoryPluginManager;
+   * @var \Drupal\prod_check\Plugin\ProdCheckCategoryPluginManager
    */
   protected $categoryManager;
 
@@ -52,10 +52,10 @@ class StatusReportController extends ControllerBase implements ContainerInjectio
   }
 
   /**
-   * Builds a list of fields
+   * Builds a list of fields.
    */
   public function build() {
-    /** @var ProdCheckProcessor $internal_processor */
+    /** @var \Drupal\prod_check\Entity\ProdCheckProcessor $internal_processor */
     $internal_processor = ProdCheckProcessor::load('internal');
     $requirements = $internal_processor->getPlugin()->requirements();
 

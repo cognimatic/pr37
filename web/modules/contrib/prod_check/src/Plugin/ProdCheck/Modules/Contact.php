@@ -6,7 +6,7 @@ use Drupal\contact\Entity\ContactForm;
 use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 
 /**
- * Contact status check
+ * Contact status check.
  *
  * @ProdCheck(
  *   id = "contact",
@@ -18,7 +18,7 @@ use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 class Contact extends ProdCheckBase {
 
   /**
-   * Found email addresses
+   * Found email addresses.
    */
   public $matches;
 

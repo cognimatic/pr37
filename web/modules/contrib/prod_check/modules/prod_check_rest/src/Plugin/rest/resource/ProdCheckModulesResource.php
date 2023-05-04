@@ -6,7 +6,7 @@ use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 
 /**
- * Provides a resource to list all the active modules
+ * Provides a resource to list all the active modules.
  *
  * @RestResource(
  *   id = "prod_check_modules",
@@ -19,7 +19,7 @@ use Drupal\rest\ResourceResponse;
 class ProdCheckModulesResource extends ResourceBase {
 
   /**
-   * @return ResourceResponse
+   * @return \Drupal\rest\ResourceResponse
    */
   public function get() {
     return new ResourceResponse(\Drupal::service('extension.list.module')->getAllInstalledInfo(), 200);

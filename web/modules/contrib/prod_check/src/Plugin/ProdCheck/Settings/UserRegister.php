@@ -7,7 +7,7 @@ use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 use Drupal\user\UserInterface;
 
 /**
- * User register settings check
+ * User register settings check.
  *
  * @ProdCheck(
  *   id = "user_register",
@@ -18,12 +18,12 @@ use Drupal\user\UserInterface;
 class UserRegister extends ProdCheckBase {
 
   /**
-   * The currently selected option
+   * The currently selected option.
    */
   protected $current;
 
   /**
-   * All the possible options
+   * All the possible options.
    */
   protected $options;
 
@@ -76,7 +76,7 @@ class UserRegister extends ProdCheckBase {
           '@current' => $this->options[$this->current],
           '@options' => '"' . implode('" ' . t('or') . ' "', $this->getSelectedOptions()) . '"',
         ]
-      )
+      ),
     ];
   }
 
@@ -88,7 +88,7 @@ class UserRegister extends ProdCheckBase {
     $configuration['options'] = [
       UserInterface::REGISTER_ADMINISTRATORS_ONLY => UserInterface::REGISTER_ADMINISTRATORS_ONLY,
       UserInterface::REGISTER_VISITORS => 0,
-      UserInterface::REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL => UserInterface::REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL
+      UserInterface::REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL => UserInterface::REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL,
     ];
 
     return $configuration;

@@ -5,17 +5,17 @@ namespace Drupal\prod_check\Plugin\ProdCheck\Modules;
 use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 
 /**
- * Generic module check class
+ * Generic module check class.
  */
 abstract class ModulesBase extends ProdCheckBase {
 
   /**
-   * The module to check
+   * The module to check.
    */
   protected $module = '';
 
   /**
-   * The route name of the module
+   * The route name of the module.
    */
   protected $routeName = '';
 

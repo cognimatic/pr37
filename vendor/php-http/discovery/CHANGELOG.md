@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.18.0 - 2023-05-03
+
+- [#235](https://github.com/php-http/discovery/pull/235) - Deprecate HttpClientDiscovery, use Psr18ClientDiscovery instead
+- [#238](https://github.com/php-http/discovery/pull/238) - Skip requiring php-http/message-factory when installing symfony/http-client 6.3+
+- [#239](https://github.com/php-http/discovery/pull/239) - Skip auto-installing when the root package's extra.discovery is enough
+
+## 1.17.0 - 2023-04-26
+
+- [#230](https://github.com/php-http/discovery/pull/230) - Add Psr18Client to make it straightforward to use PSR-18
+- [#232](https://github.com/php-http/discovery/pull/232) - Allow pinning the preferred implementations in composer.json
+- [#233](https://github.com/php-http/discovery/pull/233) - Fix Psr17Factory::createServerRequestFromGlobals() when uploaded files have been moved
+
 ## 1.16.0 - 2023-04-26
 
 - [#225](https://github.com/php-http/discovery/pull/225) - Remove support for the abandoned Zend Diactoros which has been replaced with Laminas Diactoros; marked the zend library as conflict in composer.json to avoid confusion

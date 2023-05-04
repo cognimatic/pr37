@@ -19,14 +19,14 @@ abstract class ProdCheckProcessorBase extends PluginBase implements ContainerFac
   /**
    * The prod check plugin manager.
    *
-   * @var \Drupal\prod_check\Plugin\ProdCheckPluginManager;
+   * @var \Drupal\prod_check\Plugin\ProdCheckPluginManager
    */
   protected $checkManager;
 
   /**
    * The prod check category plugin manager.
    *
-   * @var \Drupal\prod_check\Plugin\ProdCheckCategoryPluginManager;
+   * @var \Drupal\prod_check\Plugin\ProdCheckCategoryPluginManager
    */
   protected $categoryManager;
 

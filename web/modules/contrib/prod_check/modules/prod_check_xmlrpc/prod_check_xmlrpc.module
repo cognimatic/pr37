@@ -2,13 +2,13 @@
 
 /**
  * @file
- * Production check XML-RPC connector
+ * Production check XML-RPC connector.
  */
 
 use Drupal\prod_check\Entity\ProdCheckProcessor;
 
 /**
- * Implements hook_xmlrpc
+ * Implements hook_xmlrpc.
  */
 function prod_check_xmlrpc_xmlrpc() {
   return [
@@ -16,13 +16,13 @@ function prod_check_xmlrpc_xmlrpc() {
       'prod_check.get_settings',
       'prod_check_xmlrpc_get_settings',
       ['struct', 'string'],
-      t("Returns a struct containing a form to be displayed on the prod_monitor module's settings page for site specific configuration.")
+      t("Returns a struct containing a form to be displayed on the prod_monitor module's settings page for site specific configuration."),
     ],
     [
       'prod_check.get_data',
       'prod_check_xmlrpc_get_data',
       ['struct', 'string', 'struct'],
-      t('Returns a struct containing the result of all requested checks.')
+      t('Returns a struct containing the result of all requested checks.'),
     ],
   ];
 }
@@ -34,7 +34,7 @@ function prod_check_xmlrpc_xmlrpc() {
 function prod_check_xmlrpc_get_settings($ping_key) {
   $data = FALSE;
 
-  /** @var ProdCheckProcessor $xmlrpc_processor */
+  /** @var \Drupal\prod_check\Entity\ProdCheckProcessor $xmlrpc_processor */
   $xmlrpc_processor = ProdCheckProcessor::load('xmlrpc');
   if ($xmlrpc_processor && $xmlrpc_processor->getPlugin()->verifyKey($ping_key)) {
     $data = $xmlrpc_processor->getPlugin()->listPlugins();
@@ -42,6 +42,7 @@ function prod_check_xmlrpc_get_settings($ping_key) {
 
   return $data;
 }
+
 /**
  * XMLRPC callback function that returns all data of requested checks.
  *
@@ -59,7 +60,7 @@ function prod_check_xmlrpc_get_data($ping_key, $checks) {
   $checkmanager = \Drupal::service('plugin.manager.prod_check');
   $definitions = $checkmanager->getDefinitions();
 
-  /** @var ProdCheckProcessor $xmlrpc_processor */
+  /** @var \Drupal\prod_check\Entity\ProdCheckProcessor $xmlrpc_processor */
   $xmlrpc_processor = ProdCheckProcessor::load('xmlrpc');
   if ($xmlrpc_processor && $xmlrpc_processor->getPlugin()->verifyKey($ping_key)) {
     $data = [];

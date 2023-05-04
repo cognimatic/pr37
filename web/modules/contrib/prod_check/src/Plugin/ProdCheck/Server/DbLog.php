@@ -5,7 +5,7 @@ namespace Drupal\prod_check\Plugin\ProdCheck\Server;
 use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 
 /**
- * Dblog report
+ * Dblog report.
  *
  * @ProdCheck(
  *   id = "dblog",
@@ -14,83 +14,82 @@ use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
  *   provider = "dblog"
  * )
  */
-class DbLog extends ProdCheckBase
-{
+class DbLog extends ProdCheckBase {
 
-    /**
-     * Error level
-     */
-    public $errorLevel;
-
-
-    /**
-     * Threshold
-     */
-    public $threshold;
+  /**
+   * Error level.
+   */
+  public $errorLevel;
 
 
-    /**
-     * The result of the query
-     */
-    public $result;
+  /**
+   * Threshold.
+   */
+  public $threshold;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function init() {
 
-        $this->errorLevel = 0;
-        $this->threshold = 0;
+  /**
+   * The result of the query.
+   */
+  public $result;
 
-        // @todo this query is broken
-        $this->result = \Drupal::database()->query(
-          'SELECT COUNT(*) FROM (SELECT count(wid) FROM {watchdog} WHERE type = :type AND severity <= :severity GROUP BY variables HAVING COUNT(wid) >= :threshold) subquery',
+  /**
+   * {@inheritdoc}
+   */
+  public function init() {
+
+    $this->errorLevel = 0;
+    $this->threshold = 0;
+
+    // @todo this query is broken
+    $this->result = \Drupal::database()->query(
+        'SELECT COUNT(*) FROM (SELECT count(wid) FROM {watchdog} WHERE type = :type AND severity <= :severity GROUP BY variables HAVING COUNT(wid) >= :threshold) subquery',
+        [
+          ':type' => 'php',
+          ':severity' => $this->errorLevel,
+          ':threshold' => $this->threshold,
+        ]
+      )->fetchField();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function state() {
+    return !$this->result;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function successMessages() {
+    return [
+      'value' => $this->t('No PHP errors reported.'),
+      'description' => $this->t('Status is OK for production use.'),
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function failMessages() {
+    $link_array = $this->generateLinkArray(
+        $this->title(),
+        'dblog.overview'
+      );
+
+    return [
+      'value' => $this->t('PHP errors reported.'),
+      'description' => $this->formatPlural(
+          $this->result,
+          '@count PHP error occuring more than @threshold time(s) has been reported! Check the %link for details!',
+          '@count PHP errors occuring more than @threshold time(s) have been reported! Check the %link for details!',
           [
-            ':type' => 'php',
-            ':severity' => $this->errorLevel,
-            ':threshold' => $this->threshold,
+            '%link' => implode($link_array),
+            '@threshold' => $this->threshold,
           ]
-        )->fetchField();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function state() {
-        return !$this->result;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function successMessages() {
-        return [
-          'value' => $this->t('No PHP errors reported.'),
-          'description' => $this->t('Status is OK for production use.'),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function failMessages() {
-        $link_array = $this->generateLinkArray(
-          $this->title(),
-          'dblog.overview'
-        );
-
-        return [
-          'value' => $this->t('PHP errors reported.'),
-          'description' => $this->formatPlural(
-            $this->result,
-            '@count PHP error occuring more than @threshold time(s) has been reported! Check the %link for details!',
-            '@count PHP errors occuring more than @threshold time(s) have been reported! Check the %link for details!',
-            [
-              '%link' => implode($link_array),
-              '@threshold' => $this->threshold,
-            ]
-          ),
-        ];
-    }
+      ),
+    ];
+  }
 
 }

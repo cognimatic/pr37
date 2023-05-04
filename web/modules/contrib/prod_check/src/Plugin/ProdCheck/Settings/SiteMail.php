@@ -5,7 +5,7 @@ namespace Drupal\prod_check\Plugin\ProdCheck\Settings;
 use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 
 /**
- * Site email status check
+ * Site email status check.
  *
  * @ProdCheck(
  *   id = "site_email",
@@ -16,7 +16,7 @@ use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 class SiteMail extends ProdCheckBase {
 
   /**
-   * Dangerous mail address
+   * Dangerous mail address.
    */
   public $dangerous_mail;
 

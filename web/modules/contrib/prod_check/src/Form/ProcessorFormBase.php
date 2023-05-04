@@ -92,7 +92,7 @@ abstract class ProcessorFormBase extends EntityForm {
    * Determines if the prod check processor already exists.
    *
    * @param string $id
-   *   The processor ID
+   *   The processor ID.
    *
    * @return bool
    *   TRUE if the processor exists, FALSE otherwise.

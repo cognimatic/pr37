@@ -143,7 +143,7 @@ return array(
     'Laminas\\ServiceManager\\' => array($vendorDir . '/laminas/laminas-servicemanager/src'),
     'Laminas\\Feed\\' => array($vendorDir . '/laminas/laminas-feed/src'),
     'Laminas\\Escaper\\' => array($vendorDir . '/laminas/laminas-escaper/src'),
-    'Laminas\\Diactoros\\' => array($vendorDir . '/laminas/laminas-diactoros/src'),
+    'Laminas\\Diactoros\\' => array($vendorDir . '/longwave/laminas-diactoros/src'),
     'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
     'JsonSchema\\' => array($vendorDir . '/justinrainbow/json-schema/src/JsonSchema'),
     'Http\\Promise\\' => array($vendorDir . '/php-http/promise/src'),

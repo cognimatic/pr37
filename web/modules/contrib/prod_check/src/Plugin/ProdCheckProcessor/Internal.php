@@ -36,13 +36,13 @@ class Internal extends ProdCheckProcessorBase {
   }
 
   /**
-   * Processes a single prod check plugin
+   * Processes a single prod check plugin.
    *
    * @param \Drupal\prod_check\Plugin\ProdCheckInterface $plugin
+   *
    * @return array
    *   An array containing the check result. Contains the status, severity,
    *   title and success or failure messages depending on the result.
-   *
    */
   public function process(ProdCheckInterface $plugin) {
     if (!$plugin) {

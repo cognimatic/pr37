@@ -3,7 +3,7 @@
 namespace Drupal\prod_check\Plugin;
 
 /**
- * Defines an interface for prod checks
+ * Defines an interface for prod checks.
  */
 interface ProdCheckInterface {
 
@@ -21,7 +21,7 @@ interface ProdCheckInterface {
   public function title();
 
   /**
-   * Returns the title of the check
+   * Returns the title of the check.
    *
    * @return
    *   The category
@@ -64,7 +64,7 @@ interface ProdCheckInterface {
   public function successMessages();
 
   /**
-   * Returns the fail messages for the check
+   * Returns the fail messages for the check.
    *
    * @return
    *   An associative array containing the following keys

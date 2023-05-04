@@ -7,7 +7,7 @@ dependencies:
   - prod_check:prod_check
   - drupal:rest
 
-# Information added by Drupal.org packaging script on 2021-09-09
-version: '8.x-1.0-alpha8'
+# Information added by Drupal.org packaging script on 2023-05-04
+version: '8.x-1.0-beta1'
 project: 'prod_check'
-datestamp: 1631179992
+datestamp: 1683208995

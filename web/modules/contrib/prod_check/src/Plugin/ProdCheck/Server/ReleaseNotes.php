@@ -6,7 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 
 /**
- * Release notes check
+ * Release notes check.
  *
  * @ProdCheck(
  *   id = "release_notes",
@@ -17,7 +17,7 @@ use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 class ReleaseNotes extends ProdCheckBase {
 
   /**
-   * Remaining files
+   * Remaining files.
    */
   public $remaining_files;
 

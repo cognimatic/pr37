@@ -78,7 +78,7 @@ class SettingsForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'prod_check.settings'
+      'prod_check.settings',
     ];
   }
 

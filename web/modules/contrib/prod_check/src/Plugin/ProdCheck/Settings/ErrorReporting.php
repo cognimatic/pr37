@@ -6,7 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 
 /**
- * User register settings check
+ * User register settings check.
  *
  * @ProdCheck(
  *   id = "error_reporting",
@@ -17,12 +17,12 @@ use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 class ErrorReporting extends ProdCheckBase {
 
   /**
-   * The currently selected option
+   * The currently selected option.
    */
   protected $current;
 
   /**
-   * All the possible options
+   * All the possible options.
    */
   protected $options;
 
@@ -30,13 +30,14 @@ class ErrorReporting extends ProdCheckBase {
    * {@inheritdoc}
    */
   public function init() {
-    $this->current = $this->configFactory->get('system.logging')->get('error_level');;
+    $this->current = $this->configFactory->get('system.logging')->get('error_level');
+    ;
 
     $this->options = [
       ERROR_REPORTING_HIDE => $this->t('Display no errors'),
       ERROR_REPORTING_DISPLAY_SOME => $this->t('Display errors and warnings'),
       ERROR_REPORTING_DISPLAY_ALL => $this->t('Display all messages'),
-      ERROR_REPORTING_DISPLAY_VERBOSE => $this->t('Display all messages, plus backtrace information')
+      ERROR_REPORTING_DISPLAY_VERBOSE => $this->t('Display all messages, plus backtrace information'),
     ];
   }
 
@@ -77,7 +78,7 @@ class ErrorReporting extends ProdCheckBase {
           '@current' => $this->options[$this->current],
           '@options' => '"' . implode('" ' . t('or') . ' "', $this->getSelectedOptions()) . '"',
         ]
-      )
+      ),
     ];
   }
 
@@ -90,7 +91,7 @@ class ErrorReporting extends ProdCheckBase {
       ERROR_REPORTING_HIDE => ERROR_REPORTING_HIDE,
       ERROR_REPORTING_DISPLAY_SOME => 0,
       ERROR_REPORTING_DISPLAY_ALL => 0,
-      ERROR_REPORTING_DISPLAY_VERBOSE => 0
+      ERROR_REPORTING_DISPLAY_VERBOSE => 0,
     ];
 
     return $configuration;

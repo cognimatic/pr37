@@ -1,13 +1,7 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\prod_check\Plugin\ProdCheck\Modules\ModuleList.
- */
-
 namespace Drupal\prod_check\Plugin\ProdCheck\Modules;
 
-use Drupal;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -60,10 +54,14 @@ class ModuleList extends ProdCheckBase {
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $handler
    */
   public function __construct(
-    array $configuration, $plugin_id, $plugin_definition,
+    array $configuration,
+  $plugin_id,
+  $plugin_definition,
     RedirectDestinationInterface $destination,
-    LinkGeneratorInterface $generator, ConfigFactoryInterface $factory,
-    DateFormatter $formatter, ModuleHandlerInterface $handler
+    LinkGeneratorInterface $generator,
+  ConfigFactoryInterface $factory,
+    DateFormatter $formatter,
+  ModuleHandlerInterface $handler
   ) {
     $this->moduleHandler = $handler;
     parent::__construct(
@@ -80,7 +78,9 @@ class ModuleList extends ProdCheckBase {
    * @return static
    */
   public static function create(
-    ContainerInterface $container, array $configuration, $plugin_id,
+    ContainerInterface $container,
+  array $configuration,
+  $plugin_id,
     $plugin_definition
   ) {
     return new static(
@@ -99,22 +99,22 @@ class ModuleList extends ProdCheckBase {
    * {@inheritdoc}
    */
   public function init() {
-    $build = array(
-      '#theme' => 'update_report'
-    );
+    $build = [
+      '#theme' => 'update_report',
+    ];
 
     if (!function_exists('update_get_available')) {
       return $build;
     }
 
-    if ($available = update_get_available(TRUE)) {
+    if ($this->moduleHandler->moduleExists('update') && $available = update_get_available(TRUE)) {
       $this->moduleHandler->loadInclude('update', 'compare.inc');
-      $private_key = Drupal::service('private_key')->get();
+      $private_key = \Drupal::service('private_key')->get();
 
       $build['#data'] = [
         'projects' => update_calculate_project_data($available),
         'site_key' => $private_key,
-        'last_update' => (int) $_SERVER['REQUEST_TIME']
+        'last_update' => (int) $_SERVER['REQUEST_TIME'],
       ];
 
       $this->moduleListRefreshed = TRUE;
@@ -124,6 +124,9 @@ class ModuleList extends ProdCheckBase {
     return $build;
   }
 
+  /**
+   *
+   */
   public function data() {
     return $this->moduleList;
   }
@@ -162,7 +165,7 @@ class ModuleList extends ProdCheckBase {
   }
 
   /**
-   * Returns the fail messages for the check
+   * Returns the fail messages for the check.
    *
    * @return array
    *   An associative array containing the following keys
@@ -175,4 +178,5 @@ class ModuleList extends ProdCheckBase {
       'description' => $this->t('An error occurred while refreshing the list of modules.'),
     ];
   }
+
 }

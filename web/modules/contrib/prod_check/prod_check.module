@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Module file for the prod check module
+ * Module file for the prod check module.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -108,7 +108,7 @@ function prod_check_cache_flush() {
 }
 
 /**
- * Helper function to synchronize prod check plugins and entities
+ * Helper function to synchronize prod check plugins and entities.
  */
 function prod_check_synchronize_prod_checks() {
   // This isn't a nice way but at the moment it's the only way I can think of to keep the one on one relation between
@@ -130,7 +130,7 @@ function prod_check_synchronize_prod_checks() {
         'label' => (string) $plugin->title(),
       ];
 
-      /** @var ProdCheckEntity $new_check */
+      /** @var \Drupal\prod_check\ProdCheckEntity $new_check */
       $new_check = \Drupal::entityTypeManager()
         ->getStorage('prod_check')
         ->create($values);
@@ -142,7 +142,7 @@ function prod_check_synchronize_prod_checks() {
 }
 
 /**
- * Helper function to synchronize prod check processor plugins and entities
+ * Helper function to synchronize prod check processor plugins and entities.
  */
 function prod_check_synchronize_prod_check_processors() {
   // This isn't a nice way but at the moment it's the only way I can think of to keep the one on one relation between
@@ -159,7 +159,7 @@ function prod_check_synchronize_prod_check_processors() {
         'label' => (string) $processor['title'],
       ];
 
-      /** @var ProdCheckEntity $new_check */
+      /** @var \Drupal\prod_check\ProdCheckEntity $new_check */
       $new_check = \Drupal::entityTypeManager()
         ->getStorage('prod_check_processor')
         ->create($values);

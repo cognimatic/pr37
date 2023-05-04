@@ -83,6 +83,7 @@ class AttributeArray extends AttributeValueBase implements \ArrayAccess, \Iterat
         $bad = true;
       }
     }
+    
     // Filter out any empty values before printing.
     $this->value = array_unique(array_filter($normalizedValue));
     return Html::escape(implode(' ', $normalizedValue));

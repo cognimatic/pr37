@@ -5,7 +5,7 @@ namespace Drupal\prod_check\Plugin\ProdCheck\Performance;
 use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 
 /**
- * JS aggregation check
+ * JS aggregation check.
  *
  * @ProdCheck(
  *   id = "js_aggregated",

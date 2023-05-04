@@ -128,7 +128,7 @@ class ProdCheck extends ConfigEntityBase implements ProdCheckConfigInterface, En
   }
 
   /**
-   * Fetches the category of the plugin
+   * Fetches the category of the plugin.
    */
   public function getCategory() {
     return $this->getPlugin()->category();

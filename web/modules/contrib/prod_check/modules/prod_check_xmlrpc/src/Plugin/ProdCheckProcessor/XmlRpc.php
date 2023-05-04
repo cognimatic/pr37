@@ -7,7 +7,7 @@ use Drupal\prod_check\Plugin\ProdCheckInterface;
 use Drupal\prod_check\Plugin\ProdCheckProcessor\ConfigurableProdCheckProcessorBase;
 
 /**
- * XML-RPC processor
+ * XML-RPC processor.
  *
  * @ProdCheckProcessor(
  *   id = "xmlrpc",
@@ -36,7 +36,7 @@ class XmlRpc extends ConfigurableProdCheckProcessorBase {
   /**
    * Helper function to check for correct API key.
    */
-  function verifyKey($ping_key) {
+  public function verifyKey($ping_key) {
     $connect_key = $this->configuration['key'];
 
     $result = FALSE;

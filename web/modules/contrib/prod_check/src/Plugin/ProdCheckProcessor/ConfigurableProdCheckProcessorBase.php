@@ -21,6 +21,7 @@ abstract class ConfigurableProdCheckProcessorBase extends ProdCheckProcessorBase
 
     $this->configuration += $this->defaultConfiguration();
   }
+
   /**
    * {@inheritdoc}
    */

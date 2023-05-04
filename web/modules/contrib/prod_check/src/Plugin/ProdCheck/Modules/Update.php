@@ -5,7 +5,7 @@ namespace Drupal\prod_check\Plugin\ProdCheck\Modules;
 use Drupal\prod_check\Plugin\ProdCheck\ProdCheckBase;
 
 /**
- * Update status check
+ * Update status check.
  *
  * @ProdCheck(
  *   id = "update",

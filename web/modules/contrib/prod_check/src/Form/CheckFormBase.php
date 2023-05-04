@@ -92,7 +92,7 @@ abstract class CheckFormBase extends EntityForm {
    * Determines if the prod check already exists.
    *
    * @param string $id
-   *   The check ID
+   *   The check ID.
    *
    * @return bool
    *   TRUE if the check exists, FALSE otherwise.

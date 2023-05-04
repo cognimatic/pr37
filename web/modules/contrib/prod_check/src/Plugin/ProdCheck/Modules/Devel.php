@@ -2,9 +2,8 @@
 
 namespace Drupal\prod_check\Plugin\ProdCheck\Modules;
 
-
 /**
- * Devel status check
+ * Devel status check.
  *
  * @ProdCheck(
  *   id = "devel",

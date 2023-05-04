@@ -2,9 +2,8 @@
 
 namespace Drupal\prod_check\Plugin\ProdCheck\Modules;
 
-
 /**
- * Devel node access check
+ * Devel node access check.
  *
  * @ProdCheck(
  *   id = "devel_node_access",
