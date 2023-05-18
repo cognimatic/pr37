@@ -4,6 +4,7 @@ namespace Drupal\viewer\Controller;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Render\Renderer;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -27,22 +28,33 @@ class CKEditorPreview extends ControllerBase {
   protected $renderer;
 
   /**
-   * {@inheritdoc}
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('renderer')
-    );
-  }
+  protected $entityTypeManager;
 
   /**
    * The controller constructor.
    *
    * @param \Drupal\Core\Render\Renderer $renderer
    *   The renderer service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
-  public function __construct(Renderer $renderer) {
+  public function __construct(Renderer $renderer, EntityTypeManagerInterface $entity_type_manager) {
     $this->renderer = $renderer;
+    $this->entityTypeManager = $entity_type_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('renderer'),
+      $container->get('entity_type.manager')
+    );
   }
 
   /**
@@ -55,10 +67,8 @@ class CKEditorPreview extends ControllerBase {
       if (!$viewer) {
         throw new \Exception();
       }
-
-      $viewer = (int) $viewer;
       
-      $storage = \Drupal::entityTypeManager()->getStorage('viewer');
+      $storage = $this->entityTypeManager->getStorage('viewer');
       $ids = $storage->getQuery()
         ->condition('id', $viewer)
         ->sort('created', 'DESC')
@@ -107,8 +117,7 @@ class CKEditorPreview extends ControllerBase {
         ],
       ];
     }
-    $renderer = \Drupal::service('renderer');
-    return new Response($renderer->renderRoot($build));
+    return new Response($this->renderer->renderRoot($build));
   }
 
   /**

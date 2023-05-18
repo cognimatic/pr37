@@ -1,0 +1,44 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - viewer
+id: viewer-viewers
+label: 'Viewer: Viewers'
+module: viewer
+routes:
+  -
+    route_name: entity.viewer.collection
+tips:
+  viewer:
+    id: viewer
+    plugin: text
+    label: 'Viewer'
+    weight: 1
+    body: 'Viewers are plugins that process data provided by the Source plugins. Some examples of Viewer plugins are Datatables, Charts, Fullcalendar etc. You may also group different Viewer plugins into Tabs, Accordions'
+  viewer-new:
+    id: viewer-new
+    plugin: text
+    label: 'New Viewer'
+    weight: 2
+    selector: .new-viewer
+    body: 'In order to be able to create new Viewer you would need to create <a href="/admin/structure/viewer-source?tour">Source</a> for it. Source plugins are the onces that provide CSV/XLSX, PDF or other files for Viewers.'
+  viewer-configure:
+    id: viewer-configure
+    plugin: text
+    label: 'Configure Viewer'
+    weight: 3
+    selector: .dropbutton-widget
+    body: 'By clicking "Preview" you will be able to see how the data looks appears in the Viewer. You can also Configure viewer and set Filters.'
+  viewer-sources:
+    id: viewer-source
+    plugin: text
+    label: 'Viewer Sources'
+    weight: 4
+    body: 'The Viewer management screen also has an another tab on the top which is used to add Viewer Sources. The name of the tab is <a href="/admin/structure/viewer-source?tour">Sources</a>. This tab ultimately provides a link to add Source plugins.'
+  support:
+    id: support
+    plugin: text
+    label: 'Support'
+    weight: 5
+    body: 'You help is important, please consider supporting the module by clicking <a href="/admin/structure/viewer-support?tour">Support</a> tab at the top of the page.'

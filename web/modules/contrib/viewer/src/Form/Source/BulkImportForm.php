@@ -74,6 +74,8 @@ class BulkImportForm extends ConfirmFormBase {
     $form = parent::buildForm($form, $form_state);
     $form['actions']['cancel']['#attributes']['class'][] = 'dialog-cancel';
     $form['description']['#markup'] = $this->t('This will run all imports but Manual at once. Depending on file sizes this may take time please keep the window open.');
+    $form['description']['#prefix'] = '<p>';
+    $form['description']['#suffx'] = '</p>';
     return $form;
   }
 

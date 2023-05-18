@@ -7,6 +7,7 @@ entity.viewer_source.new:
     attributes:
       class:
         - 'use-ajax'
+        - 'new-source'
       data-dialog-type: 'modal'
       data-dialog-options: '{"width":"600"}'
 
@@ -19,6 +20,7 @@ entity.viewer_source.bulk_import:
     attributes:
       class:
         - 'use-ajax'
+        - 'import-all'
       data-dialog-type: 'modal'
       data-dialog-options: '{"width":"600"}'
 
@@ -31,5 +33,6 @@ entity.viewer.new:
     attributes:
       class:
         - 'use-ajax'
+        - 'new-viewer'
       data-dialog-type: 'modal'
       data-dialog-options: '{"width":"600"}'

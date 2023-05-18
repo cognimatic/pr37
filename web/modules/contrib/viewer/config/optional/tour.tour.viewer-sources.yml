@@ -1,0 +1,51 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - viewer
+id: viewer-sources
+label: 'Viewer: Sources'
+module: viewer
+routes:
+  -
+    route_name: entity.viewer_source.collection
+tips:
+  source:
+    id: source
+    plugin: text
+    label: 'Source'
+    weight: 1
+    body: 'Sources are plugins that store files for Viewer. Files can be imported automatically via SFTP, FTP, HTTP, System path or Manual upload.'
+  source-new:
+    id: source-new
+    plugin: text
+    label: 'New Source'
+    weight: 2
+    selector: .new-source
+    body: 'Create new Source plugin to import files manually or automatically on scheduled frequency. Files can be imported from SFTP, FTP, HTTP, System path or Manual upload.'
+  source-import-all:
+    id: source-import-all
+    plugin: text
+    label: 'Import All'
+    weight: 3
+    selector: .import-all
+    body: 'This will run all source imports configured to run automatically. All manual imports should be imported individually.'
+  source-configure:
+    id: source-configure
+    plugin: text
+    label: 'Configure Source'
+    weight: 4
+    selector: .dropbutton-widget
+    body: 'This dropdown contains all the configrations for the plugin. It includes manual Import, Schedule, Download, Notifications and other configurable options.'
+  source-viewer:
+    id: source-viewer
+    plugin: text
+    label: 'Viewers'
+    weight: 5
+    body: 'The Source management screen also has an another tab on the top which is used to add Viewers. The name of the tab is <a href="/admin/structure/viewers?tour">Viewers</a>. This tab ultimately provides plugins to display files stored in Sources.'
+  support:
+    id: support
+    plugin: text
+    label: 'Support'
+    weight: 6
+    body: 'You help is important, please consider supporting the module by clicking <a href="/admin/structure/viewer-support?tour">Support</a> tab at the top of the page.'

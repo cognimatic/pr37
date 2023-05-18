@@ -2,18 +2,46 @@
 
 namespace Drupal\viewer\Form;
 
-use Drupal\Component\Serialization\Json;
-use Drupal\Component\Utility\Xss;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Xss;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\editor\Ajax\EditorDialogSave;
 
 /**
  * Ckeditor dialog form to insert Viewer block.
  */
 class CKEditorDialogForm extends FormBase {
+ 
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * Constructs a CKEditorDialogForm object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   */
+  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+    $this->entityTypeManager = $entity_type_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity_type.manager')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -91,7 +119,7 @@ class CKEditorDialogForm extends FormBase {
    * Get all viewers.
    */
   protected function getViewers() {
-    $storage = \Drupal::entityTypeManager()->getStorage('viewer');
+    $storage = $this->entityTypeManager->getStorage('viewer');
     $ids = $storage->getQuery()
       ->sort('created', 'DESC')
       ->accessCheck(TRUE)

@@ -35,6 +35,8 @@ class ViewerSourceDeleteForm extends ContentEntityDeleteForm {
     $form['actions']['cancel']['#attributes']['class'][] = 'dialog-cancel';
     $form['description'] = [
       '#markup' => $this->t('IMPORTANT: This action cannot be undone. All Viewers that are using this Viewer Source will be also deleted.'),
+      '#prefix' => '<p>',
+      '#suffx' => '</p>',
     ];
     return $form;
   }
