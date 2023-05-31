@@ -12,9 +12,9 @@ libraries:
   - lgd_abc/variables
   - lgd_abc/overrides
   - lgd_abc/fonts
-  - lgd_abc/cookie-control-scripts
+  # - lgd_abc/cookie-control-scripts
   - lgd_abc/subsites
-  - lgd_abc/useberry
+  # - lgd_abc/useberry
 
 regions:
   tabs: "Tabs"

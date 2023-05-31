@@ -36,6 +36,6 @@ subsites:
       css/subsites.css: {}
 
       # Remove following and reference in info.yml once testing complete
-useberry:
-  js:
-    'https://api.useberry.com/integrations/liveUrl/scripts/useberryScript.js': { type: external, minified: true }
+#useberry:
+#  js:
+#    'https://api.useberry.com/integrations/liveUrl/scripts/useberryScript.js': { type: external, minified: true }
