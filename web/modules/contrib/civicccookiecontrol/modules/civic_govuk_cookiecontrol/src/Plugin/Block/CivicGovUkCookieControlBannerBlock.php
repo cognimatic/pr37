@@ -137,7 +137,7 @@ class CivicGovUkCookieControlBannerBlock extends BlockBase implements ContainerF
           Note that this setting may not work for all themes.
           '
       ),
-      '#default_value' => isset($this->configuration['fixed_top']) ? $this->configuration['fixed_top'] : FALSE,
+      '#default_value' => $this->configuration['fixed_top'] ?? FALSE,
     ];
     return $form;
   }
@@ -260,7 +260,11 @@ class CivicGovUkCookieControlBannerBlock extends BlockBase implements ContainerF
             $stmtName,
             'entity.node.canonical',
             ['node' => $nid],
-            ['attributes' => ['class' => "cookie-policy govuk-link"]],
+            [
+              'attributes' =>
+              ['class' => "cookie-policy govuk-link"],
+              'absolute' => TRUE,
+            ]
         );
       $policy_link = Xss::filter(
             $stmtDescr . ' ' .
@@ -293,7 +297,11 @@ class CivicGovUkCookieControlBannerBlock extends BlockBase implements ContainerF
             $this->getTranslation($linkText),
             'entity.node.canonical',
             ['node' => $nid],
-            ['attributes' => ['class' => "cookie-policy govuk-link"]],
+            [
+              'attributes' =>
+              ['class' => "cookie-policy govuk-link"],
+              'absolute' => TRUE,
+            ]
         );
       $link = Xss::filter(
             $this->getTranslation($prefix) . ' ' .

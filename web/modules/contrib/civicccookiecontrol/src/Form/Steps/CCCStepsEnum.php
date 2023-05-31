@@ -35,7 +35,7 @@ abstract class CCCStepsEnum {
       self::CCC_SETTINGS => 'civiccookiecontrol.CCCSettings',
     ];
 
-    return isset($map[$step]) ? $map[$step] : FALSE;
+    return $map[$step] ?? FALSE;
   }
 
 }

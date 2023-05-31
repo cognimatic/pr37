@@ -84,3 +84,7 @@ span.fieldset-title {
   height: 30px !important;
   width: 412px !important;
 }
+
+.filter-wrapper {
+  display: none;
+}

@@ -18,13 +18,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class CCC9Config extends AbstractCCCConfig {
 
   /**
-   * The language manager service.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
    * CCC9Config constructor.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config
@@ -45,10 +38,9 @@ class CCC9Config extends AbstractCCCConfig {
         CacheBackendInterface $cache,
         LanguageManagerInterface $languageManager
     ) {
-    parent::__construct($config, $entityTypeManager, $dateFormatter, $cache);
+    parent::__construct($config, $entityTypeManager, $dateFormatter, $cache, $languageManager);
     $this->iabConfig = $config->get(CCCConfigNames::IAB2);
     $this->loadCookieConfig();
-    $this->languageManager = $languageManager;
   }
 
   /**
@@ -56,7 +48,6 @@ class CCC9Config extends AbstractCCCConfig {
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
-    $instance->languageManager = $container->get('language_manager');
     return $instance;
   }
 
@@ -105,7 +96,17 @@ class CCC9Config extends AbstractCCCConfig {
     $this->loadTextObject();
     $this->loadBrandingObject();
 
-    $this->config['locales'] = $this->loadAltLanguagesList();
+    // Get locale mode from configuration.
+    $mode = $this->cccConfig->get('civiccookiecontrol_locale_mode');
+
+    if ($mode == 'drupal') {
+      // Get current site language.
+      $currentLang = $this->languageManager->getCurrentLanguage()->getId();
+      $this->config['locales'] = $this->loadAltLanguages($currentLang);
+    }
+    else {
+      $this->config['locales'] = $this->loadAltLanguages();
+    }
   }
 
   /**
@@ -138,16 +139,18 @@ class CCC9Config extends AbstractCCCConfig {
           ->get('civiccookiecontrol' . $key . '_stmt_date')) ? $this->dateFormatter
           ->format(strtotime($this->cccConfig
             ->get('civiccookiecontrol' . $key . '_stmt_date')), 'custom', 'd/m/Y') : "",
+        'rejectButton' => $this->cccConfig
+          ->get('civiccookiecontrol' . $key . '_stmt_rejectb'),
       ];
       if ($nid = $this->cccConfig->get('civiccookiecontrol' . $key . '_privacynode')) {
         $privacyNodeUrl = Link::createFromRoute(
               $this->t("Privacy Policy"),
               'entity.node.canonical',
-              ['node' => $nid]
+              ['node' => $nid],
+              ['absolute' => TRUE]
           );
-        global $base_url;
-        $this->config[$type]['url'] = $base_url . $privacyNodeUrl->getUrl()
-          ->toString();
+
+        $this->config[$type]['url'] = $privacyNodeUrl->getUrl()->toString();
       }
 
       $this->config[$type] = array_filter($this->config[$type], 'strlen');
@@ -161,6 +164,7 @@ class CCC9Config extends AbstractCCCConfig {
     parent::loadAccessibilityObject();
     $this->config['accessibility']['overlay'] = $this->cccConfig->get('civiccookiecontrol_overlay');
     $this->config['accessibility']['outline'] = $this->cccConfig->get('civiccookiecontrol_outline');
+    $this->config['accessibility']['disableSiteScrolling'] = $this->cccConfig->get('civiccookiecontrol_site_scrolling');
   }
 
   /**
@@ -225,17 +229,54 @@ class CCC9Config extends AbstractCCCConfig {
   }
 
   /**
-   * Function to load alternative languages list.
+   * Function to load alternative languages.
+   *
+   * When $lang is not provided ('browser' mode), the returned array will have
+   * all alternative languages.
+   * When $lang is provided ('drupal' mode), the returned array will have only
+   * the reference alt language from alter language configuration. If not found,
+   * the returned array will be empty, so the default language will be used.
+   *
+   * @param null|string $lang
+   *   Language code.
+   *
+   * @return array
+   *   The language(s) in array.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function loadAltLanguagesList() {
+  public function loadAltLanguages($lang = NULL) {
 
     $altLanguages = $this->entityTypeManager
       ->getStorage('altlanguage')
       ->loadMultiple();
     $locales = [];
 
-    foreach ($altLanguages as $altLang) {
-      $locale['locale'] = $altLang->getAltLanguageIsoCode();
+    $languageMapping = [];
+    foreach ($altLanguages as $key => $value) {
+      $languageMapping[$key] = $value->getAltLanguageIsoCode();
+    }
+
+    // For locale mode 'drupal', when reference alt language not found, return
+    // empty array.
+    if ($lang && !in_array($lang, $languageMapping)) {
+      return $locales;
+    }
+
+    // For locale mode 'drupal', when reference alt language exists, use only
+    // this language for the loop.
+    $altLanguage = [];
+    if ($lang && in_array($lang, $languageMapping)) {
+      $langCCId = array_search($lang, $languageMapping);
+      $altLanguage[] = $altLanguages[$langCCId];
+    }
+
+    $altLanguagesArray = $lang ? $altLanguage : $altLanguages;
+
+    foreach ($altLanguagesArray as $altLang) {
+
+      $locale['locale'] = strtolower(str_replace('-', '_', $altLang->getAltLanguageIsoCode()));
       $locale['mode'] = $altLang->getAltLanguageMode();
       $locale['location'] = $altLang->getAltLanguageLocation();
 
@@ -264,19 +305,19 @@ class CCC9Config extends AbstractCCCConfig {
 
       $locale['statement']['description'] = $altLang->getAltLanguageStmtDescrText();
       $locale['statement']['name'] = $altLang->getAltLanguageStmtNameText();
-      global $base_url;
+
       if (($nid = $altLang->getAltLanguageStmtUrl()) && ($locale['mode'] != 'nothing')) {
         $privacyNodeUrl = Link::createFromRoute(
               $altLang->getAltLanguageStmtUrl(),
               'entity.node.canonical',
-              ['node' => $nid]
+              ['node' => $nid],
+              ['absolute' => TRUE]
           );
-        $locale['statement']['url'] = $base_url . $privacyNodeUrl->getUrl()
-          ->toString();
+        $locale['statement']['url'] = $privacyNodeUrl->getUrl()->toString();
       }
       $locale['statement']['updated'] = !empty($altLang->getAltLanguageStmtDate()) ?
-            $this->dateFormatter
-              ->format(strtotime($altLang->getAltLanguageStmtDate()), 'custom', 'd/m/Y') : NULL;
+        $this->dateFormatter
+          ->format(strtotime($altLang->getAltLanguageStmtDate()), 'custom', 'd/m/Y') : NULL;
 
       $locale['ccpaConfig']['description'] = $altLang->getAltLanguageCcpaStmtDescrText();
       $locale['ccpaConfig']['name'] = $altLang->getAltLanguageCcpaStmtNameText();
@@ -284,14 +325,16 @@ class CCC9Config extends AbstractCCCConfig {
         $privacyNodeUrl = Link::createFromRoute(
               $altLang->getAltLanguageCcpaStmtUrl(),
               'entity.node.canonical',
-              ['node' => $nid]
+              ['node' => $nid],
+              ['absolute' => TRUE]
           );
-        $locale['ccpaConfig']['url'] = $base_url . $privacyNodeUrl->getUrl()
-          ->toString();
+        $locale['ccpaConfig']['url'] = $privacyNodeUrl->getUrl()->toString();
       }
       $locale['ccpaConfig']['updated'] = !empty($altLang->getAltLanguageCcpaStmtDate()) ?
-            $this->dateFormatter
-              ->format(strtotime($altLang->getAltLanguageCcpaStmtDate()), 'custom', 'd/m/Y') : NULL;
+        $this->dateFormatter
+          ->format(strtotime($altLang->getAltLanguageCcpaStmtDate()), 'custom', 'd/m/Y') : NULL;
+
+      $locale['ccpaConfig']['rejectButton'] = $altLang->getAltLanguageCcpaStmtRejectButtonText();
 
       if (($this->iabConfig->get('iabCMP') == 1)) {
         $locale['text']['iabCMP']['panelTitle'] = $altLang->getAltLanguageIabPanelTitleText();
@@ -310,30 +353,30 @@ class CCC9Config extends AbstractCCCConfig {
         $locale['text']['on'] = $altLang->getAltLanguageIabOn();
         $locale['text']['off'] = $altLang->getAltLanguageIabOff();
         $locale['text']['iabCMP']['purposeLegitimateInterest'] =
-                  $altLang->getAltLanguageIabPurposeLegitimateInterest();
+          $altLang->getAltLanguageIabPurposeLegitimateInterest();
         $locale['text']['iabCMP']['vendorLegitimateInterest'] =
-                  $altLang->getAltLanguageIabVendorLegitimateInterest();
+          $altLang->getAltLanguageIabVendorLegitimateInterest();
         $locale['text']['iabCMP']['objectPurposeLegitimateInterest'] =
-                  $altLang->getAltLanguageIabObjectPurposeLegitimateInterest();
+          $altLang->getAltLanguageIabObjectPurposeLegitimateInterest();
         $locale['text']['iabCMP']['objectVendorLegitimateInterest'] =
-                  $altLang->getAltLanguageIabObjectVendorLegitimateInterest();
+          $altLang->getAltLanguageIabObjectVendorLegitimateInterest();
         $locale['text']['iabCMP']['relyConsent'] = $altLang->getAltLanguageIabRelyConsent();
         $locale['text']['iabCMP']['relyLegitimateInterest'] =
-                  $altLang->getAltLanguageIabRelyLegitimateInterest();
+          $altLang->getAltLanguageIabRelyLegitimateInterest();
         $locale['text']['iabCMP']['savePreferences'] = $altLang->getAltLanguageIabSavePreferences();
         $locale['text']['iabCMP']['acceptAll'] = $altLang->getAltLanguageIabAcceptAll();
         $locale['text']['iabCMP']['rejectAll'] = $altLang->getAltLanguageIabRejectAll();
         $locale['text']['iabCMP']['legalDescription'] = $altLang->getAltLanguageIabLegalDescription();
         $locale['text']['iabCMP']['cookieMaxAge'] = $altLang->getAltLanguageIabCookieMaxAge();
         $locale['text']['iabCMP']['usesNonCookieAccessTrue'] =
-                  $altLang->getAltLanguageIabUsesNonCookieAccessTrue();
+          $altLang->getAltLanguageIabUsesNonCookieAccessTrue();
         $locale['text']['iabCMP']['usesNonCookieAccessFalse'] =
-                  $altLang->getAltLanguageIabUsesNonCookieAccessFalse();
+          $altLang->getAltLanguageIabUsesNonCookieAccessFalse();
         $locale['text']['iabCMP']['storageDisclosures'] = $altLang->getAltLanguageIabStorageDisclosures();
         $locale['text']['iabCMP']['disclosureDetailsColumn'] =
-                  $altLang->getAltLanguageIabDisclosureDetailsColumn();
+          $altLang->getAltLanguageIabDisclosureDetailsColumn();
         $locale['text']['iabCMP']['disclosurePurposesColumn'] =
-                  $altLang->getAltLanguageIabDisclosurePurposesColumn();
+          $altLang->getAltLanguageIabDisclosurePurposesColumn();
         $locale['text']['iabCMP']['seconds'] = $altLang->getAltLanguageIabSeconds();
         $locale['text']['iabCMP']['minutes'] = $altLang->getAltLanguageIabMinutes();
         $locale['text']['iabCMP']['hours'] = $altLang->getAltLanguageIabHours();
@@ -341,6 +384,7 @@ class CCC9Config extends AbstractCCCConfig {
       }
       $locales[] = $locale;
     }
+
     return $locales;
   }
 

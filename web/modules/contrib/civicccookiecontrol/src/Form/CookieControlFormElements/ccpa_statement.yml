@@ -3,6 +3,10 @@ civiccookiecontrol_ccpa_stmt_descr:
   '#title': 'CCPA Statement Description'
   '#default_value': 'civiccookiecontrol_ccpa_stmt_descr'
   '#description': 'The text description that introduces your ccpa privacy statement.'
+  '#placeholder': 'This may include the website or our third-party tools processing
+                       personal data. In the case of your personal data, you may opt out of such activity by using the buttons below.
+                       To find out more about the categories of personal information collected and the purposes for which such information
+                       will be used, please refer to our'
   'needsApiValidation': true
   'cookieVersion': [9]
 civiccookiecontrol_ccpa_stmt_name:
@@ -10,7 +14,7 @@ civiccookiecontrol_ccpa_stmt_name:
   '#title': 'CCPA Statement Name'
   '#default_value': 'civiccookiecontrol_ccpa_stmt_name'
   '#description': "The text that you wish to call your terms by, for example 'CCPA Privacy Statement'."
-  '#placeholder': 'CCPA Privacy Statement'
+  '#placeholder': 'Personal Information Policy'
   'needsApiValidation': true
   'cookieVersion': [9]
 civiccookiecontrol_ccpa_stmt_date:
@@ -22,6 +26,14 @@ civiccookiecontrol_ccpa_stmt_date:
   '#description': 'The date that your ccpa privacy statement was last issued.'
   'needsApiValidation': true
   'cookieVersion': [9]
+civiccookiecontrol_ccpa_stmt_rejectb:
+  '#type': 'textfield'
+  '#title': 'CCPA Statement Reject Button Text'
+  '#default_value': 'civiccookiecontrol_ccpa_stmt_rejectb'
+  '#description': 'Reject CCPA StatementText'
+  '#placeholder': 'Do Not Sell or Share My Personal Information'
+  'needsApiValidation': true
+  'cookieVersion': [ 9 ]
 civiccookiecontrol_ccpa_privacynode:
     '#type': 'number'
     '#size': 5

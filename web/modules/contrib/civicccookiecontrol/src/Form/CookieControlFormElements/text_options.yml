@@ -145,7 +145,7 @@ civiccookiecontrol_intro_text:
   '#title': 'Introductory Text'
   '#default_value': 'civiccookiecontrol_intro_text'
   '#description': 'Some short, sharp copy to introduce the role of cookies on your site. On window-style widgets, this text is concatenated to the title and appears together. On bar-style widgets, this is the first text displayed in the widget when the information panel is visible.'
-  '#format': 'full_html'
+  '#format': 'cookie_control_html'
   'needsApiValidation': true
   'cookieVersion': [8,9]
 civiccookiecontrol_necessary_title_text:
@@ -160,7 +160,7 @@ civiccookiecontrol_necessary_desc_text:
   '#title': 'Necessary Description Text'
   '#default_value': 'civiccookiecontrol_necessary_desc_text'
   '#description': 'Necessary cookies enable core functionality such as page navigation and access to secure areas. The website cannot function properly without these cookies, and can only be disabled by changing your browser preferences.'
-  '#format': 'full_html'
+  '#format': 'cookie_control_html'
   'needsApiValidation': true
   'cookieVersion': [8,9]
 civiccookiecontrol_notify_title_text:
@@ -175,7 +175,7 @@ civiccookiecontrol_notify_desc_text:
   '#title': 'Notify Description Text'
   '#default_value': 'civiccookiecontrol_notify_desc_text'
   'needsApiValidation': true
-  '#format': 'full_html'
+  '#format': 'cookie_control_html'
   'cookieVersion': [8,9]
 civiccookiecontrol_third_party_title_text:
   '#type': 'textarea'
@@ -188,7 +188,7 @@ civiccookiecontrol_third_party_desc_text:
   '#title': 'Third Party Cookies Description Text'
   '#default_value': 'civiccookiecontrol_third_party_desc_text'
   'needsApiValidation': true
-  '#format': 'full_html'
+  '#format': 'cookie_control_html'
   'cookieVersion': [8,9]
 civiccookiecontrol_on_text:
   '#type': 'textfield'

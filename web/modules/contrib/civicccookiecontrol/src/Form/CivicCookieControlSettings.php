@@ -140,6 +140,7 @@ class CivicCookieControlSettings extends ConfigFormBase {
       $this->stepId = CCCStepsEnum::CCC_LICENSE_INFO;
     }
     civiccookiecontrol_check_cookie_categories();
+    civiccookiecontrol_check_local_mode();
   }
 
   /**

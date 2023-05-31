@@ -67,6 +67,7 @@ civiccookiecontrol_settings_style: 'button'
 civiccookiecontrol_access_key: 'C'
 civiccookiecontrol_highlight_focus: false
 civiccookiecontrol_overlay: true
+civiccookiecontrol_site_scrolling: false
 civiccookiecontrol_outline: true
 civiccookiecontrol_onload: ''
 civiccookiecontrol_close_label: 'Close'
@@ -79,6 +80,7 @@ civiccookiecontrol_ccpa_privacynode: ''
 civiccookiecontrol_ccpa_stmt_descr: ''
 civiccookiecontrol_ccpa_stmt_name: ''
 civiccookiecontrol_ccpa_stmt_date: ''
+civiccookiecontrol_ccpa_stmt_rejectb: ''
 civiccookiecontrol_ccpa_stmt_url: ''
 civiccookiecontrol_show_vendors: 'Show vendors within this category'
 civiccookiecontrol_third_party_cookies: 'This vendor may set third party cookies.'

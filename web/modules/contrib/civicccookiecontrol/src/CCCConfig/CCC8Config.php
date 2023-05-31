@@ -8,6 +8,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -27,14 +28,17 @@ class CCC8Config extends AbstractCCCConfig {
    *   Injected date formatter service.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   Injected cache service.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   Injected language manager service.
    */
   public function __construct(
         ConfigFactoryInterface $config,
         EntityTypeManager $entityTypeManager,
         DateFormatterInterface $dateFormatter,
-        CacheBackendInterface $cache
+        CacheBackendInterface $cache,
+        LanguageManagerInterface $languageManager
     ) {
-    parent::__construct($config, $entityTypeManager, $dateFormatter, $cache);
+    parent::__construct($config, $entityTypeManager, $dateFormatter, $cache, $languageManager);
     $this->iabConfig = $config->get(CCCConfigNames::IAB);
     $this->loadCookieConfig();
   }
@@ -43,7 +47,8 @@ class CCC8Config extends AbstractCCCConfig {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return parent::create($container);
+    $instance = parent::create($container);
+    return $instance;
   }
 
   /**
@@ -65,7 +70,19 @@ class CCC8Config extends AbstractCCCConfig {
     $this->loadTextObject();
     $this->loadBrandingObject();
 
-    $this->config['locales'] = $this->loadAltLanguagesList();
+    // Get locale mode from configuration.
+    $mode = $this->cccConfig->get('civiccookiecontrol_locale_mode');
+
+    if ($mode == 'drupal') {
+
+      // Get current site language.
+      $currentLang = $this->languageManager->getCurrentLanguage()->getId();
+      $this->config['locales'] = $this->loadAltLanguages($currentLang);
+    }
+    else {
+      $this->config['locales'] = $this->loadAltLanguages();
+    }
+
   }
 
   /**
@@ -106,16 +123,52 @@ class CCC8Config extends AbstractCCCConfig {
   }
 
   /**
-   * Function to load alternative languages list.
+   * Function to load alternative languages.
+   *
+   * When $lang is not provided ('browser' mode), the returned array will have
+   * all alternative languages.
+   * When $lang is provided ('drupal' mode), the returned array will have only
+   * the reference alt language from alter language configuration. If not found,
+   * the returned array will be empty, so the default language will be used.
+   *
+   * @param null|string $lang
+   *   Language code.
+   *
+   * @return array
+   *   The language(s) in array.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function loadAltLanguagesList() {
+  public function loadAltLanguages($lang = NULL) {
     $altLanguages = $this->entityTypeManager
       ->getStorage('altlanguage')
       ->loadMultiple();
     $locales = [];
 
-    foreach ($altLanguages as $altLang) {
-      $locale['locale'] = $altLang->getAltLanguageIsoCode();
+    $languageMapping = [];
+    foreach ($altLanguages as $key => $value) {
+      $languageMapping[$key] = $value->getAltLanguageIsoCode();
+    }
+
+    // For locale mode 'drupal', when reference alt language not found, return
+    // empty array.
+    if ($lang && !in_array($lang, $languageMapping)) {
+      return $locales;
+    }
+
+    // For locale mode 'drupal', when reference alt language exists, use only
+    // this language for the loop.
+    $altLanguage = [];
+    if ($lang && in_array($lang, $languageMapping)) {
+      $langCCId = array_search($lang, $languageMapping);
+      $altLanguage[] = $altLanguages[$langCCId];
+    }
+
+    $altLanguagesArray = $lang ? $altLanguage : $altLanguages;
+
+    foreach ($altLanguagesArray as $altLang) {
+      $locale['locale'] = strtolower(str_replace('-', '_', $altLang->getAltLanguageIsoCode()));
       $locale['text']['title'] = $altLang->getAltLanguageTitle();
       $locale['text']['intro'] = $altLang->getAltLanguageIntro();
       $locale['text']['acceptRecommended'] = $altLang->getAltLanguageAcceptRecommended();
@@ -140,11 +193,10 @@ class CCC8Config extends AbstractCCCConfig {
         $privacyNodeUrl = Link::createFromRoute(
               $altLang->getAltLanguageStmtUrl(),
               'entity.node.canonical',
-              ['node' => $nid]
+              ['node' => $nid],
+              ['absolute' => TRUE]
           );
-        global $base_url;
-        $locale['text']['statement']['url'] = $base_url . $privacyNodeUrl->getUrl()
-          ->toString();
+        $locale['text']['statement']['url'] = $privacyNodeUrl->getUrl()->toString();
       }
       $locale['text']['statement']['updated'] = !empty($altLang->getAltLanguageStmtDate()) ?
             $this->dateFormatter->format(strtotime($altLang->getAltLanguageStmtDate()), 'custom', 'd/m/Y') : NULL;

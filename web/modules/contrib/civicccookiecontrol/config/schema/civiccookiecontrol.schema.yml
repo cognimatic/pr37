@@ -116,6 +116,8 @@ civiccookiecontrol.settings:
       type: boolean
     civiccookiecontrol_overlay:
       type: boolean
+    civiccookiecontrol_site_scrolling:
+      type: boolean
     civiccookiecontrol_outline:
       type: boolean
     civiccookiecontrol_notify_once:
@@ -160,6 +162,8 @@ civiccookiecontrol.settings:
       type: string
     civiccookiecontrol_ccpa_stmt_descr:
       type: string
+      civiccookiecontrol_ccpa_stmt_rejectb:
+        type: string
     civiccookiecontrol_ccpa_stmt_name:
       type: string
     civiccookiecontrol_ccpa_stmt_date:

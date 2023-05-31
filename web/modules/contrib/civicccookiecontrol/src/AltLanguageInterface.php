@@ -447,6 +447,25 @@ interface AltLanguageInterface extends ConfigEntityInterface {
   public function setAltLanguageCcpaStmtDescrText($altLanguageCcpaStmtDescrText);
 
   /**
+   * Returns CCPA Statement Reject Button Text in Alternative Language.
+   *
+   * @return string
+   *   CCPA Statement Reject Button Text in Alternative Language.
+   */
+  public function getAltLanguageCcpaStmtRejectButtonText();
+
+  /**
+   * Sets CCPA Statement Reject Button Text in Alternative Language.
+   *
+   * @param string $altLanguageCcpaStmtRejectButtonText
+   *   CCPA Statement Reject Button Text in Alternative Language.
+   *
+   * @return string
+   *   CCPA Statement Reject Button Text in Alternative Language.
+   */
+  public function setAltLanguageCcpaStmtRejectButtonText($altLanguageCcpaStmtRejectButtonText);
+
+  /**
    * CCPA Returns Statement Name Text in Alternative Language.
    *
    * @return string

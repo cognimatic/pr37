@@ -18,7 +18,7 @@ use Drupal\Core\Form\FormStateInterface;
  *   multiple_values = "FALSE",
  * )
  */
-class OfficeHoursExceptionsWeekWidget extends OfficeHoursSeasonWidget {
+class OfficeHoursComplexWeekWidget extends OfficeHoursSeasonWidget {
 
   /**
    * {@inheritdoc}
@@ -37,40 +37,40 @@ class OfficeHoursExceptionsWeekWidget extends OfficeHoursSeasonWidget {
 
     // First, create a Week widget for the normal weekdays.
     // Use the form we are already in, not by adding a new widget.
+    /** @var \Drupal\office_hours\Plugin\Field\FieldType\OfficeHoursItemList $items */
+    /** @var \Drupal\office_hours\Plugin\Field\FieldWidget\OfficeHoursWeekWidget $widget */
     $field_type = 'office_hours';
-    $element[$field_type] = parent::formElement($items, $delta, $element, $form, $form_state);
+    $element[$field_type][0] = parent::formElement($items, $delta, $element, $form, $form_state);
     $items->filterEmptyItems();
 
     // Then, add a List Widget for the Exception days.
-    /** @var \Drupal\office_hours\Plugin\Field\FieldType\OfficeHoursItemList $items */
     if ($this->getFieldSetting('exceptions')) {
       $field_type = 'office_hours_exceptions';
       $plugin_id = 'office_hours_exceptions_only';
       $field_definition = $items->getFieldDefinition($field_type);
-      /** @var \Drupal\Core\Field\WidgetInterface $widget */
+
+      $id = 0;
       $widget = $this->getOfficeHoursPlugin('widget', $plugin_id, $field_definition);
+
       $widget_form = $widget->form($items, $form, $form_state);
       // @todo #3335549 Decide to use complete form or only ['widget'] part.
-      $element[$field_type] = $widget_form['widget'];
-      unset($element[$field_type]['#after_build']);
-      unset($element[$field_type]['#parents']);
-      unset($element[$field_type]['#tree']);
+      $element[$field_type][$id] = $widget_form['widget'];
+      unset($element[$field_type][$id]['#after_build']);
+      unset($element[$field_type][$id]['#parents']);
+      unset($element[$field_type][$id]['#tree']);
     }
 
     // Then, add Widgets for the Season days.
     if ($this->getFieldSetting('seasons')) {
-
-      // Create an array of seasons. (Do not collect regular or exception days.)
-      $seasons = $items->getSeasons(FALSE, TRUE);
-
-      // Create a Widget for each season.
       $field_type = 'office_hours_season';
       $plugin_id = 'office_hours_season_only';
       $field_definition = $items->getFieldDefinition($field_type);
+      // Create a Widget for each season.
+      $seasons = $items->getSeasons(FALSE, TRUE);
       foreach ($seasons as $id => $season) {
-        /** @var \Drupal\office_hours\Plugin\Field\FieldWidget\OfficeHoursSeasonWidget $widget */
         $widget = $this->getOfficeHoursPlugin('widget', $plugin_id, $field_definition);
         $widget->setSeason($season);
+
         $widget_form = $widget->form($items, $form, $form_state);
         // @todo #3335549 Decide to use complete form or only ['widget'] part.
         $element[$field_type][$id] = $widget_form['widget'];
@@ -129,33 +129,25 @@ class OfficeHoursExceptionsWeekWidget extends OfficeHoursSeasonWidget {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     $massaged_values = [];
-    foreach ($values as $field_type => $widget_values) {
+    foreach ($values as $field_type => $widgets) {
+      foreach ($widgets as $id => $widget_values) {
+        switch ($field_type) {
+            case 'office_hours':
+              $widget_values = OfficeHoursWeekWidget::massageFormValues($widget_values, $form, $form_state);
+              break;
 
-      switch ($field_type) {
-        case 'office_hours':
-          // Normal weekdays.
-          $widget_values = parent::massageFormValues($widget_values, $form, $form_state);
-          $massaged_values = array_merge($massaged_values, $widget_values);
-          break;
+            case 'office_hours_exceptions':
+              $widget_values = OfficeHoursExceptionsWidget::_massageFormValues($widget_values, $form, $form_state);
+              break;
 
-        case 'office_hours_exceptions':
-          if (is_array($widget_values['value'])) {
-            $widget_values = parent::massageFormValues($widget_values, $form, $form_state);
-            $massaged_values = array_merge($massaged_values, $widget_values);
-          }
-          break;
-
-        case 'office_hours_season':
-          // Seasonal Weekdays, grouped per season.
-          foreach ($widget_values as $season_id => $season_values) {
-            $season_values = parent::massageFormValues($season_values, $form, $form_state);
-            $massaged_values = array_merge($massaged_values, $season_values);
-          }
-          break;
-
+          case 'office_hours_season':
+            $widget_values = OfficeHoursSeasonWidget::massageFormValues($widget_values, $form, $form_state);
+            break;
+        }
+        $massaged_values = array_merge($massaged_values, $widget_values);
       }
-
     }
+
     return $massaged_values;
   }
 

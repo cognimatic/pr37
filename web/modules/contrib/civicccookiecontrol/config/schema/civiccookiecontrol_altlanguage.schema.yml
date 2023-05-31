@@ -86,6 +86,9 @@ civiccookiecontrol.altlanguage.*:
     altLanguageCcpaStmtNameText:
       type: string
       label: 'CCPA Statement Name Text'
+    altLanguageCcpaStmtRejectButtonText:
+      type: string
+      label: 'CCPA Statement Reject Button Text'
     altLanguageCcpaStmtUrl:
       type: string
       label: 'Statement Url'

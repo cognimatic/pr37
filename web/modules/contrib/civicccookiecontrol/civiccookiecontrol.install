@@ -15,147 +15,11 @@ use Drupal\civiccookiecontrol\CCCConfigNames;
  * Clear configuration values.
  */
 function civiccookiecontrol_uninstall() {
-
-  $config = \Drupal::configFactory()
-    ->getEditable(CCCConfigNames::COOKIECONTROL);
-  $config->clear('civiccookiecontrol_api_key')->save();
-  $config->clear('civiccookiecontrol_api_key_verion')->save();
-  $config->clear('civiccookiecontrol_mode')->save();
-  $config->clear('civiccookiecontrol_product')->save();
-  $config->clear('civiccookiecontrol_initial_state')->save();
-  $config->clear('civiccookiecontrol_notify_once')->save();
-  $config->clear('civiccookiecontrol_reject_button')->save();
-  $config->clear('civiccookiecontrol_layout')->save();
-  $config->clear('civiccookiecontrol_widget_position')->save();
-  $config->clear('civiccookiecontrol_widget_theme')->save();
-  $config->clear('civiccookiecontrol_remove_icon')->save();
-  $config->clear('civiccookiecontrol_remove_about_text')->save();
-  $config->clear('civiccookiecontrol_font_color')->save();
-  $config->clear('civiccookiecontrol_font_size_title')->save();
-  $config->clear('civiccookiecontrol_font_size_intro')->save();
-  $config->clear('civiccookiecontrol_font_size_headers')->save();
-  $config->clear('civiccookiecontrol_font_size')->save();
-  $config->clear('civiccookiecontrol_background_color')->save();
-  $config->clear('civiccookiecontrol_toggle_text')->save();
-  $config->clear('civiccookiecontrol_toggle_color')->save();
-  $config->clear('civiccookiecontrol_toggle_background')->save();
-  $config->clear('civiccookiecontrol_button_icon')->save();
-  $config->clear('civiccookiecontrol_button_icon_width')->save();
-  $config->clear('civiccookiecontrol_button_icon_height')->save();
-  $config->clear('civiccookiecontrol_title_text')->save();
-  $config->clear('civiccookiecontrol_intro_text')->save();
-  $config->clear('civiccookiecontrol_necessary_title_text')->save();
-  $config->clear('civiccookiecontrol_necessary_desc_text')->save();
-  $config->clear('civiccookiecontrol_third_party_title_text')->save();
-  $config->clear('civiccookiecontrol_third_party_desc_text')->save();
-  $config->clear('civiccookiecontrol_consent_cookie_expiry')->save();
-  $config->clear('civiccookiecontrol_privacynode')->save();
-  $config->clear('civiccookiecontrol_log_consent')->save();
-  $config->clear('civiccookiecontrol_encode_cookie')->save();
-  $config->clear('civiccookiecontrol_sub_domains')->save();
-  $config->clear('civiccookiecontrol_font_family')->save();
-  $config->clear('civiccookiecontrol_alert_text')->save();
-  $config->clear('civiccookiecontrol_alert_background')->save();
-  $config->clear('civiccookiecontrol_on_text')->save();
-  $config->clear('civiccookiecontrol_off_text')->save();
-  $config->clear('civiccookiecontrol_accept_text')->save();
-  $config->clear('civiccookiecontrol_reject_text')->save();
-  $config->clear('civiccookiecontrol_accept_recommended')->save();
-  $config->clear('civiccookiecontrol_reject_settings')->save();
-  $config->clear('civiccookiecontrol_setting_text')->save();
-  $config->clear('civiccookiecontrol_stmt_descr')->save();
-  $config->clear('civiccookiecontrol_stmt_name')->save();
-  $config->clear('civiccookiecontrol_stmt_date')->save();
-  $config->clear('civiccookiecontrol_toggle_type')->save();
-  $config->clear('civiccookiecontrol_close_style')->save();
-  $config->clear('civiccookiecontrol_settings_style')->save();
-  $config->clear('civiccookiecontrol_access_key')->save();
-  $config->clear('civiccookiecontrol_highlight_focus')->save();
-  $config->clear('civiccookiecontrol_overlay')->save();
-  $config->clear('civiccookiecontrol_onload')->save();
-  $config->clear('civiccookiecontrol_close_label')->save();
-  $config->clear('civiccookiecontrol_accessibility_alert')->save();
-  $config->clear('civiccookiecontrol_accept_text_color')->save();
-  $config->clear('civiccookiecontrol_accept_background_color')->save();
-  $config->clear('civiccookiecontrol_reject_text_color')->save();
-  $config->clear('civiccookiecontrol_reject_background_color')->save();
-  $config->clear('civiccookiecontrol_drupal_admin')->save();
-  $config->clear('civiccookiecontrol_ccpa_privacynode')->save();
-  $config->clear('civiccookiecontrol_ccpa_stmt_descr')->save();
-  $config->clear('civiccookiecontrol_ccpa_stmt_name')->save();
-  $config->clear('civiccookiecontrol_ccpa_stmt_date')->save();
-  $config->clear('civiccookiecontrol_ccpa_stmt_url')->save();
-
-  $config->clear('civiccookiecontrol_show_vendors')->save();
-  $config->clear('civiccookiecontrol_third_party_cookies')->save();
-  $config->clear('civiccookiecontrol_read_more')->save();
-  $config->clear('civiccookiecontrol_outline')->save();
-  $config->clear('civiccookiecontrol_notify_font_color')->save();
-  $config->clear('civiccookiecontrol_notify_bg_color')->save();
-  $config->clear('civiccookiecontrol_close_text')->save();
-  $config->clear('civiccookiecontrol_close_bg_color')->save();
-
-  $config->delete();
-
-  $iabConfig = \Drupal::configFactory()
-    ->getEditable('iab.settings');
-
-  $iabConfig->clear('iabCMP')->save();
-  $iabConfig->clear('iabLanguage')->save();
-  $iabConfig->clear('iabGdprAppliesGlobally')->save();
-  $iabConfig->clear('iabRecommendedState')->save();
-  $iabConfig->clear('iabLabelText')->save();
-  $iabConfig->clear('iabDescriptionText')->save();
-  $iabConfig->clear('iabConfigureText')->save();
-  $iabConfig->clear('iabPanelTitleText')->save();
-  $iabConfig->clear('iabPanelIntroText')->save();
-  $iabConfig->clear('iabAboutIabText')->save();
-  $iabConfig->clear('iabIabNameText')->save();
-  $iabConfig->clear('iabIabLinkText')->save();
-  $iabConfig->clear('iabPanelBackText')->save();
-  $iabConfig->clear('iabVendorTitleText')->save();
-  $iabConfig->clear('iabVendorConfigureText')->save();
-  $iabConfig->clear('iabVendorBackText')->save();
-  $iabConfig->clear('iabAcceptAllText')->save();
-  $iabConfig->clear('iabRejectAllText')->save();
-  $iabConfig->clear('iabBackText')->save();
-  $iabConfig->delete();
-
-  $iabConfig = \Drupal::configFactory()
-    ->getEditable('iab2.settings');
-
-  $iabConfig->clear('iabCMP')->save();
-  $iabConfig->clear('iabLanguage')->save();
-  $iabConfig->clear('iabPublisherCC')->save();
-  $iabConfig->clear('iabPanelTitle')->save();
-  $iabConfig->clear('iabPanelIntro1')->save();
-  $iabConfig->clear('iabPanelIntro2')->save();
-  $iabConfig->clear('iabPanelIntro3')->save();
-  $iabConfig->clear('iabAboutIab')->save();
-  $iabConfig->clear('iabName')->save();
-  $iabConfig->clear('iabLink')->save();
-  $iabConfig->clear('iabPurposes')->save();
-  $iabConfig->clear('iabSpecialPurposes')->save();
-  $iabConfig->clear('iabFeatures')->save();
-  $iabConfig->clear('iabSpecialFeatures')->save();
-  $iabConfig->clear('iabDataUse')->save();
-  $iabConfig->clear('iabVendors')->save();
-  $iabConfig->clear('iabPurposeLegitimateInterest')->save();
-  $iabConfig->clear('iabVendorLegitimateInterest')->save();
-  $iabConfig->clear('iabObjectPurposeLegitimateInterest')->save();
-  $iabConfig->clear('iabObjectVendorLegitimateInterest')->save();
-  $iabConfig->clear('iabRelyConsent')->save();
-  $iabConfig->clear('iabRelyLegitimateInterest')->save();
-  $iabConfig->clear('iabSavePreferences')->save();
-  $iabConfig->clear('iabAcceptAll')->save();
-  $iabConfig->clear('iabRejectAll')->save();
-  $iabConfig->clear('iabLegalDescription')->save();
-  $iabConfig->clear('iabFullLegalDescription')->save();
-  $iabConfig->clear('iabDropDowns')->save();
-  $iabConfig->clear('iabSaveOnlyOnClose')->save();
-
-  $iabConfig->delete();
-
+  \Drupal::configFactory()->getEditable(CCCConfigNames::COOKIECONTROL)->delete();
+  \Drupal::configFactory()->getEditable('iab.settings')->delete();
+  \Drupal::configFactory()->getEditable('iab2.settings')->delete();
+  \Drupal::configFactory()->getEditable('filter.format.cookie_control_html')->delete();
+  \Drupal::configFactory()->getEditable('editor.editor.cookie_control_html')->delete();
 }
 
 /**
@@ -164,6 +28,7 @@ function civiccookiecontrol_uninstall() {
  * Just flush caches.
  */
 function civiccookiecontrol_install() {
+  civiccookiecontrol_install_html_format();
   drupal_flush_all_caches();
 }
 
@@ -171,66 +36,57 @@ function civiccookiecontrol_install() {
  * Cookie control 8.2 update.
  */
 function civiccookiecontrol_update_8210(&$sandbox) {
-  $config = \Drupal::configFactory()
-    ->getEditable(CCCConfigNames::COOKIECONTROL);
-
-  $config->set('civiccookiecontrol_encode_cookie', FALSE)->save();
-  $config->set('civiccookiecontrol_sub_domains', TRUE)->save();
-  $config->set('civiccookiecontrol_notify_once', FALSE)->save();
-  $config->set('civiccookiecontrol_reject_button', FALSE)->save();
-  $config->set('civiccookiecontrol_toggle_type', 'slider')->save();
-  $config->set('civiccookiecontrol_close_style', 'icon')->save();
-  $config->set('civiccookiecontrol_settings_style', 'button')->save();
-  $config->set('civiccookiecontrol_access_key', 'C')->save();
-  $config->set('civiccookiecontrol_highlight_focus', FALSE)->save();
-  $config->set('civiccookiecontrol_reject_settings', 'Reject All')->save();
-  $config->set('civiccookiecontrol_reject_text', 'Reject')->save();
-  $config->set('civiccookiecontrol_notify_title_text', 'Your choice regarding cookies on this site')
+  \Drupal::configFactory()
+    ->getEditable(CCCConfigNames::COOKIECONTROL)
+    ->set('civiccookiecontrol_encode_cookie', FALSE)
+    ->set('civiccookiecontrol_sub_domains', TRUE)
+    ->set('civiccookiecontrol_notify_once', FALSE)
+    ->set('civiccookiecontrol_reject_button', FALSE)
+    ->set('civiccookiecontrol_toggle_type', 'slider')
+    ->set('civiccookiecontrol_close_style', 'icon')
+    ->set('civiccookiecontrol_settings_style', 'button')
+    ->set('civiccookiecontrol_access_key', 'C')
+    ->set('civiccookiecontrol_highlight_focus', FALSE)
+    ->set('civiccookiecontrol_reject_settings', 'Reject All')
+    ->set('civiccookiecontrol_reject_text', 'Reject')
+    ->set('civiccookiecontrol_notify_title_text', 'Your choice regarding cookies on this site')
+    ->set('civiccookiecontrol_notify_desc_text', 'We use cookies to optimise site functionality and give you the best possible experience.')
+    ->set('civiccookiecontrol_close_label', 'Close')
+    ->set('civiccookiecontrol_accessibility_alert', 'This site uses cookies to store information. Press accesskey C to learn more about your options.')
+    ->set('civiccookiecontrol_reject_text', 'Reject')
+    ->set('civiccookiecontrol_accept_text_color', '')
+    ->set('civiccookiecontrol_accept_background_color', '')
+    ->set('civiccookiecontrol_drupal_admin', FALSE)
     ->save();
-  $config->set('civiccookiecontrol_notify_desc_text', 'We use cookies to optimise site functionality and give you the best possible experience.')
-    ->save();
-  $config->set('civiccookiecontrol_close_label', 'Close')->save();
-  $config->set('civiccookiecontrol_accessibility_alert', 'This site uses cookies to store information. Press accesskey C to learn more about your options.')
-    ->save();
-  $config->set('civiccookiecontrol_reject_text', 'Reject')->save();
-  $config->set('civiccookiecontrol_accept_text_color', '')->save();
-  $config->set('civiccookiecontrol_accept_background_color', '')->save();
-  $config->set('civiccookiecontrol_drupal_admin', FALSE)->save();
-  $config->save();
 }
 
 /**
  * Cookie control IAB update.
  */
 function civiccookiecontrol_update_8211(&$sandbox) {
-  $iabConfig = \Drupal::configFactory()
-    ->getEditable('iab.settings');
+  \Drupal::configFactory()
+    ->getEditable('iab.settings')
+    ->set('iabCMP', FALSE)
+    ->set('iabLanguage', 'en')
+    ->set('iabGdprAppliesGlobally', TRUE)
+    ->set('iabRecommendedState', '{ 1 : false, 2 : false, 3 : false, 4 : false, 5 : false }')
+    ->set('iabLabelText', 'Ad Vendors')
+    ->set('iabDescriptionText', 'When you visit our site, pre-selected companies may access and use certain information on your device to serve relevant ads or personalised content. Certain partners rely on your consent while others require you to opt-out.')
+    ->set('iabConfigureText', 'Configure Ad Vendors')
+    ->set('iabPanelTitleText', 'Ad Vendors : What information is collected and how it may be used')
+    ->set('iabPanelIntroText', 'We and select companies may access information such as the device, operating system and type of browser your using; cookie information and information about your activity on that device, including web pages and mobile apps visited or used, along with the the IP address and associated geographic location of the device when it accesses a website or mobile application.')
+    ->set('iabAboutIabText', 'You may control how this information is used by signaling your consent to the following purposes outlined by ')
+    ->set('iabIabNameText', 'IAB Europe')
+    ->set('iabIabLinkText', 'https://advertisingconsent.eu/')
+    ->set('iabPanelBackText', 'Back to All Categories')
+    ->set('iabVendorTitleText', 'Ad Vendors')
+    ->set('iabVendorConfigureText', 'Show Ad Vendors')
+    ->set('iabVendorBackText', 'Back to Ad Vendor Purposes')
+    ->set('iabAcceptAllText', 'Accept All')
+    ->set('iabRejectAllText', 'Reject All')
+    ->set('iabBackText', 'Back')
+    ->save();
 
-  $iabConfig->set('iabCMP', FALSE)->save();
-  $iabConfig->set('iabLanguage', 'en')->save();
-  $iabConfig->set('iabGdprAppliesGlobally', TRUE)->save();
-  $iabConfig->set('iabRecommendedState', '{ 1 : false, 2 : false, 3 : false, 4 : false, 5 : false }')
-    ->save();
-  $iabConfig->set('iabLabelText', 'Ad Vendors')->save();
-  $iabConfig->set('iabDescriptionText', 'When you visit our site, pre-selected companies may access and use certain information on your device to serve relevant ads or personalised content. Certain partners rely on your consent while others require you to opt-out.')
-    ->save();
-  $iabConfig->set('iabConfigureText', 'Configure Ad Vendors')->save();
-  $iabConfig->set('iabPanelTitleText', 'Ad Vendors : What information is collected and how it may be used')
-    ->save();
-  $iabConfig->set('iabPanelIntroText', 'We and select companies may access information such as the device, operating system and type of browser your using; cookie information and information about your activity on that device, including web pages and mobile apps visited or used, along with the the IP address and associated geographic location of the device when it accesses a website or mobile application.')
-    ->save();
-  $iabConfig->set('iabAboutIabText', 'You may control how this information is used by signaling your consent to the following purposes outlined by ')
-    ->save();
-  $iabConfig->set('iabIabNameText', 'IAB Europe')->save();
-  $iabConfig->set('iabIabLinkText', 'https://advertisingconsent.eu/')->save();
-  $iabConfig->set('iabPanelBackText', 'Back to All Categories')->save();
-  $iabConfig->set('iabVendorTitleText', 'Ad Vendors')->save();
-  $iabConfig->set('iabVendorConfigureText', 'Show Ad Vendors')->save();
-  $iabConfig->set('iabVendorBackText', 'Back to Ad Vendor Purposes')->save();
-  $iabConfig->set('iabAcceptAllText', 'Accept All')->save();
-  $iabConfig->set('iabRejectAllText', 'Reject All')->save();
-  $iabConfig->set('iabBackText', 'Back')->save();
-  $iabConfig->save();
 }
 
 /**
@@ -240,8 +96,8 @@ function civiccookiecontrol_update_8212(&$sandbox) {
   $config = \Drupal::configFactory()
     ->getEditable(CCCConfigNames::COOKIECONTROL);
 
-  if (empty($config->get("civiccookiecontrol_onload"))) {
-    $config->set("civiccookiecontrol_onload", "")->save();
+  if (empty($config->get('civiccookiecontrol_onload'))) {
+    $config->set('civiccookiecontrol_onload', '')->save();
   }
 }
 
@@ -250,33 +106,32 @@ function civiccookiecontrol_update_8212(&$sandbox) {
  */
 function civiccookiecontrol_update_8400(&$sandbox) {
   $config = \Drupal::configFactory()
-    ->getEditable(CCCConfigNames::COOKIECONTROL);
+    ->getEditable(CCCConfigNames::COOKIECONTROL)
+    ->set('civiccookiecontrol_reject_text_color', '')
+    ->set('civiccookiecontrol_reject_background_color', '')
+    ->set('civiccookiecontrol_locale_mode', 'browser')
+    ->set('civiccookiecontrol_landmark', 'Cookie preferences.')
+    ->set('civiccookiecontrol_corner_button', 'Set cookie preferences.');
 
-  if (empty($config->get("civiccookiecontrol_api_key_version")) && !empty($config->get("civiccookiecontrol_api_key"))) {
-    $config->set("civiccookiecontrol_api_key_version", 8)->save();
+  if (empty($config->get('civiccookiecontrol_api_key_version')) && !empty($config->get('civiccookiecontrol_api_key'))) {
+    $config->set('civiccookiecontrol_api_key_version', 8);
   }
   else {
-    $config->set("civiccookiecontrol_api_key_version", 9)->save();
+    $config->set('civiccookiecontrol_api_key_version', 9);
   }
 
-  if (empty($config->get("civiccookiecontrol_mode"))) {
-    $config->set("civiccookiecontrol_mode", 'GDPR')->save();
+  if (empty($config->get('civiccookiecontrol_mode'))) {
+    $config->set('civiccookiecontrol_mode', 'GDPR');
   }
 
-  if (empty($config->get("civiccookiecontrol_same_site_cookie"))) {
-    $config->set("civiccookiecontrol_same_site_cookie", FALSE)->save();
+  if (empty($config->get('civiccookiecontrol_same_site_cookie'))) {
+    $config->set('civiccookiecontrol_same_site_cookie', FALSE);
   }
 
-  if (empty($config->get("civiccookiecontrol_accept_behaviour"))) {
-    $config->set("civiccookiecontrol_accept_behaviour", 'all')->save();
+  if (empty($config->get('civiccookiecontrol_accept_behaviour'))) {
+    $config->set('civiccookiecontrol_accept_behaviour', 'all');
   }
 
-  $config->set('civiccookiecontrol_reject_text_color', '')->save();
-  $config->set('civiccookiecontrol_reject_background_color', '')->save();
-  $config->set('civiccookiecontrol_locale_mode', 'browser')->save();
-  $config->set('civiccookiecontrol_landmark', 'Cookie preferences.')->save();
-  $config->set('civiccookiecontrol_corner_button', 'Set cookie preferences.')
-    ->save();
   $config->save();
 }
 
@@ -285,41 +140,43 @@ function civiccookiecontrol_update_8400(&$sandbox) {
  */
 function civiccookiecontrol_update_8401(&$sandbox) {
   $iabConfig = \Drupal::configFactory()
-    ->getEditable('iab2.settings');
+    ->getEditable('iab2.settings')
 
-  $iabConfig->set('iabCMP', FALSE);
-  $iabConfig->set('iabLanguage', 'en');
-  $iabConfig->set('iabPublisherCC', 'GB');
-  $iabConfig->set('iabPanelTitle', 'This site uses cookies to store information on your computer.');
-  $iabConfig->set('iabPanelIntro1', 'We and select companies use cookies to store and retrieve information from your browser. This information may be about you, your preferences or your device and is mostly used to make the site work as you expect. While the information does not usually directly identify you, details such as the device, operating system and type of browser may be considered personal data as it helps to create a more personalised web experience.');
-  $iabConfig->set('iabPanelIntro2', 'You can review how this information is used and customise your consent preferences for cookies or for any other identifying technology below by either purpose, feature or third party vendor.');
-  $iabConfig->set('iabPanelIntro3', 'Certain vendors may process personal data on the basis of legitimate interests to offer certain services. You have the right to object to the processing of data in this manner and can do so on an individual basis or globally by clicking "Reject All". Please refer to the vendor tab for more details. You may freely change your preferences at any time by clicking the Cookie Control icon.');
-  $iabConfig->set('iabAboutIab', 'The aforementioned personalised advertising services adhere to the');
-  $iabConfig->set('iabName', 'IAB Transparency and Consent Framework (TCF)');
-  $iabConfig->set('iabLink', 'https://iabeurope.eu/iab-europe-transparency-consent-framework-policies/');
-  $iabConfig->set('iabPurposes', 'Purposes');
-  $iabConfig->set('iabSpecialPurposes', 'Special Purposes');
-  $iabConfig->set('iabFeatures', 'Features');
-  $iabConfig->set('iabSpecialFeatures', 'Special Features');
-  $iabConfig->set('iabDataUse', 'How Data is used');
-  $iabConfig->set('iabVendors', 'Third Party Vendors');
-  $iabConfig->set('iabPurposeLegitimateInterest', 'I accept the processing of personal data on the grounds of Legitimate Interest for the purpose:');
-  $iabConfig->set('iabVendorLegitimateInterest', 'I accept the processing of personal data on the grounds of Legitimate Interest by:');
-  $iabConfig->set('iabObjectPurposeLegitimateInterest', 'I object to the processing of personal data on the grounds of Legitimate Interest for the purpose:');
-  $iabConfig->set('iabObjectVendorLegitimateInterest', 'I object to the processing of personal data on the grounds of Legitimate Interest by:');
-  $iabConfig->set('iabRelyConsent', 'Relying on consent for:');
-  $iabConfig->set('iabRelyLegitimateInterest', 'Relying on legitimate interests for:');
-  $iabConfig->set('iabSavePreferences', 'Save Preferences and Exit');
-  $iabConfig->set('iabAcceptAll', 'Accept All');
-  $iabConfig->set('iabRejectAll', 'Reject All');
+    ->set('iabCMP', FALSE)
+    ->set('iabLanguage', 'en')
+    ->set('iabPublisherCC', 'GB')
+    ->set('iabPanelTitle', 'This site uses cookies to store information on your computer.')
+    ->set('iabPanelIntro1', 'We and select companies use cookies to store and retrieve information from your browser. This information may be about you, your preferences or your device and is mostly used to make the site work as you expect. While the information does not usually directly identify you, details such as the device, operating system and type of browser may be considered personal data as it helps to create a more personalised web experience.')
+    ->set('iabPanelIntro2', 'You can review how this information is used and customise your consent preferences for cookies or for any other identifying technology below by either purpose, feature or third party vendor.')
+    ->set('iabPanelIntro3', 'Certain vendors may process personal data on the basis of legitimate interests to offer certain services. You have the right to object to the processing of data in this manner and can do so on an individual basis or globally by clicking "Reject All". Please refer to the vendor tab for more details. You may freely change your preferences at any time by clicking the Cookie Control icon.')
+    ->set('iabAboutIab', 'The aforementioned personalised advertising services adhere to the')
+    ->set('iabName', 'IAB Transparency and Consent Framework (TCF)')
+    ->set('iabLink', 'https://iabeurope.eu/iab-europe-transparency-consent-framework-policies/')
+    ->set('iabPurposes', 'Purposes')
+    ->set('iabSpecialPurposes', 'Special Purposes')
+    ->set('iabFeatures', 'Features')
+    ->set('iabSpecialFeatures', 'Special Features')
+    ->set('iabDataUse', 'How Data is used')
+    ->set('iabVendors', 'Third Party Vendors')
+    ->set('iabPurposeLegitimateInterest', 'I accept the processing of personal data on the grounds of Legitimate Interest for the purpose:')
+    ->set('iabVendorLegitimateInterest', 'I accept the processing of personal data on the grounds of Legitimate Interest by:')
+    ->set('iabObjectPurposeLegitimateInterest', 'I object to the processing of personal data on the grounds of Legitimate Interest for the purpose:')
+    ->set('iabObjectVendorLegitimateInterest', 'I object to the processing of personal data on the grounds of Legitimate Interest by:')
+    ->set('iabRelyConsent', 'Relying on consent for:')
+    ->set('iabRelyLegitimateInterest', 'Relying on legitimate interests for:')
+    ->set('iabSavePreferences', 'Save Preferences and Exit')
+    ->set('iabAcceptAll', 'Accept All')
+    ->set('iabRejectAll', 'Reject All');
+
   $iabConfig->save();
 
   $config = \Drupal::configFactory()
-    ->getEditable(CCCConfigNames::COOKIECONTROL);
+    ->getEditable(CCCConfigNames::COOKIECONTROL)
 
-  $config->set('civiccookiecontrol_notify_dismiss_button', TRUE);
-  $config->set('civiccookiecontrol_same_site_value', 'Strict');
-  $config->set('civiccookiecontrol_accept_settings', 'I Accept');
+    ->set('civiccookiecontrol_notify_dismiss_button', TRUE)
+    ->set('civiccookiecontrol_same_site_value', 'Strict')
+    ->set('civiccookiecontrol_accept_settings', 'I Accept');
+
   $config->save();
 
 }
@@ -329,9 +186,10 @@ function civiccookiecontrol_update_8401(&$sandbox) {
  */
 function civiccookiecontrol_update_8402(&$sandbox) {
   $config = \Drupal::configFactory()
-    ->getEditable(CCCConfigNames::COOKIECONTROL);
+    ->getEditable(CCCConfigNames::COOKIECONTROL)
 
-  $config->set('civiccookiecontrol_overlay', TRUE)->save();
+    ->set('civiccookiecontrol_overlay', TRUE);
+
   $config->save();
 
   civiccookiecontrol_clear_tempstore();
@@ -342,13 +200,14 @@ function civiccookiecontrol_update_8402(&$sandbox) {
  */
 function civiccookiecontrol_update_8403(&$sandbox) {
   $config = \Drupal::configFactory()
-    ->getEditable(CCCConfigNames::COOKIECONTROL);
+    ->getEditable(CCCConfigNames::COOKIECONTROL)
 
-  $config->set('civiccookiecontrol_ccpa_privacynode', '')->save();
-  $config->set('civiccookiecontrol_ccpa_stmt_descr', '')->save();
-  $config->set('civiccookiecontrol_ccpa_stmt_name', '')->save();
-  $config->set('civiccookiecontrol_ccpa_stmt_date', '')->save();
-  $config->set('civiccookiecontrol_ccpa_stmt_url', '')->save();
+    ->set('civiccookiecontrol_ccpa_privacynode', '')
+    ->set('civiccookiecontrol_ccpa_stmt_descr', '')
+    ->set('civiccookiecontrol_ccpa_stmt_name', '')
+    ->set('civiccookiecontrol_ccpa_stmt_date', '')
+    ->set('civiccookiecontrol_ccpa_stmt_url', '');
+
   $config->save();
 
   civiccookiecontrol_clear_tempstore();
@@ -359,16 +218,17 @@ function civiccookiecontrol_update_8403(&$sandbox) {
  */
 function civiccookiecontrol_update_8404(&$sandbox) {
   $config = \Drupal::configFactory()
-    ->getEditable(CCCConfigNames::COOKIECONTROL);
+    ->getEditable(CCCConfigNames::COOKIECONTROL)
 
-  $config->set('civiccookiecontrol_show_vendors', 'Show vendors within this category')->save();
-  $config->set('civiccookiecontrol_third_party_cookies', 'This vendor may set third party cookies.')->save();
-  $config->set('civiccookiecontrol_read_more', 'Read more')->save();
-  $config->set('civiccookiecontrol_outline', TRUE)->save();
-  $config->set('civiccookiecontrol_notify_font_color', '')->save();
-  $config->set('civiccookiecontrol_notify_bg_color', '')->save();
-  $config->set('civiccookiecontrol_close_text', '')->save();
-  $config->set('civiccookiecontrol_close_bg_color', '')->save();
+    ->set('civiccookiecontrol_show_vendors', 'Show vendors within this category')
+    ->set('civiccookiecontrol_third_party_cookies', 'This vendor may set third party cookies.')
+    ->set('civiccookiecontrol_read_more', 'Read more')
+    ->set('civiccookiecontrol_outline', TRUE)
+    ->set('civiccookiecontrol_notify_font_color', '')
+    ->set('civiccookiecontrol_notify_bg_color', '')
+    ->set('civiccookiecontrol_close_text', '')
+    ->set('civiccookiecontrol_close_bg_color', '');
+
   $config->save();
 
   civiccookiecontrol_clear_tempstore();
@@ -380,14 +240,15 @@ function civiccookiecontrol_update_8404(&$sandbox) {
 function civiccookiecontrol_update_8405(&$sandbox) {
 
   $iabConfig = \Drupal::configFactory()
-    ->getEditable('iab2.settings');
+    ->getEditable('iab2.settings')
 
-  $iabConfig->set('iabLegalDescription', 'Read full legal description')->save();
-  $iabConfig->set('iabFullLegalDescription', TRUE)->save();
-  $iabConfig->set('iabDropDowns', FALSE)->save();
-  $iabConfig->set('iabSaveOnlyOnClose', FALSE)->save();
+    ->set('iabLegalDescription', 'Read full legal description')
+    ->set('iabFullLegalDescription', TRUE)
+    ->set('iabDropDowns', FALSE)
+    ->set('iabSaveOnlyOnClose', FALSE);
 
   $iabConfig->save();
+
   civiccookiecontrol_clear_tempstore();
 }
 
@@ -395,59 +256,40 @@ function civiccookiecontrol_update_8405(&$sandbox) {
  * Fix for IAB configurations not getting imported.
  */
 function civiccookiecontrol_update_8406(&$sandbox) {
-  $iabConfigOld = \Drupal::configFactory()
-    ->getEditable('iab.settings');
 
   $iabConfig = \Drupal::configFactory()
     ->getEditable(CCCConfigNames::IAB);
 
-  $iabConfig->set('iabCMP', $iabConfigOld->get('iabCMP'))->save();
-  $iabConfig->set('iabLanguage', $iabConfigOld->get('iabLanguage'))->save();
-  $iabConfig->set('iabGdprAppliesGlobally', $iabConfigOld->get('iabGdprAppliesGlobally'))->save();
-  $iabConfig->set('iabRecommendedState', $iabConfigOld->get('iabRecommendedState'))->save();
-  $iabConfig->set('iabLabelText', $iabConfigOld->get('iabLabelText'))->save();
+  $iabConfigOld = \Drupal::configFactory()
+    ->getEditable('iab.settings');
 
-  $iabConfig->set('iabDescriptionText', $iabConfigOld->get('iabDescriptionText'))->save();
-  $iabConfig->set('iabConfigureText', $iabConfigOld->get('iabConfigureText'))->save();
-  $iabConfig->set('iabPanelTitleText', $iabConfigOld->get('iabPanelTitleText'))->save();
-  $iabConfig->set('iabPanelIntroText', $iabConfigOld->get('iabPanelIntroText'))->save();
-  $iabConfig->set('iabAboutIabText', $iabConfigOld->get('iabAboutIabText'))->save();
+  $iabConfig->set('iabCMP', $iabConfigOld->get('iabCMP'))
+    ->set('iabLanguage', $iabConfigOld->get('iabLanguage'))
+    ->set('iabGdprAppliesGlobally', $iabConfigOld->get('iabGdprAppliesGlobally'))
+    ->set('iabRecommendedState', $iabConfigOld->get('iabRecommendedState'))
+    ->set('iabLabelText', $iabConfigOld->get('iabLabelText'))
 
-  $iabConfig->set('iabIabNameText', $iabConfigOld->get('iabIabNameText'))->save();
-  $iabConfig->set('iabIabLinkText', $iabConfigOld->get('iabIabLinkText'))->save();
-  $iabConfig->set('iabPanelBackText', $iabConfigOld->get('iabPanelBackText'))->save();
-  $iabConfig->set('iabVendorTitleText', $iabConfigOld->get('iabVendorTitleText'))->save();
-  $iabConfig->set('iabVendorConfigureText', $iabConfigOld->get('iabVendorConfigureText'))->save();
+    ->set('iabDescriptionText', $iabConfigOld->get('iabDescriptionText'))
+    ->set('iabConfigureText', $iabConfigOld->get('iabConfigureText'))
+    ->set('iabPanelTitleText', $iabConfigOld->get('iabPanelTitleText'))
+    ->set('iabPanelIntroText', $iabConfigOld->get('iabPanelIntroText'))
+    ->set('iabAboutIabText', $iabConfigOld->get('iabAboutIabText'))
 
-  $iabConfig->set('iabVendorBackText', $iabConfigOld->get('iabVendorBackText'))->save();
-  $iabConfig->set('iabAcceptAllText', $iabConfigOld->get('iabAcceptAllText'))->save();
-  $iabConfig->set('iabRejectAllText', $iabConfigOld->get('iabRejectAllText'))->save();
-  $iabConfig->set('iabBackText', $iabConfigOld->get('iabBackText'))->save();
+    ->set('iabIabNameText', $iabConfigOld->get('iabIabNameText'))
+    ->set('iabIabLinkText', $iabConfigOld->get('iabIabLinkText'))
+    ->set('iabPanelBackText', $iabConfigOld->get('iabPanelBackText'))
+    ->set('iabVendorTitleText', $iabConfigOld->get('iabVendorTitleText'))
+    ->set('iabVendorConfigureText', $iabConfigOld->get('iabVendorConfigureText'))
+
+    ->set('iabVendorBackText', $iabConfigOld->get('iabVendorBackText'))
+    ->set('iabAcceptAllText', $iabConfigOld->get('iabAcceptAllText'))
+    ->set('iabRejectAllText', $iabConfigOld->get('iabRejectAllText'))
+    ->set('iabBackText', $iabConfigOld->get('iabBackText'));
+
   $iabConfig->save();
 
-  $iabConfigOld->clear('iabCMP')->save();
-  $iabConfigOld->clear('iabLanguage')->save();
-  $iabConfigOld->clear('iabGdprAppliesGlobally')->save();
-  $iabConfigOld->clear('iabRecommendedState')->save();
-  $iabConfigOld->clear('iabLabelText')->save();
-
-  $iabConfigOld->clear('iabDescriptionText')->save();
-  $iabConfigOld->clear('iabConfigureText')->save();
-  $iabConfigOld->clear('iabPanelTitleText')->save();
-  $iabConfigOld->clear('iabPanelIntroText')->save();
-  $iabConfigOld->clear('iabAboutIabText')->save();
-
-  $iabConfigOld->clear('iabIabNameText')->save();
-  $iabConfigOld->clear('iabIabLinkText')->save();
-  $iabConfigOld->clear('iabPanelBackText')->save();
-  $iabConfigOld->clear('iabVendorTitleText')->save();
-  $iabConfigOld->clear('iabVendorConfigureText')->save();
-
-  $iabConfigOld->clear('iabVendorBackText')->save();
-  $iabConfigOld->clear('iabAcceptAllText')->save();
-  $iabConfigOld->clear('iabRejectAllText')->save();
-  $iabConfigOld->clear('iabBackText')->save();
   $iabConfigOld->delete();
+
   civiccookiecontrol_clear_tempstore();
 }
 
@@ -461,79 +303,45 @@ function civiccookiecontrol_update_8407(&$sandbox) {
   $iab2Config = \Drupal::configFactory()
     ->getEditable(CCCConfigNames::IAB2);
 
-  $iab2Config->set('iabCMP', $iab2ConfigOld->get('iabCMP'))->save();
-  $iab2Config->set('iabLanguage', $iab2ConfigOld->get('iabLanguage'))->save();
-  $iab2Config->set('iabPublisherCC', $iab2ConfigOld->get('iabPublisherCC'))->save();
-  $iab2Config->set('iabPanelTitle', $iab2ConfigOld->get('iabPanelTitle'))->save();
-  $iab2Config->set('iabPanelIntro1', $iab2ConfigOld->get('iabPanelIntro1'))->save();
+  $iab2Config->set('iabCMP', $iab2ConfigOld->get('iabCMP'))
+    ->set('iabLanguage', $iab2ConfigOld->get('iabLanguage'))
+    ->set('iabPublisherCC', $iab2ConfigOld->get('iabPublisherCC'))
+    ->set('iabPanelTitle', $iab2ConfigOld->get('iabPanelTitle'))
+    ->set('iabPanelIntro1', $iab2ConfigOld->get('iabPanelIntro1'))
 
-  $iab2Config->set('iabPanelIntro2', $iab2ConfigOld->get('iabPanelIntro2'))->save();
-  $iab2Config->set('iabPanelIntro3', $iab2ConfigOld->get('iabPanelIntro3'))->save();
-  $iab2Config->set('iabAboutIab', $iab2ConfigOld->get('iabAboutIab'))->save();
-  $iab2Config->set('iabName', $iab2ConfigOld->get('iabName'))->save();
-  $iab2Config->set('iabLink', $iab2ConfigOld->get('iabLink'))->save();
+    ->set('iabPanelIntro2', $iab2ConfigOld->get('iabPanelIntro2'))
+    ->set('iabPanelIntro3', $iab2ConfigOld->get('iabPanelIntro3'))
+    ->set('iabAboutIab', $iab2ConfigOld->get('iabAboutIab'))
+    ->set('iabName', $iab2ConfigOld->get('iabName'))
+    ->set('iabLink', $iab2ConfigOld->get('iabLink'))
 
-  $iab2Config->set('iabPurposes', $iab2ConfigOld->get('iabPurposes'))->save();
-  $iab2Config->set('iabSpecialPurposes', $iab2ConfigOld->get('iabSpecialPurposes'))->save();
-  $iab2Config->set('iabFeatures', $iab2ConfigOld->get('iabFeatures'))->save();
-  $iab2Config->set('iabSpecialFeatures', $iab2ConfigOld->get('iabSpecialFeatures'))->save();
-  $iab2Config->set('iabDataUse', $iab2ConfigOld->get('iabDataUse'))->save();
+    ->set('iabPurposes', $iab2ConfigOld->get('iabPurposes'))
+    ->set('iabSpecialPurposes', $iab2ConfigOld->get('iabSpecialPurposes'))
+    ->set('iabFeatures', $iab2ConfigOld->get('iabFeatures'))
+    ->set('iabSpecialFeatures', $iab2ConfigOld->get('iabSpecialFeatures'))
+    ->set('iabDataUse', $iab2ConfigOld->get('iabDataUse'))
 
-  $iab2Config->set('iabVendors', $iab2ConfigOld->get('iabVendors'))->save();
-  $iab2Config->set('iabPurposeLegitimateInterest', $iab2ConfigOld->get('iabPurposeLegitimateInterest'))->save();
-  $iab2Config->set('iabVendorLegitimateInterest', $iab2ConfigOld->get('iabVendorLegitimateInterest'))->save();
-  $iab2Config->set('iabObjectPurposeLegitimateInterest', $iab2ConfigOld->get('iabObjectPurposeLegitimateInterest'))->save();
-  $iab2Config->set('iabObjectVendorLegitimateInterest', $iab2ConfigOld->get('iabObjectVendorLegitimateInterest'))->save();
+    ->set('iabVendors', $iab2ConfigOld->get('iabVendors'))
+    ->set('iabPurposeLegitimateInterest', $iab2ConfigOld->get('iabPurposeLegitimateInterest'))
+    ->set('iabVendorLegitimateInterest', $iab2ConfigOld->get('iabVendorLegitimateInterest'))
+    ->set('iabObjectPurposeLegitimateInterest', $iab2ConfigOld->get('iabObjectPurposeLegitimateInterest'))
+    ->set('iabObjectVendorLegitimateInterest', $iab2ConfigOld->get('iabObjectVendorLegitimateInterest'))
 
-  $iab2Config->set('iabRelyConsent', $iab2ConfigOld->get('iabRelyConsent'))->save();
-  $iab2Config->set('iabRelyLegitimateInterest', $iab2ConfigOld->get('iabRelyLegitimateInterest'))->save();
-  $iab2Config->set('iabSavePreferences', $iab2ConfigOld->get('iabSavePreferences'))->save();
-  $iab2Config->set('iabAcceptAll', $iab2ConfigOld->get('iabAcceptAll'))->save();
-  $iab2Config->set('iabRejectAll', $iab2ConfigOld->get('iabRejectAll'))->save();
+    ->set('iabRelyConsent', $iab2ConfigOld->get('iabRelyConsent'))
+    ->set('iabRelyLegitimateInterest', $iab2ConfigOld->get('iabRelyLegitimateInterest'))
+    ->set('iabSavePreferences', $iab2ConfigOld->get('iabSavePreferences'))
+    ->set('iabAcceptAll', $iab2ConfigOld->get('iabAcceptAll'))
+    ->set('iabRejectAll', $iab2ConfigOld->get('iabRejectAll'))
 
-  $iab2Config->set('iabLegalDescription', $iab2ConfigOld->get('iabLegalDescription'))->save();
-  $iab2Config->set('iabFullLegalDescription', $iab2ConfigOld->get('iabFullLegalDescription'))->save();
-  $iab2Config->set('iabDropDowns', $iab2ConfigOld->get('iabDropDowns'))->save();
-  $iab2Config->set('iabSaveOnlyOnClose', $iab2ConfigOld->get('iabSaveOnlyOnClose'))->save();
+    ->set('iabLegalDescription', $iab2ConfigOld->get('iabLegalDescription'))
+    ->set('iabFullLegalDescription', $iab2ConfigOld->get('iabFullLegalDescription'))
+    ->set('iabDropDowns', $iab2ConfigOld->get('iabDropDowns'))
+    ->set('iabSaveOnlyOnClose', $iab2ConfigOld->get('iabSaveOnlyOnClose'));
 
   $iab2Config->save();
 
-  $iab2ConfigOld->clear('iabCMP')->save();
-  $iab2ConfigOld->clear('iabLanguage')->save();
-  $iab2ConfigOld->clear('iabPublisherCC')->save();
-  $iab2ConfigOld->clear('iabPanelTitle')->save();
-  $iab2ConfigOld->clear('iabPanelIntro1')->save();
-
-  $iab2ConfigOld->clear('iabPanelIntro2')->save();
-  $iab2ConfigOld->clear('iabPanelIntro3')->save();
-  $iab2ConfigOld->clear('iabAboutIab')->save();
-  $iab2ConfigOld->clear('iabName')->save();
-  $iab2ConfigOld->clear('iabLink')->save();
-
-  $iab2ConfigOld->clear('iabPurposes')->save();
-  $iab2ConfigOld->clear('iabSpecialPurposes')->save();
-  $iab2ConfigOld->clear('iabFeatures')->save();
-  $iab2ConfigOld->clear('iabSpecialFeatures')->save();
-  $iab2ConfigOld->clear('iabDataUse')->save();
-
-  $iab2ConfigOld->clear('iabVendors')->save();
-  $iab2ConfigOld->clear('iabPurposeLegitimateInterest')->save();
-  $iab2ConfigOld->clear('iabVendorLegitimateInterest')->save();
-  $iab2ConfigOld->clear('iabObjectPurposeLegitimateInterest')->save();
-  $iab2ConfigOld->clear('iabObjectVendorLegitimateInterest')->save();
-
-  $iab2ConfigOld->clear('iabRelyConsent')->save();
-  $iab2ConfigOld->clear('iabRelyLegitimateInterest')->save();
-  $iab2ConfigOld->clear('iabSavePreferences')->save();
-  $iab2ConfigOld->clear('iabAcceptAll')->save();
-  $iab2ConfigOld->clear('iabRejectAll')->save();
-
-  $iab2ConfigOld->clear('iabLegalDescription')->save();
-  $iab2ConfigOld->clear('iabFullLegalDescription')->save();
-  $iab2ConfigOld->clear('iabDropDowns')->save();
-  $iab2ConfigOld->clear('iabSaveOnlyOnClose')->save();
-
   $iab2ConfigOld->delete();
+
   civiccookiecontrol_clear_tempstore();
 }
 
@@ -542,19 +350,52 @@ function civiccookiecontrol_update_8407(&$sandbox) {
  */
 function civiccookiecontrol_update_8408(&$sandbox) {
   $iab2Config = \Drupal::configFactory()
-    ->getEditable(CCCConfigNames::IAB2);
+    ->getEditable(CCCConfigNames::IAB2)
 
-  $iab2Config->set('iabCookieMaxAge', 'Cookie Max-Age:');
-  $iab2Config->set('iabUsesNonCookieAccessTrue', 'Uses other means for storing information, eg. localstorage');
-  $iab2Config->set('iabUsesNonCookieAccessFalse', 'Only uses cookies to store information');
-  $iab2Config->set('iabStorageDisclosures', 'Device Storage Duration & Access Disclosure');
-  $iab2Config->set('iabDisclosureDetailsColumn', 'Storage Details');
-  $iab2Config->set('iabDisclosurePurposesColumn', 'Purposes');
-  $iab2Config->set('iabSeconds', 'seconds');
-  $iab2Config->set('iabMinutes', 'minutes');
-  $iab2Config->set('iabHours', 'Hours');
-  $iab2Config->set('iabDays', 'days');
+    ->set('iabCookieMaxAge', 'Cookie Max-Age:')
+    ->set('iabUsesNonCookieAccessTrue', 'Uses other means for storing information, eg. localstorage')
+    ->set('iabUsesNonCookieAccessFalse', 'Only uses cookies to store information')
+    ->set('iabStorageDisclosures', 'Device Storage Duration & Access Disclosure')
+    ->set('iabDisclosureDetailsColumn', 'Storage Details')
+    ->set('iabDisclosurePurposesColumn', 'Purposes')
+    ->set('iabSeconds', 'seconds')
+    ->set('iabMinutes', 'minutes')
+    ->set('iabHours', 'Hours')
+    ->set('iabDays', 'days');
 
   $iab2Config->save();
+  civiccookiecontrol_clear_tempstore();
+}
+
+/**
+ * Update for Cookie Control 9.6.x, add disable site scrolling.
+ */
+function civiccookiecontrol_update_8409(&$sandbox) {
+  $config = \Drupal::configFactory()
+    ->getEditable(CCCConfigNames::COOKIECONTROL);
+
+  $config->set('civiccookiecontrol_site_scrolling', FALSE)->save();
+  $config->save();
+
+  civiccookiecontrol_clear_tempstore();
+}
+
+/**
+ * Update to install custom CookieControl html format.
+ */
+function civiccookiecontrol_update_8410(&$sandbox) {
+  civiccookiecontrol_install_html_format();
+  civiccookiecontrol_clear_tempstore();
+}
+
+/**
+ * Cookie control v9.8 customise language of objection button in CCPA notice.
+ */
+function civiccookiecontrol_update_8411(&$sandbox) {
+  $config = \Drupal::configFactory()
+    ->getEditable(CCCConfigNames::COOKIECONTROL)
+    ->set('civiccookiecontrol_ccpa_stmt_rejectb', '');
+  $config->save();
+
   civiccookiecontrol_clear_tempstore();
 }

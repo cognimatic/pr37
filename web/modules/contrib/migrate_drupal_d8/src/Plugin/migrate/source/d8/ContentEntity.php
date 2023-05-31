@@ -92,7 +92,7 @@ class ContentEntity extends SqlBase {
       ->condition('name', 'field.field.' . $entity_type . '.%', 'LIKE')
       ->execute()
       ->fetchAllAssoc('name');
- 
+
     $fields = [];
     foreach ($fieldConfig as $config) {
       $data = unserialize($config['data']);
@@ -101,10 +101,8 @@ class ContentEntity extends SqlBase {
       if ($data['status']) {
         // If requested by configuration, filter by a bundle. Don't filter
         // if it isn't configured.
-        if ($bundle) {
-          if ($data['bundle'] == $bundle) {
-            $fields[$data['field_name']] = $data;
-          }
+        if ($bundle && $data['bundle'] == $bundle) {
+          $fields[$data['field_name']] = $data;
         }
         else {
           $fields[$data['field_name']] = $data;
@@ -145,6 +143,7 @@ class ContentEntity extends SqlBase {
    */
   protected function getFieldValues($entity_type, $field_name, $entity_id, $revision_id = NULL) {
     $table = $this->getDedicatedDataTableName($entity_type, $field_name);
+
     $query = $this->select($table, 't')
       ->fields('t')
       ->condition('entity_id', $entity_id)
@@ -233,8 +232,6 @@ class ContentEntity extends SqlBase {
       }
     }
     else {
-      // \Drupal::logger('migrate_drupal_d8')->warning('<pre><code>' . print_r($this->select($baseTable, 'b')->fields('b'), TRUE) . '</code></pre>');
-
       $query = $this->select($baseTable, 'b')
         ->fields('b');
       if (!empty($this->configuration['bundle'])) {

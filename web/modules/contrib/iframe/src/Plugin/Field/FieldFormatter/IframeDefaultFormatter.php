@@ -154,8 +154,9 @@ class IframeDefaultFormatter extends FormatterBase {
       // Token Support for field "url" and "title".
       $tokensupport = $item->getTokenSupport();
       $tokencontext = ['user' => \Drupal::currentUser()];
-      if (isset($GLOBALS['node'])) {
-        $tokencontext['node'] = $GLOBALS['node'];
+      $node = \Drupal::routeMatch()->getParameter('node');
+      if ($node instanceof \Drupal\node\NodeInterface) {
+        $tokencontext['node'] = $node;
       }
       if ($tokensupport > 0) {
         $text = \Drupal::token()->replace($text, $tokencontext);

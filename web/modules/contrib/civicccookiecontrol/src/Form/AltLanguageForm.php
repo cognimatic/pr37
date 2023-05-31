@@ -10,12 +10,15 @@ use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form to add/edit Alternative Languages.
  */
 class AltLanguageForm extends EntityForm {
+
   /**
    * Cookie categories entities.
    *
@@ -38,20 +41,30 @@ class AltLanguageForm extends EntityForm {
   protected $entityTypeManager;
 
   /**
+   * The module handler service.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * CookieCategoryForm constructor.
    *
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   Cache interface.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity manager service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
+   *   The module handler service.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function __construct(CacheBackendInterface $cache, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(CacheBackendInterface $cache, EntityTypeManagerInterface $entityTypeManager, ModuleHandlerInterface $moduleHandler) {
     $this->cache = $cache;
     $this->entityTypeManager = $entityTypeManager;
     $this->cookieCategories = $this->entityTypeManager->getStorage('cookiecategory')->loadMultiple();
+    $this->moduleHandler = $moduleHandler;
   }
 
   /**
@@ -60,7 +73,8 @@ class AltLanguageForm extends EntityForm {
   public static function create(ContainerInterface $container) {
     return new static(
           $container->get('cache.data'),
-          $container->get('entity_type.manager')
+          $container->get('entity_type.manager'),
+          $container->get('module_handler')
       );
   }
 
@@ -85,12 +99,28 @@ class AltLanguageForm extends EntityForm {
       '#open' => TRUE,
     ];
 
+    $moduleLanguageExist = $this->moduleHandler->moduleExists('language');
+    $languageExtraDescription = '';
+
+    if ($moduleLanguageExist) {
+      $languagesUrl = Link::createFromRoute(
+        $this->t("existed languages"),
+        'entity.configurable_language.collection', [],
+        ['attributes' => ['target' => '_blank'], 'absolute' => TRUE]
+      );
+      $languageListUrl = $this->t("Use a drupal language code from @link.",
+        ['@link' => $languagesUrl->toString()]
+      );
+      $languageExtraDescription = $languageListUrl;
+    }
+
     $form['ccc']['altLanguageIsoCode'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Alternative Language (Iso Code)'),
       '#maxlength' => 125,
       '#default_value' => $altLanguage->label(),
-      '#description' => $this->t("The Language Iso code Name."),
+      '#description' => $this->t("The Language Iso code Name. @extraDescription",
+        ['@extraDescription' => $languageExtraDescription]),
       '#required' => TRUE,
     ];
 
@@ -160,7 +190,8 @@ class AltLanguageForm extends EntityForm {
 
       $form['ccc']['container']['altLanguageIntro'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('Intro in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIntro,
         '#description' => $this->t("Intro in Alternative Language"),
@@ -205,7 +236,8 @@ class AltLanguageForm extends EntityForm {
 
       $form['ccc']['container']['altLanguageNecessaryDescription'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('Necessary Description in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageNecessaryDescription,
         '#description' => $this->t("Necessary Description in Alternative Language"),
@@ -223,7 +255,8 @@ class AltLanguageForm extends EntityForm {
 
       $form['ccc']['container']['altLanguageThirdPartyDescription'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('Third Party Description in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageThirdPartyDescription,
         '#description' => $this->t("Third Party Description in Alternative Language"),
@@ -259,7 +292,8 @@ class AltLanguageForm extends EntityForm {
 
       $form['ccc']['container']['altLanguageNotifyDescription'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('Notify Description Text in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageNotifyDescription,
         '#description' => $this->t("Notify Description Text in Alternative Language"),
@@ -314,7 +348,8 @@ class AltLanguageForm extends EntityForm {
 
         $form['ccc']['container'][$cookieCat->getCookieName()]['altLanguageOptionalCookiesDescription_' . $cookieCat->id()] = [
           '#type' => 'text_format',
-          '#format' => 'full_html',
+          '#format' => 'cookie_control_html',
+          '#allowed_formats' => ['cookie_control_html'],
           '#title' =>
           ucfirst($cookieCat->getCookieName()) . " " .
           $this->t('Optional Cookies Description in Alternative Language'),
@@ -463,6 +498,15 @@ class AltLanguageForm extends EntityForm {
           '#required' => FALSE,
         ];
 
+        $form['ccc']['container']['altLanguageCcpaStmtRejectButtonText'] = [
+          '#type' => 'textfield',
+          '#title' => $this->t('CCPA Statements Reject Button Text in Alternative Language'),
+          '#maxlength' => 512,
+          '#default_value' => $altLanguage->altLanguageCcpaStmtRejectButtonText,
+          '#description' => $this->t("CCPA Statements Reject Button Text in Alternative Language"),
+          '#required' => FALSE,
+        ];
+
         $form['ccc']['container']['altLanguageCcpaStmtUrl'] = [
           '#type' => 'number',
           '#title' => $this->t('CCPA Statement URL for Alternative Language'),
@@ -518,7 +562,8 @@ class AltLanguageForm extends EntityForm {
       ];
       $form['iabTexts']['altLanguageIabDescriptionText'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('IAB Description in Alternative Language'),
         '#description' => $this->t('Set the description text for IAB in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIabDescriptionText,
@@ -538,14 +583,16 @@ class AltLanguageForm extends EntityForm {
 
       $form['iabTexts']['altLanguageIabPanelIntroText'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('IAB Panel Introduction Text in Alternative Language'),
         '#description' => $this->t('Set the introductory text for the IAB panel in Alternative Language.'),
         '#default_value' => $altLanguage->altLanguageIabPanelIntroText,
       ];
       $form['iabTexts']['altLanguageIabAboutIabText'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('About IAB Text in Alternative Language'),
         '#description' => $this->t('Set the about AIB text in Alternative Language.'),
         '#default_value' => $altLanguage->altLanguageIabAboutIabText,
@@ -631,7 +678,8 @@ class AltLanguageForm extends EntityForm {
 
       $form['iab2Texts']['altLanguageIabPanelIntro1'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('IAB Panel Intro 1 Text in Alternative Language'),
         '#description' => $this->t('IAB Panel Intro 1 Text in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIabPanelIntro1,
@@ -639,7 +687,8 @@ class AltLanguageForm extends EntityForm {
 
       $form['iab2Texts']['altLanguageIabPanelIntro2'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('IAB Panel Intro 2 Text in Alternative Language'),
         '#description' => $this->t('IAB Panel Intro 2 Text in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIabPanelIntro2,
@@ -647,7 +696,8 @@ class AltLanguageForm extends EntityForm {
 
       $form['iab2Texts']['altLanguageIabPanelIntro3'] = [
         '#type' => 'text_format',
-        '#format' => 'full_html',
+        '#format' => 'cookie_control_html',
+        '#allowed_formats' => ['cookie_control_html'],
         '#title' => $this->t('IAB Panel Intro 3 Text in Alternative Language'),
         '#description' => $this->t('IAB Panel Intro 3 Text in Alternative Language'),
         '#default_value' => $altLanguage->altLanguageIabPanelIntro3,
@@ -921,18 +971,42 @@ class AltLanguageForm extends EntityForm {
       }
 
       $altLanguage = $this->entity;
-      $altLanguage->setAltLanguageIntro($form_state->getValue('altLanguageIntro')['value']);
-      $altLanguage->setAltLanguageNecessaryDescription($form_state->getValue('altLanguageNecessaryDescription')['value']);
-      $altLanguage->setAltLanguageThirdPartyDescription($form_state->getValue('altLanguageThirdPartyDescription')['value']);
-      $altLanguage->setAltLanguageThirdPartyDescription($form_state->getValue('altLanguageThirdPartyDescription')['value']);
-      $altLanguage->setAltLanguageNotifyDescription($form_state->getValue('altLanguageNotifyDescription')['value']);
-      $altLanguage->setAltLanguageIabDescriptionText($form_state->getValue('altLanguageIabDescriptionText')['value']);
-      $altLanguage->setAltLanguageIabPanelIntroText($form_state->getValue('altLanguageIabPanelIntroText')['value']);
-      $altLanguage->setAltLanguageIabAboutIabText($form_state->getValue('altLanguageIabAboutIabText')['value']);
-      $altLanguage->setAltLanguageIabPanelIntro1($form_state->getValue('altLanguageIabPanelIntro1')['value']);
-      $altLanguage->setAltLanguageIabPanelIntro2($form_state->getValue('altLanguageIabPanelIntro2')['value']);
-      $altLanguage->setAltLanguageIabPanelIntro3($form_state->getValue('altLanguageIabPanelIntro3')['value']);
-      $altLanguage->setAltLanguageOptionalCookies(Xss::filter(json_encode($altOptionalCookies, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)));
+      $altLanguage->setAltLanguageIntro(
+        $form_state->getValue(['altLanguageIntro', 'value'], '')
+      );
+      $altLanguage->setAltLanguageNecessaryDescription(
+        $form_state->getValue(['altLanguageNecessaryDescription', 'value'], '')
+      );
+      $altLanguage->setAltLanguageThirdPartyDescription(
+        $form_state->getValue(['altLanguageThirdPartyDescription', 'value'], '')
+      );
+      $altLanguage->setAltLanguageThirdPartyDescription(
+        $form_state->getValue(['altLanguageThirdPartyDescription', 'value'], '')
+      );
+      $altLanguage->setAltLanguageNotifyDescription(
+        $form_state->getValue(['altLanguageNotifyDescription', 'value'], '')
+      );
+      $altLanguage->setAltLanguageIabDescriptionText(
+        $form_state->getValue(['altLanguageIabDescriptionText', 'value'], '')
+      );
+      $altLanguage->setAltLanguageIabPanelIntroText(
+        $form_state->getValue(['altLanguageIabPanelIntroText', 'value'], '')
+      );
+      $altLanguage->setAltLanguageIabAboutIabText(
+        $form_state->getValue(['altLanguageIabAboutIabText', 'value'], '')
+      );
+      $altLanguage->setAltLanguageIabPanelIntro1(
+        $form_state->getValue(['altLanguageIabPanelIntro1', 'value'], '')
+      );
+      $altLanguage->setAltLanguageIabPanelIntro2(
+        $form_state->getValue(['altLanguageIabPanelIntro2', 'value'], '')
+      );
+      $altLanguage->setAltLanguageIabPanelIntro3(
+        $form_state->getValue(['altLanguageIabPanelIntro3', 'value'], '')
+      );
+      $altLanguage->setAltLanguageOptionalCookies(
+        Xss::filter(json_encode($altOptionalCookies, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))
+      );
 
       $status = $altLanguage->save();
       if ($status) {

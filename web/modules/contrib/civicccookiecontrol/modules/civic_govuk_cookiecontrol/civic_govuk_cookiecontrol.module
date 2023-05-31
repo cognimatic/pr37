@@ -9,6 +9,7 @@
 
 use Drupal\civic_govuk_cookiecontrol\GovUKConfigNames;
 use Drupal\civiccookiecontrol\Access\CookieControlAccess;
+use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\locale\SourceString;
 
@@ -78,11 +79,21 @@ function civic_govuk_cookiecontrol_theme() {
 function civic_govuk_cookiecontrol_preprocess_page__admin__config__system__cookiecontrol__govuk(&$variables) {
   civiccookiecontrol_set_ccclogo($variables);
   if (CookieControlAccess::checkApiKey()) {
+    $blockUrl = Link::createFromRoute(
+      t("block"),
+      'block.admin_display', [],
+      [
+        'attributes' =>
+        ['class' => "cookie-policy govuk-link", 'target' => '_blank'],
+        'absolute' => TRUE,
+      ]
+    );
+
     $variables['ccc_gov_messages'] = t('Cookie Control will load following the <a class="cookie-policy govuk-link" href="https://design-system.dwp.gov.uk/patterns/consent-to-cookies"> GovUK DWP pattern </a> using
     the corresponding preset styling and text configurations below. You can customize displayed text elements
-    and translations in the form below. You need to place the "GovUk CookieControl Banner" <a class="cookie-policy govuk-link" href="/admin/structure/block"> block </a> to the top of your
-    theme and assign the "GovUk CookieControl Details" <a class="cookie-policy govuk-link" href="/admin/structure/block"> block </a> in your Cookie Policy page. The Cookie Control should be
-    configured as usual (i.e. Set API key, define Cookie categories, set texts for cookie statements, define the cookie policy nid');
+    and translations in the form below. You need to place the "GovUk CookieControl Banner" @blocklist to the top of your
+    theme and assign the "GovUk CookieControl Details" @blocklist in your Cookie Policy page. The Cookie Control should be
+    configured as usual (i.e. Set API key, define Cookie categories, set texts for cookie statements, define the cookie policy nid', ['@blocklist' => $blockUrl->toString()]);
   }
   else {
     $variables['ccc_gov_messages'] = t('Please provide a valid Cookie Control API key to proceed.');

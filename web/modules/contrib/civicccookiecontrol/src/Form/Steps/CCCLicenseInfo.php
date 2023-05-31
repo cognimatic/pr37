@@ -86,8 +86,7 @@ class CCCLicenseInfo extends CCCBaseStep {
         8 => $this->t('Version 8'),
         9 => $this->t('Version 9'),
       ],
-      '#default_value' => isset($this->getValues()['civiccookiecontrol_api_key_version']) ?
-      $this->getValues()['civiccookiecontrol_api_key_version'] :
+      '#default_value' => $this->getValues()['civiccookiecontrol_api_key_version'] ??
       $this->config->get('civiccookiecontrol_api_key_version'),
       '#required' => TRUE,
       '#description' => $this->t('Version of obtained Cookie Control API Key.'),
@@ -104,8 +103,7 @@ class CCCLicenseInfo extends CCCBaseStep {
     $form['license_info']['civiccookiecontrol_api_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('API Key Text'),
-      '#default_value' => isset($this->getValues()['civiccookiecontrol_api_key']) ?
-      $this->getValues()['civiccookiecontrol_api_key'] :
+      '#default_value' => $this->getValues()['civiccookiecontrol_api_key'] ??
       $this->config->get('civiccookiecontrol_api_key'),
       '#required' => TRUE,
       '#suffix' => '<span class="api-validation"></span>',
@@ -139,8 +137,7 @@ class CCCLicenseInfo extends CCCBaseStep {
         'PRO' => $this->t('Pro Edition'),
         'PRO_MULTISITE' => $this->t('Pro Multisite Edition'),
       ],
-      '#default_value' => isset($this->getValues()['civiccookiecontrol_product']) ?
-      $this->getValues()['civiccookiecontrol_product'] :
+      '#default_value' => $this->getValues()['civiccookiecontrol_product'] ??
       $this->config->get('civiccookiecontrol_product'),
       '#required' => TRUE,
       '#description' => $this->t('The type of obtained Cookie Control License that is tied to your API Key.'),

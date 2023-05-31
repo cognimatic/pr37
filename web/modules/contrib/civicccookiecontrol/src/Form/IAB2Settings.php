@@ -175,6 +175,10 @@ class IAB2Settings extends ConfigFormBase {
     $iabYamlPath = drupal_get_path('module', 'civiccookiecontrol') . "/src/Form/IAB2FormElements/iab.settings.yml";
     $formItems = Yaml::parse(file_get_contents($iabYamlPath));
     foreach ($formItems as $key => $element) {
+      if (array_key_exists('#format', $element) && $element['#format'] == 'cookie_control_html') {
+        $element['#allowed_formats'] = [$element['#format']];
+      }
+
       if (($element['#default_value'] == $key) &&
           (array_key_exists('boolOptions', $element) && $element['boolOptions'] == 1)) {
         $element['#options'] = [

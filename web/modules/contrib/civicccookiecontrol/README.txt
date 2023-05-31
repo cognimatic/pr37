@@ -286,10 +286,30 @@ CHANGELOG
 * Fix for https://www.drupal.org/project/civicccookiecontrol/issues/3216931
 
 = 4.4.8 =
-* Alternative fix for https://www.drupal.org/project/civicccookiecontrol/issues/3216931 
-  after comment https://www.drupal.org/project/civicccookiecontrol/issues/3216931#comment-14128574. 
-  Remove CookieControl suggestions for anonymous users.
+* Alternative fix for https://www.drupal.org/project/civicccookiecontrol/issues/3216931
+  after comment https://www.drupal.org/project/civicccookiecontrol/issues/3216931#comment-14128574.
+* Remove CookieControl suggestions for anonymous users.
 
 = 4.4.9 =
 * Fix for https://www.drupal.org/project/civicccookiecontrol/issues/3218216
 * Fix for https://www.drupal.org/project/civicccookiecontrol/issues/3219847
+
+= 4.4.10 =
+* Updates for Cookie Control 9.6.x.
+** Added disableSiteScrolling property in the Accessibility Object,
+   to determine if the module should prevent scrolling of the site
+   when either the notification bar or panel are open.
+* Add custom html format for https://www.drupal.org/project/civicccookiecontrol/issues/3319073
+* Fix for https://www.drupal.org/project/civicccookiecontrol/issues/3267310
+* Fix for https://www.drupal.org/project/civicccookiecontrol/issues/3231598
+* Fix for https://www.drupal.org/project/civicccookiecontrol/issues/3209090
+* FIX for https://www.drupal.org/project/civicccookiecontrol/issues/3231879
+
+= 4.4.11 =
+* Update to include CCPA changes of cookie control v.9.8
+** Added a new configuration field for a new rejectButton property
+* Fix for https://www.drupal.org/project/civicccookiecontrol/issues/3225391
+
+= 4.4.12 =
+* Add missing dependency on the CCC8 config service
+

@@ -23,6 +23,7 @@ class AltLanguageListBuilder extends ConfigEntityListBuilder {
    */
   public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage) {
     civiccookiecontrol_check_cookie_categories();
+    civiccookiecontrol_check_local_mode();
     parent::__construct($entity_type, $storage);
   }
 

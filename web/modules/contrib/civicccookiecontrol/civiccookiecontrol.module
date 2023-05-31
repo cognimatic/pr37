@@ -12,7 +12,9 @@ use Drupal\civiccookiecontrol\Access\CookieControlAccess;
 use Drupal\civiccookiecontrol\CCCConfigNames;
 use Drupal\civiccookiecontrol\CCCConfig\CCCConfigFactory;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Config\FileStorage;
 
 /**
  * Implements hook_help().
@@ -112,9 +114,38 @@ function civiccookiecontrol_check_cookie_categories() {
     ->loadMultiple();
 
   if (empty($cookieCategories) && (CookieControlAccess::checkApiKey())) {
+    $cookieCategoriesUrl = Link::createFromRoute(
+      t("Cookie Category"),
+      'entity.cookiecategory.collection', [], ['absolute' => TRUE]
+    );
+
     $messenger = \Drupal::messenger();
     $messenger->deleteAll();
-    $messenger->addMessage(t('You need to add at least <b>one</b> <a href="/admin/config/system/cookiecontrol/cookiecategory">Cookie Category</a> for the Cookie Control module to properly operate.'), $messenger::TYPE_ERROR);
+    $messenger->addMessage(
+      t('You need to add at least <b>one</b> @ccurl for the Cookie Control module to properly operate.',
+        ['@ccurl' => $cookieCategoriesUrl->toString()]),
+      $messenger::TYPE_ERROR);
+  }
+}
+
+/**
+ * Check if local mode is set to drupal and language module is enabled.
+ */
+function civiccookiecontrol_check_local_mode() {
+
+  $cccConfigLocaleMode = \Drupal::config(CCCConfigNames::COOKIECONTROL)->get('civiccookiecontrol_locale_mode');
+  $moduleLanguageExist = \Drupal::moduleHandler()->moduleExists('language');
+
+  if ($cccConfigLocaleMode == 'drupal' && !$moduleLanguageExist) {
+    $extendsUrl = Link::createFromRoute(
+      t("extend page"),
+      'system.modules_list', [], ['absolute' => TRUE]
+    );
+    $messenger = \Drupal::messenger();
+    $messenger->addMessage(
+      t('You need to enable <b>Language</b> module via @extendsUrl, in order to use Drupal`s current language as Locale for Cookie Control widget.',
+        ['@extendsUrl' => $extendsUrl->toString()]),
+      $messenger::TYPE_ERROR);
   }
 }
 
@@ -222,7 +253,7 @@ function civiccookiecontrol_clear_tempstore() {
  * @param string $needle
  *   Name of the suggestion that will be removed.
  */
-function unset_suggestion(array &$suggestions, $needle) {
+function civiccookiecontrol_unset_suggestion(array &$suggestions, $needle) {
   if (($key = array_search($needle, $suggestions, TRUE)) !== FALSE) {
     unset($suggestions[$key]);
   }
@@ -233,11 +264,103 @@ function unset_suggestion(array &$suggestions, $needle) {
  */
 function civiccookiecontrol_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   if (\Drupal::currentUser()->isAnonymous()) {
-    unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol");
-    unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol__cookiecategory");
-    unset_suggestion($suggestions, "page__admin__config__cookiecontrol__system__necessarycookie");
-    unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol__excludedcountry");
-    unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol__altlanguage");
-    unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol__govuk");
+    civiccookiecontrol_unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol");
+    civiccookiecontrol_unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol__cookiecategory");
+    civiccookiecontrol_unset_suggestion($suggestions, "page__admin__config__cookiecontrol__system__necessarycookie");
+    civiccookiecontrol_unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol__excludedcountry");
+    civiccookiecontrol_unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol__altlanguage");
+    civiccookiecontrol_unset_suggestion($suggestions, "page__admin__config__system__cookiecontrol__govuk");
+  }
+}
+
+/**
+ * Create custom CookieControl html format.
+ */
+function civiccookiecontrol_install_html_format() {
+  $modulePath = \Drupal::service('extension.list.module')->getPath('civiccookiecontrol');
+
+  /** @var \Drupal\Core\Config\StorageInterface $config_storage */
+  $configStorage = \Drupal::service('config.storage');
+
+  // Get the current CKEditor version.
+  $ckeditorVersion = NULL;
+
+  if (\Drupal::moduleHandler()->moduleExists('ckeditor5')) {
+    $ckeditorVersion = 'ckeditor5';
+  }
+  elseif (\Drupal::moduleHandler()->moduleExists('ckeditor')) {
+    $ckeditorVersion = 'ckeditor';
+  }
+
+  $htmlConfigs = [];
+  // If ckeditor or ckeditor5 not found.
+  if (!$ckeditorVersion) {
+    \Drupal::configFactory()
+      ->getEditable('filter.format.cookie_control_html')
+      ->delete();
+
+    \Drupal::configFactory()
+      ->getEditable('editor.editor.cookie_control_html')
+      ->delete();
+
+    $htmlConfigs['optional/noeditor'] = 'filter.format.cookie_control_html';
+  }
+  // If ckeditor or ckeditor5 found.
+  else {
+    $htmlConfigs = [
+      'optional' => 'filter.format.cookie_control_html',
+      'optional/' . $ckeditorVersion => 'editor.editor.cookie_control_html',
+    ];
+    $currentVersion = \Drupal::config('editor.editor.cookie_control_html')
+      ->get('editor') ?: NULL;
+
+    // If the changing or deleting the CKEditor,
+    // we need delete the existing file.
+    if ($currentVersion !== $ckeditorVersion) {
+      \Drupal::configFactory()
+        ->getEditable('editor.editor.cookie_control_html')
+        ->delete();
+    }
+
+    // Remove no-editor format if exists.
+    \Drupal::configFactory()
+      ->getEditable('filter.format.cookie_control_html')
+      ->delete();
+  }
+
+  foreach ($htmlConfigs as $path => $config) {
+    $source = new FileStorage("$modulePath/config/$path");
+    if (!$configStorage->exists($config)) {
+      $configStorage->write($config, $source->read($config));
+    }
+  }
+
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function civiccookiecontrol_modules_installed($modules, $is_syncing) {
+  civiccookiecontrol_wysiwg_editor_install_uninstall($modules, $is_syncing);
+}
+
+/**
+ * Implements hook_modules_uninstalled().
+ */
+function civiccookiecontrol_modules_uninstalled($modules, $is_syncing) {
+  civiccookiecontrol_wysiwg_editor_install_uninstall($modules, $is_syncing);
+}
+
+/**
+ * Function to be executed on wysiwg editor (un)install.
+ */
+function civiccookiecontrol_wysiwg_editor_install_uninstall($modules, $is_syncing) {
+  if ($is_syncing) {
+    return;
+  }
+
+  if (in_array('ckeditor', $modules) || (in_array('ckeditor5', $modules))) {
+    civiccookiecontrol_install_html_format();
+    civiccookiecontrol_clear_tempstore();
   }
 }

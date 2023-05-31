@@ -12,6 +12,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\locale\SourceString;
 use Drupal\locale\StringStorageInterface;
@@ -71,21 +72,25 @@ class CivicGovUkCookieControlSettings extends ConfigFormBase {
    * Checks privacy statement definition in cookie control and display messages.
    */
   private function checkStmtFields() {
+    $cookieCategoriesUrl = Link::createFromRoute(
+      $this->t("Cookie Control configuration form"),
+      'cookiecontrol.admin_overview', [], ['absolute' => TRUE]
+    );
 
     if (empty($this->config(GovUKConfigNames::COOKIECONTROL)->get('civiccookiecontrol_privacynode'))) {
       $this->messenger()->addError($this->t('The privacy policy link is undefined.
             Please add it in the "Privacy Statement" section
-            of <a href="/admin/config/system/cookiecontrol">Cookie Control configuration form</a>.'));
+            of @ccurl.', ['@ccurl' => $cookieCategoriesUrl->toString()]));
     }
     if (empty($this->config(GovUKConfigNames::COOKIECONTROL)->get('civiccookiecontrol_stmt_name'))) {
       $this->messenger()->addError($this->t('The "Statement Name" textfield is empty.
             Please add some text in the "Privacy Statement" section
-            of <a href="/admin/config/system/cookiecontrol">Cookie Control configuration form</a>.'));
+            of @ccurl.', ['@ccurl' => $cookieCategoriesUrl->toString()]));
     }
     if (empty($this->config(GovUKConfigNames::COOKIECONTROL)->get('civiccookiecontrol_stmt_descr'))) {
       $this->messenger()->addError($this->t('The "Statement Description" textfield is empty.
             Please add some text in the "Privacy Statement" section
-            of <a href="/admin/config/system/cookiecontrol">Cookie Control configuration form</a>.'));
+            of @ccurl.', ['@ccurl' => $cookieCategoriesUrl->toString()]));
     }
   }
 

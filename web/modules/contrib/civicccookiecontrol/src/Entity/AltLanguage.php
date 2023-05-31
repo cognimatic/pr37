@@ -57,6 +57,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "altLanguageStmtDate",
  *     "altLanguageCcpaStmtDescrText",
  *     "altLanguageCcpaStmtNameText",
+ *     "altLanguageCcpaStmtRejectButtonText",
  *     "altLanguageCcpaStmtUrl",
  *     "altLanguageCcpaStmtDate",
  *     "altLanguageShowVendors",
@@ -271,6 +272,13 @@ class AltLanguage extends ConfigEntityBase implements AltLanguageInterface {
    * @var string
    */
   public $altLanguageCcpaStmtDescrText;
+
+  /**
+   * The CCPA Statement Reject Button text in Alternative Language.
+   *
+   * @var string
+   */
+  public $altLanguageCcpaStmtRejectButtonText;
 
   /**
    * The CCPA Statement Name text in Alternative Language.
@@ -2075,6 +2083,31 @@ class AltLanguage extends ConfigEntityBase implements AltLanguageInterface {
     $this->altLanguageCcpaStmtDescrText = $altLanguageCcpaStmtDescrText;
 
     return $altLanguageCcpaStmtDescrText;
+  }
+
+  /**
+   * Returns CCPA Statement Reject Button Text in Alternative Language.
+   *
+   * @return string
+   *   CCPA Statement Reject Button Text in Alternative Language.
+   */
+  public function getAltLanguageCcpaStmtRejectButtonText() {
+    return $this->altLanguageCcpaStmtRejectButtonText;
+  }
+
+  /**
+   * Sets CCPA Statement Reject Button Text in Alternative Language.
+   *
+   * @param string $altLanguageCcpaStmtRejectButtonText
+   *   CCPA Statement Reject Button Text in Alternative Language.
+   *
+   * @return string
+   *   CCPA Statement Reject Button Text in Alternative Language.
+   */
+  public function setAltLanguageCcpaStmtRejectButtonText($altLanguageCcpaStmtRejectButtonText) {
+    $this->altLanguageCcpaStmtRejectButtonText = $altLanguageCcpaStmtRejectButtonText;
+
+    return $altLanguageCcpaStmtRejectButtonText;
   }
 
   /**

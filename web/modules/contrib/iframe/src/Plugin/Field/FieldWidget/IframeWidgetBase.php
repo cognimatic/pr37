@@ -2,14 +2,15 @@
 
 namespace Drupal\iframe\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Utility\Token;
+use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -374,7 +375,7 @@ class IframeWidgetBase extends WidgetBase {
       '#type' => 'textfield',
       '#title' => $this->t('Iframe URL'),
       '#placeholder' => 'https://',
-      '#default_value' => $settings['url'] ?? '',
+      '#default_value' => $settings['url'] ? static::getUriAsDisplayableString($settings['url']) : '',
       '#size' => 80,
       '#maxlength' => 2048,
       '#weight' => 1,
@@ -454,34 +455,16 @@ class IframeWidgetBase extends WidgetBase {
    *
    * @see \Drupal\Core\Form\FormValidator
    */
-  public function validateUrl(&$form, FormStateInterface &$form_state) {
-    // Get settings for this field.
+  public function validateUrl($element, FormStateInterface $form_state, $form) {
+    // Replace any tokens.
     $settings = $this->getFieldSettings();
-    $me = $this->getField($form, $form_state);
-    if (isset($settings['tokensupport'])) {
-      $tokensupport = $settings['tokensupport'];
-    }
-    else {
-      $tokensupport = 0;
-    }
-    if ($tokensupport == 2) {
-      $tokencontext = ['user' => $this->currentUser];
-      $me['url'] = $this->token->replace($me['url'], $tokencontext);
+    if (isset($settings['tokensupport']) && $settings['tokensupport'] == 2) {
+      $element['#value'] = $this->token->replace($element['#value'], ['user' => $this->currentUser]);
     }
 
-    $testabsolute = TRUE;
-    // \iframe_debug(0, 'validateUrl', $me);
-    if (!empty($me['url'])) {
-      if (preg_match('#^/($|[^/])#', $me['url'])) {
-        $testabsolute = FALSE;
-      }
-      if (!UrlHelper::isValid($me['url'], $testabsolute)) {
-        $form_state->setError($form, $this->t('Invalid syntax for "Iframe URL".'));
-      }
-      elseif (strpos($me['url'], '//') === 0) {
-        $form_state->setError($form, $this->t('Drupal does not accept scheme-less URLs. Please add "https:" to your URL, this works on http-parent-pages too.'));
-      }
-    }
+    // Use Drupal core's LinkWidget to validate the url.
+    // It handles conversions needed for internal and absolute urls.
+    LinkWidget::validateUriElement($element, $form_state, $form);
   }
 
   /**
@@ -527,6 +510,8 @@ class IframeWidgetBase extends WidgetBase {
     // \iframe_debug(0, __METHOD__ . ' settings', $settings);
     // \iframe_debug(0, __METHOD__ . ' old-values', $values);
     foreach ($values as $delta => $value) {
+      $value['url'] = static::getUserEnteredStringAsUri($value['url']);
+
       /*
        * Validate that all keys are available,
        * in the user-has-only-some-values case too.
@@ -558,6 +543,113 @@ class IframeWidgetBase extends WidgetBase {
     }
     // \iframe_debug(0, __METHOD__ . ' new-values', $new_values);
     return $new_values;
+  }
+
+  /**
+   * Gets the URI without the 'internal:' or 'entity:' scheme.
+   *
+   * The following two forms of URIs are transformed:
+   * - 'entity:' URIs: to entity autocomplete ("label (entity id)") strings;
+   * - 'internal:' URIs: the scheme is stripped.
+   *
+   * This method is the inverse of LinkWidget::getUserEnteredStringAsUri().
+   *
+   * This method is copied from LinkWidget::getUriAsDisplayableString because it
+   * is not public.
+   *
+   * @param string $uri
+   *   The URI to get the displayable string for.
+   *
+   * @return string
+   *
+   * @see LinkWidget::getUriAsDisplayableString()
+   * @see LinkWidget::getUserEnteredStringAsUri()
+   */
+  protected static function getUriAsDisplayableString($uri) {
+    $scheme = parse_url($uri, PHP_URL_SCHEME);
+
+    // By default, the displayable string is the URI.
+    $displayable_string = $uri;
+
+    // A different displayable string may be chosen in case of the 'internal:'
+    // or 'entity:' built-in schemes.
+    if ($scheme === 'internal') {
+      $uri_reference = explode(':', $uri, 2)[1];
+
+      // @todo '<front>' is valid input for BC reasons, may be removed by
+      //   https://www.drupal.org/node/2421941
+      $path = parse_url($uri, PHP_URL_PATH);
+      if ($path === '/') {
+        $uri_reference = '<front>' . substr($uri_reference, 1);
+      }
+
+      $displayable_string = $uri_reference;
+    }
+    elseif ($scheme === 'entity') {
+      [$entity_type, $entity_id] = explode('/', substr($uri, 7), 2);
+      // Show the 'entity:' URI as the entity autocomplete would.
+      // @todo Support entity types other than 'node'. Will be fixed in
+      //   https://www.drupal.org/node/2423093.
+      if ($entity_type == 'node' && $entity = \Drupal::entityTypeManager()->getStorage($entity_type)->load($entity_id)) {
+        $displayable_string = EntityAutocomplete::getEntityLabels([$entity]);
+      }
+    }
+    elseif ($scheme === 'route') {
+      $displayable_string = ltrim($displayable_string, 'route:');
+    }
+
+    return $displayable_string;
+  }
+
+  /**
+   * Gets the user-entered string as a URI.
+   *
+   * The following two forms of input are mapped to URIs:
+   * - entity autocomplete ("label (entity id)") strings: to 'entity:' URIs;
+   * - strings without a detectable scheme: to 'internal:' URIs.
+   *
+   * This method is the inverse of ::getUriAsDisplayableString().
+   *
+   * This method is copied from LinkWidget::getUriAsDisplayableString because it
+   * is not public.
+   *
+   * @param string $string
+   *   The user-entered string.
+   *
+   * @return string
+   *   The URI, if a non-empty $uri was passed.
+
+   * @see LinkWidget::getUserEnteredStringAsUri()
+   * @see LinkWidget::getUriAsDisplayableString()
+   */
+  protected static function getUserEnteredStringAsUri($string) {
+    // By default, assume the entered string is a URI.
+    $uri = trim($string);
+
+    // Detect entity autocomplete string, map to 'entity:' URI.
+    $entity_id = EntityAutocomplete::extractEntityIdFromAutocompleteInput($string);
+    if ($entity_id !== NULL) {
+      // @todo Support entity types other than 'node'. Will be fixed in
+      //   https://www.drupal.org/node/2423093.
+      $uri = 'entity:node/' . $entity_id;
+    }
+    // Support linking to nothing.
+    elseif (in_array($string, ['<nolink>', '<none>', '<button>'], TRUE)) {
+      $uri = 'route:' . $string;
+    }
+    // Detect a schemeless string, map to 'internal:' URI.
+    elseif (!empty($string) && parse_url($string, PHP_URL_SCHEME) === NULL) {
+      // @todo '<front>' is valid input for BC reasons, may be removed by
+      //   https://www.drupal.org/node/2421941
+      // - '<front>' -> '/'
+      // - '<front>#foo' -> '/#foo'
+      if (strpos($string, '<front>') === 0) {
+        $string = '/' . substr($string, strlen('<front>'));
+      }
+      $uri = 'internal:' . $string;
+    }
+
+    return $uri;
   }
 
 }

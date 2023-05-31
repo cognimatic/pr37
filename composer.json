@@ -185,9 +185,6 @@
             "drupal/autocomplete_deluxe": {
               "Multiple reference terms fails 3053986": "https://www.drupal.org/files/issues/2021-05-25/3053986-6.patch"
             },
-            "drupal/civicccookiecontrol": {
-              "No options in Text formats select box 3319073": "https://www.drupal.org/files/issues/2023-02-20/civicccoookiecontrol-fix-text-formats-3319073.patch"
-            },
             "drupal/cludo_search": {
               "Cludo search autocomplete not working on block 3050293": "https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch",
               "Hide Prompt Above Input Box 3351519": "https://www.drupal.org/files/issues/2023-03-31/cludo_search_disable_prompt.patch"
@@ -197,9 +194,6 @@
               "Deprecated function: pathinfo() on template_preprocess_image_style 3306131": "https://git.drupalcode.org/project/drupal/-/merge_requests/2680.diff",
               "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch",
               "CKEditor 5 isn't respecting field widgets row settings 3241295": "https://www.drupal.org/files/issues/2023-02-02/3241295-d9.5-101.patch"
-            },
-            "drupal/migrate_drupal_d8": {
-                "Fix bundle logic to select fields correctly 3134305": "https://www.drupal.org/files/issues/2021-07-16/3134305-fix-bundle-logic-5.patch"
             },
             "drupal/search_api_stats": {
                 "Empty search returns error 3325990": "https://www.drupal.org/files/issues/2022-12-08/search_api_stats-empty-search-returns-error-3325990-2.patch"

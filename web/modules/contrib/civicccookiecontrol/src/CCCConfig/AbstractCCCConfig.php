@@ -12,6 +12,7 @@ use Drupal\Core\Link;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 
 /**
  * Abstract for cookie control config generation.
@@ -62,6 +63,13 @@ abstract class AbstractCCCConfig {
   protected $cache;
 
   /**
+   * The language manager service.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
+
+  /**
    * AbstractCCCConfig constructor.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config
@@ -72,17 +80,21 @@ abstract class AbstractCCCConfig {
    *   Injected date formatter service.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   Injected cache service.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
+   *   Injected language manager service.
    */
   public function __construct(
         ConfigFactoryInterface $config,
         EntityTypeManager $entityTypeManager,
         DateFormatterInterface $dateFormatter,
-        CacheBackendInterface $cache
+        CacheBackendInterface $cache,
+        LanguageManagerInterface $languageManager
     ) {
     $this->cccConfig = $config->get(CCCConfigNames::COOKIECONTROL);
     $this->entityTypeManager = $entityTypeManager;
     $this->dateFormatter = $dateFormatter;
     $this->cache = $cache;
+    $this->languageManager = $languageManager;
   }
 
   /**
@@ -93,7 +105,8 @@ abstract class AbstractCCCConfig {
           $container->get('config.factory'),
           $container->get('entity_type.manager'),
           $container->get('date.formatter'),
-          $container->get('cache.data')
+          $container->get('cache.data'),
+          $container->get('language_manager')
       );
   }
 
@@ -162,11 +175,10 @@ abstract class AbstractCCCConfig {
       $privacyNodeUrl = Link::createFromRoute(
             $this->t("Privacy Policy"),
             'entity.node.canonical',
-            ['node' => $nid]
+            ['node' => $nid],
+            ['absolute' => TRUE]
         );
-      global $base_url;
-      $this->config[$type]['url'] = $base_url . $privacyNodeUrl->getUrl()
-        ->toString();
+      $this->config[$type]['url'] = $privacyNodeUrl->getUrl()->toString();
     }
 
     $this->config[$type] = array_filter($this->config[$type], 'strlen');

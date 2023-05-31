@@ -27,6 +27,17 @@ civiccookiecontrol_overlay:
   'needsApiValidation': true
   'boolOptions': true
   'cookieVersion': [9]
+civiccookiecontrol_site_scrolling:
+  '#type': 'radios'
+  '#title': 'Disable site scrolling'
+  '#options':
+    'true': 'Yes'
+    'false': 'No'
+  '#default_value': 'civiccookiecontrol_site_scrolling'
+  '#description': "Determines if the module should disable site scrolling."
+  'needsApiValidation': true
+  'boolOptions': true
+  'cookieVersion': [9]
 civiccookiecontrol_corner_button:
   '#type': 'textfield'
   '#title': 'Corner Button (used by screen readers)'

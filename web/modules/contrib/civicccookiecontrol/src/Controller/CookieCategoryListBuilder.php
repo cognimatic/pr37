@@ -6,6 +6,7 @@ use Drupal\civiccookiecontrol\Access\CookieControlAccess;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Link;
 
 /**
  * Provides a listing of Cookie Categories.
@@ -17,13 +18,15 @@ class CookieCategoryListBuilder extends ConfigEntityListBuilder {
    */
   public function load() {
     if (empty($this->getEntityIds()) && (CookieControlAccess::checkApiKey())) {
+      $cookieCategoriesUrl = Link::createFromRoute(
+        $this->t("Cookie Category"),
+        'entity.cookiecategory.collection', [], ['absolute' => TRUE]
+      );
+
       $messenger = $this->messenger();
       $messenger->addMessage(
-            $this->t(
-                'You need to add at least
-<b>one</b> <a href="/admin/config/system/cookiecontrol/cookiecategory">Cookie Category</a> for the Cookie Control
-module to properly operate.'
-            ),
+            $this->t('You need to add at least <b>one</b> @ccurl for the Cookie Control module to properly operate.',
+              ['@ccurl' => $cookieCategoriesUrl->toString()]),
             $messenger::TYPE_ERROR
         );
     }

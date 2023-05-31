@@ -258,7 +258,8 @@ their consent.</div>";
       $privacyNodeUrl = Link::createFromRoute(
             $this->t("View existing privacy policy page"),
             'entity.node.canonical',
-            ['node' => $privacynode]
+            ['node' => $privacynode],
+            ['absolute' => TRUE]
         );
       $element['#field_suffix'] = $privacyNodeUrl->toString();
     }
@@ -306,6 +307,9 @@ their consent.</div>";
             ));
         }
 
+        if (array_key_exists('#format', $element) && $element['#format'] == 'cookie_control_html') {
+          $element['#allowed_formats'] = [$element['#format']];
+        }
         unset($element['cookieVersion']);
         unset($element['boolOptions']);
         unset($element['needsApiValidation']);

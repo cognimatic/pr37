@@ -10,7 +10,7 @@ services:
     arguments: ['@country_manager', '@config.factory', '@file_system', '@tempstore.private']
   civiccookiecontrol.CCC8Config:
     class: \Drupal\civiccookiecontrol\CCCConfig\CCC8Config
-    arguments: ['@config.factory', '@entity_type.manager', '@date.formatter', '@cache.data']
+    arguments: ['@config.factory', '@entity_type.manager', '@date.formatter', '@cache.data', '@language_manager']
   civiccookiecontrol.CCC9Config:
     class: \Drupal\civiccookiecontrol\CCCConfig\CCC9Config
     arguments: ['@config.factory', '@entity_type.manager', '@date.formatter', '@cache.data', '@language_manager']
