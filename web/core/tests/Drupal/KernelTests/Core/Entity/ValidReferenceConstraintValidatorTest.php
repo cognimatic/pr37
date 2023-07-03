@@ -162,7 +162,11 @@ class ValidReferenceConstraintValidatorTest extends EntityKernelTestBase {
     $this->container->get('account_switcher')->switchTo($user_without_access);
 
     $violations = $referencing_entity->field_test->validate();
-    $this->assertCount(0, $violations);
+    $this->assertCount(1, $violations);
+    $this->assertEquals(t('This entity (%type: %id) cannot be referenced.', [
+      '%type' => 'node',
+      '%id' => $unpublished_node->id(),
+    ]), $violations[0]->getMessage());
 
     // Now save the referencing entity which will create a pre-existing state
     // for it and repeat the checks. This time, the user without access should

@@ -28,22 +28,23 @@ class NodeSelection extends DefaultSelection {
     // 'unpublished'. We need to do that as long as there are no access control
     // modules in use on the site. As long as one access control module is there,
     // it is supposed to handle this check.
-    if ($this->currentUser->hasPermission('bypass node access') || $this->moduleHandler->hasImplementations('node_grants')) {
-      return $query;
+    if (!$this->currentUser->hasPermission('bypass node access') && !$this->moduleHandler->hasImplementations('node_grants')) {
+      $query->condition('status', NodeInterface::PUBLISHED);
     }
-
-    // Permission to "view own unpublished content" allows
-    // the user to reference any published content or own unpublished content.
-    // Permission to "view any unpublished content" allows
-    // the user to reference any unpublished content.
-    if ($this->currentUser->hasPermission('view own unpublished content') && !$this->currentUser->hasPermission('view any unpublished content')) {
-      $or = $query->orConditionGroup()
-        ->condition('status', NodeInterface::PUBLISHED)
-        ->condition('uid', $this->currentUser->id());
-      $query->condition($or);
-    }
-
     return $query;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createNewEntity($entity_type_id, $bundle, $label, $uid) {
+    $node = parent::createNewEntity($entity_type_id, $bundle, $label, $uid);
+
+    // In order to create a referenceable node, it needs to published.
+    /** @var \Drupal\node\NodeInterface $node */
+    $node->setPublished();
+
+    return $node;
   }
 
   /**
@@ -52,19 +53,12 @@ class NodeSelection extends DefaultSelection {
   public function validateReferenceableNewEntities(array $entities) {
     $entities = parent::validateReferenceableNewEntities($entities);
     // Mirror the conditions checked in buildEntityQuery().
-    if ($this->currentUser->hasPermission('bypass node access') || $this->moduleHandler->hasImplementations('node_grants')) {
-      return $entities;
-    }
-
-    // Permission to "view own unpublished content" allows
-    // the user to reference any published content or own unpublished content.
-    if ($this->currentUser->hasPermission('view own unpublished content') && !$this->currentUser->hasPermission('view any unpublished content')) {
+    if (!$this->currentUser->hasPermission('bypass node access') && !$this->moduleHandler->hasImplementations('node_grants')) {
       $entities = array_filter($entities, function ($node) {
         /** @var \Drupal\node\NodeInterface $node */
-        return ($node->getOwnerId() == $this->currentUser->id() || $node->isPublished());
+        return $node->isPublished();
       });
     }
-
     return $entities;
   }
 

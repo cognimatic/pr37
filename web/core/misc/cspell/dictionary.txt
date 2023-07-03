@@ -1159,7 +1159,6 @@ sourcearea's
 sourcedialog
 sourcedialog's
 sourcedir
-sourceediting
 spacebar
 spagna
 specialchar
