@@ -5,6 +5,7 @@ namespace Drupal\civiccookiecontrol\Form;
 use Drupal\civiccookiecontrol\CCCConfigNames;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Locale\CountryManager;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -39,6 +40,13 @@ class IAB2Settings extends ConfigFormBase {
   protected $routerBuilder;
 
   /**
+   * The list of available modules.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected $extensionListModule;
+
+  /**
    * IAB2Settings constructor.
    *
    * @param \Drupal\Core\Locale\CountryManager $countryManager
@@ -49,17 +57,21 @@ class IAB2Settings extends ConfigFormBase {
    *   Injected cache service.
    * @param \Drupal\Core\Routing\RouteBuilderInterface $routeBuilder
    *   Injected router builder service.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
+   *   List of available modules.
    */
   public function __construct(
         CountryManager $countryManager,
         ConfigFactoryInterface $config_factory,
         CacheBackendInterface $cache,
-        RouteBuilderInterface $routeBuilder
+        RouteBuilderInterface $routeBuilder,
+        ModuleExtensionList $extension_list_module
     ) {
     parent::__construct($config_factory);
     $this->countryManager = $countryManager;
     $this->cache = $cache;
     $this->routerBuilder = $routeBuilder;
+    $this->extensionListModule = $extension_list_module;
     civiccookiecontrol_check_cookie_categories();
   }
 
@@ -71,7 +83,8 @@ class IAB2Settings extends ConfigFormBase {
           $container->get('country_manager'),
           $container->get('config.factory'),
           $container->get('cache.data'),
-          $container->get('router.builder')
+          $container->get('router.builder'),
+          $container->get('extension.list.module')
       );
   }
 
@@ -170,9 +183,12 @@ class IAB2Settings extends ConfigFormBase {
 
   /**
    * Loads IAB 2.0 form elements from the corresponding twig file.
+   *
+   * @param array $form
+   *   The form.
    */
   protected function loadIabSettings(&$form) {
-    $iabYamlPath = drupal_get_path('module', 'civiccookiecontrol') . "/src/Form/IAB2FormElements/iab.settings.yml";
+    $iabYamlPath = $this->extensionListModule->getPath('civiccookiecontrol') . "/src/Form/IAB2FormElements/iab.settings.yml";
     $formItems = Yaml::parse(file_get_contents($iabYamlPath));
     foreach ($formItems as $key => $element) {
       if (array_key_exists('#format', $element) && $element['#format'] == 'cookie_control_html') {

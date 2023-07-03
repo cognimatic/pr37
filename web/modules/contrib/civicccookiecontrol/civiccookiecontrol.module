@@ -97,8 +97,14 @@ function civiccookiecontrol_page_attachments(array &$page) {
   }
   $is_admin = \Drupal::service('router.admin_context')->isAdminRoute($route);
 
+  // Fix toggle functionality in gin theme.
+  $admin_theme = \Drupal::config('system.theme')->get('admin');
+  if ($is_admin  && $admin_theme == 'gin') {
+    $page['#attached']['library'][] = 'civiccookiecontrol/civiccookiecontrol.admin_toggle_css';
+  }
+
   $page['#attached']['drupalSettings']['path'] = [
-    'civiccookiecontrol_path' => drupal_get_path('module', 'civiccookiecontrol'),
+    'civiccookiecontrol_path' => \Drupal::service('extension.list.module')->getPath('civiccookiecontrol'),
   ];
   if (!$is_admin || $cccConfig->get('civiccookiecontrol_drupal_admin')) {
     $page['#attached']['drupalSettings']['civiccookiecontrol'] = CCCConfigFactory::getCccConfig($cccConfig->get('civiccookiecontrol_api_key_version'))->getCccConfigJson();
@@ -176,7 +182,7 @@ function civiccookiecontrol_check_if_empty(array $configElement) {
  */
 function civiccookiecontrol_set_ccclogo(array &$variables) {
   global $base_url;
-  $variables['ccc_logo'] = $base_url . '/' . drupal_get_path('module', 'civiccookiecontrol') . '/images/CookieControlCivic.png';
+  $variables['ccc_logo'] = $base_url . '/' . \Drupal::service('extension.list.module')->getPath('civiccookiecontrol') . '/images/CookieControlCivic.png';
 }
 
 /**

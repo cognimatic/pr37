@@ -1,0 +1,4 @@
+/* Override toggle styling to fix conflict with gin admin theme */
+.checkbox-toggle:not(.ccc-tabbable) {
+  position: relative;
+}

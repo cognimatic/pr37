@@ -11,7 +11,6 @@ use Drupal\civic_govuk_cookiecontrol\GovUKConfigNames;
 use Drupal\civiccookiecontrol\Entity\AltLanguage;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
-use Drupal\Component\Utility\Xss;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -19,6 +18,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\locale\StringStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -33,6 +33,7 @@ use Drupal\Core\Language\LanguageManagerInterface;
  */
 class CivicGovUkCookieControlBannerBlock extends BlockBase implements ContainerFactoryPluginInterface {
   use LoggerChannelTrait;
+  use StringTranslationTrait;
 
   /**
    * The language manager service.
@@ -203,13 +204,11 @@ class CivicGovUkCookieControlBannerBlock extends BlockBase implements ContainerF
     if ($lang != 'en' && $altLangEntity != NULL) {
       $renderArray['#title_banner'] = $altLangEntity->getAltLanguageTitle();
       $renderArray['#description'] = $altLangEntity->getAltLanguageIntro();
-      $renderArray['#policy_link'] = $altLangEntity->getAltLanguageStmtUrl() ?
-            'node/' . $altLangEntity->getAltLanguageStmtUrl() : '';
+      $renderArray['#stmt_descr'] = $altLangEntity->getAltLanguageStmtDescrText();
       $renderArray['#policy_link'] = $this->getPolicyLink(
             $altLangEntity->getAltLanguageStmtUrl(),
-            $altLangEntity->getAltLanguageStmtNameText(),
-            $altLangEntity->getAltLanguageStmtDescrText(),
-        );
+            $altLangEntity->getAltLanguageStmtNameText()
+         );
 
       $renderArray['#accept_label'] = $altLangEntity->getAltLanguageAcceptSettings();
       $renderArray['#reject_label'] = $altLangEntity->getAltLanguageRejectSettings();
@@ -217,26 +216,42 @@ class CivicGovUkCookieControlBannerBlock extends BlockBase implements ContainerF
     else {
       $renderArray['#title_banner'] = $this->cookieControlConfig->get('civiccookiecontrol_title_text');
       $renderArray['#description'] = $this->cookieControlConfig->get('civiccookiecontrol_intro_text');
+      $renderArray['#stmt_descr'] = $this->cookieControlConfig->get('civiccookiecontrol_stmt_descr');
       $renderArray['#policy_link'] = $this->getPolicyLink(
             $this->cookieControlConfig->get('civiccookiecontrol_privacynode'),
-            $this->cookieControlConfig->get('civiccookiecontrol_stmt_name'),
-            $this->cookieControlConfig->get('civiccookiecontrol_stmt_descr')
+            $this->cookieControlConfig->get('civiccookiecontrol_stmt_name')
             );
       $renderArray['#accept_label'] = $this->cookieControlConfig->get('civiccookiecontrol_accept_settings');
       $renderArray['#reject_label'] = $this->cookieControlConfig->get('civiccookiecontrol_reject_settings');
     }
 
-    $renderArray['#accepted_cookies'] =
-          $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_accepted_cookies_text');
-    $renderArray['#rejected_cookies'] =
-          $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_rejected_cookies_text');
+    $renderArray['#accepted_cookies'] = [
+      '#plain_text' => $this->getStringTranslation()
+        ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_accepted_cookies_text')),
+    ];
+
+    $renderArray['#rejected_cookies'] = [
+      '#plain_text' => $this->getStringTranslation()
+        ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_rejected_cookies_text')),
+    ];
+
+    $renderArray['#change_cookie_settings_prefix'] = [
+      '#plain_text' => $this->getStringTranslation()
+        ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_change_cookie_settings_prefix')),
+    ];
+    $renderArray['#change_cookie_settings_suffix'] = [
+      '#plain_text' => $this->getStringTranslation()
+        ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_change_cookie_settings_suffix')),
+    ];
     $renderArray['#change_cookie_settings_link'] = $this->getChangeCookieSettingsLink(
           $this->cookieControlConfig->get('civiccookiecontrol_privacynode'),
-          $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_change_cookie_settings_prefix'),
-          $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_change_cookie_settings_link_text'),
-          $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_change_cookie_settings_suffix'),
+      $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_change_cookie_settings_link_text')
       );
-    $renderArray['#hide'] = $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_hide_button_text');
+    $renderArray['#hide'] = [
+      '#plain_text' => $this->getStringTranslation()
+        ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_hide_button_text')),
+    ];
+
     return $renderArray;
   }
 
@@ -247,31 +262,22 @@ class CivicGovUkCookieControlBannerBlock extends BlockBase implements ContainerF
    *   The nid of privacy node loaded from civiccookiecontrol_privacynode.
    * @param string $stmtName
    *   The statement name loaded from civiccookiecontrol_stmt_name.
-   * @param string $stmtDescr
-   *   The statement description loaded from civiccookiecontrol_stmt_descr.
    *
-   * @return string
+   * @return array|mixed[]
    *   The link as string to be added in render array.
    */
-  protected function getPolicyLink($privacyNode, $stmtName, $stmtDescr) {
-    $policy_link = '';
-    if ($nid = $privacyNode) {
-      $privacyNodeUrl = Link::createFromRoute(
+  protected function getPolicyLink($privacyNode, $stmtName) {
+
+    return Link::createFromRoute(
             $stmtName,
             'entity.node.canonical',
-            ['node' => $nid],
+            ['node' => $privacyNode],
             [
               'attributes' =>
               ['class' => "cookie-policy govuk-link"],
               'absolute' => TRUE,
             ]
-        );
-      $policy_link = Xss::filter(
-            $stmtDescr . ' ' .
-            $privacyNodeUrl->toString()->getGeneratedLink() . '.'
-        );
-    }
-    return $policy_link;
+        )->toRenderable();
   }
 
   /**
@@ -279,36 +285,23 @@ class CivicGovUkCookieControlBannerBlock extends BlockBase implements ContainerF
    *
    * @param int $privacyNode
    *   The nid of privacy node loaded from civiccookiecontrol_privacynode.
-   * @param string $prefix
-   *   Text retrieved from govuk_cookiecontrol_change_cookie_settings_prefix.
    * @param string $linkText
    *   Text retrieved from govuk_cookiecontrol_change_cookie_settings_link_text.
-   * @param string $suffix
-   *   Text retrieved from govuk_cookiecontrol_change_cookie_settings_suffix.
    *
-   * @return string
+   * @return array|mixed[]
    *   The link as string to be added in render array.
    */
-  protected function getChangeCookieSettingsLink($privacyNode, $prefix, $linkText, $suffix) {
-
-    $link = '';
-    if ($nid = $privacyNode) {
-      $privacyNodeUrl = Link::createFromRoute(
-            $this->getTranslation($linkText),
-            'entity.node.canonical',
-            ['node' => $nid],
-            [
-              'attributes' =>
-              ['class' => "cookie-policy govuk-link"],
-              'absolute' => TRUE,
-            ]
-        );
-      $link = Xss::filter(
-            $this->getTranslation($prefix) . ' ' .
-            $privacyNodeUrl->toString()->getGeneratedLink() . ' ' . $this->getTranslation($suffix) . '.'
-        );
-    }
-    return $link;
+  protected function getChangeCookieSettingsLink($privacyNode, $linkText) {
+    return Link::createFromRoute(
+        $this->getTranslation($linkText),
+        'entity.node.canonical',
+        ['node' => $privacyNode],
+        [
+          'attributes' =>
+            ['class' => "cookie-policy govuk-link"],
+          'absolute' => TRUE,
+        ]
+      )->toRenderable();
   }
 
   /**

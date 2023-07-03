@@ -100,9 +100,7 @@ class CCC9Config extends AbstractCCCConfig {
     $mode = $this->cccConfig->get('civiccookiecontrol_locale_mode');
 
     if ($mode == 'drupal') {
-      // Get current site language.
-      $currentLang = $this->languageManager->getCurrentLanguage()->getId();
-      $this->config['locales'] = $this->loadAltLanguages($currentLang);
+      $this->config['locales'] = $this->loadAltLanguages($this->getCurrentLanguageId());
     }
     else {
       $this->config['locales'] = $this->loadAltLanguages();
@@ -153,7 +151,7 @@ class CCC9Config extends AbstractCCCConfig {
         $this->config[$type]['url'] = $privacyNodeUrl->getUrl()->toString();
       }
 
-      $this->config[$type] = array_filter($this->config[$type], 'strlen');
+      $this->config[$type] = array_filter($this->config[$type]);
     }
   }
 
@@ -275,7 +273,6 @@ class CCC9Config extends AbstractCCCConfig {
     $altLanguagesArray = $lang ? $altLanguage : $altLanguages;
 
     foreach ($altLanguagesArray as $altLang) {
-
       $locale['locale'] = strtolower(str_replace('-', '_', $altLang->getAltLanguageIsoCode()));
       $locale['mode'] = $altLang->getAltLanguageMode();
       $locale['location'] = $altLang->getAltLanguageLocation();
@@ -392,7 +389,7 @@ class CCC9Config extends AbstractCCCConfig {
    * Get the cookie control configuration object.
    */
   public function getCccConfigJson() {
-    $lang = $this->languageManager->getCurrentLanguage()->getId();
+    $lang = $this->getCurrentLanguageId();
     $cid = 'civiccookiecontrol_config_' . $lang;
     $response = &drupal_static(__FUNCTION__);
 

@@ -8,6 +8,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Link;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -318,7 +319,7 @@ abstract class AbstractCCCConfig {
       $cookieCategory['name'] = $cookieCat->getCookieName();
       $cookieCategory['label'] = $cookieCat->getCookieLabel();
       $cookieCategory['description'] = $cookieCat->getCookieDescription();
-      $cookieCategory['cookies'] = explode(',', $cookieCat->getCookies());
+      $cookieCategory['cookies'] = explode(',', $cookieCat->getCookies() ?? '');
       $cookieCategory['onAccept'] = "function(){" . $cookieCat->getOnAcceptCallBack() . "}";
       $cookieCategory['onRevoke'] = "function(){" . $cookieCat->getOnRevokeCallBack() . "}";
       $cookieCategory['recommendedState'] = $cookieCat->getRecommendedState();
@@ -374,6 +375,22 @@ abstract class AbstractCCCConfig {
       $this->cache->set($cid, $response, Cache::PERMANENT, $this->cccConfig->getCacheTags());
     }
     return $response;
+  }
+
+  /**
+   * Function to get the current language Id.
+   *
+   * @return string
+   *   Returns current website language id.
+   */
+  protected function getCurrentLanguageId() {
+    $defaultLanguage = $this->languageManager->getDefaultLanguage()->getId();
+
+    // If Interface text language is the same as the default
+    // language then check if content text language is provided.
+    return $this->languageManager->getCurrentLanguage()->getId() == $defaultLanguage ?
+      $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId() :
+      $this->languageManager->getCurrentLanguage()->getId();
   }
 
 }

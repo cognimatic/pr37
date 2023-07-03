@@ -427,6 +427,15 @@ ga('send', 'pageview');"
 
   /**
    * Helper function to check Cookie Category configuration entity existence.
+   *
+   * @param string $id
+   *   Cookie category Id.
+   *
+   * @return bool
+   *   True or false.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function exist($id) {
     $entity = $this->entityTypeManager->getStorage('cookiecategory')->getQuery()
@@ -437,6 +446,11 @@ ga('send', 'pageview');"
 
   /**
    * The submit function to add third party cookies.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    */
   public function addThirdPartyCookieSubmit(array &$form, FormStateInterface &$form_state) {
     $items_count = ($form_state->get('thirdPartyCookiesCount')) + 1;
@@ -446,6 +460,11 @@ ga('send', 'pageview');"
 
   /**
    * The submit function to add vendors.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    */
   public function addVendorSubmit(array &$form, FormStateInterface &$form_state) {
     $items_count = ($form_state->get('vendorsCount')) + 1;
@@ -455,6 +474,14 @@ ga('send', 'pageview');"
 
   /**
    * Ajax callback to add third party cookies.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return mixed
+   *   Array value.
    */
   public function addThirdPartyCookieCallback(array &$form, FormStateInterface &$form_state) {
     return $form['thirdPartyCookies'];
@@ -462,6 +489,14 @@ ga('send', 'pageview');"
 
   /**
    * Ajax callback to add third party cookies.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return mixed
+   *   Array value.
    */
   public function addVendorCallback(array &$form, FormStateInterface &$form_state) {
     return $form['vendors'];
@@ -469,6 +504,11 @@ ga('send', 'pageview');"
 
   /**
    * Submit function to delete third party cookies.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    */
   public function delThirdPartyCookieSubmit(array &$form, FormStateInterface &$form_state) {
     if ($form_state->get('thirdPartyCookiesCount') > 0) {
@@ -480,6 +520,11 @@ ga('send', 'pageview');"
 
   /**
    * Submit function to delete vendor.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    */
   public function delVendorSubmit(array &$form, FormStateInterface &$form_state) {
     if ($form_state->get('vendorsCount') > 0) {
@@ -491,6 +536,14 @@ ga('send', 'pageview');"
 
   /**
    * Ajax callback to delete third party cookies.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return mixed
+   *   Array value.
    */
   public function delThirdPartyCookieCallback(array &$form, FormStateInterface &$form_state) {
     return $form['thirdPartyCookies'];
@@ -498,6 +551,14 @@ ga('send', 'pageview');"
 
   /**
    * Ajax callback to delete third party cookies.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return mixed
+   *   Array value.
    */
   public function delVendorCallback(array &$form, FormStateInterface &$form_state) {
     return $form['thirdPartyCookies'];
@@ -505,13 +566,19 @@ ga('send', 'pageview');"
 
   /**
    * Function to parse third party cookies.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array
+   *   Third party cookies in array.
    */
   public function parseThirdPartyCookies(FormStateInterface &$form_state) {
     $cookieCategory = $this->entity;
     $thirdPartyCookiesStr = $cookieCategory->getThirdPartyCookies();
     $thirdPartyCookiesCount = $cookieCategory->getThirdPartyCookiesCount();
 
-    $thirdPartyCookies = explode(';', $thirdPartyCookiesStr);
+    $thirdPartyCookies = explode(';', $thirdPartyCookiesStr ?? '');
 
     $retArray = [];
     foreach ($thirdPartyCookies as $item) {
@@ -525,13 +592,19 @@ ga('send', 'pageview');"
 
   /**
    * Function to parse vendors.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array
+   *   Vendors in array.
    */
   public function parseVendors(FormStateInterface &$form_state) {
     $cookieCategory = $this->entity;
     $vendorsStr = $cookieCategory->getVendors();
     $vendorsCount = $cookieCategory->getVendorsCount();
 
-    $vendors = explode(';', $vendorsStr);
+    $vendors = explode(';', $vendorsStr ?? '');
 
     $retArray = [];
     foreach ($vendors as $item) {

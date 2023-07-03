@@ -15,7 +15,9 @@ civiccookiecontrol_font_size_title:
   '#default_value': 'civiccookiecontrol_font_size_title'
   '#placeholder': '1.2'
   '#description': "The CSS font-size that you'd like to use for the main (h2) title when the module is opened."
-  '#suffix': 'em'
+  '#field_suffix': 'em'
+  '#attributes':
+    'class': ['width-90']
   '#states':
     'invisible':
       ':input[name=civiccookiecontrol_product]':
@@ -26,7 +28,9 @@ civiccookiecontrol_font_size_headers:
   '#title': 'Font Size Headers'
   '#default_value': 'civiccookiecontrol_font_size_headers'
   '#placeholder': '1'
-  '#suffix': 'em'
+  '#field_suffix': 'em'
+  '#attributes':
+    'class': ['width-90']
   '#description': "The CSS font-size that you'd like to use for the sub (h3) titles when the module is opened."
   '#states':
     'invisible':
@@ -38,7 +42,9 @@ civiccookiecontrol_font_size:
   '#title': 'Font Size Headers'
   '#default_value': 'civiccookiecontrol_font_size'
   '#placeholder': '0.8'
-  '#suffix': 'em'
+  '#field_suffix': 'em'
+  '#attributes':
+    'class': ['width-90']
   '#description': "The CSS font-size that you'd like to use throughout the module for body text."
   '#states':
     'invisible':
@@ -210,7 +216,9 @@ civiccookiecontrol_button_icon_width:
   '#title': 'Button Icon Width'
   '#default_value': 'civiccookiecontrol_button_icon_width'
   '#placeholder': '64'
-  '#suffix': 'px'
+  '#field_suffix': 'px'
+  '#attributes':
+    'class': ['width-90']
   '#description': "If Button Icon exists, the css width that you'd like this image to be sized to."
   '#states':
     'invisible':
@@ -225,7 +233,9 @@ civiccookiecontrol_button_icon_height:
   '#title': 'Button Icon Height'
   '#default_value': 'civiccookiecontrol_button_icon_height'
   '#placeholder': '64'
-  '#suffix': 'px'
+  '#field_suffix': 'px'
+  '#attributes':
+    'class': ['width-90']
   '#description': "If Button Icon exists, the css height that you'd like this image to be sized to."
   '#states':
     'invisible':

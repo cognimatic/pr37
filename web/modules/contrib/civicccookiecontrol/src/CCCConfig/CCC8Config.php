@@ -74,10 +74,8 @@ class CCC8Config extends AbstractCCCConfig {
     $mode = $this->cccConfig->get('civiccookiecontrol_locale_mode');
 
     if ($mode == 'drupal') {
-
       // Get current site language.
-      $currentLang = $this->languageManager->getCurrentLanguage()->getId();
-      $this->config['locales'] = $this->loadAltLanguages($currentLang);
+      $this->config['locales'] = $this->loadAltLanguages($this->getCurrentLanguageId());
     }
     else {
       $this->config['locales'] = $this->loadAltLanguages();

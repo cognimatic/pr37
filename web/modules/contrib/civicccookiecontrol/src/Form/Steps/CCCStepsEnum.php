@@ -12,6 +12,9 @@ abstract class CCCStepsEnum {
 
   /**
    * Key steps array.
+   *
+   * @return string[]
+   *   Steps array.
    */
   public static function toArray() {
     return [

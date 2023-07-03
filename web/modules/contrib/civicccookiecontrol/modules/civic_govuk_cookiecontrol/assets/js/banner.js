@@ -8,67 +8,72 @@ const cookieBannerMain = document.querySelector('.cookie-banner--main');
 const cookieBanner = document.querySelector('.cookie-banner');
 const body = document.getElementsByTagName('BODY')[0];
 
-  if (cookieBanner.classList.contains('fixed-top')
-      && !body.classList.contains('toolbar-fixed')) {
+if (cookieBanner.classList.contains('fixed-top')
+    && !body.classList.contains('toolbar-fixed')
+) {
     var bannerHeight = cookieBanner.offsetHeight;
     body.style.paddingTop = bannerHeight + 'px';
-  }
+}
 
-  function hideElement(element) {
+function hideElement(element)
+{
     element.classList.add('hidden');
     body.style.paddingTop = 0;
-  }
+}
 
-  function showElement(element) {
+function showElement(element)
+{
     element.setAttribute('tabindex', -1);
     element.classList.remove('hidden');
-  }
+}
 
-  function hideConfirmation(e) {
+function hideConfirmation(e)
+{
     e.preventDefault();
     hideElement(cookieBanner);
     body.style.paddingTop = 0;
-  }
+}
 
-  function showConfirmation(e) {
+function showConfirmation(e)
+{
     const cookieValue = e.target.value;
     e.preventDefault();
     hideElement(cookieBannerMain);
 
     if (cookieValue === 'accept') {
-      showElement(cookieBannerAccept);
-      //Cookie Control accept all
-      CookieControl.acceptAll();
+        showElement(cookieBannerAccept);
+        //Cookie Control accept all
+        CookieControl.acceptAll();
     }
     if (cookieValue === 'reject') {
-      showElement(cookieBannerReject);
-      //Cookie Control reject all
-      CookieControl.rejectAll();
+        showElement(cookieBannerReject);
+        //Cookie Control reject all
+        CookieControl.rejectAll();
     }
 
     if (cookieBanner.classList.contains('fixed-top')
-      && !body.classList.contains('toolbar-fixed')) {
+        && !body.classList.contains('toolbar-fixed')
+    ) {
         bannerHeight = cookieBanner.offsetHeight;
         body.style.paddingTop = bannerHeight + 'px';
     }
-  }
+}
 
-  const getCookieValue = function (name) {
+const getCookieValue = function (name) {
     return document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)") ? document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)").pop() : ""
-  };
-  if (
-    document.cookie &&
-    (getCookieValue("CookieControl").indexOf("accepted") !== -1 ||
-      getCookieValue("CookieControl").indexOf("revoked") !== -1)
-  ) {
+};
+if (document.cookie 
+    && (getCookieValue("CookieControl").indexOf("accepted") !== -1 
+    || getCookieValue("CookieControl").indexOf("revoked") !== -1)
+) {
     hideElement(cookieBanner);
-  }
+}
 
-  if (cookieBannerButtonAcceptHide != null) {
+if (cookieBannerButtonAcceptHide != null) {
     cookieBannerButtonAcceptHide.addEventListener('click', hideConfirmation);
     cookieBannerButtonRejectHide.addEventListener('click', hideConfirmation);
-  }
-  if (cookieBanner != null) {
+}
+if (cookieBanner != null) {
     cookieBannerButtonAccept.addEventListener('click', showConfirmation);
     cookieBannerButtonReject.addEventListener('click', showConfirmation);
-  }
+}

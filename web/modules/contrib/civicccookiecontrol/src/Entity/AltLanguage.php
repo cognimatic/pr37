@@ -833,7 +833,7 @@ class AltLanguage extends ConfigEntityBase implements AltLanguageInterface {
    * {@inheritdoc}
    */
   public function getAltLanguageOptionalCookies() {
-    return Json::decode($this->altLanguageOptionalCookies);
+    return $this->altLanguageOptionalCookies ? Json::decode($this->altLanguageOptionalCookies) : NULL;
   }
 
   /**

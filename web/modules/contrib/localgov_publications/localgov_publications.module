@@ -5,13 +5,13 @@
  * Module file for the LocalGov Publications module.
  */
 
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Access\AccessResult;
-use Drupal\node\NodeInterface;
 use Drupal\block\Entity\Block;
-use Drupal\user\Entity\Role;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\node\NodeInterface;
+use Drupal\user\Entity\Role;
 
 /**
  * Implements hook_theme().
@@ -84,6 +84,18 @@ function localgov_publications_block_access(Block $block, $operation, AccountInt
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter() for book_admin_edit.
+ */
+function localgov_publications_form_book_admin_edit_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // If we're on the route this module uses for this form, change some wording.
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'publication.admin_edit') {
+    $form['save']['#value'] = t('Save publication pages');
+  }
+}
+
+/**
  * Implements hook_form_alter().
  */
 function localgov_publications_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -116,38 +128,26 @@ function localgov_publications_form_alter(&$form, FormStateInterface $form_state
   // Alter the select element.
   $form['book']['bid']['#title'] = t('Publication');
 
-  // Change the "Create new book".
-  if (!empty($form['book']['bid']['#options'][$node->id()])) {
-    $form['book']['bid']['#options'][$node->id()] = t(
-      '- Create a new publication -',
-    );
-  }
-  elseif (!empty($form['book']['bid']['#options']['new'])) {
-    $form['book']['bid']['#options']['new'] = t(
-      '- Create a new publication -',
-    );
+  // Change "Create new book" to "Create a new publication".
+  if (!empty($form['book']['bid']['#options']['new'])) {
+    $form['book']['bid']['#options']['new'] = t('- Create a new publication -');
   }
 
-  $form['book']['bid']['#description'] = t(
-    'Your page will be part of the selected publication',
-  );
+  $form['book']['bid']['#description'] = t('Your page will be part of the selected publication');
 
   // Alter "No book selected".
   if (empty($book_values)) {
-    $form['book']['pid']['#prefix'] =
-      '<div id="edit-book-plid-wrapper"><em>No publication selected.</em>';
+    $form['book']['pid']['#prefix'] = '<div id="edit-book-plid-wrapper"><em>No publication selected.</em>';
   }
   else {
     switch ($book_values['bid']) {
       case '0':
-        $form['book']['pid']['#prefix'] =
-          '<div id="edit-book-plid-wrapper"><em>No publication selected.</em>';
+        $form['book']['pid']['#prefix'] = '<div id="edit-book-plid-wrapper"><em>No publication selected.</em>';
         break;
 
       case 'new':
       case $node->id():
-        $form['book']['pid']['#prefix'] =
-          '<div id="edit-book-plid-wrapper"><em>This will be the top-level page in this publication.</em>';
+        $form['book']['pid']['#prefix'] = '<div id="edit-book-plid-wrapper"><em>This will be the top-level page in this publication.</em>';
         break;
 
       default:

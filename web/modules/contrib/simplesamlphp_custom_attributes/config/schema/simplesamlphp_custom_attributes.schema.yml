@@ -1,0 +1,17 @@
+simplesamlphp_custom_attributes.mappings:
+  type: config_object
+  label: 'SimpleSAMLphp Auth Attribute Mappings'
+  mapping:
+    mappings:
+      type: sequence
+      label: 'List'
+      sequence:
+        type: mapping
+        label: 'Attribute Map'
+        mapping:
+          attribute_name:
+            type: string
+            label: 'Field name of the attribute from SAML provider.'
+          field_name:
+            type: string
+            label: 'Drupal user field name.'

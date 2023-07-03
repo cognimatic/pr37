@@ -41,13 +41,13 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
    * Constructs a new AuditFilesManagedNotUsedForm.
    */
   final public function __construct(
-      protected AuditFilesConfigInterface $auditFilesConfig,
-      protected AuditFilesManagedNotUsed $filesManagedNotUsed,
-      protected PagerManagerInterface $pagerManager,
-      protected DateFormatterInterface $dateFormatter,
-      protected FileSystemInterface $fileSystem,
-      protected FileUrlGeneratorInterface $fileUrlGenerator,
-  ) {  
+    protected AuditFilesConfigInterface $auditFilesConfig,
+    protected AuditFilesManagedNotUsed $filesManagedNotUsed,
+    protected PagerManagerInterface $pagerManager,
+    protected DateFormatterInterface $dateFormatter,
+    protected FileSystemInterface $fileSystem,
+    protected FileUrlGeneratorInterface $fileUrlGenerator,
+  ) {
   }
 
   /**
@@ -55,12 +55,12 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
    */
   public static function create(ContainerInterface $container): static {
     return new static(
-        $container->get('auditfiles.config'),
-        $container->get('auditfiles.auditor.managed_not_used'),
-        $container->get('pager.manager'),
-        $container->get('date.formatter'),
-        $container->get('file_system'),
-        $container->get('file_url_generator'),
+      $container->get('auditfiles.config'),
+      $container->get('auditfiles.auditor.managed_not_used'),
+      $container->get('pager.manager'),
+      $container->get('date.formatter'),
+      $container->get('file_system'),
+      $container->get('file_url_generator'),
     );
   }
 
@@ -140,12 +140,7 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
 
     $pages = [];
     $currentPage = NULL;
-    if (is_countable($rows) && isset($rows)) {
-      $rows_count = count($rows);
-    }
-    else {
-      $rows_count = 0;
-    }
+    $rows_count = count($rows);
     if ($rows_count > 0) {
       $itemsPerPage = $this->auditFilesConfig->getReportOptionsItemsPerPage();
       if ($itemsPerPage > 0) {
@@ -157,48 +152,46 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
     // Setup the record count and related messages.
     $maximumRecords = $this->auditFilesConfig->getReportOptionsMaximumRecords();
     $form['help']['#markup'] = ($rows_count > 0) ? $this->formatPlural(
-            $rows_count,
-            'Found 1 file in the file_managed table that is not in the file_usage table.',
-            (($maximumRecords !== 0) ? 'Found at least @count files in the file_managed table not in the file_usage table.' : 'Found @count files in the file_managed table not in the file_usage table.'),
-        ) : $this->t('Found no files in the file_managed table not in the file_usage table.');
+      $rows_count,
+      'Found 1 file in the file_managed table that is not in the file_usage table.',
+      (($maximumRecords !== 0) ? 'Found at least @count files in the file_managed table not in the file_usage table.' : 'Found @count files in the file_managed table not in the file_usage table.'),
+    ) : $this->t('Found no files in the file_managed table not in the file_usage table.');
 
     // Create the form table.
-    if (isset($rows)) {
-      $form['files'] = [
-        '#type' => 'tableselect',
-        '#header' => [
-          'fid' => [
-            'data' => $this->t('File ID'),
-          ],
-          'uid' => [
-            'data' => $this->t('User ID'),
-          ],
-          'filename' => [
-            'data' => $this->t('Name'),
-          ],
-          'uri' => [
-            'data' => $this->t('URI'),
-          ],
-          'path' => [
-            'data' => $this->t('Path'),
-          ],
-          'filemime' => [
-            'data' => $this->t('MIME'),
-          ],
-          'filesize' => [
-            'data' => $this->t('Size'),
-          ],
-          'datetime' => [
-            'data' => $this->t('When added'),
-          ],
-          'status' => [
-            'data' => $this->t('Status'),
-          ],
+    $form['files'] = [
+      '#type' => 'tableselect',
+      '#header' => [
+        'fid' => [
+          'data' => $this->t('File ID'),
         ],
-        '#empty' => $this->t('No items found.'),
-        '#options' => $pages[$currentPage] ?? $rows,
-      ];
-    }
+        'uid' => [
+          'data' => $this->t('User ID'),
+        ],
+        'filename' => [
+          'data' => $this->t('Name'),
+        ],
+        'uri' => [
+          'data' => $this->t('URI'),
+        ],
+        'path' => [
+          'data' => $this->t('Path'),
+        ],
+        'filemime' => [
+          'data' => $this->t('MIME'),
+        ],
+        'filesize' => [
+          'data' => $this->t('Size'),
+        ],
+        'datetime' => [
+          'data' => $this->t('When added'),
+        ],
+        'status' => [
+          'data' => $this->t('Status'),
+        ],
+      ],
+      '#empty' => $this->t('No items found.'),
+      '#options' => $pages[$currentPage] ?? $rows,
+    ];
 
     if (0 === $rows_count) {
       return $form;
@@ -234,17 +227,17 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
   public function submitDeleteRecord(array &$form, FormStateInterface $form_state): void {
     $selected = $form_state->getValue('files');
     $references = array_filter(
-        $form_state->getTemporaryValue(static::TEMPORARY_ALL_REFERENCES),
-        static function (FileEntityReference $reference) use ($selected): bool {
-          return array_key_exists($reference->getId(), $selected);
-        },
+      $form_state->getTemporaryValue(static::TEMPORARY_ALL_REFERENCES),
+      static function (FileEntityReference $reference) use ($selected): bool {
+        return array_key_exists($reference->getId(), $selected);
+      },
     );
     $form_state
-        ->setStorage([
-          'references' => $references,
-          'confirm' => TRUE,
-        ])
-        ->setRebuild();
+      ->setStorage([
+        'references' => $references,
+        'confirm' => TRUE,
+      ])
+      ->setRebuild();
   }
 
   /**
@@ -290,15 +283,15 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
     $references = $storage['references'];
 
     $batchDefinition = (new BatchBuilder())
-        ->setTitle(\t('Deleting files from the file_managed table'))
-        ->setErrorMessage(\t('One or more errors were encountered processing the files.'))
-        ->setFinishCallback([AuditFilesDeleteFileEntityBatchProcess::class, 'finishBatch'])
-        ->setProgressMessage(\t('Completed @current of @total operations.'));
+      ->setTitle(\t('Deleting files from the file_managed table'))
+      ->setErrorMessage(\t('One or more errors were encountered processing the files.'))
+      ->setFinishCallback([AuditFilesDeleteFileEntityBatchProcess::class, 'finishBatch'])
+      ->setProgressMessage(\t('Completed @current of @total operations.'));
     foreach ($references as $reference) {
       assert($reference instanceof FileEntityReference);
       $batchDefinition->addOperation(
-          [AuditFilesDeleteFileEntityBatchProcess::class, 'create'],
-          [$reference],
+        [AuditFilesDeleteFileEntityBatchProcess::class, 'create'],
+        [$reference],
       );
     }
 

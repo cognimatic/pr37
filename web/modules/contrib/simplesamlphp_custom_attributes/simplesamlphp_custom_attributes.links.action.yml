@@ -1,0 +1,5 @@
+simplesamlphp_custom_attributes.add:
+  route_name: simplesamlphp_custom_attributes.add
+  title: 'Add Mapping'
+  appears_on:
+    - simplesamlphp_custom_attributes.list

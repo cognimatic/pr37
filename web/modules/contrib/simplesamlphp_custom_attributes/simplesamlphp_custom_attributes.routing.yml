@@ -1,0 +1,34 @@
+simplesamlphp_custom_attributes.list:
+  path: 'admin/config/people/simplesamlphp-custom-attributes'
+  defaults:
+    _title: 'SimpleSAMLphp Auth Attribute Mapping'
+    _controller: '\Drupal\simplesamlphp_custom_attributes\Controller\SimplesamlphpCustomAttributesController::ssoMappings'
+  requirements:
+    _permission: 'administer simplesamlphp authentication'
+
+simplesamlphp_custom_attributes.add:
+  path: 'admin/config/people/simplesamlphp-custom-attributes/add'
+  defaults:
+    _title: 'Add'
+    _title_context: 'Add a user sso mapping.'
+    _form: '\Drupal\simplesamlphp_custom_attributes\Form\SimplesamlphpCustomAttributesEditForm'
+  requirements:
+    _permission: 'administer simplesamlphp authentication'
+
+simplesamlphp_custom_attributes.edit:
+  path: 'admin/config/people/simplesamlphp-custom-attributes/{mapping}/edit'
+  defaults:
+    _title: 'Edit'
+    _title_context: 'Edit a user sso mapping.'
+    _form: '\Drupal\simplesamlphp_custom_attributes\Form\SimplesamlphpCustomAttributesEditForm'
+  requirements:
+    _permission: 'administer simplesamlphp authentication'
+
+simplesamlphp_custom_attributes.delete:
+  path: 'admin/config/people/simplesamlphp-custom-attributes/{mapping}/delete'
+  defaults:
+    _title: 'Delete'
+    _title_context: 'Delete a user sso mapping.'
+    _form: '\Drupal\simplesamlphp_custom_attributes\Form\SimplesamlphpCustomAttributesDeleteForm'
+  requirements:
+    _permission: 'administer simplesamlphp authentication'

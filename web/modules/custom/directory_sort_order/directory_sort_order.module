@@ -1,0 +1,19 @@
+<?php
+
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\ViewExecutable;
+
+function directory_sort_order_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+  // ksm($view);
+
+  if ($view->id() == 'localgov_directory_channel' && $view->current_display == 'node_embed' && $view->args[0] == '23696') {
+    dsm('Order by created date');
+    $query->orderby = [];
+    $query->orderby[1] = array(
+      'field' => 'created',
+      'direction' => 'ASC',
+    );
+    ksm($query->orderby);
+
+  }
+}

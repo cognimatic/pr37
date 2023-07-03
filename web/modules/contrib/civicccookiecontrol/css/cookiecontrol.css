@@ -77,14 +77,17 @@ span.fieldset-title {
 
 .minicolors-theme-default {
   width: 412px !important;
-  height: 30px !important;
+  max-width: 100%;
 }
 
 .minicolors-input {
-  height: 30px !important;
   width: 412px !important;
 }
 
 .filter-wrapper {
   display: none;
+}
+
+.width-90 {
+  max-width: 90% !important;
 }

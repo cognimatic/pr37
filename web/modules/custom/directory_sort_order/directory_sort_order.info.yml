@@ -1,0 +1,8 @@
+name: Directory Sort order
+type: module
+description: Change default sort order for specific Directory channels
+core_version_requirement: ^9 || ^10
+package: ABC
+dependencies:
+  - localgov_directories:localgov_directories
+

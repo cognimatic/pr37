@@ -1,9 +1,19 @@
-(function ($,Drupal, drupalSettings) {
+(function ($,Drupal, once, drupalSettings) {
     "use strict";
 
     Drupal.behaviors.cookieControlWidget = {
         attach: function (context, setting) {
-            $(document, context).once('cookieControlWidget').each(function () {
+
+          // Can not use 'document' directly.
+          if (!once('cookieControlWidget', 'html').length) {
+
+            // Early return avoid changing the indentation for the rest of
+            // the code.
+            return;
+          }
+
+          $(document, context).each(function () {
+
                 try {
                     var config = JSON.parse(drupalSettings.civiccookiecontrol);
                     if (config.debug) {
@@ -46,4 +56,4 @@
             }
         }
     }
-})(jQuery,Drupal, drupalSettings);
+})(jQuery,Drupal, once, drupalSettings);

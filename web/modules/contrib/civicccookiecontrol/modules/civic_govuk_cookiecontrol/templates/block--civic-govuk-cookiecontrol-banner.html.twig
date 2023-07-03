@@ -5,7 +5,7 @@
       <h2 id="cookie-banner-heading" class="govuk-heading-m">{{ title_banner }}</h2>
       <p class="govuk-body">{{ description }}</p>
       <p class="govuk-body">
-        {{ policy_link | raw }}
+      {{ stmt_descr }}  {{ policy_link }}.
       </p>
 
       <button value="accept" name="cookieChoice" class="govuk-button cookie-banner-button--accept govuk-\!-margin-bottom-4 govuk-\!-margin-right-4" data-module="govuk-button">
@@ -22,23 +22,23 @@
 
   <div class="cookie-banner--accept govuk-width-container govuk-body hidden" tabindex="-1">
     <p class="govuk-!-margin-top-1 govuk-!-margin-bottom-3">
-        {{ accepted_cookies | trans }} {{ change_cookie_settings_link | trans }}
+        {{ accepted_cookies }} {{ change_cookie_settings_prefix }} {{ change_cookie_settings_link }} {{ change_cookie_settings_suffix }}.
     </p>
 
     <button value="hide-accept" name="confirmationHide" class="govuk-button cookie-banner-accept--hide govuk-link govuk-!-margin-top-1  govuk-!-margin-bottom-3" data-module="govuk-button">
-      {{ hide | trans }}
+      {{ hide }}
     </button>
 
   </div>
 
   <div class="cookie-banner--reject govuk-width-container govuk-body hidden" tabindex="-1">
     <p class="govuk-\!-margin-top-1 govuk-\!-margin-bottom-3">
-      {{ rejected_cookies | trans }}
-      {{ change_cookie_settings_link | trans }}
+      {{ rejected_cookies }}
+      {{ change_cookie_settings_prefix }} {{ change_cookie_settings_link }} {{ change_cookie_settings_suffix }}.
     </p>
 
     <button value="hide-reject" name="confirmationHide" class="govuk-button cookie-banner-reject--hide govuk-link govuk-!-margin-top-1  govuk-!-margin-bottom-3" data-module="govuk-button">
-      {{ hide | trans }}
+      {{ hide }}
     </button>
 
   </div>
@@ -59,7 +59,7 @@
         <h2 id='cookie-banner-heading' class="govuk-heading-m">{{ title_banner }}</h2>
         <p class="govuk-body">{{ description }}</p>
         <p class="govuk-body">
-          {{ policy_link | raw }}
+          {{ stmt_descr }}  {{ policy_link }}.
         </p>
         <form method="post" action="/set-cookie-message" novalidate>
           <button value="accept" name="cookieChoice" class="govuk-button cookie-banner-button--accept govuk-!-margin-bottom-4 govuk-!-margin-right-4" data-module="govuk-button">

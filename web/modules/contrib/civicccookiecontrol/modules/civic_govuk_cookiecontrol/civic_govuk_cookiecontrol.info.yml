@@ -2,7 +2,7 @@ name: 'Civic GovUK Cookie Control'
 description: 'Integrates Civic Cookie Control module with DWP Design System for use with all public facing DWP services'
 type: module
 package: Civic
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 libraries:
   - civic_govuk_cookiecontrol/civic_govuk_cookiecontrol
 configure: civic_govuk_cookiecontrol.admin_overview
@@ -11,7 +11,7 @@ dependencies:
   - drupal:language
   - drupal:config_translation
 
-# Information added by Drupal.org packaging script on 2023-05-30
-version: '4.4.12'
+# Information added by Drupal.org packaging script on 2023-06-22
+version: '4.5.0'
 project: 'civicccookiecontrol'
-datestamp: 1685450501
+datestamp: 1687440910

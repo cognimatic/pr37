@@ -1,0 +1,5 @@
+simplesamlphp_custom_attributes.mappings:
+  title: 'SimpleSAMLphp Auth Attribute Mappings'
+  base_route_name: simplesamlphp_custom_attributes.list
+  names:
+    - simplesamlphp_custom_attributes.mappings

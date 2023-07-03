@@ -102,8 +102,6 @@ function redirect_path_alias_update(PathAliasInterface $path_alias) {
   // Create redirect from the old path alias to the new one.
   if ($original_path_alias->getAlias() != $path_alias->getAlias()) {
     if (!redirect_repository()->findMatchingRedirect($original_path_alias->getAlias(), [], $original_path_alias->language()->getId())) {
-      $hash = Redirect::generateHash(ltrim($path_alias->getPath(),'/'), [], $original_path_alias->language()->getId());
-      redirect_delete_by_hash($hash);
       $redirect = Redirect::create();
       $redirect->setSource($original_path_alias->getAlias());
       $redirect->setRedirect($path_alias->getPath());
@@ -207,31 +205,6 @@ function redirect_delete_by_path($path, $langcode = NULL, $match_subpaths_and_re
 }
 
 /**
- * Delete any redirects with a certain hash
- *
- * Given a hash like 'uiw673iLnkADyupNDaMwl7O2Rd08ej_dqkD3lTDCSp4'
- * this function will delete any redirects that have that specific hash
- *
- * @param string $hash
- *   An string with the hash.
- *
- * @ingroup redirect_api
- */
-function redirect_delete_by_hash($hash) {
-  $database = \Drupal::database();
-  $query = $database->select('redirect');
-  $query->addField('redirect', 'rid');
-  $query->condition('hash', $hash, '=');
-  $rids = $query->execute()->fetchCol();
-
-  if ($rids) {
-    foreach (redirect_repository()->loadMultiple($rids) as $redirect) {
-      $redirect->delete();
-    }
-  }
-}
-
-/**
  * Sort an array recusively.
  *
  * @param $array
@@ -288,13 +261,6 @@ function locale_form_redirect_edit_form_alter(array &$form, FormStateInterface $
     '#default_value' => $form['language']['#value'],
     '#description' => t('A redirect set for a specific language will always be used when requesting this page in that language, and takes precedence over redirects set for <em>All languages</em>.'),
   ];
-}
-
-/**
- * Ajax callback for the redirect link widget.
- */
-function redirect_source_link_get_status_messages(array $form, FormStateInterface $form_state) {
-  return $form['redirect_source']['widget'][0]['status_box'];
 }
 
 /**

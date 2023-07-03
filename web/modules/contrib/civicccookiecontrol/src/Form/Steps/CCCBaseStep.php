@@ -28,6 +28,13 @@ abstract class CCCBaseStep implements CCCStepInterface {
   public $tempStore;
 
   /**
+   * File url generator object.
+   *
+   * @var \Drupal\Core\File\FileUrlGenerator
+   */
+  public $fileUrlGenerator;
+
+  /**
    * Filesystem object.
    *
    * @var \Drupal\Core\File\FileSystemInterface
@@ -147,7 +154,7 @@ abstract class CCCBaseStep implements CCCStepInterface {
     $cccFormElements = $this->tempStore->get('cccFormElements');
 
     if (empty($cccFormElements)) {
-      $ymlFiles = $this->fileSystem->scanDirectory(DRUPAL_ROOT . '/' . drupal_get_path('module', 'civiccookiecontrol') . "/src/Form/CookieControlFormElements", '/.*\.yml$/');
+      $ymlFiles = $this->fileSystem->scanDirectory(DRUPAL_ROOT . '/' . \Drupal::service('extension.list.module')->getPath('civiccookiecontrol') . "/src/Form/CookieControlFormElements", '/.*\.yml$/');
       foreach ($ymlFiles as $file_path => $ymlFile) {
         $file_contents = file_get_contents($file_path);
         $formItems = Yaml::parse($file_contents);

@@ -10,6 +10,7 @@ use Drupal\civiccookiecontrol\Form\CCCFormHelper;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\File\FileUrlGenerator;
 use Drupal\Core\Link;
 use Drupal\Core\Locale\CountryManager;
 use Drupal\Core\Messenger\MessengerTrait;
@@ -44,16 +45,20 @@ class CCCSettings extends CCCBaseStep {
    *   Injected files system service.
    * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $tempStoreFactory
    *   Injected tempstore private service.
+   * @param \Drupal\Core\File\FileUrlGenerator $fileUrlGenerator
+   *   File url generator object.
    */
   public function __construct(
         CountryManager $countryManager,
         ConfigFactoryInterface $config,
         FileSystemInterface $fileSystem,
-        PrivateTempStoreFactory $tempStoreFactory
+        PrivateTempStoreFactory $tempStoreFactory,
+        FileUrlGenerator $fileUrlGenerator
     ) {
     $this->countryManager = $countryManager;
     $this->fileSystem = $fileSystem;
     $this->tempStore = $tempStoreFactory->get('civiccookiecontrol');
+    $this->fileUrlGenerator = $fileUrlGenerator;
     $this->config = $config->getEditable(CCCConfigNames::COOKIECONTROL);
     $this->loadFormElements();
   }
@@ -78,7 +83,8 @@ class CCCSettings extends CCCBaseStep {
           $container->get('country_manager'),
           $container->get('config.factory'),
           $container->get('file_system'),
-          $container->get('tempstore.private')
+          $container->get('tempstore.private'),
+          $container->get('file_url_generator')
       );
   }
 
@@ -275,7 +281,7 @@ their consent.</div>";
    *   Form field array.
    */
   public function getFormFieldArray(array $elements) {
-    global $base_url;
+    global $base_root;
 
     foreach ($elements as $key => &$element) {
       if (empty($element['needsApiValidation']) || /*($this->apiKeyValidated))*/
@@ -302,9 +308,7 @@ their consent.</div>";
         }
 
         if (empty($element['#placeholder']) && ($key == 'civiccookiecontrol_button_icon')) {
-          $element['#placeholder'] = $base_url . file_url_transform_relative(file_create_url(
-                theme_get_setting('logo.url', $this->config->get('default'))
-            ));
+          $element['#placeholder'] = $base_root . $this->fileUrlGenerator->generateString(theme_get_setting('logo.url', $this->config->get('default')));
         }
 
         if (array_key_exists('#format', $element) && $element['#format'] == 'cookie_control_html') {

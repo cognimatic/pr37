@@ -1,0 +1,9 @@
+name: Argyll and Bute Regions
+type: module
+description: Custom blocks to render the Texonomy Regions terms
+core_version_requirement: ^9 || ^10
+package: ABC
+dependencies:
+  - drupal:block
+  - drupal:taxonomy
+

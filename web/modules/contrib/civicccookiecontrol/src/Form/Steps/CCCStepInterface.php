@@ -14,7 +14,7 @@ interface CCCStepInterface extends ContainerInjectionInterface {
   /**
    * Gets the step.
    *
-   * @returns step;
+   * @returns mixed;
    */
   public function getStep();
 
@@ -52,11 +52,17 @@ interface CCCStepInterface extends ContainerInjectionInterface {
    *
    * @param array $values
    *   The array of step values.
+   *
+   * @return mixed
+   *   Array with values.
    */
   public function setValues(array $values);
 
   /**
    * Gets filled out values of step.
+   *
+   * @return mixed
+   *   Step values.
    */
   public function getValues();
 

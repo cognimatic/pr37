@@ -8,6 +8,18 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "enyo/dropzone",
+                "version": "5.7.1",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/enyo/dropzone/archive/v5.7.1.zip",
+                    "type": "zip"
+                }
+            }
         }
     ],
     "require": {
@@ -17,6 +29,7 @@
         "drupal/auditfiles": "^4.0@beta",
         "drupal/autocomplete_deluxe": "^2.0",
         "drupal/backup_migrate": "5.1.x-dev@dev",
+        "drupal/base_field_override_ui": "^1.1",
         "drupal/better_exposed_filters": "^6.0",
         "drupal/block_class": "^2.0",
         "drupal/block_field": "^1.0@RC",
@@ -33,7 +46,9 @@
         "drupal/core-recommended": "^9.1",
         "drupal/csv_serialization": "^2.1",
         "drupal/db_maintenance": "^2.0",
+        "drupal/devel_php": "^1.5",
         "drupal/did_this_help": "^2.0",
+        "drupal/dropzonejs": "^2.8",
         "drupal/editor_advanced_link": "^2.0",
         "drupal/editoria11y": "^1.0",
         "drupal/entity_embed": "^1.3",
@@ -56,6 +71,7 @@
         "drupal/layout_builder_base": "1.x-dev@dev",
         "drupal/linkchecker": "^1.1",
         "drupal/mail_login": "^2.6",
+        "drupal/maillog": "^1.1",
         "drupal/mailsystem": "^4.4",
         "drupal/media_entity_audio": "^3.0",
         "drupal/media_link_enhancements": "^1.0",
@@ -73,6 +89,7 @@
         "drupal/migrate_source_csv": "^3.5",
         "drupal/module_filter": "^3.2",
         "drupal/paragraphs_table": "^1.9",
+        "drupal/plupload": "^2.1@beta",
         "drupal/prod_check": "^1.0@alpha",
         "drupal/rabbit_hole": "^1.0@beta",
         "drupal/rabbit_hole_href": "^2.0",
@@ -91,6 +108,7 @@
         "drupal/shs": "^2.0@RC",
         "drupal/simple_styleguide": "^1.8",
         "drupal/simplesamlphp_auth": "^3.2",
+        "drupal/simplesamlphp_custom_attributes": "^2.0",
         "drupal/simplify": "^1.2",
         "drupal/single_content_sync": "^1.3",
         "drupal/site_audit": "^3.0@RC",
@@ -98,9 +116,11 @@
         "drupal/smtp": "^1.0",
         "drupal/styleguide": "^2.1",
         "drupal/svg_image": "^1.16",
+        "drupal/symfony_mailer": "^1.3@RC",
         "drupal/taxonomy_manager": "^2.0",
         "drupal/twitter_block": "^3.0@alpha",
         "drupal/type_tray": "^1.1",
+        "drupal/user_csv_import": "^2.0",
         "drupal/viewer": "^1.0@beta",
         "drupal/views_bulk_edit": "^2.8",
         "drupal/views_bulk_operations": "^4.1",
@@ -108,7 +128,9 @@
         "drupal/views_tree": "^2.0@RC",
         "drupal/webform": "^6.1",
         "drupal/webprofiler": "^9.0",
+        "drupal/xhprof": "^1.0@beta",
         "drupal/yoast_seo": "^1.7",
+        "enyo/dropzone": "^5.7",
         "localgovdrupal/localgov": "^2.0",
         "localgovdrupal/localgov_forms": "^1.0@beta",
         "localgovdrupal/localgov_moderngov": "1.x-dev",

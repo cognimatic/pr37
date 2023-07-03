@@ -313,3 +313,11 @@ CHANGELOG
 = 4.4.12 =
 * Add missing dependency on the CCC8 config service
 
+= 4.4.13 =
+* Restructure the render arrays and the twig template for GovUK submodule banner and details blocks.
+
+= 4.5.0 =
+* Update module to support drupal 10
+* Set required drupal core version to 9 || 10.
+* Update codebase to pass phpcs with Drupal and DrupalPractice profiles.
+* Fix various issues in the configuration form

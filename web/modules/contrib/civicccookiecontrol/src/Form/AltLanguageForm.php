@@ -340,7 +340,7 @@ class AltLanguageForm extends EntityForm {
           '#type' => 'textfield',
           '#title' => ucfirst($cookieCat->getCookieName()) . " " . $this->t('Label in Alternative Language'),
           '#maxlength' => 512,
-          '#default_value' => $optCookiesAltLang[$i]['label'],
+          '#default_value' => $optCookiesAltLang ? $optCookiesAltLang[$i]['label'] : NULL,
           '#description' =>
           ucfirst($cookieCat->getCookieName()) . " " . $this->t("Cookie Label in Alternative Language"),
           '#required' => TRUE,
@@ -353,7 +353,7 @@ class AltLanguageForm extends EntityForm {
           '#title' =>
           ucfirst($cookieCat->getCookieName()) . " " .
           $this->t('Optional Cookies Description in Alternative Language'),
-          '#default_value' => $optCookiesAltLang[$i]['description'],
+          '#default_value' => $optCookiesAltLang ? $optCookiesAltLang[$i]['description'] : NULL,
           '#description' => ucfirst($cookieCat->getCookieName()) . " " .
           $this->t("Cookie Description in Alternative Language"),
           '#required' => TRUE,
@@ -371,7 +371,7 @@ class AltLanguageForm extends EntityForm {
                   ['@vendorName' => ucfirst($vendor['name'])]
               ) . " " . $this->t('in Alternative Language'),
               '#maxlength' => 512,
-              '#default_value' => $optCookiesAltLang[$i]['vendors'][$j]['name'],
+              '#default_value' => $optCookiesAltLang ? $optCookiesAltLang[$i]['vendors'][$j]['name'] : NULL,
               '#description' => $this->t(
                   "Vendor @vendorName",
                   ['@vendorName' => ucfirst($vendor['name'])]
@@ -384,7 +384,7 @@ class AltLanguageForm extends EntityForm {
                   ['@vendorDesc' => ucfirst($vendor['description'])]
               ) . " " . $this->t('in Alternative Language'),
               '#maxlength' => 512,
-              '#default_value' => $optCookiesAltLang[$i]['vendors'][$j]['description'],
+              '#default_value' => $optCookiesAltLang ? $optCookiesAltLang[$i]['vendors'][$j]['description'] : NULL,
               '#description' => $this->t(
                   "Vendor @vendorDesc",
                   ['@vendorDesc' => ucfirst($vendor['description'])]
@@ -393,7 +393,7 @@ class AltLanguageForm extends EntityForm {
             $form['ccc']['container'][$cookieCat->getCookieName()]['altLanguageOptionalCookiesVendors_' . $cookieCat->id() . '_url_' . str_replace(' ', '_', $vendor['name'])] = [
               '#type' => 'url',
               '#title' => $this->t('Vendor URL in Alternative Language'),
-              '#default_value' => $optCookiesAltLang[$i]['vendors'][$j]['url'],
+              '#default_value' => $optCookiesAltLang ? $optCookiesAltLang[$i]['vendors'][$j]['url'] : NULL,
               '#description' => $this->t('Vendor URL in Alternative Language'),
             ];
             $form['ccc']['container'][$cookieCat->getCookieName()]['altLanguageOptionalCookiesVendors_' . $cookieCat->id() . '_thrd_' . str_replace(' ', '_', $vendor['name'])] = [
@@ -402,7 +402,7 @@ class AltLanguageForm extends EntityForm {
                 TRUE => $this->t('Yes'),
                 FALSE => $this->t('No'),
               ],
-              '#default_value' => $optCookiesAltLang[$i]['vendors'][$j]['thirdPartyCookies'],
+              '#default_value' => $optCookiesAltLang ? $optCookiesAltLang[$i]['vendors'][$j]['thirdPartyCookies'] : NULL,
               '#type' => 'radios',
               '#description' => $this->t('Vendor Third Party Cookies in Alternative Language'),
             ];

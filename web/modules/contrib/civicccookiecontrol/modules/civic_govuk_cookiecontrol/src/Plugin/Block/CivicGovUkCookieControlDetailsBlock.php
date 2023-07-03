@@ -16,6 +16,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -28,6 +29,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class CivicGovUkCookieControlDetailsBlock extends BlockBase implements ContainerFactoryPluginInterface {
   use LoggerChannelTrait;
+  use StringTranslationTrait;
+
   /**
    * The language manager service.
    *
@@ -164,45 +167,58 @@ class CivicGovUkCookieControlDetailsBlock extends BlockBase implements Container
       foreach ($categoriesList as $entity) {
         $categories[] = [
           'id' => $entity->id(),
-          'title' => $entity->label(),
-          'cookieLabel' => array_key_exists($i, $optCookiesAltLang) ? $optCookiesAltLang[$i]['label'] : $entity->getCookieLabel(),
-          'cookieDescription' => array_key_exists($i, $optCookiesAltLang) ? $optCookiesAltLang[$i]['description'] : $entity->getCookieDescription(),
+          'title' => ['#plain_text' => $entity->label()],
+          'cookieLabel' => ['#plain_text' => array_key_exists($i, $optCookiesAltLang) ? $optCookiesAltLang[$i]['label'] : $entity->getCookieLabel()],
+          'cookieDescription' => ['#markup' => array_key_exists($i, $optCookiesAltLang) ? $optCookiesAltLang[$i]['description'] : $entity->getCookieDescription()],
         ];
         $i++;
       }
       $renderArray['#categories'] = $categories;
-      $renderArray['#title_details'] = $altLangEntity->getAltLanguageTitle();
-      $renderArray['#description'] = $altLangEntity->getAltLanguageIntro();
-      $renderArray['#yes_text'] = $altLangEntity->getAltLanguageOn();
-      $renderArray['#no_text'] = $altLangEntity->getAltLanguageOff();
+      $renderArray['#title_details'] = ['#plain_text' => $altLangEntity->getAltLanguageTitle()];
+      $renderArray['#description'] = ['#markup' => $altLangEntity->getAltLanguageIntro()];
+      $renderArray['#yes_text'] = ['#plain_text' => $altLangEntity->getAltLanguageOn()];
+      $renderArray['#no_text'] = ['#plain_text' => $altLangEntity->getAltLanguageOff()];
     }
     else {
       foreach ($categoriesList as $entity) {
         $categories[] = [
           'id' => $entity->id(),
-          'title' => $entity->label(),
-          'cookieLabel' => $entity->getCookieLabel(),
-          'cookieDescription' => $entity->getCookieDescription(),
+          'title' => ['#plain_text' => $entity->label()],
+          'cookieLabel' => ['#plain_text' => $entity->getCookieLabel()],
+          'cookieDescription' => ['#markup' => $entity->getCookieDescription()],
         ];
       }
       $renderArray['#categories'] = $categories;
-      $renderArray['#title_details'] = $this->cookieControlConfig->get('civiccookiecontrol_title_text');
-      $renderArray['#description'] = $this->cookieControlConfig->get('civiccookiecontrol_intro_text');
-      $renderArray['#yes_text'] = $this->cookieControlConfig->get('civiccookiecontrol_on_text');
-      $renderArray['#no_text'] = $this->cookieControlConfig->get('civiccookiecontrol_off_text');
+      $renderArray['#title_details'] = ['#plain_text' => $this->cookieControlConfig->get('civiccookiecontrol_title_text')];
+      $renderArray['#description'] = ['#markup' => $this->cookieControlConfig->get('civiccookiecontrol_intro_text')];
+      $renderArray['#yes_text'] = ['#plain_text' => $this->cookieControlConfig->get('civiccookiecontrol_on_text')];
+      $renderArray['#no_text'] = ['#plain_text' => $this->cookieControlConfig->get('civiccookiecontrol_off_text')];
     }
     $renderArray['#optional_cookie_text'] =
-          $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_optional_cookie_text');
-
+      [
+        '#plain_text' => $this->getStringTranslation()
+          ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_optional_cookie_text')),
+      ];
     $renderArray['#saved_settings_text'] =
-          $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_saved_settings_text');
-
+      [
+        '#plain_text' => $this->getStringTranslation()
+          ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_saved_settings_text')),
+      ];
     $renderArray['#save_and_continue'] =
-          $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_save_and_continue');
+      [
+        '#plain_text' => $this->getStringTranslation()
+          ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_save_and_continue')),
+      ];
     $renderArray['#allow_cookies_question_prefix'] =
-          $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_allow_cookies_question_prefix');
+      [
+        '#plain_text' => $this->getStringTranslation()
+          ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_allow_cookies_question_prefix')),
+      ];
     $renderArray['#allow_cookies_question_suffix'] =
-           $this->cookieControlGovUkConfig->get('govuk_cookiecontrol_allow_cookies_question_suffix');
+      [
+        '#plain_text' => $this->getStringTranslation()
+          ->translate($this->cookieControlGovUkConfig->get('govuk_cookiecontrol_allow_cookies_question_suffix')),
+      ];
 
     return $renderArray;
   }

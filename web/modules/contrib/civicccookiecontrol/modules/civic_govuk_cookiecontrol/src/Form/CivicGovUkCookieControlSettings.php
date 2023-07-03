@@ -9,6 +9,7 @@ namespace Drupal\civic_govuk_cookiecontrol\Form;
 
 use Drupal\civic_govuk_cookiecontrol\GovUKConfigNames;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
@@ -44,6 +45,13 @@ class CivicGovUkCookieControlSettings extends ConfigFormBase {
   protected $langCodes;
 
   /**
+   * The list of available modules.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected $extensionListModule;
+
+  /**
    * CivicGovUkCookieControlSettings constructor.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config
@@ -52,17 +60,21 @@ class CivicGovUkCookieControlSettings extends ConfigFormBase {
    *   Injected language manager service.
    * @param \Drupal\locale\StringStorageInterface $localeStorage
    *   Injected string storage service.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
+   *   List of available modules.
    */
   public function __construct(
         ConfigFactoryInterface $config,
         LanguageManagerInterface $languageManager,
-        StringStorageInterface $localeStorage
+        StringStorageInterface $localeStorage,
+        ModuleExtensionList $extension_list_module
     ) {
     parent::__construct($config);
     // $this->config = $config->getEditable(GovUKConfigNames::GOVUKSETTINGS);
     // $this->cccConfig = $config->get(GovUKConfigNames::COOKIECONTROL);
     $this->languageManager = $languageManager;
     $this->localeStorage = $localeStorage;
+    $this->extensionListModule = $extension_list_module;
     $this->langCodes = $this->languageManager->getLanguages();
     civiccookiecontrol_check_cookie_categories();
     $this->checkStmtFields();
@@ -101,7 +113,8 @@ class CivicGovUkCookieControlSettings extends ConfigFormBase {
     return new static(
           $container->get('config.factory'),
           $container->get('language_manager'),
-          $container->get('locale.storage')
+          $container->get('locale.storage'),
+          $container->get('extension.list.module')
       );
   }
 
@@ -210,11 +223,8 @@ class CivicGovUkCookieControlSettings extends ConfigFormBase {
    *   Current language string.
    */
   protected function loadSettings(array &$form, $langCode, $lang) {
-    $iabYamlPath = drupal_get_path(
-          'module',
-          'civic_govuk_cookiecontrol'
-      ) .
-          "/src/Form/GovUkFormElements/civic_govuk_cookiecontrol.texts.yml";
+    $iabYamlPath = $this->extensionListModule->getPath('civic_govuk_cookiecontrol') .
+      "/src/Form/GovUkFormElements/civic_govuk_cookiecontrol.texts.yml";
 
     $formItems = Yaml::parse(file_get_contents($iabYamlPath));
     foreach ($formItems as $key => $element) {

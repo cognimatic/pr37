@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * SimpleSAMLphp Custom Attribute Mapping module.
+ */
+
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_help().
+ */
+function simplesamlphp_custom_attributes_help($route_name) {
+  switch ($route_name) {
+    case 'simplesamlphp_custom_attributes.list':
+    case 'help.page.simplesamlphp_custom_attributes':
+      return t('<p>This module saves SimpleSAMLphp attributes to Drupal user fields.</p>');
+  }
+}
+
+/**
+ * Alter a user account after authentication using attribute mapping.
+ *
+ * @param Drupal\user\UserInterface $account
+ *   The user account that can be altered.
+ * @param array $attributes
+ *   The SimpleSAMLphp attributes for this user.
+ *
+ * @return bool|UserInterface
+ *   The altered user account
+ */
+function simplesamlphp_custom_attributes_simplesamlphp_auth_user_attributes(UserInterface $account, array $attributes) {
+  $mappings = Drupal::config('simplesamlphp_custom_attributes.mappings')->get('mappings');
+  /** @var Drupal\Core\Entity\EntityFieldManagerInterface $entityFieldManager */
+  $entityFieldManager = Drupal::service('entity_field.manager');
+  $fields = $entityFieldManager->getFieldDefinitions('user', 'user');
+  $changed = 0;
+  foreach ($mappings as $mapping) {
+    if (
+      isset($attributes[$mapping['attribute_name']]) &&
+      $account->hasField($mapping['field_name']) &&
+      isset($fields[$mapping['field_name']])
+    ) {
+      $changed = 1;
+      $attribute = $attributes[$mapping['attribute_name']];
+      $field = $fields[$mapping['field_name']];
+      $type = $field->getType();
+      $cardinality = $field->getFieldStorageDefinition()->getCardinality();
+      // Handle entity reference fields.
+      if ($type === 'entity_reference' && is_numeric($attribute)) {
+        $attribute = ['target_id' => $attribute];
+      }
+      // Basic support for cardinality.
+      if ($cardinality !== 1 and $type === 'entity_reference') {
+        $account->get($mapping['field_name'])->appendItem($attribute);
+      }
+      else {
+        $account->set($mapping['field_name'], $attribute);
+      }
+    }
+  }
+  return ($changed) ? $account : FALSE;
+}

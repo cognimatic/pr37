@@ -27,9 +27,9 @@ civiccookiecontrol.settings:
     js/cookieControlSettings.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
     - core/drupal
     - core/drupalSettings
+    - core/once
 
 civiccookiecontrol.admin:
   js:
@@ -55,3 +55,8 @@ civiccookiecontrol.minicolors:
   css:
     component:
       https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.4/jquery.minicolors.min.css: {type: external, minified: true}
+
+civiccookiecontrol.admin_toggle_css:
+  css:
+    component:
+      css/cookiecontroltoggle.css: {}
