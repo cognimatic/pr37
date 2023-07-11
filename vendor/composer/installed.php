@@ -3,7 +3,7 @@
         'name' => 'localgovdrupal/localgov-project',
         'pretty_version' => 'dev-devel',
         'version' => 'dev-devel',
-        'reference' => 'b58cb61a7bcbbbcee386c17181c5c7a5a0f90df4',
+        'reference' => '21c01deec1aaec0aefe2f0bf65b92cb91b42f982',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -1987,15 +1987,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'drupal/shield' => array(
-            'pretty_version' => '1.7.0',
-            'version' => '1.7.0.0',
-            'reference' => '8.x-1.7',
-            'type' => 'drupal-module',
-            'install_path' => __DIR__ . '/../../web/modules/contrib/shield',
-            'aliases' => array(),
-            'dev_requirement' => true,
-        ),
         'drupal/shs' => array(
             'pretty_version' => '2.0.0-rc4',
             'version' => '2.0.0.0-RC4',
@@ -2623,7 +2614,7 @@
         'localgovdrupal/localgov-project' => array(
             'pretty_version' => 'dev-devel',
             'version' => 'dev-devel',
-            'reference' => 'b58cb61a7bcbbbcee386c17181c5c7a5a0f90df4',
+            'reference' => '21c01deec1aaec0aefe2f0bf65b92cb91b42f982',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

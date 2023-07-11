@@ -1,0 +1,5 @@
+civica_payment_handler.settings:
+  title: Civica Payment settings
+  parent: system.admin_config_services
+  route_name: civica_payment_handler.settings
+  weight: 10

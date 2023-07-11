@@ -1,0 +1,7 @@
+civica_payment_endpoint: 'https://www.civicaepay.co.uk/ArgyllButeEstoreTest/TransportableBasket/api/BasketApi/CreateImmediatePaymentBasket'
+callingAppIdentifier: 'Drupal'
+customerId: 'Drupal'
+apiPassword: 'Ar9yllDrup41'
+returnUrl: 'http://localhost:8080/my-council/payment/thankyou'
+notifyURL: 'http://localhost:8080/my-council/payment/thankyou'
+langcode: 'en'

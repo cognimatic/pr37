@@ -1,0 +1,16 @@
+civica_payment_handler.content:
+  path: '/my-council/payment/thankyou'
+  defaults:
+    _controller: '\Drupal\civica_payment_handler\Controller\paymentthanksController::paymentthanksPage'
+    _title: 'Thank you for your payment'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+civica_payment_handler.settings:
+  path: '/admin/config/services/civica_payment_settings'
+  defaults:
+    _title: 'Settings'
+    _form: 'Drupal\civica_payment_handler\Form\SettingsForm'
+  requirements:
+    _permission: 'administer site configuration'
