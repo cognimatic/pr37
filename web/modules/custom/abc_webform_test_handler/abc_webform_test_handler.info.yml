@@ -1,0 +1,7 @@
+name: ABC Test Webform Handler
+type: module
+description: Test impact of saving submission multiple times
+core_version_requirement: ^8 || ^9 || ^10
+package: ABC
+dependencies:
+  - 'webform:webform'
