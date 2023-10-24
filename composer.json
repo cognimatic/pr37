@@ -38,7 +38,6 @@
         "drupal/cludo_search": "^1.0@beta",
         "drupal/coffee": "^1.2",
         "drupal/config_split": "^2.0@RC",
-        "drupal/console": "~1.0",
         "drupal/content_moderation_notifications": "^3.4",
         "drupal/content_readability": "^2.0",
         "drupal/convert_bundles": "^1.0@alpha",
@@ -136,6 +135,7 @@
         "localgovdrupal/localgov_multilingual": "1.x-dev",
         "localgovdrupal/localgov_os_places_geocoder_provider": "1.x-dev",
         "localgovdrupal/localgov_publications": "1.x-dev",
+        "mglaman/composer-drupal-lenient": "^1.0",
         "simplesamlphp/simplesamlphp": " ^1.19"
     },
     "require-dev": {
@@ -173,7 +173,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "simplesamlphp/composer-module-installer": true,
             "drupal/console-extend-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "mglaman/composer-drupal-lenient": true
         }
     },
     "extra": {
@@ -234,6 +235,9 @@
                 "  * Remove the plugin that prints this message:",
                 "      composer remove drupal/core-project-message"
             ]
+        },
+        "drupal-lenient": {
+            "allowed-list": ["drupal/filefield_sources", "drupal/cludo_search", "drupal/db_maintenance"]
         }
 
     }

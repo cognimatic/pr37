@@ -49,14 +49,13 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         '96f8d8288528d52059397cad6ec61f17' => __DIR__ . '/..' . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvanced.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'c9d07b32a2e02bc0fc582d4f0c1b56cc' => __DIR__ . '/..' . '/laminas/laminas-servicemanager/src/autoload.php',
         '9e4824c5afbdc1482b6025ce3d4dfde8' => __DIR__ . '/..' . '/league/csv/src/functions_include.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
-        '5a12a5271c58108e0aa33355e6ac54ea' => __DIR__ . '/..' . '/drupal/console-core/src/functions.php',
         '92c8763cd6170fce6fcfe7e26b4e8c10' => __DIR__ . '/..' . '/symfony/phpunit-bridge/bootstrap.php',
         '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
     );
@@ -137,7 +136,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Symfony\\Component\\HttpFoundation\\' => 33,
             'Symfony\\Component\\Finder\\' => 25,
             'Symfony\\Component\\Filesystem\\' => 29,
-            'Symfony\\Component\\ExpressionLanguage\\' => 37,
             'Symfony\\Component\\EventDispatcher\\' => 34,
             'Symfony\\Component\\ErrorHandler\\' => 31,
             'Symfony\\Component\\DomCrawler\\' => 29,
@@ -152,7 +150,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Symfony\\Bundle\\FrameworkBundle\\' => 31,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Symfony\\Bridge\\PhpUnit\\' => 23,
-            'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 49,
             'Spatie\\PdfToImage\\' => 18,
             'Solarium\\' => 9,
             'SlevomatCodingStandard\\' => 23,
@@ -288,9 +285,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Drush\\' => 6,
             'Drupal\\Driver\\' => 14,
             'Drupal\\Core\\' => 12,
-            'Drupal\\Console\\Core\\' => 20,
-            'Drupal\\Console\\Composer\\Plugin\\' => 31,
-            'Drupal\\Console\\' => 15,
             'Drupal\\Composer\\Plugin\\Scaffold\\' => 32,
             'Drupal\\Component\\' => 17,
             'Drupal\\' => 7,
@@ -328,6 +322,7 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
             'Composer\\Installers\\' => 20,
             'Composer\\CaBundle\\' => 18,
             'Composer\\' => 9,
+            'ComposerDrupalLenient\\' => 22,
             'Complex\\' => 8,
             'CommerceGuys\\Addressing\\' => 24,
             'Clue\\StreamFilter\\' => 18,
@@ -342,7 +337,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         array (
             'Asm89\\Stack\\' => 12,
             'ArrayQuery\\' => 11,
-            'Alchemy\\Zippy\\' => 14,
         ),
     );
 
@@ -533,10 +527,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         array (
             0 => __DIR__ . '/..' . '/symfony/filesystem',
         ),
-        'Symfony\\Component\\ExpressionLanguage\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/expression-language',
-        ),
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
@@ -592,10 +582,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'Symfony\\Bridge\\PhpUnit\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/phpunit-bridge',
-        ),
-        'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/stecman/symfony-console-completion/src',
         ),
         'Spatie\\PdfToImage\\' => 
         array (
@@ -1008,18 +994,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         array (
             0 => __DIR__ . '/../..' . '/web/core/lib/Drupal/Core',
         ),
-        'Drupal\\Console\\Core\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/drupal/console-core/src',
-        ),
-        'Drupal\\Console\\Composer\\Plugin\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/drupal/console-extend-plugin/src',
-        ),
-        'Drupal\\Console\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/drupal/console/src',
-        ),
         'Drupal\\Composer\\Plugin\\Scaffold\\' => 
         array (
             0 => __DIR__ . '/..' . '/drupal/core-composer-scaffold',
@@ -1159,6 +1133,10 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         array (
             0 => __DIR__ . '/..' . '/composer/composer/src/Composer',
         ),
+        'ComposerDrupalLenient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mglaman/composer-drupal-lenient/src',
+        ),
         'Complex\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
@@ -1191,10 +1169,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         'ArrayQuery\\' => 
         array (
             0 => __DIR__ . '/..' . '/minnur/array-query/src',
-        ),
-        'Alchemy\\Zippy\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/alchemy/zippy/src',
         ),
     );
 
@@ -1244,14 +1218,6 @@ class ComposerStaticInitac63a14fe3e83462456265cb381107bb
         ),
         'D' => 
         array (
-            'Dflydev\\PlaceholderResolver' => 
-            array (
-                0 => __DIR__ . '/..' . '/dflydev/placeholder-resolver/src',
-            ),
-            'Dflydev\\DotAccessConfiguration' => 
-            array (
-                0 => __DIR__ . '/..' . '/dflydev/dot-access-configuration/src',
-            ),
             'DaveChild\\TextStatistics' => 
             array (
                 0 => __DIR__ . '/..' . '/davechild/textstatistics/src',
