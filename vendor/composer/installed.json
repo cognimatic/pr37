@@ -6170,6 +6170,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "D10 compatability": "https://www.drupal.org/files/issues/2023-06-23/automateddrupal10compatibilityissues-3286921.patch"
                 }
             },
             "installation-source": "dist",
@@ -9445,34 +9448,31 @@
         },
         {
             "name": "drupal/image_resize_filter",
-            "version": "1.1.0",
-            "version_normalized": "1.1.0.0",
+            "version": "dev-1.x",
+            "version_normalized": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/image_resize_filter.git",
-                "reference": "8.x-1.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/image_resize_filter-8.x-1.1.zip",
-                "reference": "8.x-1.1",
-                "shasum": "5a8869959407f2eeec7495d5cf64396334e0a673"
+                "reference": "cb99bc8c1d83e80e8d8fb78bd7056576660c8613"
             },
             "require": {
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^9.3 || ^10"
             },
             "type": "drupal-module",
             "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
                 "drupal": {
-                    "version": "8.x-1.1",
-                    "datestamp": "1591040375",
+                    "version": "8.x-1.1+2-dev",
+                    "datestamp": "1661585246",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
                     }
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
                 "GPL-2.0-or-later"

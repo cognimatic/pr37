@@ -65,7 +65,7 @@
         "drupal/httpswww": "^2.0",
         "drupal/iframe": "^2.21",
         "drupal/image_effects": "^3.3",
-        "drupal/image_resize_filter": "^1.1",
+        "drupal/image_resize_filter": "1.x-dev@dev",
         "drupal/jquery_ui_datepicker": "^2.0",
         "drupal/keysave": "^1.0@beta",
         "drupal/layout_builder_base": "1.x-dev@dev",
@@ -210,6 +210,9 @@
             "drupal/core": {
               "Deprecated function: pathinfo() on template_preprocess_image_style 3306131": "https://git.drupalcode.org/project/drupal/-/merge_requests/2680.diff",
               "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch"
+            },
+            "drupal/db_maintenance": {
+              "D10 compatability": "https://www.drupal.org/files/issues/2023-06-23/automateddrupal10compatibilityissues-3286921.patch"
             },
             "drupal/filefield_sources": {
               "D10 Compatability https://www.drupal.org/project/filefield_sources/issues/3336268": "https://www.drupal.org/files/issues/2023-08-15/3336268-3-filefield_sources-drupal-10-compatibility.patch"

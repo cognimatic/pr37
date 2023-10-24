@@ -3,7 +3,7 @@
         'name' => 'localgovdrupal/localgov-project',
         'pretty_version' => 'dev-devel',
         'version' => 'dev-devel',
-        'reference' => '0e9f74a9de50f4df4ba93d924f73107f4f66551e',
+        'reference' => '81b90cc83c4798b2601c6334ac4675e1e8a4ec4b',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -1383,12 +1383,14 @@
             'dev_requirement' => false,
         ),
         'drupal/image_resize_filter' => array(
-            'pretty_version' => '1.1.0',
-            'version' => '1.1.0.0',
-            'reference' => '8.x-1.1',
+            'pretty_version' => 'dev-1.x',
+            'version' => 'dev-1.x',
+            'reference' => 'cb99bc8c1d83e80e8d8fb78bd7056576660c8613',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/image_resize_filter',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
             'dev_requirement' => false,
         ),
         'drupal/image_widget_crop' => array(
@@ -2625,7 +2627,7 @@
         'localgovdrupal/localgov-project' => array(
             'pretty_version' => 'dev-devel',
             'version' => 'dev-devel',
-            'reference' => '0e9f74a9de50f4df4ba93d924f73107f4f66551e',
+            'reference' => '81b90cc83c4798b2601c6334ac4675e1e8a4ec4b',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
