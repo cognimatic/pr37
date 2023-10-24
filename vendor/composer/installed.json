@@ -13997,28 +13997,30 @@
         },
         {
             "name": "drupal/site_audit",
-            "version": "3.0.0-rc4",
-            "version_normalized": "3.0.0.0-RC4",
+            "version": "4.0.0-rc2",
+            "version_normalized": "4.0.0.0-RC2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/site_audit.git",
-                "reference": "8.x-3.0-rc4"
+                "reference": "4.0.0-rc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/site_audit-8.x-3.0-rc4.zip",
-                "reference": "8.x-3.0-rc4",
-                "shasum": "99b84c9a05f3b9c9255f5570a96463edd8d0a551"
+                "url": "https://ftp.drupal.org/files/projects/site_audit-4.0.0-rc2.zip",
+                "reference": "4.0.0-rc2",
+                "shasum": "929711da9866856864fcc44e99e029b16c7b67f2"
             },
             "require": {
-                "drupal/core": "^8 || ^9",
-                "php": ">=5.6.0"
+                "drupal/core": "^9.2 | ^10"
+            },
+            "require-dev": {
+                "drupal/site_audit_report_entity": "*"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-3.0-rc4",
-                    "datestamp": "1657821381",
+                    "version": "4.0.0-rc2",
+                    "datestamp": "1696979535",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "RC releases are not covered by Drupal security advisories."

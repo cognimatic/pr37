@@ -11,7 +11,7 @@ use Drupal\site_audit\Plugin\SiteAuditCheckBase;
  *  id = "content_field_instances",
  *  name = @Translation("Field instance counts"),
  *  description = @Translation("For each bundle, entity and instance, get the count of populated fields."),
- *  report = "content"
+ *  checklist = "content"
  * )
  */
 class ContentFieldInstances extends SiteAuditCheckBase {
@@ -105,7 +105,7 @@ class ContentFieldInstances extends SiteAuditCheckBase {
                 $field_count = $this->custom_field_count($bundle, $table, $field . '_given');
                 break;
               default:
-                $query = \Drupal::entityQuery($entity);
+                $query = \Drupal::entityQuery($entity)->accessCheck(FALSE);
                 if (!empty($bundle_column_name)) {
                   $query->condition($bundle_column_name, $bundle);
                 }
@@ -114,8 +114,9 @@ class ContentFieldInstances extends SiteAuditCheckBase {
                 $field_count = $query->execute();
             }
           }
-          catch (\Drupal\Core\Entity\Query\QueryException $e) {
+          catch (\Exception $e) {
             $field_count = get_class($e) . ': ' . $e->getMessage();
+            watchdog_exception('site_audit', $e);
           }
           $this->registry->field_instance_counts[$bundle][$entity][$field] = $field_count;
         }
