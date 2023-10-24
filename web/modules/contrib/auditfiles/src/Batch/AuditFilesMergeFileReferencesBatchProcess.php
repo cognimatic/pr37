@@ -20,9 +20,9 @@ final class AuditFilesMergeFileReferencesBatchProcess {
    * Constructs a new AuditFilesMergeFileReferencesBatchProcess.
    */
   final protected function __construct(
-    protected EventDispatcherInterface $eventDispatcher,
-    protected FileEntityReference $canonicalFile,
-    protected FileEntityReference $mergedFile,
+    protected readonly EventDispatcherInterface $eventDispatcher,
+    protected readonly FileEntityReference $canonicalFile,
+    protected readonly FileEntityReference $mergedFile,
   ) {
   }
 

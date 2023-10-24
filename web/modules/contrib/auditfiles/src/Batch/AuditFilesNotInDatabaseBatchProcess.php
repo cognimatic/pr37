@@ -22,8 +22,8 @@ final class AuditFilesNotInDatabaseBatchProcess {
    * Constructs a new AuditFilesNotInDatabaseBatchProcess.
    */
   final protected function __construct(
-    protected EventDispatcherInterface $eventDispatcher,
-    protected DiskReference $reference,
+    protected readonly EventDispatcherInterface $eventDispatcher,
+    protected readonly DiskReference $reference,
   ) {
   }
 

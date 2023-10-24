@@ -7,7 +7,7 @@ use Drupal\Core\Url;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\localgov_geo\Entity\LocalgovGeo;
+use Drupal\geo_entity\Entity\GeoEntity;
 use Drupal\localgov_openreferral\Entity\PropertyMapping;
 use Drupal\search_api\Entity\Index;
 use Drupal\search_api\Utility\Utility;
@@ -26,6 +26,48 @@ class ResourceTest extends BrowserTestBase {
   use NodeCreationTrait;
 
   /**
+   * Skip schema checks.
+   *
+   * @var string[]
+   */
+  protected static $configSchemaCheckerExclusions = [
+    // Missing schema:
+    // - 'content.location.settings.reset_map.position'.
+    // - 'content.location.settings.weight'.
+    'core.entity_view_display.localgov_geo.area.default',
+    'core.entity_view_display.localgov_geo.area.embed',
+    'core.entity_view_display.localgov_geo.area.full',
+    'core.entity_view_display.geo_entity.area.default',
+    'core.entity_view_display.geo_entity.area.embed',
+    'core.entity_view_display.geo_entity.area.full',
+    // Missing schema:
+    // - content.location.settings.geometry_validation.
+    // - content.location.settings.multiple_map.
+    // - content.location.settings.leaflet_map.
+    // - content.location.settings.height.
+    // - content.location.settings.height_unit.
+    // - content.location.settings.hide_empty_map.
+    // - content.location.settings.disable_wheel.
+    // - content.location.settings.gesture_handling.
+    // - content.location.settings.popup.
+    // - content.location.settings.popup_content.
+    // - content.location.settings.leaflet_popup.
+    // - content.location.settings.leaflet_tooltip.
+    // - content.location.settings.map_position.
+    // - content.location.settings.weight.
+    // - content.location.settings.icon.
+    // - content.location.settings.leaflet_markercluster.
+    // - content.location.settings.feature_properties.
+    'core.entity_form_display.geo_entity.address.default',
+    'core.entity_form_display.geo_entity.address.inline',
+    // Missing schema:
+    // - content.postal_address.settings.providers.
+    // - content.postal_address.settings.geocode_geofield.
+    'core.entity_form_display.localgov_geo.address.default',
+    'core.entity_form_display.localgov_geo.address.inline',
+  ];
+
+  /**
    * Modules to install.
    *
    * @var array
@@ -37,7 +79,7 @@ class ResourceTest extends BrowserTestBase {
     'search_api',
     'facets',
     'node',
-    'localgov_geo_address',
+    'geo_entity_address',
   ];
 
   /**
@@ -51,6 +93,41 @@ class ResourceTest extends BrowserTestBase {
    * @var \Drupal\Core\Entity\EntityInterface
    */
   protected $entity;
+
+  /**
+   * Organization Type node for testing.
+   *
+   * @var \Drupal\node\Entity\NodeType
+   */
+  protected $organizationType;
+
+  /**
+   * Organization node for testing.
+   *
+   * @var \Drupal\node\Entity\Node
+   */
+  protected $organization;
+
+  /**
+   * Location Geo Entity for testing.
+   *
+   * @var \Drupal\geo_entity\Entity\GeoEntity
+   */
+  protected $location;
+
+  /**
+   * Service Type node for testing.
+   *
+   * @var \Drupal\node\Entity\NodeType
+   */
+  protected $serviceType;
+
+  /**
+   * Service node for testing.
+   *
+   * @var \Drupal\node\Entity\Node
+   */
+  protected $service;
 
   /**
    * {@inheritdoc}
@@ -123,7 +200,7 @@ class ResourceTest extends BrowserTestBase {
     ])->save();
     $this->organization = $this->createNode(['type' => $this->organizationType->id()]);
 
-    $this->location = LocalgovGeo::create([
+    $this->location = GeoEntity::create([
       'bundle' => 'address',
       'label' => $this->randomString(256),
       'status' => 0,

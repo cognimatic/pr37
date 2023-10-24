@@ -7,7 +7,7 @@ _meta:
   depends:
     b9dbea76-8a95-459b-847a-7f331ba2b508: node
     f590d6ff-97f2-45f1-a387-2d427f3c7c2f: localgov_directories_facets
-    f75bd1bc-ca41-49b3-b1b5-fdabc686ab2c: localgov_geo
+    f75bd1bc-ca41-49b3-b1b5-fdabc686ab2c: geo_entity
 default:
   revision_uid:
     -

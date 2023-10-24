@@ -33,6 +33,13 @@ class SearchApiDataRow extends DataEntityRow {
   use LoggerTrait;
 
   /**
+   * Search API Index.
+   *
+   * @var \Drupal\search_api\IndexInterface|null
+   */
+  protected $index;
+
+  /**
    * {@inheritdoc}
    */
   public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {

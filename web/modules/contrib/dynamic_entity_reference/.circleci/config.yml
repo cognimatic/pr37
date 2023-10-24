@@ -6,16 +6,16 @@ workflows:
       - test:
           matrix:
             parameters:
-              php: ["7.4", "8.0"]
-              drupal-version: ["9.3.x", "9.4.x"]
+              php: ["8.1", "8.2"]
+              drupal-version: ["10.1.x", "11.x"]
   # Run nightly tests every day 8 AM.
   nightly:
     jobs:
     - test:
         matrix:
           parameters:
-            php: ["7.4", "8.0"]
-            drupal-version: ["9.3.x", "9.4.x"]
+            php: ["8.1", "8.2"]
+            drupal-version: ["10.1.x", "11.x"]
     triggers:
     - schedule:
         # Weekday (22=10pm UTC). Evaluates to 8am AEST.
@@ -23,8 +23,8 @@ workflows:
         filters:
           branches:
             only:
-            - 8.x-1.x
-            - 8.x-2.x
+            - 3.x
+            - 4.x
 
 jobs:
   test:
@@ -34,21 +34,21 @@ jobs:
       drupal-version:
         type: string
     docker:
-    - image: skpr/php-circleci:<< parameters.php >>-1.x
+    - image: skpr/php-circleci:<< parameters.php >>-v2-latest
       environment:
         MODULE_NAME: dynamic_entity_reference
         SIMPLETEST_BASE_URL: http://127.0.0.1:8080
         SIMPLETEST_DB: mysql://drupal:drupal@127.0.0.1/local
         BROWSERTEST_OUTPUT_FILE: /data/app/sites/simpletest/browser_output.html
         BROWSERTEST_OUTPUT_DIRECTORY: /data/app/sites/simpletest/browser_output
-        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", null, "http:\/\/127.0.0.1:4444\/wd\/hub"]'
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"chromeOptions": { "args": [ "--disable-gpu", "--headless" ] } }, "http://127.0.0.1:4444/wd/hub" ]'
     - image: mariadb
       environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: local
         MYSQL_USER: drupal
         MYSQL_PASSWORD: drupal
-    - image: selenium/standalone-chrome:latest
+    - image: selenium/standalone-chrome:3.141.59-oxygen
     working_directory: /data/app
     steps:
     - setup_remote_docker:
@@ -66,8 +66,19 @@ jobs:
         name: Fetch drupal dependencies, dev dependencies, and module test dependencies
         command: |
           composer install --prefer-dist --no-progress
-          composer require drupal/diff:1.x-dev --no-progress
-          composer require --dev "phpstan/phpstan:^1.1" "phpstan/phpstan-deprecation-rules:^1.0" "mglaman/phpstan-drupal:^1.0"
+          composer require --dev "phpstan/phpstan-deprecation-rules:^1.0"
+    - when:
+        name: Fetch drupal 10 dependencies, dev dependencies, and module test dependencies
+        condition:
+          or:
+          - equal: [ "10.0.x", << parameters.drupal-version >> ]
+          - equal: [ "10.1.x", << parameters.drupal-version >> ]
+        steps:
+          - run: composer require 'drupal/hal-hal:^1.0'
+
+    - run:
+        name: Show all installed composer packages.
+        command: composer show
 
     - checkout:
         path: modules/${MODULE_NAME}

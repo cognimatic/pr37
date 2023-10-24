@@ -1,0 +1,10 @@
+{
+    "name": "drupal/simplesamlphp_custom_attributes",
+    "description": "This module is a child module of simpleSAMLphp Authentication. It provides a user interface to map attributes from SAML login to user fields.",
+    "type": "drupal-module",
+    "homepage": "https://www.drupal.org/project/simplesamlphp_custom_attributes",
+    "license": "GPL-2.0+",
+    "require": {
+        "drupal/simplesamlphp_auth": "^3.2 || ^4"
+    }
+}

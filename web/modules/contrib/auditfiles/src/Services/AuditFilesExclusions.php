@@ -20,9 +20,9 @@ final class AuditFilesExclusions {
    * Constructs a new AuditFilesNotInDatabase.
    */
   final public function __construct(
-    protected AuditFilesConfigInterface $auditFilesConfig,
-    protected StreamWrapperManagerInterface $streamWrapperManager,
-    protected FileSystemInterface $fileSystem,
+    protected readonly AuditFilesConfigInterface $auditFilesConfig,
+    protected readonly StreamWrapperManagerInterface $streamWrapperManager,
+    protected readonly FileSystemInterface $fileSystem,
   ) {
   }
 
@@ -69,9 +69,9 @@ final class AuditFilesExclusions {
       $exclude_streams[$key] = $this->auditFilesEscapePreg($value, FALSE);
     }
     $exclusions_array = array_merge($exclusions_array, $exclude_streams);
+
     // Create the list of requested extension exclusions. (This is a little more
     // complicated).
-
     $exclude_extensions = $this->auditFilesConfig->getExcludeExtensions();
     if (count($exclude_extensions) > 0) {
       foreach ($exclude_extensions as $key => $value) {

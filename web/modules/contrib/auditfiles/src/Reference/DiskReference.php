@@ -13,24 +13,29 @@ final class DiskReference implements ReferenceInterface {
    * Constructs a new DiskReference.
    */
   private function __construct(
-    private string $uri,
+    private readonly string $uri,
   ) {
   }
 
-  public static function create(string $path): static {
-    return new static($path);
+  /**
+   * Creates a new DiskReference.
+   */
+  public static function create(string $uri): static {
+    return new static($uri);
   }
 
   /**
-   * @return string
+   * Get the URI.
    */
   public function getUri(): string {
     return $this->uri;
   }
 
+  /**
+   * Prints a string useful for debugging.
+   */
   public function __toString(): string {
     return sprintf('File on disk at: %s', $this->uri);
   }
-
 
 }

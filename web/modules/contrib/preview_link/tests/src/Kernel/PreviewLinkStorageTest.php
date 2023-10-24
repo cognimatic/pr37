@@ -1,16 +1,28 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\preview_link\Kernel;
 
 use Drupal\preview_link\Entity\PreviewLink;
-use Drupal\preview_link\Entity\PreviewLinkInterface;
+use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
- * Preview link form test.
+ * Preview link session test.
  *
  * @group preview_link
+ * @coversDefaultClass \Drupal\preview_link\PreviewLinkStorage
  */
-class PreviewLinkStorageTest extends PreviewLinkBase {
+final class PreviewLinkStorageTest extends PreviewLinkBase {
+
+  use ContentTypeCreationTrait;
+  use NodeCreationTrait;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static $modules = ['node', 'filter'];
 
   /**
    * Testing node.
@@ -29,8 +41,10 @@ class PreviewLinkStorageTest extends PreviewLinkBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
+    $this->installConfig(['node', 'filter']);
+    $this->createContentType(['type' => 'page']);
     $this->node = $this->createNode();
     $this->storage = $this->container->get('entity_type.manager')->getStorage('preview_link');
   }
@@ -38,35 +52,21 @@ class PreviewLinkStorageTest extends PreviewLinkBase {
   /**
    * Ensure preview link creation works.
    */
-  public function testCreatePreviewLink() {
-    $preview_link = PreviewLink::create([
-      'entity_type_id' => 'node',
-      'entity_id' => $this->node->id(),
-    ]);
+  public function testCreatePreviewLink(): void {
+    $preview_link = PreviewLink::create()->addEntity($this->node);
     $this->assertIsString($preview_link->getToken());
 
-    $preview_link = $this->storage->createPreviewLinkForEntity($this->node);
+    $preview_link = PreviewLink::create()->addEntity($this->node);
+    $preview_link->save();
     $this->assertIsString($preview_link->getToken());
-
-    $preview_link = $this->storage->createPreviewLink('node', $this->node->id());
-    $this->assertIsString($preview_link->getToken());
-  }
-
-  /**
-   * Test retrieving a preview link.
-   */
-  public function testGetPreviewLink() {
-    $preview_link = $this->storage->createPreviewLinkForEntity($this->node);
-
-    $retrieved_preview_link = $this->storage->getPreviewLinkForEntity($this->node);
-    $this->assertPreviewLinkEqual($preview_link, $retrieved_preview_link);
   }
 
   /**
    * Ensure we can re-generate a token.
    */
-  public function testRegenerateToken() {
-    $preview_link = $this->storage->createPreviewLinkForEntity($this->node);
+  public function testRegenerateToken(): void {
+    $preview_link = PreviewLink::create()->addEntity($this->node);
+    $preview_link->save();
     $current_token = $preview_link->getToken();
     $current_timestamp = $preview_link->getGeneratedTimestamp();
 
@@ -76,19 +76,6 @@ class PreviewLinkStorageTest extends PreviewLinkBase {
 
     $this->assertNotEquals($current_token, $preview_link->getToken());
     $this->assertNotEquals($current_timestamp, $preview_link->getGeneratedTimestamp());
-  }
-
-  /**
-   * Ensure two preview links are the same.
-   *
-   * @param \Drupal\preview_link\Entity\PreviewLinkInterface $preview_link1
-   *   The first preview link.
-   * @param \Drupal\preview_link\Entity\PreviewLinkInterface $preview_link2
-   *   The second preview link.
-   */
-  protected function assertPreviewLinkEqual(PreviewLinkInterface $preview_link1, PreviewLinkInterface $preview_link2) {
-    $this->assertEquals($preview_link1->getToken(), $preview_link2->getToken());
-    $this->assertEquals($preview_link1->getUrl(), $preview_link2->getUrl());
   }
 
 }

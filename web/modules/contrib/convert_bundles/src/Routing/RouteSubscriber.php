@@ -2,6 +2,7 @@
 
 namespace Drupal\convert_bundles\Routing;
 
+use Drupal\Core\Entity\EntityTypeBundleInfo;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\RouteSubscriberBase;
 use Drupal\Core\Routing\RoutingEvents;
@@ -23,13 +24,24 @@ class RouteSubscriber extends RouteSubscriberBase {
   protected $entityTypeManager;
 
   /**
+   * The entity type bundle info.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfo
+   */
+  protected $entityTypeBundleInfo;
+
+  /**
    * Constructs a new RouteSubscriber object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
    *   The entity type manager.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfo $entity_type_bundle_info
+   *   The entity type bundle info.
    */
-  public function __construct(EntityTypeManagerInterface $entity_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_manager, EntityTypeBundleInfo $entity_type_bundle_info) {
     $this->entityTypeManager = $entity_manager;
+    $this->entityTypeBundleInfo = $entity_type_bundle_info;
   }
 
   /**
@@ -37,6 +49,11 @@ class RouteSubscriber extends RouteSubscriberBase {
    */
   protected function alterRoutes(RouteCollection $collection) {
     foreach ($this->entityTypeManager->getDefinitions() as $entity_type_id => $entity_type) {
+      $bundles = $this->entityTypeBundleInfo->getBundleInfo($entity_type_id);
+      if (count($bundles) < 2) {
+        continue;
+      }
+
       $route = new Route("/$entity_type_id/{{$entity_type_id}}/convertbundles");
       $route
         ->addDefaults([
@@ -44,7 +61,7 @@ class RouteSubscriber extends RouteSubscriberBase {
           '_title' => 'Convert Bundle',
         ])
         ->addRequirements([
-          '_permission' => 'administer convert_bundles',
+          '_permission' => "convert $entity_type_id bundle",
         ])
         ->setOption('_admin_route', TRUE)
         ->setOption('_convert_bundles_entity_type_id', $entity_type_id)
@@ -59,7 +76,7 @@ class RouteSubscriber extends RouteSubscriberBase {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     $events = parent::getSubscribedEvents();
     $events[RoutingEvents::ALTER] = ['onAlterRoutes', 100];
     return $events;

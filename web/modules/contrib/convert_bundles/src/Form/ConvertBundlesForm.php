@@ -12,7 +12,7 @@ use Drupal\Core\Session\SessionManagerInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityFieldManager;
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfo;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Routing\RouteBuilderInterface;
@@ -100,7 +100,7 @@ class ConvertBundlesForm extends FormBase implements FormInterface {
   /**
    * The entity type manager service.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManager
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -164,8 +164,8 @@ class ConvertBundlesForm extends FormBase implements FormInterface {
    *   User.
    * @param \Drupal\Core\Entity\EntityFieldManager $entity_field_manager
    *   EntityFieldManager.
-   * @param \Drupal\Core\Entity\EntityTypeManager $entity_type_manager
-   *   EntityTypeManager.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   EntityTypeManagerInterface.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfo $bundle_info
    *   EntityTypeBundleInfo.
    * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
@@ -175,7 +175,7 @@ class ConvertBundlesForm extends FormBase implements FormInterface {
    * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
    *   The string translation service.
    */
-  public function __construct(PrivateTempStoreFactory $temp_store_factory, SessionManagerInterface $session_manager, AccountInterface $current_user, EntityFieldManager $entity_field_manager, EntityTypeManager $entity_type_manager, EntityTypeBundleInfo $bundle_info, RouteMatchInterface $route_match, RouteBuilderInterface $route_builder, TranslationInterface $string_translation) {
+  public function __construct(PrivateTempStoreFactory $temp_store_factory, SessionManagerInterface $session_manager, AccountInterface $current_user, EntityFieldManager $entity_field_manager, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfo $bundle_info, RouteMatchInterface $route_match, RouteBuilderInterface $route_builder, TranslationInterface $string_translation) {
     $this->tempStoreFactory = $temp_store_factory;
     $this->sessionManager = $session_manager;
     $this->currentUser = $current_user->id();
@@ -215,12 +215,16 @@ class ConvertBundlesForm extends FormBase implements FormInterface {
    * {@inheritdoc}
    */
   public function convertBundles() {
+    $ids = array_keys($this->entities);
+    if (empty($ids)) {
+      return $this->t('There is no content to convert');
+    }
+
     $base_table_names = ConvertBundles::getBaseTableNames($this->entityType);
     $userInput = ConvertBundles::sortUserInput($this->userInput, $this->fieldsNewTo, $this->fieldsFrom);
     $map_fields = $userInput['map_fields'];
     $update_fields = $userInput['update_fields'];
     $field_table_names = ConvertBundles::getFieldTableNames($this->entityType, $this->fieldsFrom);
-    $ids = array_keys($this->entities);
     $limit = 100;
     $batch = [
       'title' => $this->t('Converting Base Tables...'),

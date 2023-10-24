@@ -31,10 +31,10 @@ final class AuditFilesMergeFileReferences implements AuditFilesAuditorInterface,
    * Constructs a new AuditFilesMergeFileReferences.
    */
   final public function __construct(
-    protected AuditFilesConfigInterface $auditFilesConfig,
-    protected Connection $connection,
-    protected FileSystemInterface $fileSystem,
-    protected EntityTypeManagerInterface $entityTypeManager,
+    protected readonly AuditFilesConfigInterface $auditFilesConfig,
+    protected readonly Connection $connection,
+    protected readonly FileSystemInterface $fileSystem,
+    protected readonly EntityTypeManagerInterface $entityTypeManager,
   ) {
   }
 

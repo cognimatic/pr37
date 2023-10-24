@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\preview_link;
 
 use Drupal\Core\Cache\CacheableMetadata;
@@ -12,20 +14,14 @@ use Drupal\Core\Routing\RouteMatchInterface;
 class PreviewLinkCacheContext implements CacheContextInterface {
 
   /**
-   * Route match.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   */
-  protected $routeMatch;
-
-  /**
    * Constructs a new PreviewLinkCacheContext.
    *
    * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
    *   Route match.
    */
-  public function __construct(RouteMatchInterface $routeMatch) {
-    $this->routeMatch = $routeMatch;
+  public function __construct(
+    protected RouteMatchInterface $routeMatch,
+  ) {
   }
 
   /**

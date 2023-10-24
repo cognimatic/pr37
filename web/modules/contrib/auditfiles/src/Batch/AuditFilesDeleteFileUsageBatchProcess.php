@@ -20,8 +20,8 @@ final class AuditFilesDeleteFileUsageBatchProcess {
    * Class constructor.
    */
   final protected function __construct(
-    protected EventDispatcherInterface $eventDispatcher,
-    protected FileEntityReference $reference,
+    protected readonly EventDispatcherInterface $eventDispatcher,
+    protected readonly FileEntityReference $reference,
   ) {
   }
 

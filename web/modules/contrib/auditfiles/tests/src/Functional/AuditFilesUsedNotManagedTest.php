@@ -27,7 +27,7 @@ final class AuditFilesUsedNotManagedTest extends BrowserTestBase {
   /**
    * User with admin privileges.
    */
-  protected UserInterface $user;
+  protected readonly UserInterface $user;
 
   /**
    * {@inheritdoc}

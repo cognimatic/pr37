@@ -115,7 +115,7 @@ final class AuditFilesReferencedNotUsedForm extends FormBase implements AuditFil
    * {@inheritdoc}
    */
   public function buildListForm(array $form, FormStateInterface $form_state): array {
-    $referenceHash = function(FileFieldReference $reference): string {
+    $referenceHash = function (FileFieldReference $reference): string {
       return \sprintf('%s.%s.%d.%s.%s', $reference->table, $reference->column, $reference->entityId, $reference->entityTypeId, $reference->getFileReference()->getId());
     };
 
@@ -241,20 +241,20 @@ final class AuditFilesReferencedNotUsedForm extends FormBase implements AuditFil
       '#type' => 'submit',
       '#value' => $this->t('Add selected items to the file_usage table'),
       '#validate' => [
-        [$this, 'validateListForm'],
+        $this::validateListForm(...),
       ],
       '#submit' => [
-        [$this, 'submitAddUsageForFileFieldReference'],
+        $this::submitAddUsageForFileFieldReference(...),
       ],
     ];
     $form['actions']['delete'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete selected references'),
       '#validate' => [
-        [$this, 'validateListForm'],
+        $this::validateListForm(...),
       ],
       '#submit' => [
-        [$this, 'submitDeleteFileFieldReference'],
+        $this::submitDeleteFileFieldReference(...),
       ],
     ];
     $form['pager'] = ['#type' => 'pager'];

@@ -228,8 +228,12 @@ final class AuditFilesUsedNotReferencedForm extends FormBase implements AuditFil
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete selected items from the file_usage table'),
-      '#validate' => [[$this, 'validateListForm']],
-      '#submit' => [[$this, 'submitForm']],
+      '#validate' => [
+        $this::validateListForm(...),
+      ],
+      '#submit' => [
+        $this::submitForm(...),
+      ],
     ];
     $form['pager'] = ['#type' => 'pager'];
 

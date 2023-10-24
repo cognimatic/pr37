@@ -19,7 +19,7 @@ final class AuditFilesConfig implements AuditFilesConfigInterface {
    * Constructs a new AuditFilesConfig.
    */
   final public function __construct(
-    protected ConfigFactoryInterface $configFactory,
+    protected readonly ConfigFactoryInterface $configFactory,
   ) {
   }
 

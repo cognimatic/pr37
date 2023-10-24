@@ -1,6 +1,6 @@
 name: LocalGov Demo Content
 description: Example content for demonstrating the LocalGov Drupal distribution and to help with development.
-core_version_requirement: ^8.9 || ^9
+core_version_requirement: ^9 || ^10
 type: module
 package: LocalGov Drupal
 
@@ -44,7 +44,7 @@ default_content:
     - 64a4909c-c6bf-483b-99dd-5b0ad4ce90b0
     - 9fd42e4a-aa83-4c9a-9999-1b5bfa96a003
     - c0676f68-b06d-4674-89be-09bc1de1fdf5
-  localgov_geo:
+  geo_entity:
     - 61a2c681-f994-4108-9c6c-f525cd67774a
     - 62e5b97f-277e-4032-8c43-1af65d021638
     - 6c093157-8509-4046-869e-4c95eee26d8e

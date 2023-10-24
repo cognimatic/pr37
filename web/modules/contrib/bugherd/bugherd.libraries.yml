@@ -1,9 +1,0 @@
-bugherd:
-  version: VERSION
-  header: true
-  js:
-    js/bugherd.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupal
-    - core/drupalSettings

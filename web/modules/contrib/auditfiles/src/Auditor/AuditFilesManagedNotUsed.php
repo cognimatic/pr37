@@ -26,8 +26,8 @@ final class AuditFilesManagedNotUsed implements AuditFilesAuditorInterface {
    * Constructs a new AuditFilesManagedNotUsed.
    */
   final public function __construct(
-    protected AuditFilesConfigInterface $auditFilesConfig,
-    protected Connection $connection,
+    protected readonly AuditFilesConfigInterface $auditFilesConfig,
+    protected readonly Connection $connection,
   ) {
   }
 

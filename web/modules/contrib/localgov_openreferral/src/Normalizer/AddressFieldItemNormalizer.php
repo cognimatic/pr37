@@ -52,7 +52,7 @@ class AddressFieldItemNormalizer extends FieldItemNormalizer {
    * cacheability in mind, and hence bubbles cacheability out of band. This must
    * catch it, and pass it to the value object that JSON:API uses.
    */
-  public function normalize($field_item, $format = NULL, array $context = []) {
+  public function normalize($field_item, $format = NULL, array $context = []): array {
     assert($field_item instanceof FieldItemInterface);
     $values = [
       'id' => 'address:' . $field_item->getEntity()->id(),

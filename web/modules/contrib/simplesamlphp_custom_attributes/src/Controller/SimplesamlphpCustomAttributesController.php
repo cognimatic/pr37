@@ -105,7 +105,7 @@ class SimplesamlphpCustomAttributesController extends ControllerBase {
         $table['#rows'][$id] = [
           'saml_attribute' => $mapping['attribute_name'],
           'user_field' => $user_field,
-          'operations' => render($operations),
+          'operations' => \Drupal::service('renderer')->render($operations),
         ];
       }
     }

@@ -25,7 +25,7 @@ final class AuditFilesDeleteFileOnDiskEvent extends Event {
    *   made.
    */
   public function __construct(
-    public DiskReference $reference,
+    public readonly DiskReference $reference,
     public ?bool $wasDeleted = NULL,
   ) {
   }

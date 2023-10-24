@@ -27,7 +27,7 @@ final class AuditFilesAddFileOnDiskEvent extends Event {
    *   Represents a file being constructed.
    */
   public function __construct(
-    public DiskReference $reference,
+    public readonly DiskReference $reference,
     public ?FileInterface $file = NULL,
   ) {
   }

@@ -44,7 +44,7 @@ class ContentEntityNormalizer extends NormalizerBase {
   /**
    * {@inheritdoc}
    */
-  public function normalize($entity, $format = NULL, array $context = []) {
+  public function normalize($entity, $format = NULL, array $context = []): mixed {
     $context += [
       'account' => NULL,
     ];
@@ -53,6 +53,7 @@ class ContentEntityNormalizer extends NormalizerBase {
     $context['parents'][] = $openreferral_type;
 
     $object = TypedDataInternalPropertiesHelper::getNonInternalProperties($entity->getTypedData());
+    $attributes = [];
 
     // Called as the entity is referenced in a field.
     // The field configuration is for only one property.
@@ -74,7 +75,7 @@ class ContentEntityNormalizer extends NormalizerBase {
       $property_mapping = $this->mappingInformation->getPropertyMapping($entity->getEntityTypeId(), $entity->bundle(), $parent);
       foreach ($property_mapping as $property) {
         [$field_name] = explode(':', $property['field_name'], 2);
-        $field_items = $object[$field_name];
+        $field_items = $object[$field_name] ?? NULL;
         if (empty($field_items)) {
           throw new \Exception('Mapped field "' . $field_name . '" not found on object "' . $entity->getEntityTypeId() . '"');
         }

@@ -7,7 +7,7 @@ _meta:
   depends:
     13ac08b7-9ee6-4a55-867a-8f9ed2fe5c14: taxonomy_term
     cc3c3c1d-8cbe-4446-8b9e-73003530678c: taxonomy_term
-    e19f2979-22ab-4a77-8d6c-0a2d7f92651c: localgov_geo
+    e19f2979-22ab-4a77-8d6c-0a2d7f92651c: geo_entity
     a3206157-5bb8-4894-934c-6c3c74ec5500: taxonomy_term
 default:
   revision_uid:

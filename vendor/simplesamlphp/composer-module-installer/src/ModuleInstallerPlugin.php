@@ -17,6 +17,7 @@ class ModuleInstallerPlugin implements PluginInterface
     /** @var \Composer\IO\IOInterface */
     private IOInterface $io;
 
+
     /**
      * Apply plugin modifications to Composer
      *
@@ -57,16 +58,6 @@ class ModuleInstallerPlugin implements PluginInterface
      */
     public function uninstall(Composer $composer, IOInterface $io)
     {
-        $installPath = $this->installer->getPackageBasePath($package);
-
-        $io = $this->io;
-        $outputStatus = function () use ($io, $installPath) {
-            $io->write(
-                sprintf('Deleting %s - %s', $installPath, !file_exists($installPath) ? '<comment>deleted</comment>' : '<error>not deleted</error>')
-            );
-        };
-
-        // If not, execute the code right away as parent::uninstall executed synchronously (composer v1, or v2 without async)
-        $outputStatus();
+        // Not implemented
     }
 }

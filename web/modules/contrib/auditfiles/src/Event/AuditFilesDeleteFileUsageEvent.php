@@ -29,7 +29,7 @@ final class AuditFilesDeleteFileUsageEvent extends Event {
    *   attempt has been made.
    */
   public function __construct(
-    public FileEntityReference $reference,
+    public readonly FileEntityReference $reference,
     public ?bool $wasDeleted = NULL,
   ) {
   }

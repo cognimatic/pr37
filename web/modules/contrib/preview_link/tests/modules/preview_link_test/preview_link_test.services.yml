@@ -1,4 +1,6 @@
 services:
-  datetime.time:
-    class: Drupal\preview_link_test\TimeMachine
+  logger.preview_link_test:
+    class: Drupal\preview_link_test\StateLogger
     arguments: ['@state']
+    tags:
+      - { name: logger }

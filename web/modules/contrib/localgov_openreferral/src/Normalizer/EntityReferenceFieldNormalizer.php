@@ -43,7 +43,7 @@ class EntityReferenceFieldNormalizer extends NormalizerBase {
   /**
    * {@inheritdoc}
    */
-  public function normalize($field, $format = NULL, array $context = []) {
+  public function normalize($field, $format = NULL, array $context = []): mixed {
     // There are two types of references in the standard.
     // One has an intervening 'relationship entity' between the parent and
     // child.

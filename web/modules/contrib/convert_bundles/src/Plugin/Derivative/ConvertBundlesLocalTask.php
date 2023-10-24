@@ -3,6 +3,7 @@
 namespace Drupal\convert_bundles\Plugin\Derivative;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;
+use Drupal\Core\Entity\EntityTypeBundleInfo;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -27,6 +28,13 @@ class ConvertBundlesLocalTask extends DeriverBase implements ContainerDeriverInt
   protected $entityTypeManager;
 
   /**
+   * Entity Type Bundle Info.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfo
+   */
+  protected $entityTypeBundleInfo;
+
+  /**
    * Creates an ConvertBundlesLocalTask object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -34,8 +42,9 @@ class ConvertBundlesLocalTask extends DeriverBase implements ContainerDeriverInt
    * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
    *   The translation manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, TranslationInterface $string_translation) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfo $entity_type_bundle_info, TranslationInterface $string_translation) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->entityTypeBundleInfo = $entity_type_bundle_info;
     $this->stringTranslation = $string_translation;
   }
 
@@ -45,6 +54,7 @@ class ConvertBundlesLocalTask extends DeriverBase implements ContainerDeriverInt
   public static function create(ContainerInterface $container, $base_plugin_id) {
     return new static(
       $container->get('entity_type.manager'),
+      $container->get('entity_type.bundle.info'),
       $container->get('string_translation')
     );
   }
@@ -55,6 +65,11 @@ class ConvertBundlesLocalTask extends DeriverBase implements ContainerDeriverInt
   public function getDerivativeDefinitions($base_plugin_definition) {
     $this->derivatives = [];
     foreach ($this->entityTypeManager->getDefinitions() as $entity_type_id => $entity_type) {
+      $bundles = $this->entityTypeBundleInfo->getBundleInfo($entity_type_id);
+      if (count($bundles) < 2) {
+        continue;
+      }
+
       $this->derivatives["entity.$entity_type_id.convert_bundles"] = [
         'route_name' => "entity.$entity_type_id.convert_bundles",
         'title' => $this->t('Convert Bundle'),

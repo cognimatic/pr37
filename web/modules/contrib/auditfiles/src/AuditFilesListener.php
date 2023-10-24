@@ -37,11 +37,11 @@ final class AuditFilesListener implements EventSubscriberInterface {
    * Constructs a new AuditFilesListener.
    */
   final public function __construct(
-    protected Connection $connection,
-    protected FileSystemInterface $fileSystem,
-    protected MimeTypeGuesserInterface $fileMimeTypeGuesser,
-    protected TimeInterface $time,
-    protected EntityTypeManagerInterface $entityTypeManager,
+    protected readonly Connection $connection,
+    protected readonly FileSystemInterface $fileSystem,
+    protected readonly MimeTypeGuesserInterface $fileMimeTypeGuesser,
+    protected readonly TimeInterface $time,
+    protected readonly EntityTypeManagerInterface $entityTypeManager,
   ) {
   }
 

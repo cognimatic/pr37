@@ -23,7 +23,9 @@ function localgov_demo_modules_installed($modules, $is_syncing) {
   ) {
 
     // Set all alert banners to be live by default.
-    $alert_banner_ids = \Drupal::entityQuery('localgov_alert_banner')->execute();
+    $alert_banner_ids = \Drupal::entityQuery('localgov_alert_banner')
+      ->accessCheck(FALSE)
+      ->execute();
     $alert_banner_entities = \Drupal::entityTypeManager()->getStorage('localgov_alert_banner')->loadMultiple($alert_banner_ids);
 
     foreach ($alert_banner_entities as $alert_banner) {

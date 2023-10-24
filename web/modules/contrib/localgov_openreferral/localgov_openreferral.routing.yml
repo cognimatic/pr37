@@ -38,7 +38,7 @@ localgov_openreferral.location:
   options:
     parameters:
       entity:
-        type: entity:localgov_geo
+        type: entity:geo_entity
 
 localgov_openreferral.vocabulary:
   path: '/openreferral/v1/vocabulary'

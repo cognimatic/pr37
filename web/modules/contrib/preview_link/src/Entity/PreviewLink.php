@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\preview_link\Entity;
 
+use Drupal\Component\Assertion\Inspector;
 use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Url;
 
 /**
@@ -21,10 +26,7 @@ use Drupal\Core\Url;
  *     }
  *   },
  *   entity_keys = {
- *     "id" = "id",
- *     "token" = "token",
- *     "entity_id" = "entity_id",
- *     "entity_type_id" = "entity_type_id"
+ *     "id" = "id"
  *   }
  * )
  */
@@ -40,10 +42,9 @@ class PreviewLink extends ContentEntityBase implements PreviewLinkInterface {
   /**
    * {@inheritdoc}
    */
-  public function getUrl() {
-    $entity_type_id = $this->entity_type_id->value;
-    return Url::fromRoute("entity.$entity_type_id.preview_link", [
-      $entity_type_id => $this->entity_id->value,
+  public function getUrl(EntityInterface $entity): Url {
+    return Url::fromRoute(sprintf('entity.%s.preview_link', $entity->getEntityTypeId()), [
+      $entity->getEntityTypeId() => $entity->id(),
       'preview_token' => $this->getToken(),
     ]);
   }
@@ -51,14 +52,14 @@ class PreviewLink extends ContentEntityBase implements PreviewLinkInterface {
   /**
    * {@inheritdoc}
    */
-  public function getToken() {
+  public function getToken(): string {
     return $this->get('token')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setToken($token) {
+  public function setToken($token): static {
     $this->set('token', $token);
     // Add a second so our testing always works.
     $this->set('generated_timestamp', time() + 1);
@@ -68,7 +69,7 @@ class PreviewLink extends ContentEntityBase implements PreviewLinkInterface {
   /**
    * {@inheritdoc}
    */
-  public function regenerateToken($needs_new_token = FALSE) {
+  public function regenerateToken($needs_new_token = FALSE): bool {
     $current_value = $this->needsNewToken;
     $this->needsNewToken = $needs_new_token;
     return $current_value;
@@ -77,8 +78,53 @@ class PreviewLink extends ContentEntityBase implements PreviewLinkInterface {
   /**
    * {@inheritdoc}
    */
-  public function getGeneratedTimestamp() {
-    return $this->get('generated_timestamp')->value;
+  public function getGeneratedTimestamp(): int {
+    return (int) $this->get('generated_timestamp')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEntities(): array {
+    $entities = $this->entities->referencedEntities();
+    assert(Inspector::assertAllObjects($entities, EntityInterface::class));
+    return $entities;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setEntities(array $entities): static {
+    assert(Inspector::assertAllObjects($entities, EntityInterface::class));
+    $this->entities = $entities;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function addEntity(EntityInterface $entity): static {
+    $this->entities[] = $entity;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getExpiry(): ?\DateTimeImmutable {
+    $value = $this->expiry->value ?? NULL;
+    if (!is_numeric($value)) {
+      return NULL;
+    }
+
+    return new \DateTimeImmutable('@' . $value);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setExpiry(\DateTimeInterface $expiry) {
+    return $this->set('expiry', $expiry->getTimestamp());
   }
 
   /**
@@ -91,22 +137,63 @@ class PreviewLink extends ContentEntityBase implements PreviewLinkInterface {
       ->setDescription(t('A token that allows any user to view a preview of this entity.'))
       ->setRequired(TRUE);
 
-    $fields['entity_id'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Entity Id'))
-      ->setDescription(t('The entity Id'))
-      ->setRequired(TRUE);
-
-    $fields['entity_type_id'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Entity Type Id'))
-      ->setDescription(t('The entity type Id'))
-      ->setRequired(TRUE);
+    $fields['entities'] = BaseFieldDefinition::create('dynamic_entity_reference')
+      ->setLabel(t('Entities'))
+      ->setDescription(t('The associated entities this preview link unlocks.'))
+      ->setRequired(TRUE)
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->addConstraint('PreviewLinkEntitiesUniqueConstraint', [])
+      ->setSettings(static::entitiesDefaultFieldSettings())
+      ->setDisplayOptions('form', [
+        'type' => 'preview_link_entities_widget',
+        'weight' => 10,
+      ]);
 
     $fields['generated_timestamp'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Generated Timestamp'))
       ->setDescription(t('The time the link was generated'))
       ->setRequired(TRUE);
 
+    $fields['expiry'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Time this Preview Link expires.'))
+      ->setDescription(t('The time after which the preview link is no longer valid.'))
+      ->setDefaultValueCallback(static::class . '::expiryDefaultValue')
+      ->setRequired(TRUE);
+
     return $fields;
+  }
+
+  /**
+   * Rewrites settings for 'entities' dynamic_entity_reference field.
+   *
+   * DynamicEntityReferenceItem::defaultFieldSettings doesnt receive any context
+   * so we need to change the default handlers manually.
+   */
+  public static function entitiesDefaultFieldSettings(): array {
+    $labels = \Drupal::service('entity_type.repository')->getEntityTypeLabels(TRUE);
+    $options = $labels[(string) t('Content', [], ['context' => 'Entity type group'])];
+    $settings = [
+      'exclude_entity_types' => TRUE,
+      'entity_type_ids' => [],
+    ];
+    $settings += array_fill_keys(array_keys($options), [
+      'handler' => 'preview_link',
+      'handler_settings' => [],
+    ]);
+    return $settings;
+  }
+
+  /**
+   * Get default value for 'expiry' field.
+   *
+   * @return int<0, max>
+   *   A timestamp.
+   */
+  public static function expiryDefaultValue(): int {
+    $time = \Drupal::time();
+    /** @var \Drupal\preview_link\PreviewLinkExpiry $linkExpiry */
+    $linkExpiry = \Drupal::service('preview_link.link_expiry');
+    return max(0, $time->getRequestTime() + $linkExpiry->getLifetime());
   }
 
 }

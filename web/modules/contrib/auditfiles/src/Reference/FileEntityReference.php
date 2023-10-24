@@ -16,7 +16,7 @@ final class FileEntityReference implements ReferenceInterface {
    * Constructs a new FileEntityReference.
    */
   private function __construct(
-    private int $id,
+    private readonly int $id,
   ) {
   }
 

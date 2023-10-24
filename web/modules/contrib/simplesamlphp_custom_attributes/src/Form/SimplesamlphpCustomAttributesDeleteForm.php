@@ -94,7 +94,12 @@ class SimplesamlphpCustomAttributesDeleteForm extends ConfirmFormBase {
   public function getQuestion() {
     // Get the pretty label for the message.
     $fields = $this->entityFieldManager->getFieldDefinitions('user', 'user');
-    $field_name = $fields[$this->fieldName]->getLabel();
+    if (isset($fields[$this->fieldName])) {
+      $field_name = $fields[$this->fieldName]->getLabel();
+    }
+    else {
+      $field_name = $this->t('Custom');
+    }
 
     return $this->t('Are you sure you want to delete the ":attribute > :field" mapping?', [
       ':attribute' => $this->attributeName,

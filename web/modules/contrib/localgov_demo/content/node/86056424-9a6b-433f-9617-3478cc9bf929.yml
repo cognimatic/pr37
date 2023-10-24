@@ -6,7 +6,7 @@ _meta:
   default_langcode: en
   depends:
     8b24be29-f78d-4ff2-8a2d-7e35030e4157: taxonomy_term
-    b7bd2cce-8fe6-4cff-a7fc-15ebd86cd2ad: localgov_geo
+    b7bd2cce-8fe6-4cff-a7fc-15ebd86cd2ad: geo_entity
     2d26cc28-44d0-4ccb-8150-dab195d9b7f6: taxonomy_term
 default:
   revision_uid:

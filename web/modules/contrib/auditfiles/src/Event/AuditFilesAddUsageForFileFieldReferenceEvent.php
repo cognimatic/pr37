@@ -25,7 +25,7 @@ final class AuditFilesAddUsageForFileFieldReferenceEvent extends Event {
    *   attempt has been made.
    */
   public function __construct(
-    public FileFieldReference $reference,
+    public readonly FileFieldReference $reference,
     public ?bool $wasAdded = NULL,
   ) {
   }

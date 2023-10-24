@@ -16,17 +16,14 @@ use Robo\Contract\ConfigAwareInterface;
 use Robo\Contract\IOAwareInterface;
 use Consolidation\AnnotatedCommand\Events\CustomEventAwareInterface;
 use Consolidation\AnnotatedCommand\Events\CustomEventAwareTrait;
-use Drush\Boot\AutoloaderAwareInterface;
-use Drush\Boot\AutoloaderAwareTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * SiteAudit Drush commandfile.
  */
-class SiteAuditCommands extends DrushCommands implements IOAwareInterface, LoggerAwareInterface, ConfigAwareInterface, CustomEventAwareInterface, AutoloaderAwareInterface {
+class SiteAuditCommands extends DrushCommands implements IOAwareInterface, LoggerAwareInterface, ConfigAwareInterface, CustomEventAwareInterface {
 
   use CustomEventAwareTrait;
-  use AutoloaderAwareTrait;
   use StringTranslationTrait;
 
   /**

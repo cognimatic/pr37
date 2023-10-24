@@ -24,9 +24,9 @@ final class AuditFilesReferencedNotUsed implements AuditFilesAuditorInterface {
    * Constructs a new AuditFilesReferencedNotUsed.
    */
   final public function __construct(
-    protected AuditFilesConfigInterface $auditFilesConfig,
-    protected Connection $connection,
-    protected EntityFieldManagerInterface $entityFieldManager,
+    protected readonly AuditFilesConfigInterface $auditFilesConfig,
+    protected readonly Connection $connection,
+    protected readonly EntityFieldManagerInterface $entityFieldManager,
   ) {
   }
 

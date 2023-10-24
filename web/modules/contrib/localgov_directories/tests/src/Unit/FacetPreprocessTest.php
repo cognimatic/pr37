@@ -14,6 +14,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\localgov_directories\DirectoryExtraFieldDisplay;
 use Drupal\localgov_directories\Entity\LocalgovDirectoriesFacets;
 use Drupal\localgov_directories\Entity\LocalgovDirectoriesFacetsType;
+
 use Drupal\Tests\UnitTestCase;
 
 /**
@@ -66,6 +67,7 @@ class FacetPreprocessTest extends UnitTestCase {
    * @see DirectoryExtraFieldDisplay::__construct()
    */
   public function setup(): void {
+    parent::setup();
 
     // Facet items.
     $facet_zero = $this->createMock(LocalgovDirectoriesFacets::class);

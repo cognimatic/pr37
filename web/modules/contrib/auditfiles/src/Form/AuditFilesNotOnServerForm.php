@@ -199,8 +199,12 @@ final class AuditFilesNotOnServerForm extends FormBase implements AuditFilesAudi
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete selected items from the database'),
-      '#validate' => [[$this, 'validateListForm']],
-      '#submit' => [[$this, 'submissionHandlerDeleteFromDb']],
+      '#validate' => [
+        $this::validateListForm(...),
+      ],
+      '#submit' => [
+        $this::submissionHandlerDeleteFromDb(...),
+      ],
     ];
     $form['pager'] = ['#type' => 'pager'];
 

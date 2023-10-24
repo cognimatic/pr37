@@ -6,12 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'org\\bovigo\\vfs\\' => array($vendorDir . '/mikey179/vfsstream/src/main/php'),
-    'WebDriver' => array($vendorDir . '/instaclick/php-webdriver/lib'),
-    'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
-    'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Stiphle' => array($vendorDir . '/davedevelopment/stiphle/src'),
-    'Stack' => array($vendorDir . '/stack/builder/src'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
     'DaveChild\\TextStatistics' => array($vendorDir . '/davechild/textstatistics/src'),
     'Console' => array($vendorDir . '/pear/console_getopt'),

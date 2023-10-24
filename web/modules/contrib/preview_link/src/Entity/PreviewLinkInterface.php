@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\preview_link\Entity;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Url;
 
 /**
  * Interface for the preview link entity.
@@ -10,12 +14,15 @@ use Drupal\Core\Entity\ContentEntityInterface;
 interface PreviewLinkInterface extends ContentEntityInterface {
 
   /**
-   * The URL for this preview link.
+   * The URL for this preview link for an entity.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   A host entity.
    *
    * @return \Drupal\Core\Url
    *   The url object.
    */
-  public function getUrl();
+  public function getUrl(EntityInterface $entity): Url;
 
   /**
    * Gets thew new token.
@@ -23,7 +30,7 @@ interface PreviewLinkInterface extends ContentEntityInterface {
    * @return string
    *   The token.
    */
-  public function getToken();
+  public function getToken(): string;
 
   /**
    * Set the new token.
@@ -31,10 +38,10 @@ interface PreviewLinkInterface extends ContentEntityInterface {
    * @param string $token
    *   The new token.
    *
-   * @return \Drupal\preview_link\Entity\PreviewLinkInterface
-   *   Returns the preview link for chaining.
+   * @return $this
+   *   Return this for chaining.
    */
-  public function setToken($token);
+  public function setToken(string $token): static;
 
   /**
    * Mark the entity needing a new token. Only updated upon save.
@@ -45,7 +52,7 @@ interface PreviewLinkInterface extends ContentEntityInterface {
    * @return bool
    *   TRUE if it was currently marked to generate otherwise FALSE.
    */
-  public function regenerateToken($needs_new_token = FALSE);
+  public function regenerateToken($needs_new_token = FALSE): bool;
 
   /**
    * Gets the timestamp stamp of when the token was generated.
@@ -53,6 +60,51 @@ interface PreviewLinkInterface extends ContentEntityInterface {
    * @return int
    *   The timestamp.
    */
-  public function getGeneratedTimestamp();
+  public function getGeneratedTimestamp(): int;
+
+  /**
+   * Get entities this preview link unlocks.
+   *
+   * Ideally preview link access is determined via PreviewLinkHost service.
+   *
+   * @return \Drupal\Core\Entity\EntityInterface[]
+   *   Associated entities.
+   */
+  public function getEntities(): array;
+
+  /**
+   * Set the entity this preview link unlocks.
+   *
+   * @return $this
+   *   Return this for chaining.
+   */
+  public function setEntities(array $entities): static;
+
+  /**
+   * Add an entity for this preview link to unlock.
+   *
+   * @return $this
+   *   Return this for chaining.
+   */
+  public function addEntity(EntityInterface $entity): static;
+
+  /**
+   * Get expiration date.
+   *
+   * @return \DateTimeImmutable|null
+   *   The expiration date, or NULL if not set.
+   */
+  public function getExpiry(): ?\DateTimeImmutable;
+
+  /**
+   * Set the expiration date.
+   *
+   * @param \DateTimeInterface $expiry
+   *   The expiration date.
+   *
+   * @return $this
+   *   Return this for chaining.
+   */
+  public function setExpiry(\DateTimeInterface $expiry);
 
 }

@@ -10,6 +10,13 @@ use Drupal\Core\Config\Entity\ConfigEntityStorage;
 class PropertyMappingStorage extends ConfigEntityStorage {
 
   /**
+   * Mapping storage.
+   *
+   * @var \Drupal\Core\Entity\ConfigEntityStorage
+   */
+  protected $storage;
+
+  /**
    * Load by Drupal Entity Type ID and Bundle.
    *
    * @param string $entity_type_id

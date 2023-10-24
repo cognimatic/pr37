@@ -45,7 +45,7 @@ function localgov_demo_install() {
   // Create a link to Docs.
   $news_menu_item = MenuLinkContent::create([
     'title' => 'Docs',
-    'link' => ['uri' => 'https://docs.localgovdrupal.org/'],
+    'link' => ['uri' => 'https://localgovdrupal.org/'],
     'menu_name' => 'main',
     'expanded' => FALSE,
   ]);

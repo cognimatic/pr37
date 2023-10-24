@@ -25,7 +25,7 @@ final class AuditFilesDeleteFileFieldReferenceEvent extends Event {
    *   no attempt has been made.
    */
   public function __construct(
-    public FileFieldReference $reference,
+    public readonly FileFieldReference $reference,
     public ?bool $wasDeleted = NULL,
   ) {
   }

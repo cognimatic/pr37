@@ -191,14 +191,22 @@ final class AuditFilesNotInDatabaseForm extends FormBase implements AuditFilesAu
     $form['actions']['add'] = [
       '#type' => 'submit',
       '#value' => $this->t('Add selected items to the database'),
-      '#validate' => [[$this, 'validateListForm']],
-      '#submit' => [[$this, 'submitAddRecord']],
+      '#validate' => [
+        $this::validateListForm(...),
+      ],
+      '#submit' => [
+        $this::submitAddRecord(...),
+      ],
     ];
     $form['actions']['delete'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete selected items from the server'),
-      '#validate' => [[$this, 'validateListForm']],
-      '#submit' => [[$this, 'submitDeleteRecord']],
+      '#validate' => [
+        $this::validateListForm(...),
+      ],
+      '#submit' => [
+        $this::submitDeleteRecord(...),
+      ],
     ];
     $form['pager'] = ['#type' => 'pager'];
 

@@ -216,8 +216,12 @@ final class AuditFilesMergeFileReferencesForm extends FormBase implements AuditF
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Merge selected items'),
-      '#validate' => [[$this, 'validateListForm']],
-      '#submit' => [[$this, 'submitForm']],
+      '#validate' => [
+        $this::validateListForm(...),
+      ],
+      '#submit' => [
+        $this::submitForm(...),
+      ],
     ];
     $form['pager'] = ['#type' => 'pager'];
 
@@ -306,8 +310,12 @@ final class AuditFilesMergeFileReferencesForm extends FormBase implements AuditF
     $form['actions']['add'] = [
       '#type' => 'submit',
       '#value' => $this->t('Next step'),
-      '#validate' => [[$this, 'validateForm']],
-      '#submit' => [[$this, 'submitMergePreConfirm']],
+      '#validate' => [
+        $this::validateForm(...),
+      ],
+      '#submit' => [
+        $this::submitMergePreConfirm(...),
+      ],
     ];
 
     return $form;
@@ -410,7 +418,9 @@ final class AuditFilesMergeFileReferencesForm extends FormBase implements AuditF
       '#type' => 'submit',
       '#value' => $this->getConfirmText(),
       '#button_type' => 'primary',
-      '#submit' => [[$this, 'confirmSubmissionHandlerFileMerge']],
+      '#submit' => [
+        $this::confirmSubmissionHandlerFileMerge(...),
+      ],
     ];
     $form['actions']['cancel'] = ConfirmFormHelper::buildCancelLink($this, $this->getRequest());
 

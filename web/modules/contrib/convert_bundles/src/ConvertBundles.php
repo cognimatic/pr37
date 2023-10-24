@@ -22,6 +22,7 @@ class ConvertBundles {
     $column = $definition->getKey('bundle');
 
     $query = \Drupal::entityQuery($type);
+    $query->accessCheck(TRUE);
     $query->condition($column, $bundles, 'IN');
     $ids = $query->execute();
     $entities = [];
@@ -323,6 +324,12 @@ class ConvertBundles {
         $entity->setRevisionLogMessage($revision_log);
         $entity->setRevisionCreationTime(\Drupal::time()->getRequestTime());
       }
+
+      // Trigger hook_convert_bundle_alter().
+      // Allow modules to change converted entity before it gets saved
+      // during convert bundle process.
+      \Drupal::service('module_handler')->alter('convert_bundle', $old_entity, $entity);
+
       $entity->save();
 
       $context['results'][] = $id;

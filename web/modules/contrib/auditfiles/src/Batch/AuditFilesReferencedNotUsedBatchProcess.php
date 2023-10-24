@@ -20,8 +20,8 @@ final class AuditFilesReferencedNotUsedBatchProcess {
    * Constructs a new AuditFilesReferencedNotUsedBatchProcess.
    */
   final protected function __construct(
-    protected EventDispatcherInterface $eventDispatcher,
-    protected FileFieldReference $reference,
+    protected readonly EventDispatcherInterface $eventDispatcher,
+    protected readonly FileFieldReference $reference,
   ) {
   }
 

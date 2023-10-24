@@ -5,7 +5,7 @@ _meta:
   bundle: localgov_directories_venue
   default_langcode: en
   depends:
-    b84ccb63-a5c6-40bd-b393-18bd023c3004: localgov_geo
+    b84ccb63-a5c6-40bd-b393-18bd023c3004: geo_entity
 default:
   revision_uid:
     -

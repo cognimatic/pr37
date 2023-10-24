@@ -25,10 +25,10 @@ final class AuditFilesNotInDatabase implements AuditFilesAuditorInterface {
    * Constructs a new AuditFilesNotInDatabase.
    */
   final public function __construct(
-    protected AuditFilesConfigInterface $auditFilesConfig,
-    protected AuditFilesExclusions $exclusions,
-    protected Connection $connection,
-    protected FileSystemInterface $fileSystem,
+    protected readonly AuditFilesConfigInterface $auditFilesConfig,
+    protected readonly AuditFilesExclusions $exclusions,
+    protected readonly Connection $connection,
+    protected readonly FileSystemInterface $fileSystem,
   ) {
   }
 
@@ -155,7 +155,6 @@ final class AuditFilesNotInDatabase implements AuditFilesAuditorInterface {
     $path = preg_replace('@\\\\@', DIRECTORY_SEPARATOR, $path);
     return $path;
   }
-
 
   /**
    * Checks to see if the file is being included.

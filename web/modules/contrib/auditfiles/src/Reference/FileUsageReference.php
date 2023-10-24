@@ -13,11 +13,11 @@ final class FileUsageReference implements ReferenceInterface {
    * Constructs a new FileUsageReference.
    */
   private function __construct(
-    private int $fileId,
-    private string $module,
-    private string $entityTypeId,
-    private string|int $entityId,
-    private int $count,
+    private readonly int $fileId,
+    private readonly string $module,
+    private readonly string $entityTypeId,
+    private readonly string|int $entityId,
+    private readonly int $count,
   ) {
   }
 
@@ -32,6 +32,9 @@ final class FileUsageReference implements ReferenceInterface {
     return static::create((int) $row->fid, $row->module, $row->type, $row->id, (int) $row->count);
   }
 
+  /**
+   * Prints a string useful for debugging.
+   */
   public function __toString(): string {
     return sprintf('File usage');
   }

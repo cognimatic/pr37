@@ -1,11 +1,13 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 // This is the base directory of the SimpleSAMLphp installation
-$baseDir = dirname(dirname(__FILE__));
+$baseDir = dirname(__FILE__, 2);
 
 // Add library autoloader and configuration
-require_once $baseDir . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . '_autoload.php';
+require_once $baseDir . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . '_autoload.php';
 require_once \SimpleSAML\Utils\Config::getConfigDir() . DIRECTORY_SEPARATOR . 'config.php';
 
 echo "Initializing Metadata Database..." . PHP_EOL;

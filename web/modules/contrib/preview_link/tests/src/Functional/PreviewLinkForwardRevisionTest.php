@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\Tests\preview_link\Functional;
 
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
@@ -17,18 +19,18 @@ use Drupal\workflows\Entity\Workflow;
  *
  * @group preview_link
  */
-class PreviewLinkForwardRevisionTest extends BrowserTestBase {
+final class PreviewLinkForwardRevisionTest extends BrowserTestBase {
   use ContentModerationTestTrait;
 
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'preview_link',
     'node',
     'text',
@@ -41,7 +43,7 @@ class PreviewLinkForwardRevisionTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->createEditorialWorkflow();
     $this->createContentType(['type' => 'page']);
@@ -56,7 +58,7 @@ class PreviewLinkForwardRevisionTest extends BrowserTestBase {
   /**
    * Test the latest forward revision is loaded.
    */
-  public function testForwardRevision() {
+  public function testForwardRevision(): void {
     $original_random_text = 'Original Title';
     $latest_random_text = 'Latest Title';
 
@@ -72,10 +74,7 @@ class PreviewLinkForwardRevisionTest extends BrowserTestBase {
     $node->save();
 
     // Create the preview link.
-    $previewLink = PreviewLink::create([
-      'entity_type_id' => 'node',
-      'entity_id' => $node->id(),
-    ]);
+    $previewLink = PreviewLink::create()->addEntity($node);
     $previewLink->save();
 
     // Visit the node and assert the original text.
@@ -84,7 +83,7 @@ class PreviewLinkForwardRevisionTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains($original_random_text);
 
     // Visit the preview link and assert the forward revision text.
-    $this->drupalGet($previewLink->getUrl());
+    $this->drupalGet($previewLink->getUrl($node));
     $this->assertSession()->pageTextContains($latest_random_text);
     $this->assertSession()->pageTextNotContains($original_random_text);
   }
@@ -92,7 +91,7 @@ class PreviewLinkForwardRevisionTest extends BrowserTestBase {
   /**
    * Tests draft revision with paragraph field.
    */
-  public function testDraftRevisionWithParagraphField() {
+  public function testDraftRevisionWithParagraphField(): void {
     $this->setupParagraphTypeAndField();
 
     // Create a paragraph.
@@ -111,10 +110,7 @@ class PreviewLinkForwardRevisionTest extends BrowserTestBase {
     ]);
 
     // Create the preview link.
-    $previewLink = PreviewLink::create([
-      'entity_type_id' => 'node',
-      'entity_id' => $node->id(),
-    ]);
+    $previewLink = PreviewLink::create()->addEntity($node);
     $previewLink->save();
 
     // Login as user who can view unpublished content.
@@ -128,14 +124,14 @@ class PreviewLinkForwardRevisionTest extends BrowserTestBase {
     // Now visit preview link as anonymous, and verify paragraph content is
     // shown.
     $this->drupalLogout();
-    $this->drupalGet($previewLink->getUrl());
+    $this->drupalGet($previewLink->getUrl($node));
     $assert->pageTextContains('A section title');
   }
 
   /**
    * Sets up paragraph type and field.
    */
-  protected function setupParagraphTypeAndField() {
+  protected function setupParagraphTypeAndField(): void {
     // Add a paragraph type.
     $paragraph_type = ParagraphsType::create([
       'id' => 'section',

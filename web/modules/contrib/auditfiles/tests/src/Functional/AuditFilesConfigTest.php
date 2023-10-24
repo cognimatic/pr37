@@ -28,7 +28,7 @@ final class AuditFilesConfigTest extends BrowserTestBase {
    *
    * @var \Drupal\user\UserInterface
    */
-  protected UserInterface $user;
+  protected readonly UserInterface $user;
 
   /**
    * {@inheritdoc}

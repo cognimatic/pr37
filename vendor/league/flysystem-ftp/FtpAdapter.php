@@ -37,65 +37,36 @@ class FtpAdapter implements FilesystemAdapter
     private const SYSTEM_TYPE_WINDOWS = 'windows';
     private const SYSTEM_TYPE_UNIX = 'unix';
 
-    /**
-     * @var FtpConnectionOptions
-     */
-    private $connectionOptions;
-
-    /**
-     * @var FtpConnectionProvider
-     */
-    private $connectionProvider;
-
-    /**
-     * @var ConnectivityChecker
-     */
-    private $connectivityChecker;
+    private FtpConnectionProvider $connectionProvider;
+    private ConnectivityChecker $connectivityChecker;
 
     /**
      * @var resource|false|\FTP\Connection
      */
-    private $connection = false;
-
-    /**
-     * @var PathPrefixer
-     */
-    private $prefixer;
-
-    /**
-     * @var VisibilityConverter
-     */
-    private $visibilityConverter;
-
-    /**
-     * @var bool|null
-     */
-    private $isPureFtpdServer;
-
-    /**
-     * @var null|string
-     */
-    private $systemType;
-
-    /**
-     * @var MimeTypeDetector
-     */
-    private $mimeTypeDetector;
+    private mixed $connection = false;
+    private PathPrefixer $prefixer;
+    private VisibilityConverter $visibilityConverter;
+    private ?bool $isPureFtpdServer = null;
+    private ?bool $useRawListOptions;
+    private ?string $systemType;
+    private MimeTypeDetector $mimeTypeDetector;
 
     private ?string $rootDirectory = null;
 
     public function __construct(
-        FtpConnectionOptions $connectionOptions,
+        private FtpConnectionOptions $connectionOptions,
         FtpConnectionProvider $connectionProvider = null,
         ConnectivityChecker $connectivityChecker = null,
         VisibilityConverter $visibilityConverter = null,
-        MimeTypeDetector $mimeTypeDetector = null
+        MimeTypeDetector $mimeTypeDetector = null,
+        private bool $detectMimeTypeUsingPath = false,
     ) {
-        $this->connectionOptions = $connectionOptions;
+        $this->systemType = $this->connectionOptions->systemType();
         $this->connectionProvider = $connectionProvider ?: new FtpConnectionProvider();
         $this->connectivityChecker = $connectivityChecker ?: new NoopCommandConnectivityChecker();
         $this->visibilityConverter = $visibilityConverter ?: new PortableVisibilityConverter();
         $this->mimeTypeDetector = $mimeTypeDetector ?: new FinfoMimeTypeDetector();
+        $this->useRawListOptions = $connectionOptions->useRawListOptions();
     }
 
     /**
@@ -142,6 +113,19 @@ class FtpAdapter implements FilesystemAdapter
         $response = ftp_raw($this->connection, 'HELP');
 
         return $this->isPureFtpdServer = stripos(implode(' ', $response), 'Pure-FTPd') !== false;
+    }
+
+    private function isServerSupportingListOptions(): bool
+    {
+        if ($this->useRawListOptions !== null) {
+            return $this->useRawListOptions;
+        }
+
+        $response = ftp_raw($this->connection, 'SYST');
+        $syst = implode(' ', $response);
+
+        return $this->useRawListOptions = stripos($syst, 'FileZilla') === false
+            && stripos($syst, 'L8') === false;
     }
 
     public function fileExists(string $path): bool
@@ -276,7 +260,7 @@ class FtpAdapter implements FilesystemAdapter
         $mode = $this->visibilityConverter->forFile($visibility);
 
         if ( ! @ftp_chmod($this->connection(), $mode, $location)) {
-            $message = error_get_last()['message'];
+            $message = error_get_last()['message'] ?? '';
             throw UnableToSetVisibility::atLocation($path, $message);
         }
     }
@@ -311,8 +295,9 @@ class FtpAdapter implements FilesystemAdapter
     public function mimeType(string $path): FileAttributes
     {
         try {
-            $contents = $this->read($path);
-            $mimetype = $this->mimeTypeDetector->detectMimeType($path, $contents);
+            $mimetype = $this->detectMimeTypeUsingPath
+                ? $this->mimeTypeDetector->detectMimeTypeFromPath($path)
+                : $this->mimeTypeDetector->detectMimeType($path, $this->read($path));
         } catch (Throwable $exception) {
             throw UnableToRetrieveMetadata::mimeType($path, $exception->getMessage(), $exception);
         }
@@ -542,7 +527,11 @@ class FtpAdapter implements FilesystemAdapter
             $path = $this->escapePath($path);
         }
 
-        return ftp_rawlist($connection, $options . ' ' . $path, stripos($options, 'R') !== false) ?: [];
+        if (! $this->isServerSupportingListOptions()) {
+            $options = '';
+        }
+
+        return ftp_rawlist($connection, ($options ? $options . ' ' : '') . $path, stripos($options, 'R') !== false) ?: [];
     }
 
     public function move(string $source, string $destination, Config $config): void

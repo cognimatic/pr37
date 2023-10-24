@@ -14,7 +14,7 @@ namespace Drupal\auditfiles\Reference;
  */
 final class FileFieldReference implements ReferenceInterface {
 
-  private FileEntityReference $fileEntityReference;
+  private readonly FileEntityReference $fileEntityReference;
 
   /**
    * Constructs a new FileFieldReference.
@@ -57,6 +57,9 @@ final class FileFieldReference implements ReferenceInterface {
     return $this->fileEntityReference;
   }
 
+  /**
+   * Prints a string useful for debugging.
+   */
   public function __toString(): string {
     return sprintf('Reference at %s from entity %s #%s to file #%s', $this->table, $this->entityTypeId, $this->entityId, $this->fileId);
   }

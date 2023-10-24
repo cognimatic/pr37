@@ -25,7 +25,7 @@ class ListNormalizer extends SerializerListNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($object, $format = NULL, array $context = []) {
+  public function normalize($object, $format = NULL, array $context = []): \ArrayObject|array|string|int|float|bool|null {
     $multiple_fields = ['physical_addresses'];
     $properties = parent::normalize($object, $format, $context);
     if (count($properties) == 1 && !in_array($context['field'], $multiple_fields)) {

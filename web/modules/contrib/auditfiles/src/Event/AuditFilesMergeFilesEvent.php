@@ -26,8 +26,8 @@ final class AuditFilesMergeFilesEvent extends Event {
    *   Messages to output after dispatch is complete.
    */
   public function __construct(
-    public FileEntityReference $canonicalFile,
-    public FileEntityReference $mergedFile,
+    public readonly FileEntityReference $canonicalFile,
+    public readonly FileEntityReference $mergedFile,
     public array $messages = [],
   ) {
   }

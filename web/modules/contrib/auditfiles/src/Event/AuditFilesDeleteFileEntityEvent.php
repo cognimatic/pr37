@@ -25,7 +25,7 @@ final class AuditFilesDeleteFileEntityEvent extends Event {
    *   has been made.
    */
   public function __construct(
-    public FileEntityReference $reference,
+    public readonly FileEntityReference $reference,
     public ?bool $wasDeleted = NULL,
   ) {
   }
