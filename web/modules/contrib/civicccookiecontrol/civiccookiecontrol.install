@@ -399,3 +399,34 @@ function civiccookiecontrol_update_8411(&$sandbox) {
 
   civiccookiecontrol_clear_tempstore();
 }
+
+/**
+ * Cookie control v9.9 IAB Updates for cookie control version.
+ */
+function civiccookiecontrol_update_8412(&$sandbox) {
+  $iab2Config = \Drupal::configFactory()
+    ->getEditable(CCCConfigNames::IAB2)
+    ->set('iabGoogleVendors', 'Google Vendors')
+    ->set('iabGoogleVendorInformation', 'Cookies may be shared across the following domains:');
+
+  $iab2Config->save();
+  civiccookiecontrol_clear_tempstore();
+}
+
+/**
+ * Cookie control v9.9 IAB Updates for cookie control version.
+ */
+function civiccookiecontrol_update_8413(&$sandbox) {
+  $iab2Config = \Drupal::configFactory()
+    ->getEditable(CCCConfigNames::IAB2)
+    ->set('iabVendorDataUses', 'Data collected and processed by vendor:')
+    ->set('iabDataRetention', 'day data retention period')
+    ->set('iabPrivacy', 'Privacy Policy')
+    ->set('iabLiClaims', 'Legitimate Interests at stake')
+    ->set('iabVendorCount', 'TCF vendors are seeking consent or wishing to pursue data processing purposes on the basis of their legitimate interests.')
+    ->set('iabIllustrationsDescription', 'Read illustrations of possible use scenarios')
+    ->set('iabIncludeVendors', '');
+
+  $iab2Config->save();
+  civiccookiecontrol_clear_tempstore();
+}

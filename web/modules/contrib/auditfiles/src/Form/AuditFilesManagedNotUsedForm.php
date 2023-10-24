@@ -120,7 +120,6 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
     /** @var \Drupal\auditfiles\Reference\FileEntityReference[] $references */
     $references = iterator_to_array($this->filesManagedNotUsed->getReferences());
     $form_state->setTemporaryValue(static::TEMPORARY_ALL_REFERENCES, $references);
-    $rows = [];
 
     foreach ($references as $reference) {
       $file = $reference->getFile() ?? throw new \LogicException('The file_managed row exists so this should be loadable.');
@@ -140,19 +139,18 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
 
     $pages = [];
     $currentPage = NULL;
-    $rows_count = count($rows);
-    if ($rows_count > 0) {
+    if (count($rows) > 0) {
       $itemsPerPage = $this->auditFilesConfig->getReportOptionsItemsPerPage();
       if ($itemsPerPage > 0) {
-        $currentPage = $this->pagerManager->createPager($rows_count, $itemsPerPage)->getCurrentPage();
+        $currentPage = $this->pagerManager->createPager(count($rows), $itemsPerPage)->getCurrentPage();
         $pages = array_chunk($rows, $itemsPerPage, TRUE);
       }
     }
 
     // Setup the record count and related messages.
     $maximumRecords = $this->auditFilesConfig->getReportOptionsMaximumRecords();
-    $form['help']['#markup'] = ($rows_count > 0) ? $this->formatPlural(
-      $rows_count,
+    $form['help']['#markup'] = (count($rows) > 0) ? $this->formatPlural(
+      count($rows),
       'Found 1 file in the file_managed table that is not in the file_usage table.',
       (($maximumRecords !== 0) ? 'Found at least @count files in the file_managed table not in the file_usage table.' : 'Found @count files in the file_managed table not in the file_usage table.'),
     ) : $this->t('Found no files in the file_managed table not in the file_usage table.');
@@ -193,7 +191,7 @@ final class AuditFilesManagedNotUsedForm extends FormBase implements AuditFilesA
       '#options' => $pages[$currentPage] ?? $rows,
     ];
 
-    if (0 === $rows_count) {
+    if (0 === count($rows)) {
       return $form;
     }
 

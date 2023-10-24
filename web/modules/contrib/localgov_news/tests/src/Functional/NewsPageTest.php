@@ -33,6 +33,13 @@ class NewsPageTest extends BrowserTestBase {
   protected $adminUser;
 
   /**
+   * Node to hold the article.
+   *
+   * @var \Drupal\node\NodeInterface
+   */
+  protected $nodeStorage;
+
+  /**
    * Modules to enable.
    *
    * @var array

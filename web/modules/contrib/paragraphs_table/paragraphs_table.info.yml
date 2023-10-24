@@ -4,9 +4,9 @@ description: 'This module provides both a field formatter and a widget for the P
 core_version_requirement: ^8.8 || ^9 || ^10
 package: Paragraphs
 dependencies:
-  - paragraphs
+  - drupal:paragraphs
 
-# Information added by Drupal.org packaging script on 2023-02-18
-version: '8.x-1.20'
+# Information added by Drupal.org packaging script on 2023-09-17
+version: '8.x-1.21'
 project: 'paragraphs_table'
-datestamp: 1676733933
+datestamp: 1694953484

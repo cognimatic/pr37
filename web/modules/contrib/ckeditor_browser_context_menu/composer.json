@@ -1,0 +1,11 @@
+{
+    "name": "drupal/ckeditor_browser_context_menu",
+    "type": "drupal-module",
+    "description": "Makes CKEditor 4.x use the browser's built-in context menu instead of CKEditor's custom context menu (right-click menu).  This will allow full use of the browser's built-in spellcheck capabilities.",
+    "homepage": "http://drupal.org/project/ckeditor_browser_context_menu",
+    "license": "GPL-2.0+",
+    "require": {
+        "drupal/core": "^9 || ^10"
+    },
+    "minimum-stability": "dev"
+}

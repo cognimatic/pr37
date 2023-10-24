@@ -41,8 +41,8 @@
   </div>
 
   {% for category, categ_types in items %}
-    <div class="type-tray-category category--{{ category }}">
-      <h2>{{ category_labels[category] }}</h2>
+    <div class="type-tray-category category--{{ category|clean_class }}">
+      <h2 id="{{ category|clean_class }}">{{ category_labels[category] }}</h2>
       <ul>
         {% for item in categ_types %}
           <li data-type-tray="teaser-wrapper">{{ item }}</li>

@@ -2,12 +2,12 @@ name: 'Production Check REST'
 type: 'module'
 description: "Exposes the prod check report as a rest service"
 package: Monitoring
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^8.9 || ^9 || ^10
 dependencies:
   - prod_check:prod_check
   - drupal:rest
 
 # Information added by Drupal.org packaging script on 2023-05-04
-version: '8.x-1.0-beta1'
+version: '2.0.0-beta1'
 project: 'prod_check'
-datestamp: 1683208995
+datestamp: 1683208857

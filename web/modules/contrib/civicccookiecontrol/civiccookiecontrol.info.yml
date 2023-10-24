@@ -8,7 +8,7 @@ libraries:
 type: module
 configure: cookiecontrol.admin_overview
 
-# Information added by Drupal.org packaging script on 2023-06-22
-version: '4.5.0'
+# Information added by Drupal.org packaging script on 2023-09-26
+version: '4.5.2'
 project: 'civicccookiecontrol'
-datestamp: 1687440910
+datestamp: 1695717001

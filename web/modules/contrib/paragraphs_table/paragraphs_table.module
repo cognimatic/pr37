@@ -5,8 +5,8 @@
  * Contains paragraphs_table.module.
  */
 
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\paragraphs_table\Form\ParagraphCloneForm;
 use Drupal\paragraphs_table\Form\ParagraphDeleteForm;
 use Drupal\paragraphs_table\Form\ParagraphEditForm;
@@ -18,9 +18,25 @@ function paragraphs_table_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     // Main module help for the paragraphs_table module.
     case 'help.page.paragraphs_table':
-      $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('This module provides both a field formatter and a widget table for the Paragraphs entity type') . '</p>';
+      $output = '<p>' . t('The Paragraphs Table module is a versatile Drupal extension that shares similarities with the <a href="https://www.drupal.org/project/field_collection_table">Field Collection Table</a> module. It offers robust features for managing and presenting data in a table format, providing an efficient way to structure and display information on your Drupal website') . '</p>';
+      $output .= '<p>' . t('With the Paragraphs Table module, you can:') . '</p>';
+      $output .= '<ul><li>' . t('<b>Table Mode:</b> Easily create and manage tables in both new and edit modes.') . '</li>';
+      $output .= '<li>' . t('<b>Flexible Display:</b> Choose between vertical or horizontal table display in your views.') . '</li>';
+      $output .= '<li>' . t('<b>Ajax Support:</b> Handle large tables with Ajax, ensuring optimal performance.') . '</li>';
+      $output .= '<li>' . t('<b>Operations:</b> Perform common table operations like modify, delete & duplicate, similar to Field Collection Table.') . '</li>';
+      $output .= '<li>' . t('<b>Support <a href="https://www.drupal.org/project/ds">Display Suite</a>:</b> Seamlessly integrate the module with Display Suite to enhance your content layout.') . '</li>';
+      $output .= '<li>' . t('<b>Support <a href="https://www.drupal.org/project/field_permissions">Field Permission</a>:</b> Control table access using field permission settings.') . '</li>';
+      $output .= '<li>' . t('<b>Support <a href="https://datatables.net/">Datatable</a>:</b> enhanced data manipulation.') . '</li>';
+      $output .= '<li>' . t('<b>Support <a href="https://bootstrap-table.com/">Bootstraptable</a>:</b> polished & responsive table design.') . '</li>';
+      $output .= '<li>' . t('<b>Support <a href="https://developers-dot-devsite-v2-prod.appspot.com/chart/interactive/docs/gallery">Google Chart</a>:</b> Utilize Google Charts for data visualization. Be sure to verify your data using the arrayToDataTable examples') . '</li></ul>';
+      $output .= '<h5>' . t('Functionality Note') . '</h5>';
+      $output .= '<p>' . t("It's important to note that, some functions may still be a work in progress. We encourage you to propose solutions or contribute to help improve the module's functionality, with the aim of achieving a user experience similar to that of the Field Collection Table module.") . '</p>';
+      $output .= '<h5>' . t('Note') . '</h5>';
+      $output .= '<ul><li>' . t('Add a new form page for paragraphs in view display mode, which operates smoothly with Ajax.') . '</li>';
+      $output .= '<li>' . t('Be aware that edit/duplicate forms in view mode may not work as expected with image fields, and the reasons for this behavior are being investigated') . '</li></ul>';
+      $output .= '<p>' . t("For the best results, consider using a <a href='https://www.drupal.org/project/bootstrap5_admin'>Bootstrap 5 admin</a> theme to complement the module's features") . '</p>';
+      $output .= '<h4>' . t('Support and Appreciation') . '</h4>';
+      $output .= '<p>' . t('If you find the Paragraphs Table module valuable and would like to show your appreciation, consider <a href="https://www.buymeacoffee.com/nbao">buying a cup of coffee ☕</a> for the developer.') . '</p>';
       return $output;
 
     default:
@@ -35,8 +51,9 @@ function _paragraphs_table_hidden_label(&$field_form) {
     $field_form['#title_display'] = 'invisible';
   }
   // Remove title field date.
-  if (!empty($field_form['#type'])){
-    if (in_array($field_form['#type'], ['select', 'managed_file', 'entity_autocomplete'])) {
+  if (!empty($field_form['#type'])) {
+    $invisibleType = ['select', 'managed_file', 'entity_autocomplete'];
+    if (in_array($field_form['#type'], $invisibleType)) {
       $field_form['#title_display'] = 'invisible';
     }
     if ($field_form['#type'] == 'datetime') {
@@ -113,13 +130,12 @@ function paragraphs_table_preprocess_field_multiple_value_form(&$variables) {
         if ($remove_row) {
           $variables["table"]["#rows"] = array_merge($variables["table"]["#rows"]);
         }
-        if (empty($variables["table"]["#rows"]) &&
-          !empty($element["#no_header"])) {
+        if (empty($variables["table"]["#rows"]) || !empty($element["#no_header"])) {
           unset($variables["table"]["#header"]);
           unset($variables["table"]["#caption"]);
         }
         elseif ($element["#paragraphsTable"]["#paste_clipboard"]) {
-          $variables['table']['#prefix'] = '<a class="paste-paragraphs-clipboard" data-table="'.$variables["table"]["#attributes"]["id"].'" href="#'.$variables["table"]["#attributes"]["id"].'" data-bs-toggle="tooltip" data-bs-title="'. t('Paste from excel').'"><i class="bi bi-clipboard-check"></i></a>';
+          $variables['table']['#prefix'] = '<a class="paste-paragraphs-clipboard" data-table="' . $variables["table"]["#attributes"]["id"] . '" href="#' . $variables["table"]["#attributes"]["id"] . '" data-bs-toggle="tooltip" data-bs-title="' . t('Paste from excel') . '"><i class="bi bi-clipboard-check"></i></a>';
           $variables['table']['#attached']['library'][] = 'paragraphs_table/paste-clipboard';
         }
       }
@@ -288,4 +304,11 @@ function paragraphs_table_theme($existing, $type, $theme, $path) {
   ];
 
   return $variables;
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function paragraphs_table_type_alter(array &$entity_types) {
+  $entity_types['paragraph']->setLinkTemplate('delete-form', '/paragraphs_item/{paragraph}/delete');
 }

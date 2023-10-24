@@ -24,7 +24,7 @@ class ParagraphCloneForm extends ContentEntityForm {
   protected $entityFieldManager;
 
   /**
-   * Constructs a BookOutlineForm object.
+   * Constructs a paragraphs clone form object.
    *
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository.

@@ -14,6 +14,40 @@ use Drupal\node\NodeTypeInterface;
 use Drupal\workflows\Entity\Workflow;
 
 /**
+ * Implements hook_modules_installed().
+ */
+function localgov_workflows_modules_installed($modules, $is_syncing) {
+
+  // Fix the core moderated content view.
+  if (in_array('localgov_workflows', $modules) && !$is_syncing) {
+
+    // Don't change things if the core editorial workflow is enabled.
+    if (!is_null(\Drupal::entityTypeManager()->getStorage('workflow')->load('editorial'))) {
+      return;
+    }
+
+    $moderated_content_view = \Drupal::entityTypeManager()
+      ->getStorage('view')
+      ->load('moderated_content');
+    if ($moderated_content_view) {
+      $display = $moderated_content_view->get('display');
+      $filters = $display['default']['display_options']['filters'];
+      $filters['moderation_state']['value'] = [
+        'localgov_editorial-draft' => 'localgov_editorial-draft',
+        'localgov_editorial-review' => 'localgov_editorial-review',
+        'localgov_editorial-archived' => 'localgov_editorial-archived',
+      ];
+      $filters['moderation_state_1']['value'] = [
+        'localgov_editorial-published' => 'localgov_editorial-published',
+      ];
+      $display['default']['display_options']['filters'] = $filters;
+      $moderated_content_view->set('display', $display);
+      $moderated_content_view->save();
+    }
+  }
+}
+
+/**
  * Implements hook_localgov_roles_default().
  */
 function localgov_workflows_localgov_roles_default(): array {

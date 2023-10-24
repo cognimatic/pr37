@@ -7,8 +7,8 @@ use Drupal\commerce_order\Entity\OrderType;
 use Drupal\symfony_mailer\Address;
 use Drupal\symfony_mailer\EmailFactoryInterface;
 use Drupal\symfony_mailer\EmailInterface;
-use Drupal\symfony_mailer\MailerHelperTrait;
 use Drupal\symfony_mailer\Entity\MailerPolicy;
+use Drupal\symfony_mailer\MailerHelperTrait;
 use Drupal\symfony_mailer\Processor\EmailBuilderBase;
 
 /**
@@ -88,10 +88,15 @@ class CommerceOrderEmailBuilder extends EmailBuilderBase {
 
     $email->setTo($to)
       ->setBodyEntity($order, 'email')
-      ->setFrom($store->getEmail())
       ->addLibrary('symfony_mailer/commerce_order')
       ->setVariable('order_number', $order->getOrderNumber())
       ->setVariable('store', $store->getName());
+
+    // Get the actual email value without picking up the default from the site
+    // mail. Instead we prefer to default from Mailer policy.
+    if ($store_email = $store->get('mail')->value) {
+      $email->setFrom($store_email);
+    }
   }
 
   /**

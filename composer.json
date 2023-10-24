@@ -50,7 +50,7 @@
         "drupal/did_this_help": "^2.0",
         "drupal/dropzonejs": "^2.8",
         "drupal/editor_advanced_link": "^2.0",
-        "drupal/editoria11y": "^1.0",
+        "drupal/editoria11y": "^2.1",
         "drupal/entity_embed": "^1.3",
         "drupal/entity_share": "^3.0@RC",
         "drupal/environment_indicator": "^4.0",
@@ -60,7 +60,7 @@
         "drupal/feeds_tamper": "^2.0@beta",
         "drupal/filefield_sources": "^1.0@alpha",
         "drupal/fpa": "^4.0",
-        "drupal/hide_submit_d8": "^1.2",
+        "drupal/hide_submit_d8": "1.x-dev@dev",
         "drupal/honeypot": "^2.1",
         "drupal/httpswww": "^2.0",
         "drupal/iframe": "^2.21",
@@ -69,7 +69,6 @@
         "drupal/jquery_ui_datepicker": "^2.0",
         "drupal/keysave": "^1.0@beta",
         "drupal/layout_builder_base": "1.x-dev@dev",
-        "drupal/linkchecker": "^1.1",
         "drupal/mail_login": "^2.6",
         "drupal/maillog": "^1.1",
         "drupal/mailsystem": "^4.4",
@@ -87,13 +86,13 @@
         "drupal/migrate_process_trim": "^2.0",
         "drupal/migrate_skip_on_404": "^1.1",
         "drupal/migrate_source_csv": "^3.5",
-        "drupal/module_filter": "^3.2",
+        "drupal/module_filter": "^4.0",
         "drupal/paragraphs_table": "^1.9",
         "drupal/plupload": "^2.1@beta",
-        "drupal/prod_check": "^1.0@alpha",
+        "drupal/prod_check": "^2.0@beta",
         "drupal/rabbit_hole": "^1.0@beta",
         "drupal/rabbit_hole_href": "^2.0",
-        "drupal/responsive_favicons": "^1.7",
+        "drupal/responsive_favicons": "^2.0",
         "drupal/scheduled_transitions": "^2.3@beta",
         "drupal/scheduler": "^2.0@RC",
         "drupal/scheduler_content_moderation_integration": "^2.0@beta",
@@ -106,16 +105,16 @@
         "drupal/security_review": "^2.0",
         "drupal/seo_checklist": "^5.1",
         "drupal/shs": "^2.0@RC",
-        "drupal/simple_styleguide": "^1.8",
-        "drupal/simplesamlphp_auth": "^3.2",
+        "drupal/simple_styleguide": "^2.0",
+        "drupal/simplesamlphp_auth": "^4.0@RC",
         "drupal/simplesamlphp_custom_attributes": "^2.0",
-        "drupal/simplify": "^1.2",
+        "drupal/simplify": "^2.1",
         "drupal/single_content_sync": "^1.3",
         "drupal/site_audit": "^3.0@RC",
         "drupal/smart_sql_idmap": "^1.1",
         "drupal/smtp": "^1.0",
         "drupal/styleguide": "^2.1",
-        "drupal/svg_image": "^1.16",
+        "drupal/svg_image": "^3.0",
         "drupal/symfony_mailer": "^1.3@RC",
         "drupal/taxonomy_manager": "^2.0",
         "drupal/twitter_block": "^3.0@alpha",
@@ -126,7 +125,7 @@
         "drupal/views_bulk_operations": "^4.1",
         "drupal/views_data_export": "^1.1",
         "drupal/views_tree": "^2.0@RC",
-        "drupal/webform": "^6.1",
+        "drupal/webform": "^6.2@RC",
         "drupal/webprofiler": "^9.0",
         "drupal/xhprof": "^1.0@beta",
         "drupal/yoast_seo": "^1.7",
@@ -144,7 +143,7 @@
         "drupal/bugherd": "^1.0@beta",
         "drupal/coder": "^8.3",
         "drupal/core-dev": "^9.1",
-        "drupal/devel": "^4.1",
+        "drupal/devel": "^5.1",
         "drupal/devel_entity_updates": "^4.1",
         "drupal/entity_clone": "^2.0@beta",
         "drupal/migrate_plus": "^6.0",
@@ -200,27 +199,20 @@
             "web/themes/custom/{$name}": ["type:drupal-custom-theme"]
         },
         "patches": {
-            "drupal/auditfiles": {
-              "NULL Count Error if no 'Managed Not Used' Files 3346307": "https://git.drupalcode.org/project/auditfiles/-/merge_requests/20.diff"
-            },
             "drupal/autocomplete_deluxe": {
               "Multiple reference terms fails 3053986": "https://www.drupal.org/files/issues/2021-05-25/3053986-6.patch"
             },
             "drupal/cludo_search": {
               "Cludo search autocomplete not working on block 3050293": "https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch",
+              "D10 compatability https://www.drupal.org/project/cludo_search/issues/3296801": "https://www.drupal.org/files/issues/2022-07-18/cludo_search.1.0-beta2.rector.patch",
               "Hide Prompt Above Input Box 3351519": "https://www.drupal.org/files/issues/2023-03-31/cludo_search_disable_prompt.patch"
             },
             "drupal/core": {
-              "Claro preprocessing of field multiple value forms 3099026": "https://www.drupal.org/files/issues/2023-03-08/3099026-60-9.5.x.patch",
               "Deprecated function: pathinfo() on template_preprocess_image_style 3306131": "https://git.drupalcode.org/project/drupal/-/merge_requests/2680.diff",
-              "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch",
-              "CKEditor 5 isn't respecting field widgets row settings 3241295": "https://www.drupal.org/files/issues/2023-02-02/3241295-d9.5-101.patch"
+              "New non translatable field on translatable content throws error 3025039": "https://www.drupal.org/files/issues/2022-09-30/3025039-MR1105-79.patch"
             },
-            "drupal/search_api_stats": {
-                "Empty search returns error 3325990": "https://www.drupal.org/files/issues/2022-12-08/search_api_stats-empty-search-returns-error-3325990-2.patch"
-            },
-            "drupal/security_review": {
-                "Base table or view not found 3345844": "https://git.drupalcode.org/project/security_review/-/merge_requests/37.diff"
+            "drupal/filefield_sources": {
+              "D10 Compatability https://www.drupal.org/project/filefield_sources/issues/3336268": "https://www.drupal.org/files/issues/2023-08-15/3336268-3-filefield_sources-drupal-10-compatibility.patch"
             },
             "drupal/userswitch": {
                 "Add an entity operation 3087885": "https://www.drupal.org/files/issues/2022-01-30/add-an-entity-operation-in-addition-to-user-list-3087885-29.patch"

@@ -130,23 +130,12 @@ class ContentSyncHelper implements ContentSyncHelperInterface {
    * {@inheritdoc}
    */
   public function createImportDirectory(): string {
-    $default_scheme = $this->getDefaultFileScheme();
     $uuid = $this->uuid->generate();
-    $import_directory = "{$default_scheme}://import/zip/{$uuid}";
+    $import_directory = "temporary://import/zip/{$uuid}";
 
     $this->prepareFilesDirectory($import_directory);
 
     return $import_directory;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDefaultFileScheme(): string {
-    // We can only work with local files e.g. generating zip.
-    // External schema is not allowed as you can't create zip instance in this
-    // case.
-    return 'public';
   }
 
   /**
@@ -258,6 +247,20 @@ class ContentSyncHelper implements ContentSyncHelperInterface {
    */
   public function getSiteUuid(): string {
     return $this->configFactory->get('system.site')->get('uuid');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function containsDisallowedEntities(array $entities): bool {
+    $allowed_entity_types = $this->configFactory->get('single_content_sync.settings')->get('allowed_entity_types');
+    foreach ($entities as $entity) {
+      $entity_type_id = $entity->getEntityTypeId();
+      if (!isset($allowed_entity_types[$entity_type_id]) || ($allowed_entity_types[$entity_type_id] && !isset($allowed_entity_types[$entity_type_id][$entity->bundle()]))) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
 }

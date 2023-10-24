@@ -34,6 +34,7 @@ class ProdCheckResource extends ResourceBase {
     // collect cache ability metadata for. So, run it in our own render
     // context.
     $context = new RenderContext();
+    // @todo Use dependency injection here:
     $result = \Drupal::service('renderer')->executeInRenderContext($context, function () {
       /** @var Rest $rest_processor */
       $rest_processor = \Drupal::service('plugin.manager.prod_check_processor')->createInstance('rest');

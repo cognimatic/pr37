@@ -120,6 +120,14 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "altLanguageIabMinutes",
  *     "altLanguageIabHours",
  *     "altLanguageIabDays",
+ *     "altLanguageIabGoogleVendors",
+ *     "altLanguageIabGoogleVendorInformation",
+ *     "altLanguageIabVendorDataUses",
+ *     "altLanguageIabDataRetention",
+ *     "altLanguageIabPrivacy",
+ *     "altLanguageIabLiClaims",
+ *     "altLanguageIabVendorCount",
+ *     "altLanguageIabIllustrationsDescription",
  *   }
  * )
  */
@@ -712,6 +720,54 @@ class AltLanguage extends ConfigEntityBase implements AltLanguageInterface {
    * @var string
    */
   public $altLanguageIabDays;
+  /**
+   * IAB Google Vendors text in alternative language.
+   *
+   * @var string
+   */
+  public $altLanguageIabGoogleVendors;
+  /**
+   * IAB Google Vendor Information text in alternative language.
+   *
+   * @var string
+   */
+  public $altLanguageIabGoogleVendorInformation;
+  /**
+   * IAB Vendor Data Uses text in alternative language.
+   *
+   * @var string
+   */
+  public $altLanguageIabVendorDataUses;
+  /**
+   * IAB Data Retention text in alternative language.
+   *
+   * @var string
+   */
+  public $altLanguageIabDataRetention;
+  /**
+   * IAB Privacy text in alternative language.
+   *
+   * @var string
+   */
+  public $altLanguageIabPrivacy;
+  /**
+   * IAB LiClaims text in alternative language.
+   *
+   * @var string
+   */
+  public $altLanguageIabLiClaims;
+  /**
+   * IAB Vendor Count text in alternative language.
+   *
+   * @var string
+   */
+  public $altLanguageIabVendorCount;
+  /**
+   * IAB Illustrations Description text in alternative language.
+   *
+   * @var string
+   */
+  public $altLanguageIabIllustrationsDescription;
 
   /**
    * Get the mode of alternative language for cookie control v.9.
@@ -2463,6 +2519,166 @@ class AltLanguage extends ConfigEntityBase implements AltLanguageInterface {
    */
   public function setAltLanguageIabDays($altLanguageIabDays): void {
     $this->altLanguageIabDays = $altLanguageIabDays;
+  }
+
+  /**
+   * Getter for iab Google Vendors in alt language.
+   *
+   * @return string
+   *   The returned string value
+   */
+  public function getAltLanguageIabGoogleVendors() {
+    return $this->altLanguageIabGoogleVendors;
+  }
+
+  /**
+   * Setter for iab Google Vendors in alt language.
+   *
+   * @param string $altLanguageIabGoogleVendors
+   *   The iab Google Vendors in alt language.
+   */
+  public function setAltLanguageIabGoogleVendors($altLanguageIabGoogleVendors): void {
+    $this->altLanguageIabGoogleVendors = $altLanguageIabGoogleVendors;
+  }
+
+  /**
+   * Getter for iab Google Vendor Information in alt language.
+   *
+   * @return string
+   *   The returned string value
+   */
+  public function getAltLanguageIabGoogleVendorInformation() {
+    return $this->altLanguageIabGoogleVendorInformation;
+  }
+
+  /**
+   * Setter for iab Google Vendor Information in alt language.
+   *
+   * @param string $altLanguageIabGoogleVendorInformation
+   *   The iab Google Vendor Information in alt language.
+   */
+  public function setAltLanguageIabGoogleVendorInformation($altLanguageIabGoogleVendorInformation): void {
+    $this->altLanguageIabGoogleVendorInformation = $altLanguageIabGoogleVendorInformation;
+  }
+
+  /**
+   * Getter for iab Vendor Data Uses in alt language.
+   *
+   * @return string
+   *   The returned string value
+   */
+  public function getAltLanguageIabVendorDataUses() {
+    return $this->altLanguageIabVendorDataUses;
+  }
+
+  /**
+   * Setter for iab Vendor Data Uses in alt language.
+   *
+   * @param string $altLanguageIabVendorDataUses
+   *   The iab Vendor Data Uses in alt language.
+   */
+  public function setAltLanguageIabVendorDataUses($altLanguageIabVendorDataUses): void {
+    $this->altLanguageIabVendorDataUses = $altLanguageIabVendorDataUses;
+  }
+
+  /**
+   * Getter for iab Data Retention in alt language.
+   *
+   * @return string
+   *   The returned string value
+   */
+  public function getAltLanguageIabDataRetention() {
+    return $this->altLanguageIabDataRetention;
+  }
+
+  /**
+   * Setter for iab Data Retention in alt language.
+   *
+   * @param string $altLanguageIabDataRetention
+   *   The iab Data Retention in alt language.
+   */
+  public function setAltLanguageIabDataRetention($altLanguageIabDataRetention): void {
+    $this->altLanguageIabDataRetention = $altLanguageIabDataRetention;
+  }
+
+  /**
+   * Getter for iab Privacy in alt language.
+   *
+   * @return string
+   *   The returned string value
+   */
+  public function getAltLanguageIabPrivacy() {
+    return $this->altLanguageIabPrivacy;
+  }
+
+  /**
+   * Setter for iab Privacy in alt language.
+   *
+   * @param string $altLanguageIabPrivacy
+   *   The iab Privacy in alt language.
+   */
+  public function setAltLanguageIabPrivacy($altLanguageIabPrivacy): void {
+    $this->altLanguageIabPrivacy = $altLanguageIabPrivacy;
+  }
+
+  /**
+   * Getter for iab LiClaims in alt language.
+   *
+   * @return string
+   *   The returned string value
+   */
+  public function getAltLanguageIabLiClaims() {
+    return $this->altLanguageIabLiClaims;
+  }
+
+  /**
+   * Setter for iab LiClaims in alt language.
+   *
+   * @param string $altLanguageIabLiClaims
+   *   The iab LiClaims in alt language.
+   */
+  public function setAltLanguageIabLiClaims($altLanguageIabLiClaims): void {
+    $this->altLanguageIabLiClaims = $altLanguageIabLiClaims;
+  }
+
+  /**
+   * Getter for iab Vendor Count in alt language.
+   *
+   * @return string
+   *   The returned string value
+   */
+  public function getAltLanguageIabVendorCount() {
+    return $this->altLanguageIabVendorCount;
+  }
+
+  /**
+   * Setter for iab Vendor Count in alt language.
+   *
+   * @param string $altLanguageIabVendorCount
+   *   The iab Vendor Count in alt language.
+   */
+  public function setAltLanguageIabVendorCount($altLanguageIabVendorCount): void {
+    $this->altLanguageIabVendorCount = $altLanguageIabVendorCount;
+  }
+
+  /**
+   * Getter for iab Illustrations Description in alt language.
+   *
+   * @return string
+   *   The returned string value
+   */
+  public function getAltLanguageIabIllustrationsDescription() {
+    return $this->altLanguageIabIllustrationsDescription;
+  }
+
+  /**
+   * Setter for iab Illustrations Description in alt language.
+   *
+   * @param string $altLanguageIabIllustrationsDescription
+   *   The iab Illustrations Description in alt language.
+   */
+  public function setAltLanguageIabIllustrationsDescription($altLanguageIabIllustrationsDescription): void {
+    $this->altLanguageIabIllustrationsDescription = $altLanguageIabIllustrationsDescription;
   }
 
 }

@@ -918,6 +918,54 @@ class AltLanguageForm extends EntityForm {
         '#description' => $this->t('Set IAB Days text in Alternative Language.'),
         '#default_value' => $altLanguage->altLanguageIabDays,
       ];
+      $form['iab2Texts']['altLanguageIabGoogleVendors'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('IAB Google Vendors in Alternative Language'),
+        '#description' => $this->t('Set IAB Google Vendors text in Alternative Language.'),
+        '#default_value' => $altLanguage->altLanguageIabGoogleVendors,
+      ];
+      $form['iab2Texts']['altLanguageIabGoogleVendorInformation'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('IAB Google Vendor Information in Alternative Language'),
+        '#description' => $this->t('Set IAB Google Vendor Information text in Alternative Language.'),
+        '#default_value' => $altLanguage->altLanguageIabGoogleVendorInformation,
+      ];
+      $form['iab2Texts']['altLanguageIabVendorDataUses'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('IAB Vendor Data Uses in Alternative Language'),
+        '#description' => $this->t('The text used to describe the data collected and processed by the vendor in Alternative Language.'),
+        '#default_value' => $altLanguage->altLanguageIabVendorDataUses,
+      ];
+      $form['iab2Texts']['altLanguageIabDataRetention'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('IAB Data retention period in Alternative Language'),
+        '#description' => $this->t("The text used to describe the vendor's data retention period, which appears after a dynamic number value in days in Alternative Language."),
+        '#default_value' => $altLanguage->altLanguageIabDataRetention,
+      ];
+      $form['iab2Texts']['altLanguageIabPrivacy'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('IAB Privacy policy URL in Alternative Language'),
+        '#description' => $this->t("The text used to describe the link to the vendor's privacy policy URL in Alternative Language."),
+        '#default_value' => $altLanguage->altLanguageIabPrivacy,
+      ];
+      $form['iab2Texts']['altLanguageIabLiClaims'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('IAB Legitimate interests at stake in Alternative Language'),
+        '#description' => $this->t('The text used to describe which legitimate interests are at stake in Alternative Language.'),
+        '#default_value' => $altLanguage->altLanguageIabLiClaims,
+      ];
+      $form['iab2Texts']['altLanguageIabVendorCount'] = [
+        '#type' => 'textarea',
+        '#title' => $this->t('IAB Vendor Count in Alternative Language'),
+        '#description' => $this->t('The text on the main panel following a dynamic number used to describe how many vendors you are seeking consent for with the supplied configuration in Alternative Language.'),
+        '#default_value' => $altLanguage->altLanguageIabVendorCount,
+      ];
+      $form['iab2Texts']['altLanguageIabIllustrationsDescription'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('IAB Illustrations Description in Alternative Language'),
+        '#description' => $this->t('Set IAB Illustrations Description text in Alternative Language.'),
+        '#default_value' => $altLanguage->altLanguageIabIllustrationsDescription,
+      ];
     }
     return $form;
   }

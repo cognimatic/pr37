@@ -15,7 +15,7 @@ function content_readability_requirements($phase) {
   // Report cron status.
   if ($phase == 'runtime') {
     // Load Bundles.
-    $allowed_bundles = \Drupal::config('content_readability.settings')->get('content_readability_visibility');
+    $allowed_bundles = \Drupal::config('content_readability.settings')->get('content_readability_visibility') ?? [];
     $bundles = array_values($allowed_bundles);
 
     // Check we have an enabled bundled.

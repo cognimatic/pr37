@@ -26,6 +26,9 @@ By DamienMcKenna: Updated CHANGELOG.txt for recent 5.0.x changes already present
   opendir(private://backup_migrate/scheduled): failed to open dir.
 #3262070 by WagnerMelo, Anybody, Grevil, hmendes, andregp, DamienMcKenna,
   bruno.bicudo: Show date & time when restore / backup was successful.
+#3390910 by sarwan_verma, kepesv, DamienMcKenna: Drupal 10 compatibility
+  warnings - Call \Drupal\Core\Entity\Query\QueryInterface::accessCheck() with
+  TRUE or FALSE to specify whether access should be checked.
 
 
 Backup and Migrate 5.0.x-dev, 2023-xx-xx

@@ -89,6 +89,10 @@ class CCC9Config extends AbstractCCCConfig {
           ->get('iabFullLegalDescription');
         $this->config['iabConfig']['saveOnlyOnClose'] = $this->iabConfig
           ->get('iabSaveOnlyOnClose');
+
+        // For includeVendors convert value(string) to array .
+        $this->config['iabConfig']['includeVendors'] = explode(',', $this->iabConfig
+          ->get('iabIncludeVendors'), -1);
       }
     }
     $this->loadStatementObject();
@@ -222,6 +226,14 @@ class CCC9Config extends AbstractCCCConfig {
     $iabText['minutes'] = $this->iabConfig->get('iabMinutes');
     $iabText['hours'] = $this->iabConfig->get('iabHours');
     $iabText['days'] = $this->iabConfig->get('iabDays');
+    $iabText['googleVendors'] = $this->iabConfig->get('iabGoogleVendors');
+    $iabText['googleVendorInformation'] = $this->iabConfig->get('iabGoogleVendorInformation');
+    $iabText['vendorDataUses'] = $this->iabConfig->get('iabVendorDataUses');
+    $iabText['dataRetention'] = $this->iabConfig->get('iabDataRetention');
+    $iabText['privacy'] = $this->iabConfig->get('iabPrivacy');
+    $iabText['liClaims'] = $this->iabConfig->get('iabLiClaims');
+    $iabText['vendorCount'] = $this->iabConfig->get('iabVendorCount');
+    $iabText['illustrationsDescription'] = $this->iabConfig->get('iabIllustrationsDescription');
 
     return $iabText;
   }
@@ -378,6 +390,14 @@ class CCC9Config extends AbstractCCCConfig {
         $locale['text']['iabCMP']['minutes'] = $altLang->getAltLanguageIabMinutes();
         $locale['text']['iabCMP']['hours'] = $altLang->getAltLanguageIabHours();
         $locale['text']['iabCMP']['days'] = $altLang->getAltLanguageIabDays();
+        $locale['text']['iabCMP']['googleVendors'] = $altLang->getAltLanguageIabGoogleVendors();
+        $locale['text']['iabCMP']['googleVendorInformation'] = $altLang->getAltLanguageIabGoogleVendorInformation();
+        $locale['text']['iabCMP']['vendorDataUses'] = $altLang->getAltLanguageIabVendorDataUses();
+        $locale['text']['iabCMP']['dataRetention'] = $altLang->getAltLanguageIabDataRetention();
+        $locale['text']['iabCMP']['privacy'] = $altLang->getAltLanguageIabPrivacy();
+        $locale['text']['iabCMP']['liClaims'] = $altLang->getAltLanguageIabLiClaims();
+        $locale['text']['iabCMP']['vendorCount'] = $altLang->getAltLanguageIabVendorCount();
+        $locale['text']['iabCMP']['illustrationsDescription'] = $altLang->getAltLanguageIabIllustrationsDescription();
       }
       $locales[] = $locale;
     }

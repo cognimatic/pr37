@@ -3,6 +3,8 @@
 namespace Drupal\paragraphs_table\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Serialization\Json;
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityReferenceSelection\SelectionPluginManagerInterface;
@@ -10,20 +12,18 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\Core\Form\FormState;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Path\CurrentPathStack;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\Component\Utility\Html;
-use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\FieldConfigInterface;
-use Drupal\Core\Field\FieldItemInterface;
-use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -368,10 +368,13 @@ class ParagraphsTableFormatter extends EntityReferenceFormatterBase {
     }
     if (!empty($fieldDefinitions[$field_name])) {
       $target_bundles = $fieldDefinitions[$field_name]->getSettings()["handler_settings"]["target_bundles"];
-      $target_bundle = current($target_bundles);
-      $paragraphs_entity = $this->entityTypeManager->getStorage($target_type)
-        ->create(['type' => $target_bundle]);
-      $field_definitions = $paragraphs_entity->getFieldDefinitions();
+      $field_definitions = [];
+      if (is_array($target_bundles)) {
+        $target_bundle = current($target_bundles);
+        $paragraphs_entity = $this->entityTypeManager->getStorage($target_type)
+          ->create(['type' => $target_bundle]);
+        $field_definitions = $paragraphs_entity->getFieldDefinitions();
+      }
       $typSupport = ['integer', 'number', 'number_integer', 'bigint',
         'float', 'list_float', 'decimal',
       ];

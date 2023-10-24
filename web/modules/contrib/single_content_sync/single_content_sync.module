@@ -6,12 +6,11 @@
  */
 
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Template\Attribute;
-use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
+use Drupal\Core\Template\Attribute;
 
 /**
  * Implements hook_help().
@@ -116,6 +115,8 @@ function single_content_sync_preprocess_links__dropbutton__operations(&$variable
       continue;
     }
 
+    /** @var \Drupal\Core\Url $url */
+    $url = $link_data['link']['#url'];
     $entity_type_id = $url->getOption('entity_type');
 
     if (!$entity_type_id) {
@@ -132,7 +133,7 @@ function single_content_sync_preprocess_links__dropbutton__operations(&$variable
 
   // Add custom export operation here if it was not added in the
   // hook_entity_operation.
-  if ($entity instanceof ContentEntityInterface && !isset($variables['links']['export']) && \Drupal::service('single_content_sync.helper')->access($entity)) {
+  if ($entity instanceof EntityInterface && !isset($variables['links']['export']) && \Drupal::service('single_content_sync.helper')->access($entity)) {
     $variables['links']['export'] = [
       'text' => t('Export'),
       'link' => $entity->toLink(t('Export'), 'single-content:export')->toRenderable(),
@@ -161,6 +162,11 @@ function single_content_sync_entity_access($entity, $operation, $account) {
  * Implements hook_file_download().
  */
 function single_content_sync_file_download($uri) {
+  $routeName = \Drupal::routeMatch()->getRouteName();
+  if ($routeName !== 'single_content_sync.file_download') {
+    return [];
+  }
+
   // Provide a custom filename for the download.
   $target = StreamWrapperManager::getTarget($uri);
   $disposition = 'attachment; filename="' . basename($target) . '"';

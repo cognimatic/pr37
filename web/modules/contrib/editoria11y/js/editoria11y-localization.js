@@ -1,254 +1,439 @@
-ed11yPanel = "" +
-  "<div id='ed11y-panel' class='ed11y-reset ed11y-preload ed11y-panel-shut ed11y-pass'>" +
-    "<h1 class='ed11y-sr-only'>Editorially Tools</h1>" +
-    "<div id='ed11y-panel-upper'>" +
-      "<div id='ed11y-fullcheck-headers' class='ed11y-outline-header ed11y-fullcheck'>" +
-        "<div id='ed11y-fullcheck-outline-header' class='ed11y-bold ed11y-fullcheck-header' tabindex='-1'>Headers" +
-          "<p>Check that this forms <a href='https://accessibility.princeton.edu/how/content/headings'>a complete outline</a>:</p>" +
-        "</div>" +
-          "<button type='button' class='ed11y-upper-next-button ed11y-header-button'>Media<span aria-hidden='true'> &raquo;</span></button>" +
-          "<ul id='ed11y-outline-list' tabindex='-1' aria-labelledby='ed11y-fullcheck-headers'></ul>" +
-        "</div>" +
-      "<div id='ed11y-fullcheck-images' class='ed11y-outline-header ed11y-fullcheck'>" +
-        "<div id='ed11y-image-header' class='ed11y-bold ed11y-fullcheck-header'>Media" +
-          "<p>Check <a href='https://accessibility.princeton.edu/how/content/alternative-text'>alt text</a>, " +
-          "<a href='https://accessibility.princeton.edu/how/content/images-text'>images of text</a>, &amp; <a href='https://webaim.org/techniques/captions/'>captions</a>.</p>" +
-        "</div>" +
-        "<button type='button' class='ed11y-upper-next-button ed11y-header-button'>Content outline<span aria-hidden='true'> &raquo;</span></button>" +
-        "<ul id='ed11y-image-list' tabindex='-1' aria-labelledby='ed11y-fullcheck-outline-header'></ul>" +
-      "</div>" +
-    "</div>" +
-    "<div id='ed11y-panel-content'>" +
-      "<div class='ed11y-panel-icon'></div>" +
-      "<div id='ed11y-panel-text'>" +
-        "<span class='ed11y-checkmessage' tabindex='-1'><span class='ed11y-panel-count'>No</span> <span class='ed11y-panel-messagetype'>accessibility errors detected</span>.</span><br>" +
-        "<a href='#' class='ed11y-jumplink ed11y-small'>Show <span class='ed11y-jumpnext'>first</span> <span aria-hidden='true'> »</span></a>" +
-      "</div>" +
-    "</div>" +
-    "<div id='ed11y-panel-buttonbar'>" +
-      "<button type='button' aria-expanded='false' id='ed11y-summary-toggle' class='ed11y-button ed11y-panel-button' aria-pressed='false'>Show tags</button>" +
-      "<button type='button' class='ed11y-button ed11y-about' title='About this tool' aria-label='about' aria-pressed='false'>?</button>" +
-      "<button type='button' class='ed11y-minimize ed11y-button' title='Minimize panel' aria-label='Minimize panel' aria-pressed='false'><span></span></button>" +
-      "<button type='button' id='ed11y-shutpanel' title='Close panel' class='ed11y-button ed11y-panel-button' aria-label='close panel'>&times;</button>" +
-      "<button type='button' id='ed11y-main-toggle' class='ed11y-preload' aria-expanded='false' title='Accessibility checker'><span class='ed11y-toggle-icon'></span><span class='ed11y-sr-only'>Show accessibility scan panel with</span><span class='ed11y-count'></span><span class='ed11y-sr-only'>issues</span></button>" +
-    "</div>" +
-    "<div aria-live='polite' class='ed11y-sr-only' id='ed11y-aria-live'></div>" +
-  "</div>";
+const ed11yLangDrupal = {
 
-ed11yAbout = "" +
-  "<p>Assistive devices like screen readers depend on the invisible structure of the page matching its visual look and feel.</p>" +
-  "<p>This tool checks for common structural issues like " +
-    "<a href='https://accessibility.princeton.edu/how/content/alternative-text'>missing alternative text</a>, " +
-    "<a href='https://accessibility.princeton.edu/how/content/headings'>jumbled page outlines</a> and " +
-    "<a href='https://accessibility.princeton.edu/how/content/links'>generic link titles</a>.</p><p>Note that it <span class='ed11y-bold'>only</span> checks editorial content; your site's theme needs its own <a href='https://webaim.org/resources/evalquickref/'>accessibility testing</a>.<p>" +
-  "<p><a href='https://github.com/itmaybejj/editoria11y/issues' class='ed11y-small'>Report an issue <span aria-hidden='true'>»</span></a></p>";
+  // Main Panel
+  toggleAccessibilityTools: Drupal.t("Toggle accessibility tools"),
+  toggleDisabled: Drupal.t('Editorially is disabled.'),
+  panelCount0 : Drupal.t("No issues detected."),
+  panelCountAllDismissed : Drupal.t("All issues hidden."),
+  panelCount1 : Drupal.t("One issue detected."),
+  panelCountMultiple: Drupal.t(" issues detected."),
+  panelCountBase: Drupal.t("<span class='count'>No</span> <span class='content-type'>issues detected</span>."),
+  panelControls: Drupal.t('Editorially panel controls'),
+  buttonIssuesContent: Drupal.t('Issues'),
+  buttonOutlineContent: Drupal.t('Outline'),
+  buttonAltsContent: Drupal.t('Alt Text'),
+  buttonAboutTitle: Drupal.t('About this tool'),
+  buttonPrevContent: Drupal.t('Previous'),
+  buttonFirstContent: Drupal.t('First'),
+  buttonNextContent: Drupal.t('Next'),
+  buttonShowHiddenAlert: Drupal.t('Show 1 hidden alert'),
+  buttonShowHiddenAlerts: (count) => Drupal.t('Show') + ' ' + count + ' ' + Drupal.t('hidden alerts'),
+  buttonShowHiddenAlertsContent: Drupal.t('Restore hidden alerts'),
+  panelCheckOutline: '<p>' + Drupal.t('Check that this forms <a href=\'https://accessibility.princeton.edu/how/content/headings\'>a complete outline</a>:') + '</p>',
+  panelCheckAltText: '<p>' + Drupal.t('Check <a href=\'https://accessibility.princeton.edu/how/content/alternative-text\'>alt text</a>, <a href=\'https://accessibility.princeton.edu/how/content/images-text\'>images of text</a>, &amp; <a href=\'https://webaim.org/techniques/captions/\'>captions</a>.') + '</p>',
+  panelHelp: Drupal.t("" +
+    "<p>Assistive technologies and search engines rely on well-structured content. <a href='@demo'>Editoria11y</a> checks for common needs, such as image alternative text, meaningful heading outlines and well-named links. It is meant to supplement <a href='@testing'>testing the design and code</a>.<p>" +
+    "<p><a href='@github' class='ed11y-small'>Report bugs & request changes <span aria-hidden='true'>&raquo;</span></a></p>",  {'@demo': 'https://itmaybejj.github.io/editoria11y/','@testing': 'https://webaim.org/resources/evalquickref/','@github':'https://github.com/itmaybejj/editoria11y/issues',}),
+  altLabelPrefix: Drupal.t("Alt text: "),
+  errorAltMissing: Drupal.t("(missing!)"),
+  errorAltNull: Drupal.t("(none; image marked as decorative)"),
+  errorOutlinePrefixSkippedLevel: Drupal.t("(flagged for skipped level) "),
+  errorOutlinePrefixHeadingEmpty: Drupal.t("(empty heading) "),
+  errorOutlinePrefixHeadingIsLong: Drupal.t("(flagged for length) "),
 
-ed11yInvisibleTip = "The element with this issue is not currently visible; it may be hidden or inside a tab or accordion. I will outline its container.";
-ed11yHiddenTip = "The element with this issue has been marked as hidden from screen readers. It may be in an unopened tab or accordion, so I will outline its container.";
+  // Errors and alerts
+  consoleNotSupported: Drupal.t('This browser can not run Editoria11y.'),
+  jumpedToInvisibleTip: Drupal.t("The marked item may not be visible. Look for it inside the outlined container."),
+  jumpedToAriaHiddenTip: Drupal.t("The item with this issue may be invisible or off screen."),
 
-// Messages for Headings
-
-ed11yMessageHeadingEmpty = "<div class='ed11y-tip-heading'>Empty heading</div> " +
-    "<p>Even though headings without text aren't visible, they still appear " +
-    "in <a href='https://accessibility.princeton.edu/how/content/headings'>" +
-    "document outlines</a>, and the vertical gaps they create between " +
-    "paragraphs are often larger than the designer intended.</p>" +
-    "<p>To fix: edit the page and delete this line, or change its format " +
-    "from &quot;Heading&quot; to &quot;Normal&quot;.</p>";
-
-// Messages for links.
-ed11yMessageLinkHasNoText = "<div class='ed11y-tip-heading'>Link title not " +
-    "found</div> " +
-    "<p>Screen readers will either read the entire url of this link, one " +
-    "character at a time, or say <span class='ed11y-bold'>&quot;Link: " +
-    "[...awkward silence...].&quot;</span></p>" +
-    "<p>To fix: delete this link if it is just stray tags wrapped around an " +
-    "empty space due to a copy/paste bug, or add alt text if it is a real " +
-    "link wrapped around an image or icon.</p>";
-
-ed11yMessagelinkTextIsURL = "<div class='ed11y-tip-heading'>Link may be a " +
-    "URL</div>" +
-    "<p>Assistive devices expect link titles to be " +
-    "<a href='https://accessibility.princeton.edu/how/content/links'>" +
-    "&quot;clear and meaningful&quot;</a>, even out of context.</p>" +
-    "<p>Note that spelling out a very short URL is OK if the URL itself " +
-    "<em>is</em> what you are communicating, e.g., when providing an email " +
-    "address.</p>";
-
-ed11yMessagelinkTextIsGeneric = "<div class='ed11y-tip-heading'>Manual check " +
-    "needed: link title may be generic</div>" +
-    "<p>This link appears to be made of common words like " +
-    "&quot;click here&quot; or &quot;download&quot;.</p>" +
-    "<p>Many users skim for links, and most assistive devices provide lists of link titles, so please check to make sure this link is " +
-    "<span class='ed11y-bold'>unique, clear and meaningful</span>, even out of context.</p><p>Compare which words stand out:<br>" +
-    "<span class='ed11y-small'>&quot;To learn more about writing effective links, " +
-    "<a href='https://accessibility.princeton.edu/how/content/links'>read more</a>.&quot;</span><br>" +
-    "<span class='ed11y-small'>&quot;Learn more about <a href='https://accessibility.princeton.edu/how/content/links'>writing effective links</a>.&quot;</span></p>";
-
-// Messages for images
-ed11yGeneralAltText = "<div class='ed11y-tip-heading'>Error: Alt text attribute is missing</div>" +
-    "<p>All visual elements must provide a text alternative for assistive devices.</p>" +
-    "<p>If a blank alt was provided (alt=&quot;&quot;), screen readers would ignore the image. " +
-    "But in this case the alt attribute is <span class='ed11y-bold'>missing</span>, so screen readers will dictate the url of the image file, one letter at a time.</p>" +
-    "<p>To fix: edit this image and place <a href='https://accessibility.princeton.edu/how/content/alternative-text'>a concise description of its meaning in context</a> " +
-    "in its alternative text field.</p>"
-
-ed11yMessageAltUrl = function (altText) {
-  return "<div class='ed11y-tip-heading'>Error: alternative text may be a filename</div>" +
-      "<p>In the context of a link, an image's alt text should create a " +
-      "<a href='https://accessibility.princeton.edu/how/content/links'>clear and meaningful link title</a>.</p>" +
-      "<p class='ed11y-small'>The alt text for this image is: <span class='ed11y-bold'>&quot;" + altText + "&quot;</span></p>";
-}
-
-ed11yMessageAltDecorative = "<div class='ed11y-tip-heading'>Manual check: image marked as decorative</div><p>All meaningful visual elements must <a href='https://accessibility.princeton.edu/how/content/alternative-text'>provide a text alternative</a>. Images with empty alt attributes are ignored by screen readers; if this image conveys a message to sighted users beyond use as a spacer or background, please add alt text.</p>";
-
-ed11yMessageAltImageOfLinked = function (error, altText) {
-  return "<div class='ed11y-tip-heading'>Warning: <span class='ed11y-bold'>&quot" + error[1] + "&quot;</span> found in linked image</div> " +
-      "<p>As this image is acting as a link, its alt text should create a <a href='https://accessibility.princeton.edu/how/content/links'>clear and meaningful link title</a> " +
-      "rather than describing the image.</p>" +
-      "<p class='ed11y-small'>The alt text for this image is: <br><span class='ed11y-bold'>" + altText + "</span></p>";
-}
-ed11yMessageAltImageOf = function (error, altText) {
-  return "<div class='ed11y-tip-heading'>Alt text needs manual review</div><p>The alt text for this image is: <span class='ed11y-bold'>&quot;" + altText + "&quot;</span></p>" +
-      "<p>Assistive devices announce that they are describing an image when reading alt text, so  <span class='ed11y-bold'>&quot;" + error[1] + "&quot;</span> may be redundant.</p> " +
-      "<p class='ed11y-small'>Reference: <a href='https://accessibility.princeton.edu/how/content/alternative-text'>Alt text should describe an image in context</a>.</p>";
-}
+  // Strings used in tests
+  suspiciousWords: [
+    Drupal.t("image of"),
+    Drupal.t("graphic of"),
+    Drupal.t("picture of"),
+    Drupal.t("placeholder"),
+    Drupal.t("photo of")
+  ],
+  linksUrls: ['http:/', 'https:/', '.asp', '.htm', '.php', '.edu/', '.com/'],
+  linkStringsNewWindows: new RegExp(`(${[
+    Drupal.t('window'),
+    Drupal.t('tab'),
+    Drupal.t('download'),
+    Drupal.t('file'),
+    'window','tab,','download','file',
+  ].join('|')})`, 'g'),
+  linksMeaningless: new RegExp(`(${[
+    'learn','to','more','now','this','page','link','site','website','check','out','view','our','read','download','form','here','click',
+    Drupal.t('learn'),
+    Drupal.t('to'),
+    Drupal.t('more'),
+    Drupal.t('now'),
+    Drupal.t('this'),
+    Drupal.t('page'),
+    Drupal.t('link'),
+    Drupal.t('site'),
+    Drupal.t('website'),
+    Drupal.t('check'),
+    Drupal.t('out'),
+    Drupal.t('view'),
+    Drupal.t('our'),
+    Drupal.t('read'),
+    Drupal.t('download'),
+    Drupal.t('form'),
+    Drupal.t('here'),
+    Drupal.t('click'),
+    Drupal.t('learn more'),
+    Drupal.t('this page'),
+    Drupal.t('this link'),
+    Drupal.t('this site'),
+    Drupal.t('our website'),
+    Drupal.t('check out'),
+    Drupal.t('view our'),
+    Drupal.t('click here'),
+    '\\.',"'",'"',":",'<','>','\\s'
+  ].join('|')})`, 'g'),
 
 
-ed11yMessageAltLongLinked = function (text, altText) {
-  return "<div class='ed11y-tip-heading'>Linked image's alt text is <span class='ed11y-bold'>" + text.length + " characters</span>.</div> " +
-      "<p>The alt text on hyperlinked images should provide a <a href='https://accessibility.princeton.edu/how/content/links'>&quot;concise, clear and meaningful link title&quot;</a>, " +
-      "rather than a description of the image.</p>" +
-      "<p class='ed11y-small'>The alt text for this image is: <span class='ed11y-bold'>&quot;" + altText + "&quot;</span>.</p>";
-}
+  // Tooltips base ======================================
 
-ed11yMessageAltLinkComplex = function (altText) {
-  return "<div class='ed11y-tip-heading'>Please review (might be OK)</div> " +
-      "<p>This link contains <span class='ed11y-bold'>both</span> text and an image, which will be combined by screen readers to create a single link title. " +
-      "Please make sure the two together still create a " +
-      "<a href='https://accessibility.princeton.edu/how/content/links'>&quot;concise, clear and meaningful link title&quot;</a>.</p>" +
-      "<p class='ed11y-small'>The alt text for this image is: <span class='ed11y-bold'>&quot;" + altText + "&quot;</span></p>";
-}
-ed11yMessageAltFilename = function (altText) {
-  return "<div class='ed11y-tip-heading'>Error: alt appears to contain a filename</div> " +
-      "<p>All visual elements must <a href='https://accessibility.princeton.edu/how/content/alternative-text'>provide a text alternative</a> " +
-      "that describes the meaning of the image in context.</p>" +
-      "<p class='ed11y-small'>The alt text for this image is: <span class='ed11y-bold'>&quot;" + altText + "&quot;</span></p>";
-}
+  toggleManualCheck: Drupal.t("manual check needed"),
+  toggleAlert: Drupal.t("alert"),
+  toggleAriaLabel: (resultID, label) => Drupal.t("Accessibility issue %resultID, %label", {
+    '%resultID': resultID,
+    '%label': label
+  }),
+  dismissOkButtonContent: Drupal.t('Mark as checked and OK'),
+  dismissHideButtonContent: Drupal.t('Hide alert'),
+  dismissOkSyncedButtonContent: Drupal.t('Mark OK for all users'),
+  dismissHideSyncedButtonContent: Drupal.t('Hide alert for me'),
+  undismissOKButton: Drupal.t('Restore this alert marked as OK'),
+  undismissHideButton: Drupal.t('Restore this hidden alert'),
+  undismissNotePermissions: Drupal.t('This alert has been hidden by an administrator'),
+  elementDismissalHelpOK: Drupal.t("\"OK\" dismisses this for everyone, on this page."),
+  elementDismissalHelpHide: Drupal.t("\"Hide alert\" dismisses this for you, on this page."),
+  elementDismissalHelpAll: Drupal.t("Site-wide changes can be made in Editoria11y\'s settings."),
 
-ed11yMessageAltTooLong = function (text, altText) {
-  return "<div class='ed11y-tip-heading'>Image's alt text is <span class='ed11y-bold'>" + text.length + " characters</span>.</div> " +
-      "<p>Alt text should provide a <a href='https://accessibility.princeton.edu/how/content/alternative-text'>concise description of the meaning of the image in context</a>." +
-      "<p>If more than 160 characters are needed to describe an image (e.g., for a graph), the long description should be moved into the page's content or onto a separate page.</p>" +
-      "<p class='ed11y-small'>The alt text for this image is: <span class='ed11y-bold'>&quot;" + altText + "&quot;</span>.</p>";
-}
 
-ed11yMessageAltDeadspace = "<div class='ed11y-tip-heading'>Error: invalid alt text</div> " +
-    "<p>Please add alt text to this image to create a " +
-    "<a href='https://accessibility.princeton.edu/how/content/alternative-text'>concise description of the meaning of the image in context</a>, set the alt to nothing at all to mark the image as decorative.</p>";
+  // Tooltips for heading tests =========================
 
-// QA messages
-ed11yMessageQANewTab = "<div class='ed11y-tip-heading'>Link opens in a " +
-    "new window</div>" +
-    "<p>Opening new tabs or windows without warning can be disorienting, " +
-    "especially for users relying on assistive devices.</p> " +
-    "<p>Unless certain " +
-    "<a href='https://www.w3.org/TR/WCAG20-TECHS/G200.html#G200-description'>" +
-    "exceptions related to context-sensitive workflows</a> apply, " +
-    "it is better to let the user decide when to open new windows.</p>";
+  headingExample : Drupal.t("" +
+    "<ul>" +
+    "    <li>Heading level 1" +
+    "        <ul>" +
+    "            <li>Heading level 2: a topic" +
+    "                <ul>" +
+    "                    <li>Heading level 3: a subtopic</li>" +
+    "                </ul>" +
+    "            </li>" +
+    "            <li>Heading level 2: a new topic</li>" +
+    "        </ul>" +
+    "    </li>" +
+    "</ul>"
+  ),
+  headingLevelSkipped : {
+    title: Drupal.t("Manual check: was a heading level skipped?"),
+    tip: (prevLevel, level) => Drupal.t("" +
+      "<p>Headings and subheadings are the page's table of contents. The <em>numbers</em> indicate indents, in a nesting relationship:</p>") +
+      Ed11y.M.headingExample + Drupal.t("" +
+      "<p>This heading skipped from level %prevLevel to level %level. From a screen reader, this sounds like content is missing.</p>" +
+      "<p>To fix: adjust levels to form an accurate outline, without gaps.</p>", {
+      '%prevLevel': prevLevel,
+      '%level': level
+    }),
+  },
 
-ed11yMessageQAUppercase = "<div class='ed11y-tip-heading'>" +
-    "Manual check needed: all-cap text</div>" +
-    "<p>Some users find all-cap content somewhat difficult to " +
-    "read, some screen readers interpret all-cap words as " +
-    "acronyms (and read them one letter at a time!), and many " +
-    "users INTERPRET CAPS LOCK AS SHOUTING.</p>" +
-    "<p>Unless the all-cap text in this element is an acronym or should be capitalized " +
-    "for some similar reason, sentence case is recommended.</p>";
+  headingEmpty : {
+    title: Drupal.t("Heading tag without any text"),
+    tip: () => Drupal.t( "" +
+      "<p>Headings and subheadings create a navigable table of contents for assistive devices. The heading's <strong><em>number</em></strong> indicates its <strong><em>depth</em></strong> in the page outline; e.g.:</p>") +
+      Ed11y.M.headingExample + Drupal.t("" +
+      "<p>\"Blank\" headings create confusing gaps in this outline: they could mean the following content is still part of the previous section, or that the text was unpronounceable for some reason.</p>" +
+      "<p><strong>To fix:</strong> add text to this heading, or remove it.</p>"
+    ),
+  },
 
-ed11yMessageMissingQATableHeadings = "<div class='ed11y-tip-heading'>Error: " +
-    "table has no headers</div> " +
-    "<p>Screen reader users rely on " +
-    "<a href='https://accessibility.princeton.edu/how/content/tables'>table " +
-    "headers</a> to label cells, so they can explore the table without " +
-    "having to count rows and columns.</p> " +
-    "<p>Note that tables should be used for tabular data only, as they cannot " +
-    "reflow for small screens. If this " +
-    "<a href='https://accessibility.princeton.edu/how/content/layout-tables'>" +
-    "table is only for visual layout</a>, use CSS to create columns instead.</p>";
+  headingIsLong : {
+    title: Drupal.t("Manual check: long heading"),
+    tip: () => Drupal.t( "" +
+      "<p>Headings should be brief and clear. Assistive devices use them to create a navigable table of contents for the page. The heading's <strong><em>number</em></strong> indicates its <strong><em>depth</em></strong> in the page outline; e.g.:</p>") +
+      Ed11y.M.headingExample + Drupal.t("" +
+      "<p><strong>To fix:</strong> shorten this heading if possible, or remove the heading style if it was only applied to this text to provide visual emphasis.</p>"),
+  },
 
-ed11yMessageQAHeaderInTable = "<div class='ed11y-tip-heading'>Error: heading " +
-    "formatting inside table cells</div> " +
-    "<p>Label table rows and columns using table headers. Formatting text as " +
-    "semantic headings (Heading 2, Heading 3) creates a page outline for " +
-    "assistive devices, and users of those devices are not expecting to land " +
-    "inside a table when jumping to a heading. </p>";
+  blockquoteIsShort : {
+    title: Drupal.t("Manual check: is this a blockquote?"),
+    tip: () => Drupal.t("<p>Blockquote formatting tells screen readers that the text should be announced as a quotation. This was flagged because short blockquotes are sometimes actually headings. If this is a heading and not a quotation, use heading formatting instead, so this appears in the page outline.</p>"),
+  },
 
-ed11yMessageEmptyTableHeader = "<div class='ed11y-tip-heading'>Error: Empty " +
-    "table header</div>" +
-    "<p>Screen reader users rely on " +
-    "<a href='https://accessibility.princeton.edu/how/content/tables'>table " +
-    "headers</a> to label cells, so they can explore the table without " +
-    "having to count rows and columns.</p>";
+  // Tooltips for image tests
 
-// Full check tests.
-ed11yMessageLinkDownload = "<div class='ed11y-tip-heading'>Manual check needed: " +
-    "link to document</div>" +
-    "<p>Please make sure this document contains structural tags and image alt " +
-    "text, or a copy of its content is provided as a Web page. See tips " +
-    "for <a href='https://webaim.org/techniques/acrobat/'>tagging PDFs</a>, " +
-    "<a href='https://webaim.org/techniques/word/'>text documents</a> and " +
-    "<a href='https://webaim.org/techniques/powerpoint/'>slideshows</a>.</p>" +
-    "<p>Untagged documents often cannot be read by screen readers, and even " +
-    "tagged PDFs and slides may be difficult to read on small screens.</p>";
+  // Reusable example for tips:
+  altAttributeExample : Drupal.t("" +
+      "<p>Note that a good alt conveys what an image <strong>communicates</strong>, not what it <strong>contains</strong>. A picture of a child kicking a ball might have been selected because of the setting, the child, the kick or the ball:</p>" +
+      "<ul>" +
+      "    <li>Child happily kicking a ball on a summer day</li>" +
+      "    <li>A.J. playing in the new team uniform</li>" +
+      "    <li>A.J.'s game-winning kick curved in from the left sideline!</li>" +
+      "    <li>The \"medium\" ball is the right size for this 9-year-old child</li>" +
+      "</ul>"
+  ),
 
-ed11yMessageFullCheckBlockquote = "<div class='ed11y-tip-heading'>Manual check needed: short &lt;blockquote&gt;</div> " +
-    "<p>Blockquote formatting is announced as a quote by assistive " +
-    "devices, and should only be used for quotes.</p>" +
-    "<p>This was flagged because short blockquotes are often mislabeled " +
-    "headings. If that is the case here, please use " +
-    "<a href='https://accessibility.princeton.edu/how/content/headings'>heading formatting</a> instead.</p>"
+  altAttributeProvided: (alt) => "<p>" + Drupal.t("This image's alt text is:") + " <strong>\"" + alt + "\"</strong></p>",
 
-ed11yMessageFullCheckCaptions = "<div class='ed11y-tip-heading'>Manual check: text alternatives</div><p>Please check to make sure " +
-    "<span class='ed11y-bold'>all videos provide closed captioning.</span> " +
-    "Providing captions for all audio and video content is a mandatory Level A " +
-    "requirement. Captions are meant to support people who are D/deaf or " +
-    "hard-of-hearing.</p>"
+  altMissing : {
+    title: Drupal.t("Image has no alternative text attribute"),
+    tip: () => "<p>" + Drupal.t("" +
+      "When screen readers encounter an image with no alt attribute at all, they dictate the url of the image file instead, often one letter at a time. To fix: either add an empty alt (alt=\"\") to indicate this image should be ignored by screen readers, or add descriptive alt text.") + "</p>" +
+      Ed11y.M.altAttributeExample,
+  },
 
-ed11yMessageHeadingTooLong = function (headingLength) {
-  return "<div class='ed11y-tip-heading'>Long " +
-      "<span class='ed11y-bold'>(" + headingLength +
-      " character)</span> heading</div><p>Since " +
-      "<a href='https://accessibility.princeton.edu/how/content/headings'>" +
-      "headings are used as a page outline</a>, they should be brief, clear, " +
-      "informative and unique.</p>";
-}
-// Messages for outline Headers.
-ed11yMessageHeadingLevelSkipped = function (prevLevel, level) {
-  return "<div class='ed11y-tip-heading'>" +
-      "Heading jumped from level " + prevLevel + " to " + level + "</div>" +
-      "<p><a href='https://accessibility.princeton.edu/how/content/headings'>" +
-      "Headings should form a page outline</a> for screen readers.</p> " +
-      "<p>To fix: If this is related to the previous heading, make it " +
-      "a <span class='ed11y-bold'>Heading " + parseInt(prevLevel + 1) +
-      "</span>. If it starts a new section, make it <span class='ed11y-bold'>" +
-      "Heading " + prevLevel + "</span>.</p>";
-}
-// QA Tests.
-ed11yMessageQAShouldBeList = function (prefix) {
-  return "<div class='ed11y-tip-heading'>Possible list item prefix: &quot;" +
-      "<span class='ed11y-bold'>" + prefix +
-      "</span>&quot;</div>" +
-      "<p>List formatting is more than symbols: it tells browsers how to " +
-      "group content that breaks over multiple lines, and lets assistive " +
-      "devices jump from item to item. If this paragraph starts a list, " +
-      "please format it as a 'real' list rather than " +
-      "spelling out letters, numbers or symbols.</p>";
-}
+  altNull : {
+    title: Drupal.t("Manual check: image has no alt text"),
+    tip: () => Drupal.t("" +
+      "<p>Screen readers assume images with empty alt text are only for decoration (spacers and backgrounds), and do not mention they exist. If this image is meaningful, an alt should be provided.</p>") +
+       Ed11y.M.altAttributeExample,
+  },
 
-ed11yMessageQAMayBeHeader = "<div class='ed11y-tip-heading'>Manual check needed: Possible heading</div><p>This whole paragraph is bold. If this is for emphasis, this is fine. If it is acting as a heading or subheading, however, please format it as such so that it can become part of the page outline.</p>";
+  altURL : {
+    title: Drupal.t("Image's text alternative is a URL"),
+    tip: (alt) => Ed11y.M.altAttributeProvided(alt) + "<p>" +
+      Drupal.t("" +
+      "To fix: set this image's alternative text to a concise description of what this image means in this context.") + "</p>" +
+      Ed11y.M.altAttributeExample,
+  },
 
-ed11yMessagePodcast = "<div class='ed11y-tip-heading'>Manual check needed: embedded audio</div><p>Check to make sure a transcript is included or linked for all audio content and/or podcasts. Providing a text alternative for audio is mandatory in the United States, Canada and the European Union.</p>";
-ed11yMessageTwitter = "<div class='ed11y-tip-heading'>Manual check needed: embedded social media</div><p>Check to make sure keyboards can get past this component (if more than a few posts are embedded, this may be a keyboard trap.)</p>";
-ed11yMessageVisualization = "<div class='ed11y-tip-heading'>Warning: Data visualization</div><p>Widgets like this are often impossible for keyboard or screen readers to navigate, and can present significant difficulties for users with low vision or colorblindness. Unless this particular widget has been tested and shown to be resizable, keyboard navigable and screen reader compatible, you should assume that you also need to provide the information in an alternative (text or table) format.</p>";
-ed11yMessageEmbeddedContent = "<div class='ed11y-tip-heading'>Manual check needed</div><p>This tool cannot check this embedded content. Please make sure embedded images have alt text, videos have captions, and interactive components can be <a href='https://webaim.org/techniques/keyboard/'>operated by a keyboard</a>.</p>";
+  altURLLinked : {
+    title: Drupal.t("Linked image's text alternative is a URL"),
+    tip: (alt) => Ed11y.M.altAttributeProvided(alt) + Drupal.t("" +
+      "<p>When a link includes an image, the image's alt text becomes part of the link text announced by screen readers. Links should clearly and concisely describe their destination; a URL (usually pronounced by the screen reader one letter at a time) does not.</p>" +
+      "<ul>" +
+      "    <li>Good link text: \"About us\"</li>" +
+      "    <li>Bad link text: \"H T T P S colon forward slash forward slash example dot com forward slash aye bee oh you tee you ess\"</li>" +
+      "</ul>"),
+  },
+
+  altImageOf : {
+    title: Drupal.t("Manual check: possibly redundant text in alt"),
+    tip: (alt) => Ed11y.M.altAttributeProvided(alt) + Drupal.t("" +
+      "<p>Screen readers <strong>announce</strong> they are describing an image when reading alt text, so phrases like \"image of\" and \"photo of\" are usually redundant, sounding like \"this image's alt is the alt of an image.\"</p>" +
+      "<p>Note that sometimes the phrase is not redundant and should be kept, because the image is an image of an image:</p>" +
+      "<ul>" +
+      "    <li>Redundant: \"image of a VHS tape\"</li>" +
+      "    <li>Relevant: \"image of a VHS tape being shown in history class\"</li>" +
+      "</ul>"),
+  },
+
+  altImageOfLinked : {
+    title: Drupal.t("Manual check: possibly redundant text in linked image"),
+    tip: (alt) => Ed11y.M.altAttributeProvided(alt) + Drupal.t( "" +
+      "<p>Links should clearly and concisely describe their destination. Since words like \"image\", \"graphic\" or \"photo\" are redundant in text alternatives (screen readers already identify the image as an image), they often indicate that the image's text alternative is describing the image instead of the link.</p>" +
+      "<ul>" +
+      "    <li>Good link text: \"About us\"</li>" +
+      "    <li>Bad link text: \"Stock photo of five people jumping and high fiving around a conference table, image\"</li> " +
+      "</ul>"),
+  },
+
+  altDeadspace : {
+    title: Drupal.t( "Image's text alternative is unpronounceable"),
+    tip: (alt) => Ed11y.M.altAttributeProvided(alt) + Drupal.t("" +
+      "<p>To fix: add a descriptive alt, or provide a <em>completely</em> empty alt (alt=\"\") to tell screen readers to ignore this image.</p>") +
+      Ed11y.M.altAttributeExample,
+  },
+
+  altDeadspaceLinked : {
+    title: Drupal.t("Linked Image's text alternative is unpronounceable"),
+    tip: (alt) => Ed11y.M.altAttributeProvided(alt) + Drupal.t("" +
+      "<p>This image's alt consists of only silent characters (spaces and quotation marks). It will be announced by screen readers as as part of the link's text, but the description of what the image is will be unintelligible. To fix, set this image's alternative text to something that describes the link's destination, or provide a <em>completely</em> empty alt (alt=\"\") if the image should not be mentioned at all.</p>" +
+      "<ul>" +
+      "    <li>Good link text: \"About us\"</li>" +
+      "    <li>Bad link text: \"About us, image: [short confusing silence]\"</li>" +
+      "</ul>"),
+  },
+
+  altEmptyLinked : {
+    title: Drupal.t("Linked Image has no alt text"),
+    tip: () => Drupal.t("" +
+      "<p>When a link is wrapped around an image, the image's alt text provides the link's title for screen readers</p>" +
+      "<p>To fix: set this image's alternative text to something that describes the link's destination, or add text to the link.</p>" +
+      "<ul>" +
+      "    <li>Good linked alt: \"Meaningful link tips\"</li>" +
+      "    <li>Bad linked alt: \"Three happy dogs rolling in the grass\"</li>" +
+      "</ul>"
+    ),
+  },
+
+  altLong : {
+    title: Drupal.t("Manual check: very long alternative text"),
+    tip: (alt) => Drupal.t("" +
+      "<p>Image text alternatives are announced by screen readers as a single run-on sentence; listeners must listen to the entire alt a second time if they miss something. It is usually better to provide and reference a <em>visible</em> text alternative for complex images that need long descriptions. For example:</p>" +
+      "<ul>" +
+      "    <li>\"Event poster; details provided in caption\"</li>" +
+      "    <li>\"Chart showing our issues going to zero; details follow in table\"</li>" +
+      "</ul>") + Ed11y.M.altAttributeProvided(alt),
+  },
+
+  altLongLinked : {
+    title: Drupal.t("Manual check: very long alternative text in linked image"),
+    tip: (alt) => Drupal.t("" +
+      "<p>The alt text on a linked image is used to describe the link destination. Links should be brief, clear and concise, as screen reader users often listen to the list of links on the page to find content of interest. Long alternative text inside a link often indicates that the image's text alternative is describing the image instead rather than the link.</p>") + Ed11y.M.altAttributeProvided(alt),
+  },
+
+  altPartOfLinkWithText : {
+    title: Drupal.t("Manual check: link contains both text and an image"),
+    tip: (alt) => Drupal.t("" +
+      "<p>When a link includes an image, screen readers speak the image's alt text as part of the link. This can be confusing if the image's alt describes the image rather than the link.</p>" +
+      "<p>E.g., for a card-style link with both text and a stock photo, compare:</p>" +
+      "<ul>" +
+      "    <li>\"Link, five people jumping and high fiving around a conference table, image, about us\"</li>" +
+      "    <li>\"Link, about us\"</li>" +
+      "</ul>") + Ed11y.M.altAttributeProvided(alt) + "<p>" +
+      Drupal.t("If this link is clearer without this alt, it may be better to use a blank alt, to tell screen readers to ignore the image.") + "</p>",
+  },
+
+  linkNoText : {
+    title: Drupal.t("Link with no accessible text"),
+    tip: () => Drupal.t("" +
+      "<p>This link is either invisible and empty (e.g., a linked space character), or wrapped around something with no text alternative (an image with no alt attribute).</p>" +
+      "<p>Screen readers will either pause with an uninformative silence when they reach this link: <br>\"Link, [...awkward pause where the link title should be...],\"<br>or spell out the URL, character by character: <br>\"Link, H-T-T-P-S forward-slash forward-slash example dot com\"</p>" +
+      "<p>To fix: add text if this should be a link, or delete it if it should not.</p>"
+    ),
+  },
+
+  linkText: (text) =>
+    "<p>" + Drupal.t("This link's text is:") + " <strong>" + text + "</strong></p>",
+
+  linkTextIsURL : {
+    title: Drupal.t("Manual check: is this link text a URL?"),
+    tip: (text) => Ed11y.M.linkText(text) + Drupal.t("<p>Links should be meaningful and concise. Readers often skim by link titles. This is especially true of screen reader users, who navigate using a list of on-page links.</p>" +
+      "<p>A linked URL breaks this pattern; the reader has to read the preceding paragraph to figure out the link's purpose from context.</p>" +
+      "<ul>" +
+      "    <li>Meaningful and concise link: \"Tips for writing meaningful links\"</li>" +
+      "    <li>Linked URL, as pronounced by a screen reader: \"H T T P S colon forward-slash forward-slash example dot com forward-slash tips forward-slash meaningful-links\"</li>" +
+      "</ul>"),
+  },
+
+  linkTextIsGeneric : {
+    title: Drupal.t("Manual check: is this link meaningful and concise?"),
+    tip: (text) => Ed11y.M.linkText(text) + Drupal.t("" +
+      "<p>Readers skim for links. This is especially true of screen reader users, who navigate using a list of on-page links.</p>" +
+      "<p>Generic links like \"click here\", \"read more\" or \"download\" expect the reader be reading slowly and carefully, such that they figure out each link's purpose from context for themselves. Few readers do this, so click-through rates on meaningless links are extremely poor.</p>" +
+      "<ul>" +
+      "    <li>Not meaningful: \"<a href='https://www.google.com/search?q=writing+meaningful+links'>Click here</a> to learn about meaningful links\".</li>" +
+      "    <li>Not concise: \"<a href='https://www.google.com/search?q=writing+meaningful+links'>Click here to learn about meaningful links</a>\"</li>" +
+      "    <li>Ideal: \"Learn about <a href='https://www.google.com/search?q=writing+meaningful+links'>meaningful links</a>\"</li>" +
+      "</ul>"),
+  },
+
+  linkDocument : {
+    title : Drupal.t( "Manual check: is the linked document accessible?"),
+    tip: () => Drupal.t("" +
+      "<p>This automated checker helps ensure <strong><em>websites</em></strong> contain the features needed for accessible content, things like heading structure and text alternatives for images and audio. <strong>It is not able to help you check the documents you link.</strong></p>" +
+      "<p>Most mobile and assistive device users prefer to read text on Web pages, where content reflows to fit the screen. If the document linked here cannot be converted to a Web page, make sure the document is well structured (headings, lists, table headers) and provides alt text for its images.</p>" +
+      "<ul>" +
+      "    <li>Tips for <a href='https://webaim.org/techniques/word/'>MS Word</a> &amp; <a href='https://support.google.com/docs/answer/6199477?hl=en&ref_topic=6039805'>Google Docs</a></li>" +
+      "    <li><a href='https://webaim.org/techniques/powerpoint/'>Slideshows</a> &amp; <a href='https://support.microsoft.com/en-us/office/make-your-excel-documents-accessible-to-people-with-disabilities-6cc05fc5-1314-48b5-8eb3-683e49b3e593'>Spreadsheets</a>" +
+      "    <li><a href='https://webaim.org/techniques/acrobat/'>Documents formatted for print instead of screens (PDF)</a></li>" +
+      "</ul>"
+    ),
+  },
+
+  linkNewWindow : {
+    title: Drupal.t("Manual check: is opening a new window expected?"),
+    tip: () => Drupal.t("" +
+      "<p>Readers can always choose to open a link a new window. When a link forces open a new window, it can be confusing and annoying, especially for assistive device users who may wonder why their browser's \"back\" button is suddenly disabled.</p>" +
+      "<p>There are two general exceptions:</p>" +
+      "<ul>" +
+      "    <li>When the user is filling out a form, and opening a link in the same window would cause them to lose their work.</li>" +
+      "    <li>When the user is clearly warned a link will open a new window.</li>" +
+      "</ul>" +
+      "<p>To fix: set this link back its default target, or add a screen-reader accessible warning (text or an icon with alt text).</p>"
+    ),
+  },
+
+  // Tooltips for Text QA
+
+  tableNoHeaderCells : {
+    title: Drupal.t("Table has no header cells"),
+    tip: () => Drupal.t("" +
+      "<p>Tables are announced by screen readers as navigable data sets. Screen readers repeat row and column headers as needed to orient users while reading content cells.</p>" +
+      "<p>To fix:</p>" +
+      "<ul>" +
+      "    <li>If this table contains information that is meaningfully organized by row and column, edit the table's properties and specify whether the headers are in the first row, column or both.</li>" +
+      "    <li>If this table does not contain rows and columns of data, but is simply being used for visual layout, it would be best to remove it. Tables overflow the page rather than reflowing the text to fit on mobile devices, and should only be used when horizontal relationships are necessary to understand the content.</li>" +
+      "</ul>"
+    ),
+  },
+
+  tableContainsContentHeading : {
+    title: Drupal.t("Content heading inside a table"),
+    tip: () => Drupal.t("" +
+      "<p>Content headings (\"Heading 1\", \"Heading 2\") form a navigable table of contents for screen reader users, labelling all content <strong>until the next heading</strong>. Table headers label specific columns or rows within a table.</p>" +
+      "<p></p>" +
+      "<table>" +
+      "    <tr><th>1</th><th>2</th><th>3</th><td rowspan=\"2\">To illustrate: a <strong>table</strong> header in cell 2 would only label its column: cell B. <br> <br> A <strong>content</strong> heading in cell 2 would label all subsequent text, reading from left to right: cells 3, A, B and C, as well as this text!</td></tr>" +
+      "    <tr><td>A</td><td>B</td><td>C</td></tr>" +
+      "</table>" +
+      "<p>To fix: remove heading formatting on text inside table cells.</p>"
+    ),
+  },
+
+  tableEmptyHeaderCell : {
+    title: Drupal.t("Empty table header cell"),
+    tip: () => Drupal.t("<p>When exploring tables, screen readers repeat table header cells as needed to orient users. Without headers, it is very easy to get lost; screen reader users have to count columns and rows and try to remember which columns went with which rows.</p>"),
+  },
+
+  textPossibleList : {
+    title: Drupal.t("Manual check: should this have list formatting?"),
+    tip : (text) => Drupal.t("" +
+      "<p>List formatting is structural:</p>" +
+      "<ol>" +
+      "    <li>List formatting indents and reflows on overflow. Text aligns vertically with text, rather than the \"%text\"</li>" +
+      "    <li>Lists are machine-readable. Screen readers can orient their users, announcing this as \"list item, 2 of 2.\"</li>" +
+      "</ol>" +
+      "<p>3. Whereas this unformatted item (just a number, typed as text) is not visually or audibly included in the list.</p>" +
+      "<p>To fix: if this \"%text\" starts a list, replace it with list formatting.</p>", {
+      '%text': text
+    }),
+  },
+
+  textPossibleHeading : {
+    title: Drupal.t("Manual check: should this be a heading?"),
+    tip : () => Drupal.t("" +
+      "<p>Headings and subheadings create a navigable table of contents for assistive devices. The heading's <strong><em>number</em></strong> indicates its <strong><em>depth</em></strong> in the page outline; e.g.:</p>") +
+      Ed11y.M.headingExample +
+      "<p>" + Drupal.t("If this all-bold text is functioning visually as a heading, replace the bold formatting with the appropriately numbered heading.") + "</p>",
+  },
+
+  textUppercase : {
+    title: Drupal.t("Manual check: is this uppercase text needed?"),
+    tip : () => Drupal.t("" +
+      "<p>UPPERCASE TEXT CAN BE MORE DIFFICULT TO READ FOR MANY PEOPLE, AND IS OFTEN INTERPRETED AS SHOUTING.</p>" +
+      "<p>Consider using sentence case instead, and using bold text or font changes for visual emphasis, or structural formatting like headings for emphasis that will also be announced by screen readers.</p>"
+    ),
+  },
+
+  embedVideo : {
+    title: Drupal.t("Manual check: is this video accurately captioned?"),
+    tip : () => Drupal.t("" +
+      "<p>If a recorded video contains speech or meaningful sounds, it must provide captioning.</p>" +
+      "<p>Note that automatic, machine-generated captions must be proofread, and speaker identifications must be added, before being considered an equal alternative.</p>"
+    ),
+  },
+  embedAudio : {
+    title: Drupal.t("Manual check: is an accurate transcript provided?"),
+    tip : () => Drupal.t("" +
+      "<p>If this audio contains speech, a text alternative must be provided on this page or linked.</p>" +
+      "<p>Note that automatic, machine-generated transcripts must be proofread, and speaker identifications must be added, before being considered an equal alternative</p>"
+    ),
+  },
+  embedVisualization : {
+    title: Drupal.t("Manual check: is this visualization accessible?"),
+    tip : () => Drupal.t("" +
+      "<p>Visualization widgets are often difficult or impossible for assistive devices to operate, and can be difficult to understand for readers with low vision or colorblindness.</p>" +
+      "<p>Unless this particular widget has high visual contrast, can be operated by a keyboard and described by a screen reader, assume that an alternate format (text description, data table or downloadable spreadsheet) should also be provided.</p>"
+    ),
+  },
+  embedTwitter : {
+    title: Drupal.t("Manual check: is this embed a keyboard trap?"),
+    tip : () => Drupal.t("" +
+      "<p>If embedded feeds are set to show a high number of items, keyboard users may have to click the tab key dozens or hundreds of times to exit the component.</p>" +
+      "<p>Check to make sure only a small number of items auto-load immediately or while scrolling. Having additional items load on request (\"show more\") is fine.</p>"
+    ),
+  },
+  embedCustom : {
+    title: Drupal.t("Manual check: is this embedded content accessible?"),
+    tip : () => Drupal.t("<p>Please make sure images inside this embed have alt text, videos have captions, and interactive components can be <a href='https://webaim.org/techniques/keyboard/'>operated by a keyboard</a>.</p>"),
+  }
+
+};
+

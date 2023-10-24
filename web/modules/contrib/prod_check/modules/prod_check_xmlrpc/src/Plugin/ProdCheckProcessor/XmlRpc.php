@@ -67,13 +67,14 @@ class XmlRpc extends ConfigurableProdCheckProcessorBase {
 
     if ($status) {
       $message = $plugin->successMessages();
-      $requirement['value'] = (string) render($message['value']);
-      $requirement['description'] = (string) render($message['description']);
+      // @todo Use dependency injection for the following service calls here:
+      $requirement['value'] = (string) \Drupal::service('renderer')->render($message['value']);
+      $requirement['description'] = (string) \Drupal::service('renderer')->render($message['description']);
     }
     else {
       $message = $plugin->failMessages();
-      $requirement['value'] = (string) render($message['value']);
-      $requirement['description'] = (string) render($message['description']);
+      $requirement['value'] = (string) \Drupal::service('renderer')->render($message['value']);
+      $requirement['description'] = (string) \Drupal::service('renderer')->render($message['description']);
     }
 
     return $requirement;

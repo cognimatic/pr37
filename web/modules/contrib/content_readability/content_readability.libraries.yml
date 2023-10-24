@@ -5,10 +5,10 @@ textStatistics:
     - core/ajax
     - core/jquery
     - core/drupal
-    - core/drupalSettings
-    - core/jquery.once
-    - core/jquery.form
     - core/drupal.ajax
+    - core/drupalSettings
+    - core/jquery.form
+    - core/once
     - ckeditor5/drupal.ckeditor5
   css:
     theme:
@@ -20,10 +20,10 @@ ckeditor4:
     - core/ajax
     - core/jquery
     - core/drupal
-    - core/drupalSettings
-    - core/jquery.once
-    - core/jquery.form
     - core/drupal.ajax
+    - core/drupalSettings
+    - core/jquery.form
+    - core/once
   css:
     theme:
       css/styles.css: {}

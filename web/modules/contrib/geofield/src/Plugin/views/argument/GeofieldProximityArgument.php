@@ -206,19 +206,19 @@ class GeofieldProximityArgument extends Formula implements ContainerFactoryPlugi
    */
   public function getParsedReferenceLocation() {
     // Process argument values into an array.
-    preg_match('/^([0-9\-.]+),+([0-9\-.]+)([<>=]+)([0-9.]+)(.*$)/', trim($this->getValue()), $values);
+    preg_match('/^([0-9\-.]+),+([0-9\-.]+)([<>=]+)([0-9.]+)(.*$)/', trim((string) $this->getValue()), $values);
     // Validate and return the passed argument.
     return is_array($values) && !empty($values) ? [
       'lat' => (isset($values[1]) && is_numeric($values[1]) && $values[1] >= -90 && $values[1] <= 90) ? floatval($values[1]) : FALSE,
       'lon' => (isset($values[2]) && is_numeric($values[2]) && $values[2] >= -180 && $values[2] <= 180) ? floatval($values[2]) : FALSE,
       'operator' => (isset($values[3]) && in_array($values[3], [
-          '<>',
-          '=',
-          '>=',
-          '<=',
-          '>',
-          '<',
-        ])) ? $values[3] : '<=',
+        '<>',
+        '=',
+        '>=',
+        '<=',
+        '>',
+        '<',
+      ])) ? $values[3] : '<=',
       'distance' => (isset($values[4])) ? floatval($values[4]) : FALSE,
       'units' => (isset($values[5]) && array_key_exists($values[5], $this->units)) ? $this->units[$values[5]]['value'] : 'GEOFIELD_KILOMETERS',
     ] : FALSE;

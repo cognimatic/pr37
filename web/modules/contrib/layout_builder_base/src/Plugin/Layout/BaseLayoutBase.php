@@ -552,7 +552,7 @@ abstract class BaseLayoutBase extends MultiWidthLayoutBase {
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
 
-    if ($values['id'] != Html::cleanCssIdentifier($values['id'])) {
+    if ($values['advanced']['id'] != Html::cleanCssIdentifier($values['advanced']['id'])) {
       $form_state->setError($form['advanced']['id'], $this->t('Element ID must be a valid CSS ID'));
     }
   }

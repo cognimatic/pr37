@@ -21,6 +21,7 @@ function localgov_demo_install() {
   $system_site = \Drupal::configFactory()->getEditable('system.site');
   $system_site->set('page.front', '/localgov-drupal-demo');
   $system_site->save();
+  drupal_flush_all_caches();
 
   // Disable unwanted blocks from localgov_base and localgov_scarfolk.
   $blocks_to_disable = [
@@ -44,7 +45,7 @@ function localgov_demo_install() {
   // Create a link to Docs.
   $news_menu_item = MenuLinkContent::create([
     'title' => 'Docs',
-    'link' => ['uri' => 'https://localgovdrupal.org/'],
+    'link' => ['uri' => 'https://docs.localgovdrupal.org/'],
     'menu_name' => 'main',
     'expanded' => FALSE,
   ]);

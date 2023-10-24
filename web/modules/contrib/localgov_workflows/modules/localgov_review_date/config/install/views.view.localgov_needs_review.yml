@@ -798,7 +798,7 @@ display:
           admin_label: ''
           empty: true
           tokenize: false
-          content: 'No content waiting for review.'
+          content: 'No content has passed its review date.'
           plugin_id: text_custom
       relationships:
         entity:
@@ -818,7 +818,7 @@ display:
         operator: AND
         groups:
           1: AND
-      title: 'Needs review'
+      title: 'Review content'
     cache_metadata:
       max-age: -1
       contexts:
@@ -831,7 +831,7 @@ display:
   needs_review:
     display_plugin: page
     id: needs_review
-    display_title: 'Needs review'
+    display_title: 'Review content'
     position: 1
     display_options:
       display_extenders: {  }
@@ -839,13 +839,13 @@ display:
       path: admin/content/localgov_review
       menu:
         type: normal
-        title: 'Needs review'
+        title: 'Review content'
         description: ''
         expanded: false
         parent: ''
         weight: 0
         context: '0'
-        menu_name: main
+        menu_name: admin
     cache_metadata:
       max-age: -1
       contexts:

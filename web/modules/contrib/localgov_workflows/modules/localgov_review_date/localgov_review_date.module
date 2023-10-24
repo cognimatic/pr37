@@ -18,7 +18,7 @@ function localgov_review_date_entity_bundle_field_info(EntityTypeInterface $enti
   if ($entity_type->id() === 'node') {
     $scheduled_bundles = \Drupal::service('scheduled_transitions.utility')->getBundles();
 
-    if (isset($scheduled_bundles['node']) and in_array($bundle, $scheduled_bundles['node'])) {
+    if (isset($scheduled_bundles['node']) && in_array($bundle, $scheduled_bundles['node'])) {
       $fields['localgov_review_date'] = BaseFieldDefinition::create('review_date')
         ->setLabel(t('Review date'))
         ->setDisplayOptions('form', [

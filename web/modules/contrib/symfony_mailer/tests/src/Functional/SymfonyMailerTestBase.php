@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\symfony_mailer\Functional;
 
-use Drupal\Tests\BrowserTestBase;
 use Drupal\symfony_mailer_test\MailerTestTrait;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Base class for Symfony Mailer browser tests.
@@ -44,11 +44,21 @@ abstract class SymfonyMailerTestBase extends BrowserTestBase {
   protected $siteName = 'Tom & Jerry';
 
   /**
+   * The site email.
+   *
+   * @var string
+   */
+  protected $siteEmail = 'site@example.org';
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->config('system.site')->set('name', $this->siteName)->save();
+    $this->config('system.site')
+      ->set('name', $this->siteName)
+      ->set('mail', $this->siteEmail)
+      ->save();
     $this->adminUser = $this->drupalCreateUser(['administer mailer']);
   }
 

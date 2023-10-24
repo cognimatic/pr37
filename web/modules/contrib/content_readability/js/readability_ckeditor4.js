@@ -3,7 +3,7 @@
  * Content Readability Processing for CKEditor 4.
  */
 
-(function ($, window, Drupal, drupalSettings) {
+(function ($, window, Drupal, drupalSettings, _) {
 
   'use strict';
   /**
@@ -13,8 +13,8 @@
    */
   Drupal.behaviors.contentReadability = {
     attach: function(context, settings) {
-
-      $('body', context).once('content_readability').each(function () {
+      const body = once('content_readability', 'body', context);
+      for (let i = 0; i < body.length; i++) {
         if (typeof CKEDITOR !== "undefined") {
           CKEDITOR.on('instanceReady', function (ev) {
             var editor = ev.editor;
@@ -38,7 +38,7 @@
 
           });
         }
-      });
+      }
 
       function updateScore(){
 
@@ -73,4 +73,4 @@
       }
     }
   };
-})(jQuery, this, Drupal, drupalSettings);
+})(jQuery, this, Drupal, drupalSettings, _);

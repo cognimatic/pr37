@@ -20,7 +20,8 @@ use Drupal\filter\Plugin\FilterBase;
  *   cache = FALSE,
  *   settings = {
  *     "footnotes_collapse" = FALSE,
- *     "footnotes_html" = FALSE
+ *     "footnotes_html" = FALSE,
+ *     "footnotes_css" = TRUE
  *   },
  *   weight = 0
  * )
@@ -35,6 +36,13 @@ class FootnotesFilter extends FilterBase {
    * @var \Drupal\Core\Render\RendererInterface
    */
   protected $renderer;
+
+  /**
+   * Variable to store total number of instances for each reference link.
+   *
+   * @var array
+   */
+  protected $instanceArray;
 
   /**
    * Constructs a FootnotesFilter object.
@@ -104,6 +112,9 @@ class FootnotesFilter extends FilterBase {
         produce unpredictable results."));
     }
 
+    // Set instanceArray so links can be aware of the number of instances.
+    $this->instanceArray = $this->getLinkInstances($text);
+
     // Before doing the replacement, the callback function needs to know which
     // options to use.
     $this->replaceCallback($this->settings, 'prepare');
@@ -127,11 +138,16 @@ class FootnotesFilter extends FilterBase {
       $text .= "\n\n" . $footer;
     }
     $result = new FilterProcessResult($text);
-    $result->setAttachments([
-      'library' => [
-        'footnotes/footnotes',
-      ],
-    ]);
+
+    // Only use CSS if option is selected.
+    if (!isset($this->settings['footnotes_css']) || $this->settings['footnotes_css']) {
+      $result->setAttachments([
+        'library' => [
+          'footnotes/footnotes',
+        ],
+      ]);
+    }
+
     return $result;
   }
 
@@ -200,7 +216,7 @@ class FootnotesFilter extends FilterBase {
     // (fixes http://drupal.org/node/194558).
     $randstr = $this->randstr();
 
-    $value = '';
+    $children_text = '';
     // Did the pattern match anything in the <fn> tag?
     if ($matches[1]) {
       // See if value attribute can parsed, either well-formed in quotes eg
@@ -212,9 +228,15 @@ class FootnotesFilter extends FilterBase {
       elseif (preg_match('|value=(\S*)|', $matches[1], $value_match)) {
         $value = $value_match[1];
       }
+
+      // Try to match the text attribute as well, in case children are stored
+      // in the attribute.
+      if (preg_match('|text=["\'](.*?)["\']|', $matches[1], $text_match)) {
+        $children_text = $text_match[1];
+      }
     }
 
-    if ($value) {
+    if (isset($value)) {
       // A value label was found. If it is numeric, record it in $n so further
       // notes can increment from there.
       // After adding support for multiple references to same footnote in the
@@ -240,11 +262,14 @@ class FootnotesFilter extends FilterBase {
     // attribute.
     $value_id = preg_replace('|[^\w\-]|', '', $value);
 
+    // Decide whether to use the attribute or the child content for text.
+    $text = $children_text ? $children_text : $matches[2];
+
     // Create a sanitized version of $text that is suitable for using as HTML
     // attribute value. (In particular, as the title attribute to the footnote
     // link).
     $allowed_tags = [];
-    $text_clean = Xss::filter($matches['2'], $allowed_tags);
+    $text_clean = Xss::filter($text, $allowed_tags);
     // HTML attribute cannot contain quotes.
     $text_clean = str_replace('"', "&quot;", $text_clean);
     // Remove newlines. Browsers don't support them anyway and they'll confuse
@@ -252,13 +277,34 @@ class FootnotesFilter extends FilterBase {
     $text_clean = str_replace("\n", " ", $text_clean);
     $text_clean = str_replace("\r", "", $text_clean);
 
+    $instance = 1;
+
+    // If a link has more then 1 instance.
+    if ($this->instanceArray[$value] > 1) {
+      // If we have stored matches, use these to calculate the current instance.
+      foreach ($store_matches as $match) {
+        if ($match['value'] == $value) {
+          if (is_array($match['ref_id'])) {
+            // Add one because current ref_id is not in $store_matches yet.
+            $instance = count($match['ref_id']) + 1;
+          }
+          else {
+            // The ref_id is not an array at this point so set to 2.
+            $instance = 2;
+          }
+        }
+      }
+    }
+
     // Create a footnote item as an array.
     $fn = [
       'value' => $value,
-      'text' => $opt_html ? html_entity_decode($matches[2]) : $matches[2],
+      'text' => $opt_html ? html_entity_decode($text) : $text,
       'text_clean' => $text_clean,
       'fn_id' => 'footnote' . $value_id . '_' . $randstr,
       'ref_id' => 'footnoteref' . $value_id . '_' . $randstr,
+      'instances' => $this->instanceArray[$value],
+      'instance' => $instance,
     ];
 
     // We now allow to repeat the footnote value label, in which case the link
@@ -317,6 +363,40 @@ class FootnotesFilter extends FilterBase {
   }
 
   /**
+   * Helper function to set $instanceArray variable.
+   *
+   * @param string $text
+   *   The text being processed.
+   *
+   * @return array
+   *   Array containing number of link value instances.
+   */
+  public function getLinkInstances($text) {
+    $instances = [];
+    $pattern = '|<fn([^>]*)>(.*?)</fn>|s';
+
+    preg_match_all(
+      $pattern,
+      $text,
+      $matches,
+      PREG_PATTERN_ORDER
+    );
+
+    foreach ($matches[1] as $value_string) {
+      preg_match('/(?<=\")(.*?)(?=\")/', $value_string, $value);
+
+      if (empty($instances[$value[0]])) {
+        $instances[$value[0]] = 1;
+      }
+      else {
+        $instances[$value[0]]++;
+      }
+    }
+
+    return $instances;
+  }
+
+  /**
    * Create the settings form for the filter.
    *
    * @param array $form
@@ -343,6 +423,12 @@ class FootnotesFilter extends FilterBase {
       '#title' => $this->t('Handle footnote text as HTML'),
       '#default_value' => $this->settings['footnotes_html'],
       '#description' => $this->t('If not checked, a HTML tag in the footnote text will be shown as-is to the user.'),
+    ];
+    $settings['footnotes_css'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use footnotes CSS'),
+      '#default_value' => isset($this->settings['footnotes_css']) ? $this->settings['footnotes_css'] : TRUE,
+      '#description' => $this->t('Uncheck this option to remove footnotes CSS.'),
     ];
     return $settings;
   }

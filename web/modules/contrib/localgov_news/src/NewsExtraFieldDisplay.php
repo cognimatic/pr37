@@ -145,6 +145,7 @@ class NewsExtraFieldDisplay implements ContainerInjectionInterface {
         $workflow = $this->moderationInformation->getWorkflowForEntity($node);
         $type_plugin = $workflow->getTypePlugin();
         $transitions = $type_plugin->getTransitions();
+        $published = [];
         foreach ($transitions as $transition) {
           $state = $transition->to();
           if ($state->isPublishedState()) {

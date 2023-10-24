@@ -190,6 +190,9 @@ class ParagraphAddForm extends ContentEntityForm {
     $this->hostField = $host_field;
     $param = [$paragraph->getEntityTypeId(), $host_type, $host_field, $host_id];
     $this->domSelector = HTML::getId(implode('-', $param));
+    $form['#entity_parent_type'] = $host_type;
+    $form['#entity_field'] = $host_field;
+    $form['#entity_id'] = $host_id;
     return $this->buildComponentForm($form, $form_state);
   }
 
@@ -320,6 +323,8 @@ class ParagraphAddForm extends ContentEntityForm {
         $form['#process'][] = 'field_group_form_process';
       }
     }
+    // Disable cache to avoid errors with storing files in tempstore.
+    $form_state->disableCache();
     return $form;
   }
 

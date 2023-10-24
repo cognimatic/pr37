@@ -39,7 +39,7 @@ class ApprovalsDashboardTest extends BrowserTestBase {
 
     // Test approvals dashboard tab is visible and content moderation in hidden.
     $this->drupalGet('admin/content');
-    $this->assertSession()->responseContains('Approvals dashboard');
+    $this->assertSession()->responseContains('Approve');
     $this->assertSession()->responseNotContains('Content moderation');
 
     // Test content moderation tab is visible after enabling another workflow.
@@ -49,7 +49,7 @@ class ApprovalsDashboardTest extends BrowserTestBase {
     ], 'workflow');
     $workflow->save();
     $this->drupalGet('admin/content');
-    $this->assertSession()->responseContains('Approvals dashboard');
+    $this->assertSession()->responseContains('Approve');
     $this->assertSession()->responseContains('Moderated content');
   }
 

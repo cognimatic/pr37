@@ -3,13 +3,21 @@
 namespace Drupal\civiccookiecontrol\Form;
 
 use Drupal\civiccookiecontrol\CCCConfigNames;
+use Drupal\civiccookiecontrol\CCC9Vendors;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\Form\FormState;
 use Drupal\Core\Locale\CountryManager;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Logger\LoggerChannelFactory;
 use Drupal\Core\Routing\RouteBuilderInterface;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -47,6 +55,20 @@ class IAB2Settings extends ConfigFormBase {
   protected $extensionListModule;
 
   /**
+   * Guzzle\Client instance.
+   *
+   * @var \GuzzleHttp\ClientInterface
+   */
+  protected $httpClient;
+
+  /**
+   * LoggerChannelFactory.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   */
+  protected $loggerFactory;
+
+  /**
    * IAB2Settings constructor.
    *
    * @param \Drupal\Core\Locale\CountryManager $countryManager
@@ -59,19 +81,27 @@ class IAB2Settings extends ConfigFormBase {
    *   Injected router builder service.
    * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
    *   List of available modules.
+   * @param \GuzzleHttp\ClientInterface $http_client
+   *   The http_client.
+   * @param \Drupal\Core\Logger\LoggerChannelFactory $loggerFactory
+   *   The logger.
    */
   public function __construct(
         CountryManager $countryManager,
         ConfigFactoryInterface $config_factory,
         CacheBackendInterface $cache,
         RouteBuilderInterface $routeBuilder,
-        ModuleExtensionList $extension_list_module
+        ModuleExtensionList $extension_list_module,
+        ClientInterface $http_client,
+        LoggerChannelFactory $loggerFactory,
     ) {
     parent::__construct($config_factory);
     $this->countryManager = $countryManager;
     $this->cache = $cache;
     $this->routerBuilder = $routeBuilder;
     $this->extensionListModule = $extension_list_module;
+    $this->httpClient = $http_client;
+    $this->loggerFactory = $loggerFactory;
     civiccookiecontrol_check_cookie_categories();
   }
 
@@ -80,11 +110,13 @@ class IAB2Settings extends ConfigFormBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-          $container->get('country_manager'),
-          $container->get('config.factory'),
-          $container->get('cache.data'),
-          $container->get('router.builder'),
-          $container->get('extension.list.module')
+      $container->get('country_manager'),
+      $container->get('config.factory'),
+      $container->get('cache.data'),
+      $container->get('router.builder'),
+      $container->get('extension.list.module'),
+      $container->get('http_client'),
+      $container->get('logger.factory'),
       );
   }
 
@@ -169,6 +201,7 @@ class IAB2Settings extends ConfigFormBase {
     ];
 
     $this->loadIabSettings($form);
+    $this->loadVendorSettings($form);
 
     $form_state->setCached(FALSE);
 
@@ -207,8 +240,178 @@ class IAB2Settings extends ConfigFormBase {
         $element['#default_value'] = $this->config(CCCConfigNames::IAB2)->get($key);
       }
       unset($element['boolOptions']);
-      $form['iab']['iabSettings'][$key] = $element;
+      if ($key == 'iabIncludeVendors') {
+        $form['iab']['iabSettings']['vendor'][$key] = $element;
+      }
+      else {
+        $form['iab']['iabSettings'][$key] = $element;
+      }
     }
+  }
+
+  /**
+   * Loads Vendor options.
+   *
+   * @param array $form
+   *   The form.
+   */
+  protected function loadVendorSettings(&$form) {
+
+    $form['iab']['iabSettings']['vendor'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Vendor Options'),
+      '#open' => FALSE,
+      '#description' => $this->t('An emphasis of TCF v2.2 is to allow site owners (Publishers)
+      the ability to limit the number of vendors detailed
+      by the CMP and avoid requesting user’s consent for
+      Vendors that operate in technical environments and jurisdictions that are not relevant to their online services.
+      This can be achieved via the text field `Vendor ids`.
+      To customise and limit which vendors are displayed, the `Vendor ids` text field needs to be
+      populated with a comma separate list of the vendor ids you wish to support.
+      To make this more convenient, we have created the tool
+      below where you can set the territorial scopes, environments and service types you are interested
+      in and the tool will find all vendors operating within these parameters and create the array of their ids for you.
+      '),
+    ];
+    $form['iab']['iabSettings']['vendor']['territorial_scope'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Territorial Scope'),
+      '#options' => CCC9Vendors::TERRITORIAL_SCOPE,
+      '#description' => $this->t('Select one or more Territorial Scope(s).'),
+    ];
+    $form['iab']['iabSettings']['vendor']['environments'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Environments'),
+      '#options' => array_combine(CCC9Vendors::ENVIRONMENTS, CCC9Vendors::ENVIRONMENTS),
+      '#description' => $this->t('Select one or more Environemnts.'),
+    ];
+    $form['iab']['iabSettings']['vendor']['services_type'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Services type'),
+      '#options' => array_combine(CCC9Vendors::SERVICE_TYPES, CCC9Vendors::SERVICE_TYPES),
+      '#description' => $this->t('Select one or more Service Type(s).'),
+    ];
+    $form['iab']['iabSettings']['vendor']['iabIncludeVendors'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Vendor ids'),
+      '#default_value' => $this->config(CCCConfigNames::IAB2)->get('iabIncludeVendors'),
+      '#description' => $this->t('The list of vendor ids that you wish to seek consent for. When left empty, consent will sought for all IAB TCF vendors.'),
+    ];
+    $form['iab']['iabSettings']['vendor']['message']['#markup'] = "<div id='message-wrapper'> </div>";
+    $form['iab']['iabSettings']['vendor']['generate'] = [
+      '#type' => 'button',
+      '#prefix' => '<br>',
+      '#value' => $this->t('Calculate list of vendor ids based on my selections above.'),
+      '#ajax' => [
+        'callback' => [$this, 'generateVendors'],
+        'wrapper' => 'message-wrapper',
+        'progress' => [
+          'type' => 'throbber',
+          'message' => $this->t('Calcualting...'),
+        ],
+      ],
+    ];
+  }
+
+  /**
+   * Generate vendors using user's options.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormState $formState
+   *   The form state.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   The response.
+   */
+  public function generateVendors(array $form, FormState $formState) {
+
+    $request = $this->getVendorsList();
+
+    $response = new AjaxResponse();
+
+    // Get response status.
+    $status = is_object($request) ? $request->getStatusCode() : $request;
+
+    if ($status == 200) {
+      $responseArray = json_decode($request->getBody()->getContents(), TRUE);
+      $vendorsArray = $responseArray['vendors'];
+
+      // Get form values.
+      $territorialScope = !empty(array_filter(($formState->getValue('territorial_scope')))) ? array_map('strtolower', array_filter($formState->getValue('territorial_scope'))) : NULL;
+      $servicesType = !empty(array_filter(($formState->getValue('services_type')))) ? array_map('strtolower', array_filter($formState->getValue('services_type'))) : NULL;
+      $environments = !empty(array_filter(($formState->getValue('environments')))) ? array_map('strtolower', array_filter($formState->getValue('environments'))) : NULL;
+
+      $filters = [
+        'territorialScope' => $territorialScope,
+        'serviceTypes' => $servicesType,
+        'environments' => $environments,
+      ];
+
+      $output = [];
+      array_walk($vendorsArray, function ($element) use ($filters, &$output) {
+        $matches = TRUE;
+        foreach ($filters as $key => $value) {
+          if ($value) {
+            if ((isset($element[$key]) && !array_intersect($value, array_map('strtolower', $element[$key]))) || !isset($element[$key])) {
+              $matches = FALSE;
+            }
+          }
+        }
+
+        if ($matches) {
+          $output[] = $element['id'];
+        }
+      });
+
+      // Sorting array.
+      sort($output);
+
+      // Add vendors array ids as value in rel field, and create a message.
+      $response->addCommand(new InvokeCommand('#edit-iabincludevendors', 'val', [$output]));
+      $response->addCommand(new HtmlCommand('#message-wrapper', '<div class = "messages messages--status">' . count($output) . ' vendors added</div>'));
+
+    }
+    else {
+      // Can't retrieve vendors list, log error and create a warning message.
+      $output = '<div class = "messages messages--warning">Cannot retrieve vendors. Please try again later</div>';
+      $response->addCommand(new HtmlCommand('#message-wrapper', $output));
+    }
+
+    return $response;
+  }
+
+  /**
+   * Get vendor list JSON from cdn.
+   *
+   * @return int|mixed|\Psr\Http\Message\ResponseInterface
+   *   Response object or http error
+   */
+  protected function getVendorsList() {
+
+    $url = 'https://cc.cdn.civiccomputing.com/vl/v2/additional-vendor-information-list.json';
+    $client = $this->httpClient;
+    $parameters = [
+      'headers' => [
+        'Content-Type' => 'application/json',
+      ],
+    ];
+
+    try {
+      $response = $client->get($url, $parameters['headers']);
+      return $response;
+
+    }
+    catch (GuzzleException $ex) {
+
+      // Log errors.
+      $this->loggerFactory->get('civiccookiecontrol')->error($ex->getMessage());
+
+      // Return response code.
+      return $ex->getCode();
+
+    }
+
   }
 
 }

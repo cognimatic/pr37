@@ -3,9 +3,9 @@ description: "Makes CKEditor use the browser's built-in context menu instead of 
 package: CKEditor
 type: module
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 
-# Information added by Drupal.org packaging script on 2021-08-04
-version: '8.x-1.2'
+# Information added by Drupal.org packaging script on 2023-10-18
+version: '8.x-1.3'
 project: 'ckeditor_browser_context_menu'
-datestamp: 1628052849
+datestamp: 1697660669

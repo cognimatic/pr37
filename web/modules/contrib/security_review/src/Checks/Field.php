@@ -87,8 +87,7 @@ class Field extends Check {
           // We only check entities that are stored in database.
           if (is_a($entity->getStorageClass(), SqlContentEntityStorage::class, TRUE)) {
             if ($field_storage_definition instanceof FieldStorageConfig) {
-              $table_mapping = $entity_type_manager->getStorage($entity_type_id)->getTableMapping();
-              $table =  $table_mapping->getDedicatedDataTableName($field_storage_definition);
+              $table = $entity_type_id . '__' . $field_name;
             }
             else {
               $translatable = $entity->isTranslatable();

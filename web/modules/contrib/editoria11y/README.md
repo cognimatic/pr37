@@ -17,8 +17,8 @@ checker that addresses three critical needs for content authors:
    running; put spellcheck behind a button and few users remember to run it!
 1. It focuses exclusively on straightforward issues a content author can easily
    understand and easily fix. Comprehensive testing should be a key part of site
-   creation, but if a tool is going to run automatically, it will drive an
-   author bonkers if it is constantly alerting on code they do not understand
+   creation, but if a tool is going to run automatically, it will do more harm
+   than good if it is constantly alerting on code they do not understand
    and cannot fix.
 1. It runs in context. Views, Layout Builder, Paragraphs and all the other
    modules Drupal uses to assemble a page means that tools that run inside
@@ -83,7 +83,9 @@ checker that addresses three critical needs for content authors:
       tell us about the conflict! If it is a common module we will add it to the
       default ignore list.
 
-### JS Events for Themers
+## Extending and modifying Editorially
+
+### JS events provided by the library
 
 #### The main panel has opened
 
@@ -125,11 +127,35 @@ to transfer focus to the hidden tip:
 ```js
 document.addEventListener("ed11yHiddenHandler", function (event) {
   let myID = '#' + event.detail.id;
+  // Some action to take, e.g., look for an accordion button and click it.
   // if (jQuery(myID).parents('.example').length > 0) {
   //   jQuery(myID).parents('.example').prev('button').click();
   // }
 });
 ```
+
+### Programmatically modifying the options array
+
+Before initiating the object, the module checks to see if a module or theme has
+requested to modify the array.
+
+Example use (in JS in your theme or module) to provide a default ignored item,
+or add it to the list provided in the GUI:
+
+```js
+var editoria11yOptionsOverride = true;
+var editoria11yOptions = function(options) {
+  if (options['ignoreElements'] === false) {
+    // Replace with default value.
+    options['ignoreElements'] = `.example`;
+  } else {
+    // Append default value with comma separator.
+    options['ignoreElements'] = `${options['ignoreElements']}, .example`
+  }
+  return options;
+}
+```
+
 
 ## Troubleshooting FAQ
 
@@ -182,7 +208,7 @@ document.addEventListener("ed11yHiddenHandler", function (event) {
 libraries-override:
   'editoria11y/editoria11y':
     js:
-      js/editoria11y-localization.js: js/MY-LOCAL-THEME-VERSION-OF-THE-SAME.js 
+      js/editoria11y-localization.js: js/MY-LOCAL-THEME-VERSION-OF-THE-SAME.js
 ```
 
 ### The checker slowed down after configuration
@@ -200,25 +226,28 @@ libraries-override:
 
 ## Maintainers
 
-Editoria11y is maintained by [John Jameson](https://www.drupal.org/u/itmaybejj),
-and is provided to the community thanks to
+Editoria11y is provided to the community thanks to
 the [Digital Accessibility](https://accessibility.princeton.edu/) initiatives at
 Princeton
-University's [Office of Web Development Services](https://wds.princeton.edu/)
+University's [Office of Web Development Services](https://wds.princeton.edu/).
+- [John Jameson](https://www.drupal.org/u/itmaybejj), Digital Accessibility Developer
+- [Brian Osborne](https://www.drupal.org/u/bkosborne), Web Solutions Architect
+- [Jason Partyka](https://www.drupal.org/u/partyka), Lead Application Developer
+
 
 ### Acknowledgements
 
-Editoria11y's JavaScript began as a fork of
-the [Sa11y](https://ryersondmp.github.io/sa11y/) accessibility checker, which
+The Editoria11y library began as a fork of
+the [Sa11y](https://sa11y.netlify.app/) accessibility checker, which
 was created by Digital Media Projects, Computing and Communication Services (
-CCS) at Ryerson University in Toronto, Canada:
+CCS) at Toronto Metropoliton University:
 
 - [Adam Chaboryk](https://github.com/adamchaboryk), IT accessibility specialist
 - Benjamin Luong, web accessibility assistant
 - Arshad Mohammed, web accessibility assistant
 - Kyle Padernilla, web accessibility assistant
 
-Sa11y itself is an adaptation
+Sa11y itself was an adaptation
 of [Tota11y by Khan Academy](https://github.com/Khan/tota11y), was built
 with [FontAwesome icons](https://github.com/FortAwesome/Font-Awesome) and is
 powered with jQuery.

@@ -29,7 +29,7 @@ class BackupController extends ControllerBase {
       ->getStorage('backup_migrate_destination');
 
     $out = [];
-    foreach ($storage->getQuery()->execute() as $key) {
+    foreach ($storage->getQuery()->accessCheck(FALSE)->execute() as $key) {
       $entity = $storage->load($key);
       $destination = $entity->getObject();
       $label = $destination->confGet('name');

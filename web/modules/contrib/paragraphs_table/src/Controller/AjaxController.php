@@ -8,9 +8,9 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
 use Drupal\field\FieldConfigInterface;
+use Drupal\paragraphs_table\Plugin\Field\FieldFormatter\ParagraphsTableFormatter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Drupal\paragraphs_table\Plugin\Field\FieldFormatter\ParagraphsTableFormatter;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**

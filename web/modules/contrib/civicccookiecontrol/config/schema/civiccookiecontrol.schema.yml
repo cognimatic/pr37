@@ -328,6 +328,24 @@ civiccookiecontrol.iab2:
       type: string
     iabHours:
       type: string
+    iabGoogleVendors:
+      type: string
+    iabGoogleVendorInformation:
+      type: string
+    iabVendorDataUses:
+      type: string
+    iabDataRetention: 
+      type: string
+    iabPrivacy:
+      type: string
+    iabLiClaims:
+      type: string    
+    iabVendorCount: 
+      type: string    
+    iabIllustrationsDescription: 
+      type: string    
+    iabIncludeVendors:
+      type: string
     _core:
       type: _core_config_info
     langcode:

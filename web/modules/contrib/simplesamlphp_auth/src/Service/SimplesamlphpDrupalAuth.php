@@ -183,8 +183,8 @@ class SimplesamlphpDrupalAuth {
         // Allow other modules to decide if there is an existing Drupal user,
         // based on the supplied SAML atttributes.
         $attributes = $this->simplesamlAuth->getAttributes();
-        foreach ($this->moduleHandler->getImplementations('simplesamlphp_auth_existing_user') as $module) {
-          $return_value = $this->moduleHandler->invoke($module, 'simplesamlphp_auth_existing_user', [$attributes]);
+        $this->moduleHandler->invokeAllWith('simplesamlphp_auth_existing_user', function (callable $hook) use ($attributes, $authname, &$account) {
+          $return_value = $hook($attributes);
           if ($return_value instanceof UserInterface) {
             $account = $return_value;
             if ($this->config->get('debug')) {
@@ -195,7 +195,7 @@ class SimplesamlphpDrupalAuth {
             }
             $this->externalauth->linkExistingAccount($authname, 'simplesamlphp_auth', $account);
           }
-        }
+        });
       }
 
       // Check the admin settings for simpleSAMLphp and find out if we

@@ -2,8 +2,7 @@ name: Cludo Search
 description: Provides a search interface to a dedicated Cludo Search.
 type: module
 package: 'Cludo Search'
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9.3 || ^10
 dependencies:
 
 # Information added by Drupal.org packaging script on 2020-08-21

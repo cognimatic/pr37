@@ -205,7 +205,12 @@ function simplesamlphp_auth_user_form_submit($form, FormStateInterface $form_sta
     // This can be altered if needed. See simplesamlphp_auth.api.php for
     // details.
     $authname = $account->getAccountName();
+    if ($current_authname = $authmap->get($account->id(), 'simplesamlphp_auth')) {
+      $authname = $current_authname;
+    }
+
     \Drupal::modulehandler()->alter('simplesamlphp_auth_account_authname', $authname, $account);
+
     $externalauth->linkExistingAccount($authname, 'simplesamlphp_auth', $account);
   }
   // Remove this user from the ExternalAuth authmap table.

@@ -24,7 +24,7 @@ class StyleguidePageTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['simple_styleguide'];
+  protected static $modules = ['simple_styleguide'];
 
   /**
    * A user with permission to administer site configuration.
@@ -36,7 +36,7 @@ class StyleguidePageTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->user = $this->drupalCreateUser(['administer site configuration', 'access style guide']);
     $this->drupalLogin($this->user);
@@ -66,7 +66,8 @@ class StyleguidePageTest extends BrowserTestBase {
     $simple_style_guide_config = [
       'default_patterns[headings]' => TRUE,
     ];
-    $this->drupalPostForm('admin/config/styleguide/settings', $simple_style_guide_config, t('Save'));
+    $this->drupalGet('admin/config/styleguide/settings');
+    $this->submitForm($simple_style_guide_config, t('Save'));
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->checkboxChecked('default_patterns[headings]');
 

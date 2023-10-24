@@ -57,7 +57,7 @@ function cludo_search_features_api() {
   return [
     'cludo_search_profile' => [
       'name' => t('Config for Cludo search'),
-      'file' => drupal_get_path('module', 'cludo_search') . '/cludo_search.features.inc',
+      'file' => \Drupal::service('extension.list.module')->getPath('cludo_search') . '/cludo_search.features.inc',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
       'default_hook' => 'cludo_search_defaults',
       'feature_source' => TRUE,
@@ -114,7 +114,7 @@ function _cludo_search_get_field_keys() {
 function cludo_search_theme() {
 
   $registry = [];
-  $ca_template_dir = drupal_get_path('module', 'cludo_search') . '/templates';
+  $ca_template_dir = \Drupal::service('extension.list.module')->getPath('cludo_search') . '/templates';
 
   // Full search form on results pages.
   $registry['cludo_search_search_form'] = [

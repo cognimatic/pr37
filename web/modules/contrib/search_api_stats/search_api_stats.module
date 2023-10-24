@@ -20,10 +20,11 @@ function search_api_stats_search_api_results_alter(ResultSetInterface &$results)
     $server = $index->get('server');
   }
 
-  if (empty($index) || empty($server) || empty($originalKeys = $query->getOriginalKeys())) {
+  if (empty($index) || empty($server)) {
     return;
   }
 
+  $originalKeys = $query->getOriginalKeys();
   $lowerOriginalKeys = mb_strtolower($originalKeys);
   $keywords = trim($lowerOriginalKeys);
   // To avoid to insert empty keywords value into database.

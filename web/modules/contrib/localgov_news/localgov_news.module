@@ -107,9 +107,11 @@ function localgov_news_field_widget_complete_form_alter(&$field_widget_complete_
     if ($form_state->getFormObject() instanceof EntityFormInterface) {
       $nid = $form_state->getformObject()->getEntity()->id();
     }
-    foreach ($field_widget_complete_form['widget'] as $delta => $element) {
-      if (!empty($element['target_id']) && $element['target_id']['#selection_handler'] == 'views') {
-        $field_widget_complete_form['widget'][$delta]['target_id']['#selection_settings']['view']['arguments'] = [$nid];
+    if (isset($nid)) {
+      foreach ($field_widget_complete_form['widget'] as $delta => $element) {
+        if (!empty($element['target_id']) && $element['target_id']['#selection_handler'] == 'views') {
+          $field_widget_complete_form['widget'][$delta]['target_id']['#selection_settings']['view']['arguments'] = [$nid];
+        }
       }
     }
   }

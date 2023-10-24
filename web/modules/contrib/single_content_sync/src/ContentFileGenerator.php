@@ -3,8 +3,8 @@
 namespace Drupal\single_content_sync;
 
 use Drupal\Core\Archiver\ArchiverInterface;
-use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\file\FileInterface;
 
@@ -65,8 +65,7 @@ class ContentFileGenerator implements ContentFileGeneratorInterface {
    */
   public function generateYamlFile(FieldableEntityInterface $entity, bool $extract_translations = FALSE): FileInterface {
     $output = $this->contentExporter->doExportToYml($entity, $extract_translations);
-    $default_scheme = $this->contentSyncHelper->getDefaultFileScheme();
-    $directory = "{$default_scheme}://export";
+    $directory = 'temporary://export';
     $file_name = $this->contentSyncHelper->generateContentFileName($entity);
     $this->contentSyncHelper->prepareFilesDirectory($directory);
 
@@ -135,8 +134,7 @@ class ContentFileGenerator implements ContentFileGeneratorInterface {
    *   The generated empty zip file.
    */
   protected function generateEmptyZipFile(string $name): FileInterface {
-    $default_scheme = $this->contentSyncHelper->getDefaultFileScheme();
-    $directory = "{$default_scheme}://export/zip";
+    $directory = "temporary://export/zip";
     $this->contentSyncHelper->prepareFilesDirectory($directory);
 
     return $this->contentSyncHelper->saveFileContentTemporary('', "{$directory}/{$name}.zip");
@@ -154,14 +152,16 @@ class ContentFileGenerator implements ContentFileGeneratorInterface {
     foreach ($assets as $file_uri) {
       // Add file to the zip.
       $file_full_path = $this->fileSystem->realpath($file_uri);
+      $file_relative_path = explode('://', $file_uri)[1];
 
       // Don't add external files as it can be imported by absolute url.
-      if (!$file_full_path) {
-        continue;
+      if ($file_full_path) {
+        $zip->getArchive()->addFile($file_full_path, "assets/{$file_relative_path}");
       }
-
-      $file_relative_path = explode('://', $file_uri)[1];
-      $zip->getArchive()->addFile($file_full_path, "assets/{$file_relative_path}");
+      elseif ($data = file_get_contents($file_uri)) {
+        // Add file contents to the ZIP archive with the same relative path.
+        $zip->getArchive()->addFromString("assets/{$file_relative_path}", $data);
+      }
     }
 
     // Clean up the storage after we exported assets to the zip.

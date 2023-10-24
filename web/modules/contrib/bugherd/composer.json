@@ -10,5 +10,7 @@
         "issues": "https://www.drupal.org/project/issues/bugherd",
         "source": "http://cgit.drupalcode.org/bugherd"
     },
-    "require": { }
+    "require": {
+        "laminas/laminas-escaper": "^2.12"
+    }
 }

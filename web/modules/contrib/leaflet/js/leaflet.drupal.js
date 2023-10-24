@@ -459,7 +459,7 @@
   Drupal.Leaflet.prototype.extend_map_bounds = function(lFeature, feature) {
     if (feature.type === 'point') {
       this.bounds.push([feature.lat, feature.lon]);
-    } else {
+    } else if (lFeature.getBounds) {
       this.bounds.push(lFeature.getBounds().getSouthWest(), lFeature.getBounds().getNorthEast());
     }
   };
@@ -526,6 +526,9 @@
         lFeature = this.create_multipoly(feature, map_settings ? map_settings['leaflet_markercluster']['include_path'] : false);
         break;
 
+      // In case of singular cases where feature.type is json we use this.create_json method.
+      // @see https://www.drupal.org/project/leaflet/issues/3377403
+      // @see https://www.drupal.org/project/leaflet/issues/3186029
       case 'json':
         lFeature = this.create_json(feature.json, feature.events);
         break;
@@ -846,6 +849,10 @@
   /**
    * Leaflet Geo JSON Creator.
    *
+   * In case of singular cases where feature.type is json we use this.create_json method.
+   * @see https://www.drupal.org/project/leaflet/issues/3377403
+   * @see https://www.drupal.org/project/leaflet/issues/3186029
+   *
    * @param json
    *   The json input.
    * @param events
@@ -854,6 +861,7 @@
    */
   Drupal.Leaflet.prototype.create_json = function(json, events) {
     let lJSON = new L.GeoJSON();
+    const self = this;
 
     lJSON.options.onEachFeature = function(feature, layer) {
       for (let layer_id in layer._layers) {
@@ -868,10 +876,10 @@
       }
 
       // Eventually add Tooltip to the lFeature.
-      this.feature_bind_tooltip(layer, feature.properties);
+      self.feature_bind_tooltip(layer, feature.properties);
 
       // Eventually add Popup to the Layer.
-      this.feature_bind_popup(layer, feature.properties);
+      self.feature_bind_popup(layer, feature.properties);
 
       for (e in events) {
         let layerParam = {};
@@ -884,7 +892,8 @@
     return lJSON;
   };
 
-  // Set Map initial map position and Zoom.  Different scenarios:
+
+  // Set Map initial map position and Zoom. Different scenarios:
   //  1)  Force the initial map center and zoom to values provided by input settings
   //  2)  Fit multiple features onto map using Leaflet's fitBounds method
   //  3)  Fit a single polygon onto map using Leaflet's fitBounds method
@@ -909,7 +918,8 @@
       } else {
         //  Set the Zoom and Center by using the Leaflet fitBounds function
         const bounds = new L.LatLngBounds(this.bounds);
-        this.lMap.fitBounds(bounds);
+        const fitbounds_options = this.map_settings.fitbounds_options ? JSON.parse(this.map_settings.fitbounds_options) : {};
+        this.lMap.fitBounds(bounds, fitbounds_options);
         start_center = bounds.getCenter();
         start_zoom = this.lMap.getBoundsZoom(bounds);
 

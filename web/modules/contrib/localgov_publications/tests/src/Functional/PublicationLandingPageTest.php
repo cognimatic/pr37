@@ -46,7 +46,7 @@ class PublicationLandingPageTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->adminUser = $this->drupalCreateUser([
@@ -70,7 +70,6 @@ class PublicationLandingPageTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->pageTextContains('body');
     $this->assertSession()->pageTextContains('localgov_documents');
-    $this->assertSession()->pageTextContains('localgov_pub_landing_content');
     $this->assertSession()->pageTextContains('localgov_published_date');
     $this->assertSession()->pageTextContains('field_localgov_services_landing');
     $this->assertSession()->pageTextContains('localgov_updated_date');

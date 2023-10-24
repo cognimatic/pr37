@@ -54,6 +54,7 @@ class SmartSqlTest extends MigrateSqlIdMapTest {
    *   The row to save.
    */
   protected function saveMap(array $map) {
+    $map += ['source_row_status' => 0];
     $table = $this->getIdMap()->mapTableName();
     $schema = $this->database->schema();
     // If the table already exists, add any columns which are in the map array,

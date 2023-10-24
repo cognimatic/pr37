@@ -6,6 +6,11 @@ configure: content_readability.admin.config
 package: 'Content'
 
 # Information added by Drupal.org packaging script on 2023-04-25
-version: '2.0.0'
+# version: '2.0.0'
+# project: 'content_readability'
+# datestamp: 1682442650
+
+# Information added by Drupal.org packaging script on 2023-09-13
+version: '2.1.0'
 project: 'content_readability'
-datestamp: 1682442650
+datestamp: 1694627666

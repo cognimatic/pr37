@@ -1,6 +1,6 @@
 CKEditor Browser Context Menu
 
-This module disables CKEditor own context menu (right-click popup menu) and
+This module disables CKEditor 4.x's own context menu (right-click popup menu) and
 allows the Browser's own context menu to display normally. This will allow
 users to use the browser's built-in spell checker, autocorrect and
 other built-in options.

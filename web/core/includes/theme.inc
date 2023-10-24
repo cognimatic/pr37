@@ -1669,10 +1669,9 @@ function template_preprocess_field_multiple_value_form(&$variables) {
     $header = [
       [
         'data' => [
-          '#type' => 'html_tag',
-          '#tag' => 'h4',
-          '#value' => $element['#title'],
-          '#attributes' => $header_attributes,
+          '#prefix' => '<h4' . $header_attributes . '>',
+          '#markup' => $element['#title'],
+          '#suffix' => '</h4>',
         ],
         'colspan' => 2,
         'class' => ['field-label'],

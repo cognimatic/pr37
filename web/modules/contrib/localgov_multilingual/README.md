@@ -2,7 +2,7 @@
 
 Adds multilingual functionality to LocalGov Drupal sites. 
 
-It currently provides mulitinlgial capabilities to subsite overview and service pages. 
+It currently provides multilingual capabilities to subsite overview and service pages. 
 
 Originally developed by Tipperary County Council, Ireland, for Irish multilanguage. 
 
@@ -15,7 +15,7 @@ Once enabled, translation capabilities will be available for Irish and Welsh.
 To use this module wth LocalGov Drupal, download and enable as you would for other Drupal modules.
 
 ```
-composer reuqire localgovdrupal/localgov_multilingual
+composer require localgovdrupal/localgov_multilingual
 drush en localgov_multilingual
 ```
 
@@ -24,4 +24,5 @@ drush en localgov_multilingual
 This project is currently maintained by: 
 
  - Mark Conroy https://github.com/markconroy
+ - Alan Burke https://github.com/alanburke
  - Finn Lewis https://github.com/finnlewis

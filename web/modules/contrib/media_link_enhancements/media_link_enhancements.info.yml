@@ -1,12 +1,12 @@
 name: Media Link Enhancements
 type: module
 description: Provides various enhancements for media entity links.
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 package: Media
 dependencies:
   - drupal:media
 
-# Information added by Drupal.org packaging script on 2022-05-03
-version: '1.0.1'
+# Information added by Drupal.org packaging script on 2023-07-11
+version: '1.0.2'
 project: 'media_link_enhancements'
-datestamp: 1651617597
+datestamp: 1689104058

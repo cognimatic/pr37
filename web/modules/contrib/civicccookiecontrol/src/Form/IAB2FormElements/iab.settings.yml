@@ -207,3 +207,43 @@ iabDays:
   '#title': 'Days'
   '#description': 'Set text for Days field.'
   '#default_value': 'iabDays'
+iabGoogleVendors:
+  '#type': 'textfield'
+  '#title': 'Google Vendors'
+  '#description': 'Set text for Google Vendors field.'
+  '#default_value': 'iabGoogleVendors'
+iabGoogleVendorInformation:
+  '#type': 'textfield'
+  '#title': 'Google Vendor Information'
+  '#description': 'Set text for Google Vendor Information field.'
+  '#default_value': 'iabGoogleVendorInformation'
+iabVendorDataUses:
+  '#type': 'textfield'
+  '#title': 'Vendor Data Uses'
+  '#description': 'The text used to describe the data collected and processed by the vendor.'
+  '#default_value': 'iabVendorDataUses'
+iabDataRetention:
+  '#type': 'textfield'
+  '#title': 'Data retention period'
+  '#description': "The text used to describe the vendor's data retention period, which appears after a dynamic number value in days."
+  '#default_value': 'iabDataRetention'
+iabPrivacy:
+  '#type': 'textfield'
+  '#title': 'Privacy policy URL'
+  '#description': "The text used to describe the link to the vendor's privacy policy URL."
+  '#default_value': 'iabPrivacy'
+iabLiClaims:
+  '#type': 'textfield'
+  '#title': 'Legitimate interests at stake.'
+  '#description': 'The text used to describe which legitimate interests are at stake.'
+  '#default_value': 'iabLiClaims'
+iabVendorCount:
+  '#type': 'textarea'
+  '#title': 'Vendor Count'
+  '#description': 'The text on the main panel following a dynamic number used to describe how many vendors you are seeking consent for with the supplied configuration.'
+  '#default_value': 'iabVendorCount'
+iabIllustrationsDescription:
+  '#type': 'textfield'
+  '#title': 'Illustrations Description'
+  '#description': 'Set text for Illustrations Description field.'
+  '#default_value': 'iabIllustrationsDescription'

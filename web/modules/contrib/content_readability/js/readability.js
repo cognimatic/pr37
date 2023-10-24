@@ -3,7 +3,7 @@
  * Content Readability Processing
  */
 
-(function ($, window, Drupal) {
+(function ($, window, Drupal, _) {
 
   'use strict';
   /**
@@ -20,7 +20,8 @@
 
         // Only Target the default body field for now.
         // Possibly make fields configurable at a later date.
-        $('body', context).once('content_readability').each(function () {
+        const body = once('content_readability', 'body', context);
+        for (let i = 0; i < body.length; i++) {
           // Get CKEditor 5 instance
           // https://ckeditor.com/docs/ckeditor5/latest/support/faq.html#how-to-get-the-editor-instance-object-from-the-dom-element
           const domEditableElement = document.querySelector('#edit-body-wrapper .ck-editor__editable');
@@ -39,7 +40,7 @@
             });
 
           }
-        });
+        }
       });
 
       /**
@@ -78,4 +79,4 @@
       }
     }
   };
-})(jQuery, this, Drupal);
+})(jQuery, this, Drupal, _);

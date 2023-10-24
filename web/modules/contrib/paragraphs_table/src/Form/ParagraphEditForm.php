@@ -39,7 +39,7 @@ class ParagraphEditForm extends ContentEntityForm {
   protected $entityFieldManager;
 
   /**
-   * Constructs a BookOutlineForm object.
+   * Constructs a paragraphs edit form object.
    *
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository.
@@ -115,6 +115,11 @@ class ParagraphEditForm extends ContentEntityForm {
       '%id' => $this->entity->id(),
     ]);
     $form = parent::form($form, $form_state);
+    $form['#entity_parent_type'] = $entity_type;
+    $form['#entity_field'] = $field_name;
+    $form['#entity_id'] = $this->entity->id();
+    // Disable cache to avoid errors with storing files in tempstore.
+    $form_state->disableCache();
     return $form;
   }
 
