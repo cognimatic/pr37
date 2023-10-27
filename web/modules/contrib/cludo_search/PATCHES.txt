@@ -5,7 +5,7 @@ Cludo search autocomplete not working on block 3050293
 Source: https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch
 
 
-D10 compatability https://www.drupal.org/project/cludo_search/issues/3296801
+D10 compatibility https://www.drupal.org/project/cludo_search/issues/3296801
 Source: https://www.drupal.org/files/issues/2022-07-18/cludo_search.1.0-beta2.rector.patch
 
 

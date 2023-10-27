@@ -1,11 +1,11 @@
 <?php
 
-use Drupal\Core\Template\Attribute;
-
 /**
  * @file
  * Views tree module.
  */
+
+use Drupal\Core\Template\Attribute;
 
 /**
  * Implements hook_theme().
@@ -79,6 +79,9 @@ function template_preprocess_views_tree(array &$variables) {
 
 /**
  * Prepares variables for a views tree table display.
+ *
+ * @param array $variables
+ *   The variables to pass on to the template.
  */
 function template_preprocess_views_tree_table(array &$variables) {
   // Set variables from core's table display.

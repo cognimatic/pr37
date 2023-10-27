@@ -1275,6 +1275,87 @@
             "install-path": "../davedevelopment/stiphle"
         },
         {
+            "name": "dealerdirect/phpcodesniffer-composer-installer",
+            "version": "v1.0.0",
+            "version_normalized": "1.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPCSStandards/composer-installer.git",
+                "reference": "4be43904336affa5c2f70744a348312336afd0da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/4be43904336affa5c2f70744a348312336afd0da",
+                "reference": "4be43904336affa5c2f70744a348312336afd0da",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": ">=5.4",
+                "squizlabs/php_codesniffer": "^2.0 || ^3.1.0 || ^4.0"
+            },
+            "require-dev": {
+                "composer/composer": "*",
+                "ext-json": "*",
+                "ext-zip": "*",
+                "php-parallel-lint/php-parallel-lint": "^1.3.1",
+                "phpcompatibility/php-compatibility": "^9.0",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "time": "2023-01-05T11:28:13+00:00",
+            "type": "composer-plugin",
+            "extra": {
+                "class": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Franck Nijhof",
+                    "email": "franck.nijhof@dealerdirect.com",
+                    "homepage": "http://www.frenck.nl",
+                    "role": "Developer / IT Manager"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/PHPCSStandards/composer-installer/graphs/contributors"
+                }
+            ],
+            "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
+            "homepage": "http://www.dealerdirect.com",
+            "keywords": [
+                "PHPCodeSniffer",
+                "PHP_CodeSniffer",
+                "code quality",
+                "codesniffer",
+                "composer",
+                "installer",
+                "phpcbf",
+                "phpcs",
+                "plugin",
+                "qa",
+                "quality",
+                "standard",
+                "standards",
+                "style guide",
+                "stylecheck",
+                "tests"
+            ],
+            "support": {
+                "issues": "https://github.com/PHPCSStandards/composer-installer/issues",
+                "source": "https://github.com/PHPCSStandards/composer-installer"
+            },
+            "install-path": "../dealerdirect/phpcodesniffer-composer-installer"
+        },
+        {
             "name": "defuse/php-encryption",
             "version": "v2.4.0",
             "version_normalized": "2.4.0.0",
@@ -3274,7 +3355,7 @@
                 "shasum": "b6bec32730bf19778e7136a271ccb5491d8a5662"
             },
             "require": {
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "type": "drupal-module",
             "extra": {
@@ -3288,7 +3369,7 @@
                 },
                 "patches_applied": {
                     "Cludo search autocomplete not working on block 3050293": "https://www.drupal.org/files/issues/2020-06-11/3050293-8.cludo_search.Cludo-search-autocomplete-not-working-on-block.patch",
-                    "D10 compatability https://www.drupal.org/project/cludo_search/issues/3296801": "https://www.drupal.org/files/issues/2022-07-18/cludo_search.1.0-beta2.rector.patch",
+                    "D10 compatibility https://www.drupal.org/project/cludo_search/issues/3296801": "https://www.drupal.org/files/issues/2022-07-18/cludo_search.1.0-beta2.rector.patch",
                     "Hide Prompt Above Input Box 3351519": "https://www.drupal.org/files/issues/2023-03-31/cludo_search_disable_prompt.patch"
                 }
             },
@@ -3309,6 +3390,60 @@
                 "source": "https://git.drupalcode.org/project/cludo_search"
             },
             "install-path": "../../web/modules/contrib/cludo_search"
+        },
+        {
+            "name": "drupal/coder",
+            "version": "8.3.22",
+            "version_normalized": "8.3.22.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pfrenssen/coder.git",
+                "reference": "ba6e62303d567863275fb086941f50a06dc7d08f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pfrenssen/coder/zipball/ba6e62303d567863275fb086941f50a06dc7d08f",
+                "reference": "ba6e62303d567863275fb086941f50a06dc7d08f",
+                "shasum": ""
+            },
+            "require": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1 || ^1.0.0",
+                "ext-mbstring": "*",
+                "php": ">=7.2",
+                "sirbrillig/phpcs-variable-analysis": "^2.11.7",
+                "slevomat/coding-standard": "^8.11",
+                "squizlabs/php_codesniffer": "^3.7.1",
+                "symfony/yaml": ">=3.4.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.7.12",
+                "phpunit/phpunit": "^8.0"
+            },
+            "time": "2023-10-15T09:55:50+00:00",
+            "type": "phpcodesniffer-standard",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Drupal\\": "coder_sniffer/Drupal/",
+                    "DrupalPractice\\": "coder_sniffer/DrupalPractice/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Coder is a library to review Drupal code.",
+            "homepage": "https://www.drupal.org/project/coder",
+            "keywords": [
+                "code review",
+                "phpcs",
+                "standards"
+            ],
+            "support": {
+                "issues": "https://www.drupal.org/project/issues/coder",
+                "source": "https://www.drupal.org/project/coder"
+            },
+            "install-path": "../drupal/coder"
         },
         {
             "name": "drupal/coffee",
@@ -4466,7 +4601,7 @@
                 "shasum": "61b6ea4b99302a2f3c37b9c5f50730e52244d254"
             },
             "require": {
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "type": "drupal-module",
             "extra": {
@@ -4479,7 +4614,7 @@
                     }
                 },
                 "patches_applied": {
-                    "D10 compatability": "https://www.drupal.org/files/issues/2023-06-23/automateddrupal10compatibilityissues-3286921.patch"
+                    "D10 compatibility https://www.drupal.org/project/db_maintenance/issues/3286921": "https://www.drupal.org/files/issues/2023-06-23/automateddrupal10compatibilityissues-3286921.patch"
                 }
             },
             "installation-source": "dist",
@@ -6755,7 +6890,7 @@
                 "shasum": "e2438610bf829a82c6415f88f708b2dc73d91c49"
             },
             "require": {
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "require-dev": {
                 "drupal/imce": "^2.3"
@@ -6770,9 +6905,7 @@
                         "message": "Alpha releases are not covered by Drupal security advisories."
                     }
                 },
-                "patches_applied": {
-                    "D10 Compatability https://www.drupal.org/project/filefield_sources/issues/3336268": "https://www.drupal.org/files/issues/2023-08-15/3336268-3-filefield_sources-drupal-10-compatibility.patch"
-                }
+                "patches_applied": []
             },
             "installation-source": "dist",
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -7833,9 +7966,10 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/image_resize_filter.git",
-                "reference": "cb99bc8c1d83e80e8d8fb78bd7056576660c8613"
+                "reference": "324db7c59567e0a9e3511d0e8b8b54245043f2f7"
             },
             "require": {
+                "drupal/ckeditor": "^1.0",
                 "drupal/core": "^9.3 || ^10"
             },
             "type": "drupal-module",
@@ -7844,8 +7978,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.1+2-dev",
-                    "datestamp": "1661585246",
+                    "version": "8.x-1.1+3-dev",
+                    "datestamp": "1698272491",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
@@ -9557,18 +9691,18 @@
         },
         {
             "name": "drupal/migrate_devel",
-            "version": "2.2.0",
-            "version_normalized": "2.2.0.0",
+            "version": "2.3.0",
+            "version_normalized": "2.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/migrate_devel.git",
-                "reference": "8.x-2.2"
+                "reference": "8.x-2.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/migrate_devel-8.x-2.2.zip",
-                "reference": "8.x-2.2",
-                "shasum": "c38dd42499f508c04e4fac5ba5afcf94d91f73d5"
+                "url": "https://ftp.drupal.org/files/projects/migrate_devel-8.x-2.3.zip",
+                "reference": "8.x-2.3",
+                "shasum": "2e8efc7c16f9c3d830444a6af674dd3d511eaa69"
             },
             "require": {
                 "drupal/core": "^9.5 || ^10"
@@ -9579,8 +9713,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.2",
-                    "datestamp": "1695978927",
+                    "version": "8.x-2.3",
+                    "datestamp": "1698392974",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -12233,18 +12367,18 @@
         },
         {
             "name": "drupal/site_audit",
-            "version": "4.0.0-rc2",
-            "version_normalized": "4.0.0.0-RC2",
+            "version": "4.0.0-rc3",
+            "version_normalized": "4.0.0.0-RC3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/site_audit.git",
-                "reference": "4.0.0-rc2"
+                "reference": "4.0.0-rc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/site_audit-4.0.0-rc2.zip",
-                "reference": "4.0.0-rc2",
-                "shasum": "929711da9866856864fcc44e99e029b16c7b67f2"
+                "url": "https://ftp.drupal.org/files/projects/site_audit-4.0.0-rc3.zip",
+                "reference": "4.0.0-rc3",
+                "shasum": "33d83ffa08b488507f5f58e858c40c02f686224e"
             },
             "require": {
                 "drupal/core": "^9.2 | ^10"
@@ -12255,8 +12389,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "4.0.0-rc2",
-                    "datestamp": "1696979535",
+                    "version": "4.0.0-rc3",
+                    "datestamp": "1698374767",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "RC releases are not covered by Drupal security advisories."
@@ -12266,9 +12400,6 @@
                     "services": {
                         "drush.services.yml": "^9 || ^10"
                     }
-                },
-                "patches_applied": {
-                    "PHP Fatal error: AutoloaderAwareTrait https://www.drupal.org/project/site_audit/issues/3377204": "https://git.drupalcode.org/project/site_audit/-/merge_requests/9.diff"
                 }
             },
             "installation-source": "dist",
@@ -13947,17 +14078,17 @@
         },
         {
             "name": "drush/drush",
-            "version": "12.4.0",
-            "version_normalized": "12.4.0.0",
+            "version": "12.4.1",
+            "version_normalized": "12.4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drush-ops/drush.git",
-                "reference": "b49cc6b666279bd4582a00437bfdc4969b335612"
+                "reference": "edfd51adaa25ef0c5054fb5cd2c89a47a4269f47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/b49cc6b666279bd4582a00437bfdc4969b335612",
-                "reference": "b49cc6b666279bd4582a00437bfdc4969b335612",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/edfd51adaa25ef0c5054fb5cd2c89a47a4269f47",
+                "reference": "edfd51adaa25ef0c5054fb5cd2c89a47a4269f47",
                 "shasum": ""
             },
             "require": {
@@ -13998,7 +14129,7 @@
                 "rector/rector": "^0.12",
                 "squizlabs/php_codesniffer": "^3.7"
             },
-            "time": "2023-10-19T21:47:17+00:00",
+            "time": "2023-10-26T22:41:18+00:00",
             "bin": [
                 "drush"
             ],
@@ -14082,7 +14213,7 @@
                 "issues": "https://github.com/drush-ops/drush/issues",
                 "security": "https://github.com/drush-ops/drush/security/advisories",
                 "slack": "https://drupal.slack.com/messages/C62H9CWQM",
-                "source": "https://github.com/drush-ops/drush/tree/12.4.0"
+                "source": "https://github.com/drush-ops/drush/tree/12.4.1"
             },
             "funding": [
                 {
@@ -19473,6 +19604,56 @@
             "install-path": "../phpseclib/phpseclib"
         },
         {
+            "name": "phpstan/phpdoc-parser",
+            "version": "1.24.2",
+            "version_normalized": "1.24.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpdoc-parser.git",
+                "reference": "bcad8d995980440892759db0c32acae7c8e79442"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/bcad8d995980440892759db0c32acae7c8e79442",
+                "reference": "bcad8d995980440892759db0c32acae7c8e79442",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^2.0",
+                "nikic/php-parser": "^4.15",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^1.5",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/process": "^5.2"
+            },
+            "time": "2023-09-26T12:28:12+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\PhpDocParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPDoc parser with support for nullable, intersection and generic types",
+            "support": {
+                "issues": "https://github.com/phpstan/phpdoc-parser/issues",
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.24.2"
+            },
+            "install-path": "../phpstan/phpdoc-parser"
+        },
+        {
             "name": "phpstan/phpstan",
             "version": "1.10.39",
             "version_normalized": "1.10.39.0",
@@ -20709,24 +20890,24 @@
         },
         {
             "name": "simplesamlphp/simplesamlphp-assets-base",
-            "version": "v2.1.5",
-            "version_normalized": "2.1.5.0",
+            "version": "v2.1.6",
+            "version_normalized": "2.1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplesamlphp/simplesamlphp-assets-base.git",
-                "reference": "f462dacce8bdda4e87e02ed4f209f6dd73f8342b"
+                "reference": "ab7fdad861877ab439860ec5f77727ff2dc99327"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplesamlphp/simplesamlphp-assets-base/zipball/f462dacce8bdda4e87e02ed4f209f6dd73f8342b",
-                "reference": "f462dacce8bdda4e87e02ed4f209f6dd73f8342b",
+                "url": "https://api.github.com/repos/simplesamlphp/simplesamlphp-assets-base/zipball/ab7fdad861877ab439860ec5f77727ff2dc99327",
+                "reference": "ab7fdad861877ab439860ec5f77727ff2dc99327",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4 || ^8.0",
                 "simplesamlphp/composer-module-installer": "^1.3.2"
             },
-            "time": "2023-07-29T13:14:53+00:00",
+            "time": "2023-10-26T09:03:43+00:00",
             "type": "simplesamlphp-module",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -20742,9 +20923,138 @@
             "description": "Assets for the SimpleSAMLphp main repository",
             "support": {
                 "issues": "https://github.com/simplesamlphp/simplesamlphp-assets-base/issues",
-                "source": "https://github.com/simplesamlphp/simplesamlphp-assets-base/tree/v2.1.5"
+                "source": "https://github.com/simplesamlphp/simplesamlphp-assets-base/tree/v2.1.6"
             },
             "install-path": "../simplesamlphp/simplesamlphp/public/assets/base"
+        },
+        {
+            "name": "sirbrillig/phpcs-variable-analysis",
+            "version": "v2.11.17",
+            "version_normalized": "2.11.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
+                "reference": "3b71162a6bf0cde2bff1752e40a1788d8273d049"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/3b71162a6bf0cde2bff1752e40a1788d8273d049",
+                "reference": "3b71162a6bf0cde2bff1752e40a1788d8273d049",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "squizlabs/php_codesniffer": "^3.5.6"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7 || ^1.0",
+                "phpcsstandards/phpcsdevcs": "^1.1",
+                "phpstan/phpstan": "^1.7",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.5 || ^7.0 || ^8.0 || ^9.0",
+                "sirbrillig/phpcs-import-detection": "^1.1",
+                "vimeo/psalm": "^0.2 || ^0.3 || ^1.1 || ^4.24 || ^5.0@beta"
+            },
+            "time": "2023-08-05T23:46:11+00:00",
+            "type": "phpcodesniffer-standard",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "VariableAnalysis\\": "VariableAnalysis/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sam Graham",
+                    "email": "php-codesniffer-variableanalysis@illusori.co.uk"
+                },
+                {
+                    "name": "Payton Swick",
+                    "email": "payton@foolord.com"
+                }
+            ],
+            "description": "A PHPCS sniff to detect problems with variables.",
+            "keywords": [
+                "phpcs",
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/sirbrillig/phpcs-variable-analysis/issues",
+                "source": "https://github.com/sirbrillig/phpcs-variable-analysis",
+                "wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
+            },
+            "install-path": "../sirbrillig/phpcs-variable-analysis"
+        },
+        {
+            "name": "slevomat/coding-standard",
+            "version": "8.14.1",
+            "version_normalized": "8.14.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slevomat/coding-standard.git",
+                "reference": "fea1fd6f137cc84f9cba0ae30d549615dbc6a926"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/fea1fd6f137cc84f9cba0ae30d549615dbc6a926",
+                "reference": "fea1fd6f137cc84f9cba0ae30d549615dbc6a926",
+                "shasum": ""
+            },
+            "require": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7 || ^1.0",
+                "php": "^7.2 || ^8.0",
+                "phpstan/phpdoc-parser": "^1.23.1",
+                "squizlabs/php_codesniffer": "^3.7.1"
+            },
+            "require-dev": {
+                "phing/phing": "2.17.4",
+                "php-parallel-lint/php-parallel-lint": "1.3.2",
+                "phpstan/phpstan": "1.10.37",
+                "phpstan/phpstan-deprecation-rules": "1.1.4",
+                "phpstan/phpstan-phpunit": "1.3.14",
+                "phpstan/phpstan-strict-rules": "1.5.1",
+                "phpunit/phpunit": "8.5.21|9.6.8|10.3.5"
+            },
+            "time": "2023-10-08T07:28:08+00:00",
+            "type": "phpcodesniffer-standard",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "SlevomatCodingStandard\\": "SlevomatCodingStandard/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
+            "keywords": [
+                "dev",
+                "phpcs"
+            ],
+            "support": {
+                "issues": "https://github.com/slevomat/coding-standard/issues",
+                "source": "https://github.com/slevomat/coding-standard/tree/8.14.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kukulich",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/slevomat/coding-standard",
+                    "type": "tidelift"
+                }
+            ],
+            "install-path": "../slevomat/coding-standard"
         },
         {
             "name": "solarium/solarium",
@@ -20878,6 +21188,66 @@
                 }
             ],
             "install-path": "../spatie/pdf-to-image"
+        },
+        {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.7.2",
+            "version_normalized": "3.7.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ed8e00df0a83aa96acf703f8c2979ff33341f879",
+                "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "time": "2023-02-22T23:07:41+00:00",
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
+            "keywords": [
+                "phpcs",
+                "standards",
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
+                "source": "https://github.com/squizlabs/PHP_CodeSniffer",
+                "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
+            },
+            "install-path": "../squizlabs/php_codesniffer"
         },
         {
             "name": "symfony/cache",
@@ -24680,8 +25050,10 @@
     ],
     "dev": true,
     "dev-package-names": [
+        "dealerdirect/phpcodesniffer-composer-installer",
         "doctrine/common",
         "doctrine/persistence",
+        "drupal/coder",
         "drupal/convert_bundles",
         "drupal/devel",
         "drupal/devel_php",
@@ -24693,7 +25065,11 @@
         "laminas/laminas-text",
         "mathieuviossat/arraytotexttable",
         "mglaman/phpstan-drupal",
+        "phpstan/phpdoc-parser",
         "phpstan/phpstan",
-        "phpstan/phpstan-deprecation-rules"
+        "phpstan/phpstan-deprecation-rules",
+        "sirbrillig/phpcs-variable-analysis",
+        "slevomat/coding-standard",
+        "squizlabs/php_codesniffer"
     ]
 }

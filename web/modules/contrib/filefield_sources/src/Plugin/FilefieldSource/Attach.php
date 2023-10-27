@@ -2,14 +2,14 @@
 
 namespace Drupal\filefield_sources\Plugin\FilefieldSource;
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\filefield_sources\FilefieldSourceInterface;
-use Drupal\Core\Field\WidgetInterface;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Field\WidgetInterface;
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Template\Attribute;
+use Drupal\filefield_sources\FilefieldSourceInterface;
 
 /**
  * A FileField source plugin to allow use of files within a server directory.
@@ -212,7 +212,7 @@ class Attach implements FilefieldSourceInterface {
    *   Path that contains files to attach.
    */
   protected static function getDirectory(array $settings, $account = NULL) {
-    $account = isset($account) ? $account : \Drupal::currentUser();
+    $account = $account ?? \Drupal::currentUser();
     $path = $settings['path'];
     $absolute = !empty($settings['absolute']);
 
@@ -300,7 +300,13 @@ class Attach implements FilefieldSourceInterface {
         FILEFIELD_SOURCE_ATTACH_ABSOLUTE => t('Absolute server path'),
       ],
       '#default_value' => $settings['source_attach']['absolute'],
-      '#description' => t('The <em>File attach path</em> may be with the files directory (%file_directory) or from the root of your server. If an absolute path is used and it does not start with a "/" your path will be relative to your site directory: %realpath.', ['%file_directory' => \Drupal::service('file_system')->realpath(\Drupal::config('system.file')->get('default_scheme') . '://'), '%realpath' => realpath('./')]),
+      '#description' => t(
+          'The <em>File attach path</em> may be with the files directory (%file_directory) or from the root of your server. If an absolute path is used and it does not start with a "/" your path will be relative to your site directory: %realpath.',
+          [
+            '%file_directory' => \Drupal::service('file_system')->realpath(\Drupal::config('system.file')->get('default_scheme') . '://'),
+            '%realpath' => realpath('./')
+          ]
+      ),
     ];
     $return['source_attach']['attach_mode'] = [
       '#type' => 'radios',
@@ -309,7 +315,7 @@ class Attach implements FilefieldSourceInterface {
         FILEFIELD_SOURCE_ATTACH_MODE_MOVE => t('Move the file directly to the final location'),
         FILEFIELD_SOURCE_ATTACH_MODE_COPY => t('Leave a copy of the file in the attach directory'),
       ],
-      '#default_value' => isset($settings['source_attach']['attach_mode']) ? $settings['source_attach']['attach_mode'] : 'move',
+      '#default_value' => $settings['source_attach']['attach_mode'] ?? 'move',
     ];
 
     return $return;

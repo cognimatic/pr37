@@ -4,7 +4,7 @@ description: Site Audit is a Drupal static site analysis platform that generates
 core_version_requirement: ^9.2 || ^10
 package: Development
 
-# Information added by Drupal.org packaging script on 2023-10-10
-version: '4.0.0-rc2'
+# Information added by Drupal.org packaging script on 2023-10-27
+version: '4.0.0-rc3'
 project: 'site_audit'
-datestamp: 1696979537
+datestamp: 1698374770

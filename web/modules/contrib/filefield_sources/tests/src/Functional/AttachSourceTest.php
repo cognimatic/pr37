@@ -47,6 +47,8 @@ class AttachSourceTest extends FileFieldSourcesTestBase {
   }
 
   /**
+   * Check can be uploaded etc.
+   *
    * @param object $file
    *   The file object.
    * @param string $dest_uri

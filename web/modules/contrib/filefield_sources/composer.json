@@ -28,9 +28,9 @@
     "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
     "require": {
-        "drupal/core": "^9.2.0 | ^10"
+        "drupal/core": "^8 || ^9"
     },
     "require-dev": {
-        "drupal/imce": "^3.0"
+        "drupal/imce": "^2.3"
     }
 }

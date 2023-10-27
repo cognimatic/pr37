@@ -2,15 +2,15 @@
 
 namespace Drupal\filefield_sources\Plugin\FilefieldSource;
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\filefield_sources\FilefieldSourceInterface;
-use Symfony\Component\Routing\Route;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Field\WidgetInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\file\Entity\File;
+use Drupal\filefield_sources\FilefieldSourceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Drupal\Component\Utility\Unicode;
-use Drupal\Component\Utility\Html;
-use Drupal\file\Entity\File;
+use Symfony\Component\Routing\Route;
 
 /**
  * A FileField source plugin to allow referencing of existing files.
@@ -140,7 +140,9 @@ class Reference implements FilefieldSourceInterface {
 
       $field_definition = \Drupal::entityTypeManager()->getStorage('field_config')->load($entity_type . '.' . $bundle_name . '.' . $field_name);
       if (!isset($field_definition) || $setting_search_all_fields) {
-        $field_definitions = \Drupal::entityTypeManager()->getStorage('field_config')->loadByProperties(['type' => ['file', 'image']]);
+        $field_definitions = \Drupal::entityTypeManager()
+          ->getStorage('field_config')
+          ->loadByProperties(['type' => ['file', 'image']]);
       }
       else {
         $field_definitions = [$field_definition];
@@ -216,7 +218,7 @@ class Reference implements FilefieldSourceInterface {
         FILEFIELD_SOURCE_REFERENCE_MATCH_CONTAINS => t('Contains'),
       ],
       '#type' => 'radios',
-      '#default_value' => isset($settings['source_reference']['autocomplete']) ? $settings['source_reference']['autocomplete'] : FILEFIELD_SOURCE_REFERENCE_MATCH_STARTS_WITH,
+      '#default_value' => $settings['source_reference']['autocomplete'] ?? FILEFIELD_SOURCE_REFERENCE_MATCH_STARTS_WITH,
     ];
 
     $return['source_reference']['search_all_fields'] = [
@@ -226,7 +228,7 @@ class Reference implements FilefieldSourceInterface {
         FILEFIELD_SOURCE_REFERENCE_SEARCH_ALL_YES => t('Yes (all file fields will be searched, regardless of type)'),
       ],
       '#type' => 'radios',
-      '#default_value' => isset($settings['source_reference']['search_all_fields']) ? $settings['source_reference']['search_all_fields'] : FILEFIELD_SOURCE_REFERENCE_SEARCH_ALL_NO,
+      '#default_value' => $settings['source_reference']['search_all_fields'] ?? FILEFIELD_SOURCE_REFERENCE_SEARCH_ALL_NO,
     ];
 
     return $return;
