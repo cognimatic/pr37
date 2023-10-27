@@ -2,14 +2,14 @@
 
 namespace Drupal\filefield_sources\Plugin\FilefieldSource;
 
-use Drupal\Core\Field\WidgetInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 use Drupal\Core\Security\TrustedCallbackInterface;
-use Drupal\Core\Url;
-use Drupal\file\Entity\File;
 use Drupal\filefield_sources\FilefieldSourceInterface;
 use Symfony\Component\Routing\Route;
+use Drupal\Core\Field\WidgetInterface;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Url;
+use Drupal\file\Entity\File;
 
 /**
  * A FileField source plugin to allow referencing of files from IMCE.
@@ -198,7 +198,7 @@ class Imce implements FilefieldSourceInterface, TrustedCallbackInterface {
         0 => t('Restricted: Users can only browse the field directory. No file operations are allowed.'),
         1 => t('Full: Browsable directories are defined by <a href=":imce-admin-url">IMCE configuration profiles</a>. File operations are allowed.', [':imce-admin-url' => $imce_admin_url]),
       ],
-      '#default_value' => $settings['source_imce']['imce_mode'] ?? 0,
+      '#default_value' => isset($settings['source_imce']['imce_mode']) ? $settings['source_imce']['imce_mode'] : 0,
     ];
 
     return $return;

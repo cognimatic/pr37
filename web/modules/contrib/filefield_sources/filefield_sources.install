@@ -11,8 +11,8 @@
 function filefield_sources_install() {
   // FileField Sources needs to load after both ImageField and FileField.
   try {
-    $file_weight = filefield_sources_module_get_weight('file');
-    $image_weight = filefield_sources_module_get_weight('image');
+    $file_weight = module_get_weight('file');
+    $image_weight = module_get_weight('image');
     $weight = max([$file_weight, $image_weight]);
     $weight++;
   }

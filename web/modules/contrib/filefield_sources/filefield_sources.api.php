@@ -28,7 +28,8 @@ function hook_filefield_sources_widgets() {
  * This hook allows other modules to modify the sources available to a user.
  *
  * @param array $sources
- *   List of filefield sources plugins.
+ *   List of filefiled sources plugins.
+ *
  * @param mixed $context
  *   Contains 'enabled_sources', 'element', 'form_state'.
  */

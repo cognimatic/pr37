@@ -3,7 +3,7 @@
         'name' => 'localgovdrupal/localgov-project',
         'pretty_version' => 'dev-devel',
         'version' => 'dev-devel',
-        'reference' => '48882743688247b12e2f0f69ddf8d1377294e1dd',
+        'reference' => '3796fe9c841234c864afc1675193441e2ff3f8e4',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -2406,7 +2406,7 @@
         'localgovdrupal/localgov-project' => array(
             'pretty_version' => 'dev-devel',
             'version' => 'dev-devel',
-            'reference' => '48882743688247b12e2f0f69ddf8d1377294e1dd',
+            'reference' => '3796fe9c841234c864afc1675193441e2ff3f8e4',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

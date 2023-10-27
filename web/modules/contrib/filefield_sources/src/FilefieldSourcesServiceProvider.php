@@ -2,8 +2,8 @@
 
 namespace Drupal\filefield_sources;
 
-use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceModifierInterface;
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 
 /**
  * Alter file.mime_type.guesser.extension service.

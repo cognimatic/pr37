@@ -10,6 +10,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Field\WidgetInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\File\Event\FileUploadSanitizeNameEvent;
 use Drupal\Core\Render\Element;
 use Drupal\imce\Imce;
 use Drupal\file\Entity\File;
@@ -91,11 +92,11 @@ function filefield_sources_field_widget_settings_summary_alter(&$summary, $conte
 }
 
 /**
- * Implements hook_field_widget_form_alter().
+ * Implements hook_field_widget_single_element_form_alter().
  *
  * Add file field sources widget's settings to element.
  */
-function filefield_sources_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+function filefield_sources_field_widget_single_element_form_alter(array &$element, \Drupal\Core\Form\FormStateInterface $form_state, array $context) {
   $plugin = $context['widget'];
   if (in_array($plugin->getPluginId(), \Drupal::moduleHandler()->invokeAll('filefield_sources_widgets'))) {
     $element['#filefield_sources_settings'] = $plugin->getThirdPartySetting('filefield_sources', 'filefield_sources');
@@ -472,7 +473,9 @@ function filefield_sources_save_file($filepath, $validators = [], $destination =
   if (!empty($extensions)) {
     // Munge the filename to protect against possible malicious extension hiding
     // within an unknown file type (ie: filename.html.foo).
-    $file->setFilename(file_munge_filename($file->getFilename(), $extensions));
+    $event = new FileUploadSanitizeNameEvent($file->getFilename(), $extensions);
+    \Drupal::service('event_dispatcher')->dispatch($event);
+    $file->setFilename($event->getFilename());
   }
 
   // Rename potentially executable files, to help prevent exploits (i.e. will
@@ -522,13 +525,7 @@ function filefield_sources_save_file($filepath, $validators = [], $destination =
   // If file_destination() returns FALSE then $replace == FILE_EXISTS_ERROR and
   // there's an existing file so we need to bail.
   if ($file->destination === FALSE) {
-    \Drupal::messenger()->addError(
-        t('The file %source could not be uploaded because a file by that name already exists in the destination %directory.',
-            [
-              '%source' => $file->getFilename(),
-              '%directory' => $destination
-            ]
-        ), 'error');
+    \Drupal::messenger()->addError(t('The file %source could not be uploaded because a file by that name already exists in the destination %directory.', ['%source' => $file->getFilename(), '%directory' => $destination]), 'error');
     return FALSE;
   }
 
@@ -557,13 +554,7 @@ function filefield_sources_save_file($filepath, $validators = [], $destination =
   $file->setFileUri($file->destination);
   if (!$reuse_file && !\Drupal::service('file_system')->copy($filepath, $file->getFileUri(), $replace)) {
     \Drupal::messenger()->addError(t('File upload error. Could not move uploaded file.'), 'error');
-    \Drupal::logger('filefield_sources')->log(E_NOTICE,
-        'Upload error. Could not move uploaded file %file to destination %destination.',
-        [
-          '%file' => $file->getFilename(),
-          '%destination' => $file->getFileUri()
-        ]
-    );
+    \Drupal::logger('filefield_sources')->log(E_NOTICE, 'Upload error. Could not move uploaded file %file to destination %destination.', ['%file' => $file->getFilename(), '%destination' => $file->getFileUri()]);
     return FALSE;
   }
 
@@ -605,7 +596,9 @@ function filefield_sources_clean_filename($filepath, $extensions) {
   if (empty($extensions)) {
     $extensions = 'jpg jpeg gif png txt doc xls pdf ppt pps odt ods odp';
   }
-  $filename = file_munge_filename($filename, $extensions);
+  $event = new FileUploadSanitizeNameEvent($filename, $extensions);
+  \Drupal::service('event_dispatcher')->dispatch($event);
+  $filename = $event->getFilename();
   $directory = \Drupal::service('file_system')->dirname($filepath);
   return ($directory != '.' ? $directory . '/' : '') . $filename;
 }
@@ -616,8 +609,8 @@ function filefield_sources_clean_filename($filepath, $extensions) {
 function template_preprocess_filefield_sources_element(&$variables) {
   $element = $variables['element'];
   $source_id = $element['#source_id'];
-  $method = $element['#method'] ?? 'element';
-  $extra_variables = $element['#variables'] ?? [];
+  $method = isset($element['#method']) ? $element['#method'] : 'element';
+  $extra_variables = isset($element['#variables']) ? $element['#variables'] : [];
 
   $sources = filefield_sources_info();
   if (isset($sources[$source_id]['class'])) {
@@ -711,7 +704,7 @@ function _filefield_sources_enabled($settings) {
 }
 
 // @todo Remove once https://www.drupal.org/node/1808132 is finished.
-if (!function_exists('filefield_sources_module_get_weight')) {
+if (!function_exists('module_get_weight')) {
 
   /**
    * Gets weight of a particular module.
@@ -725,7 +718,7 @@ if (!function_exists('filefield_sources_module_get_weight')) {
    * @throws InvalidArgumentException
    *   Thrown in case the given module is not installed in the system.
    */
-  function filefield_sources_module_get_weight($module) {
+  function module_get_weight($module) {
     $weight = \Drupal::config('core.extension')->get("module.$module");
     if ($weight !== NULL) {
       return (int) $weight;

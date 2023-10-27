@@ -206,7 +206,7 @@
               "D10 compatibility https://www.drupal.org/project/db_maintenance/issues/3286921": "https://www.drupal.org/files/issues/2023-06-23/automateddrupal10compatibilityissues-3286921.patch"
             },
             "drupal/filefield_sources": {
-              "D10 Compatibility https://www.drupal.org/project/filefield_sources/issues/3336268": "https://www.drupal.org/files/issues/2023-10-27/filefield_sources_d10compat_3336268.patch"
+              "D10 Compatibility https://www.drupal.org/project/filefield_sources/issues/3336268": "https://www.drupal.org/files/issues/2023-08-15/3336268-3-filefield_sources-drupal-10-compatibility.patch"
             }
         },
 		 

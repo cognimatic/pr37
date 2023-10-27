@@ -6905,7 +6905,9 @@
                         "message": "Alpha releases are not covered by Drupal security advisories."
                     }
                 },
-                "patches_applied": []
+                "patches_applied": {
+                    "D10 Compatibility https://www.drupal.org/project/filefield_sources/issues/3336268": "https://www.drupal.org/files/issues/2023-08-15/3336268-3-filefield_sources-drupal-10-compatibility.patch"
+                }
             },
             "installation-source": "dist",
             "notification-url": "https://packages.drupal.org/8/downloads",

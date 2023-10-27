@@ -2,12 +2,9 @@
 
 namespace Drupal\filefield_sources;
 
-use Drupal\Core\Render\Element;
 use Drupal\Core\Security\TrustedCallbackInterface;
+use Drupal\Core\Render\Element;
 
-/**
- * Callback interface.
- */
 class FilefieldSourcesPreRenderCallback implements TrustedCallbackInterface {
 
   /**
@@ -18,7 +15,7 @@ class FilefieldSourcesPreRenderCallback implements TrustedCallbackInterface {
   }
 
   /**
-   * PreRender callback: hide sources if a file is currently uploaded.
+   * #pre_render callback: hide sources if a file is currently uploaded.
    */
   public static function preRender($element) {
     // If we already have a file, we don't want to show the upload controls.
@@ -31,5 +28,4 @@ class FilefieldSourcesPreRenderCallback implements TrustedCallbackInterface {
     }
     return $element;
   }
-
 }

@@ -2,32 +2,22 @@
 
 namespace Drupal\filefield_sources\Controller;
 
-use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Render\BubbleableMetadata;
-use Drupal\imce\Imce;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\imce\Imce;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Drupal\Core\Render\BubbleableMetadata;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Controller routines for imce routes.
  */
 class ImceController extends ControllerBase {
   /**
-   * IMCE Controller.
-   *
    * @var Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
-  /**
-   * Creates container.
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   Container for interface.
-   *
-   * @return static
-   */
   public static function create(ContainerInterface $container) {
     $instance = new static();
     $instance->entityTypeManager = $container->get('entity_type.manager');
@@ -86,8 +76,6 @@ class ImceController extends ControllerBase {
   /**
    * Determines the URI for a file field.
    *
-   * @param array $settings
-   *   An array containing settings.
    * @param array $data
    *   An array of token objects to pass to token_replace().
    *

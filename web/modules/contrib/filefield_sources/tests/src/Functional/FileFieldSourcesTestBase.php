@@ -4,9 +4,9 @@ namespace Drupal\Tests\filefield_sources\Functional;
 
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Tests\file\Functional\FileFieldTestBase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\file\Entity\File;
-use Drupal\Tests\file\Functional\FileFieldTestBase;
 use Drupal\user\Entity\Role;
 
 /**
@@ -33,25 +33,10 @@ abstract class FileFieldSourcesTestBase extends FileFieldTestBase {
    */
   protected $adminUser;
 
-  /**
-   * Content type.
-   *
-   * @var string
-   */
   protected $typeName = 'article';
 
-  /**
-   * Field name.
-   *
-   * @var string
-   */
   protected $fieldName;
 
-  /**
-   * Assuming this is a Node entity.
-   *
-   * @var \Drupal\Core\Node
-   */
   protected $node;
 
   /**
@@ -412,8 +397,6 @@ abstract class FileFieldSourcesTestBase extends FileFieldTestBase {
    *   File name.
    * @param int $delta
    *   Delta in multiple values field.
-   * @param bool $multiple
-   *   Whether multiple files.
    */
   public function uploadFileByUploadSource($uri = '', $filename = '', $delta = 0, $multiple = FALSE) {
     $name = 'files[' . $this->fieldName . '_' . $delta . ']';

@@ -6,8 +6,8 @@ use Drupal\Core\File\FileSystem;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\Core\Site\Settings;
 use Drupal\filefield_sources\FilefieldSourceInterface;
+use Drupal\Core\Site\Settings;
 
 /**
  * A FileField source plugin to allow transfer of files through the clipboard.
@@ -42,13 +42,7 @@ class Clipboard implements FilefieldSourceInterface {
       // work with file_prepare_directory().
       if (!\Drupal::service('file_system')->chmod($directory, $mode) && !\Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY)) {
         $url = $input['filefield_clipboard']['filename'];
-        \Drupal::logger('filefield_sources')->log(E_NOTICE,
-            'File %file could not be copied, because the destination directory %destination is not configured correctly.',
-            [
-              '%file' => $url,
-              '%destination' => \Drupal::service('file_system')->realpath($directory)
-            ]
-        );
+        \Drupal::logger('filefield_sources')->log(E_NOTICE, 'File %file could not be copied, because the destination directory %destination is not configured correctly.', ['%file' => $url, '%destination' => \Drupal::service('file_system')->realpath($directory)]);
         \Drupal::messenger()->addError(t('The specified file %file could not be copied, because the destination directory is not properly configured. This may be caused by a problem with file or directory permissions. More information is available in the system log.', ['%file' => $url]), 'error');
         return;
       }
@@ -149,7 +143,7 @@ class Clipboard implements FilefieldSourceInterface {
    */
   public static function element($variables) {
     $element = $variables['element'];
-    $output = '';
+	$output = '';
     foreach (Element::children($element) as $key) {
       if (!empty($element[$key])) {
         $output .= \Drupal::service('renderer')->render($element[$key]);
